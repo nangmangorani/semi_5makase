@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @font-face {
+    font-family: 'Ansungtangmyun-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ansungtangmyun-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+
+    * {
+
+        font-family: 'Ansungtangmyun-Bold';
+    }
+
+    #userInfoWrapper{
+        width: 500px;
+        height: 500px;
+        border: 4px solid mediumaquamarine;
+    }
+    #userInfo{
+        width: 45%;
+        height: 50px;
+        margin-left : 5%
+    }
+    #userHistory{
+        width: 45%;
+        height: 50px;
+    }
+    #userImage{
+        width: 50px;
+        height: 50px;
+    }
+    #adminUserContent{
+        width: 100%;
+        height: 70%;
+        border: 1px solid white;
+    }
+    #adminUserContent>div{
+        float: left;
+        height: 100%;
+    }
+    #contentImage{
+        width: 20%;
+        border: 1px solid blueviolet;
+    }
+    #contentInfo1,#contentInfo2{
+        width: 30%;
+        border: 1px solid black;
+    }
+    #contentInfo1>input{
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 10px;
+    }
+    #contentInfo2>input{
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 10px;
+    }
+    button{
+        border-radius: 20px;
+        border : none;
+        background: lightgray;
+    }
+    
+
+</style>
+<body>
+    <div id="userInfoWrapper">
+        <div>
+            <button id="userInfo">회원정보 상세</button>
+            <button id="userHistory">이용내역</button>
+        </div>
+        <hr>
+
+        <div id="adminUserContent">
+            
+            <div id="contentImage">
+                <img src="./resources/user.png" id="userImage">
+            </div>
+
+            <div id="contentInfo1">
+                이름<br>
+                <input type="text" name="" id="">
+                전화번호<br>
+                <input type="text" name="" id="">
+                주소<br>
+                <input type="text" name="" id="">
+                회원등급<br>
+                <input type="text" name="" id="">
+            </div>
+
+            <div id="contentInfo2">
+                아이디<br>
+                <input type="text" name="" id="">
+                비밀번호<br>
+                <input type="text" name="" id="">
+                생년월일<br>
+                <input type="text" name="" id="">
+            </div>
+        </div>
+        <div>
+            <button>삭제</button>
+            <button>수정</button>
+        </div>
+    </div>
+</body>
+</html>
