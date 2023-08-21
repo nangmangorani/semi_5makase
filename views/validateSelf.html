@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        /* .wrap-area>*{border: 1px solid red;} */
+        .wrap-area{
+            /* border: 1px solid red; */
+            width: 600px;
+            height: 600px;
+            padding: 30px;
+            margin: auto;
+        }
+
+        .intro-area{
+            font-size: xx-large;
+            line-height: 100px;
+        }
+
+        .selectMethod-area a:hover{
+            color: rgb(5, 243, 243);
+        }
+        
+        .selectId, .selectPwd{
+            display: table-cell;
+            /* background-color: rgb(192, 186, 186); */
+        }
+
+        .selectId{
+            width: 50%;
+            border: 1px solid rgb(204, 194, 194);
+        }
+        .selectPwd{
+            width: 300px;
+            height: 50px;
+            background-color: rgb(211, 203, 203);
+        }
+
+        .selectPwd>a{color: gray;}
+
+        .intro-area{height: 13%;}
+
+        .searchBy-area{height: 80%;}
+
+        #findById{margin-top: 50px;}
+
+        .name{position: relative;}
+        .email{position: relative;}
+
+        #X1{
+            position: absolute;
+            top: 70%;
+            right: 20px;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+        #X2{
+            position: absolute;
+            top: 10%;
+            right: 20px;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+        #X3{
+            position: absolute;
+            top: 25%;
+            right: 20px;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="wrap-area">
+        <div class="intro-area" align="center"> 비밀번호 찾기 인증 </div> <br><br>
+        <form action="" method="post" class="searchBy-area">
+                <div class="searchByPhone"> <br><br>
+                    <input type="radio" style="width: 15px; height: 15px;" class="radio-value" name="select" value="phone">&nbsp;&nbsp;<b style="font-size: 20px;">휴대전화</b><br><br>
+                    <div style="font-size: small;">회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야, 인증번호를 받을 수 있습니다.</div><br>
+                    <div class="name" style="display: none;">
+                        <input type="text" id="userName" class="form-control form-control-lg" placeholder="이름"> 
+                        <span id="X2" onclick="cleanName();"><b>X</b></span>
+                        <br>
+                        <input type="text" id="phone" class="form-control form-control-lg" placeholder="휴대전화(-없이 / 있이)">
+                        <span id="X1" onclick="cleanPhone();"><b>X</b></span>
+                    </div>
+                    <br><br>
+                </div>
+                <div class="searchByEmail" >
+                    <input type="radio" style="width: 15px; height: 15px;" class="radio-value" name="select" value="email"><b style="font-size: 20px;">&nbsp;&nbsp;이메일 인증</b> <br><br>
+                    <div class="email" style="display: none;">
+                        <input type="text" id="email" class="form-control form-control-lg" placeholder="이메일을 입력하세요">
+                        <span id="X3" onclick="cleanEmail();"><b>X</b></span>
+                    </div>
+                </div>
+                <button type="submit" id="findById" class="btn btn-primary btn-lg btn-block" disabled>비밀번호 찾기</button>
+        </form>
+    </div>
+    <script>
+
+            $(".radio-value").on("click", function(){
+                var valueCheck = $(".radio-value:checked").val();
+
+                if(valueCheck == "phone"){
+                    $(".name").css("display","block")
+                    $(".email").css("display","none")
+                } else{
+                    $(".name").css("display","none")
+                    $(".email").css("display","block")
+                }
+            })
+
+            $("#userName, #phone").keyup(function(){
+                switch(!($("#userName").val() && $("#phone").val())){
+                    case true : $("#findById").attr("disabled", true); break;
+                    case false : $("#findById").attr("disabled", false); break;
+                }
+            })
+
+            $("#email").keyup(function(){
+                switch(!($("#email").val())){
+                    case true : $("#findById").attr("disabled", true); break;
+                    case false : $("#findById").attr("disabled", false); break;
+                }
+            })
+
+            function cleanName(){
+                $("#userName").val('').focus();
+                $("#findById").attr("disabled", true)
+            }
+
+            function cleanPhone(){
+                $("#phone").val('').focus();
+                $("#findById").attr("disabled", true)
+            }
+
+            function cleanEmail(){
+                $("#email").val('').focus();
+                $("#findById").attr("disabled", true)
+            }
+
+    </script>
+</body>
+</html>
