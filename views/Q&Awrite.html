@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        div{
+            /* border: 1px solid red; */
+            box-sizing: border-box;
+        }     
+        .wrap{
+            width: 1080px;
+            height: 800px;
+            margin: auto;
+        }   
+        .wrap>div{
+            width: 100%;
+        }
+        #content{
+            height: 100%;
+        }
+
+        #content_1{
+            width: 50%;
+            height: 100%;
+            float: left;
+            border-right: 1px solid gray;
+
+        }
+        #content_2{
+            width: 50%;
+            height: 100%;
+            float: left;
+        }
+        #title{
+            width: 380px;
+            height: 30px;
+
+            
+        }
+        #content1{
+            width: 380px;
+            height: 200px;
+        }
+        #picture{
+            margin-right: 18px;
+        }
+        #textarea{
+            margin-left: 50px;
+        }
+
+        .change{
+            width: 100px;
+            height: 100px;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        /* Style for the image container */
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* Style for individual image divs */
+        .image {
+            margin: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* Style for the image itself */
+        .image img {
+            max-width: 100%; /* Ensure the image doesn't exceed its container */
+            max-height: 150px; /* Set the maximum height of the image */
+        }
+
+        /* Style for delete buttons */
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+
+    </style>
+</head>
+<body>  
+    <div class="wrap">
+        <div id="header"></div>
+        <div id="content">
+            <br>
+            <div id="content_1"align="center" >
+                <br>
+                <b >제목 : </b>
+                <input type="text" id="title" ><br><br>
+
+                <b style="margin-right: 384px;">내용 : </b><br>
+                <textarea name="content" id="textarea" placeholder="내용을 입력해주세요" cols="49" rows="10" style="resize: none;"></textarea><br><br>
+
+            
+                
+
+                <b id="picture">사진 : </b>
+                <input type="file" id="imageInput" multiple>
+                
+
+                <div id="imagePreview" style="display: none;">
+                    <img id="previewImage" src="#" alt="Preview">
+                    <button id="deleteButton">x</button>
+                </div>
+
+
+                <input type="checkbox" id="hide" name="hobby" value="hide">
+                <label for="hide">비공개</label><br><br>
+            
+
+                <button type="button" class="btn btn-secondary" style="width: 90px;">취소</button>
+                <button type="submit" id="next" class="btn btn-success"  >등록하기</button>
+
+
+            </div>
+
+
+            <div id="content_2" align="center">
+                <br>
+                <b>자주묻는 질문</b> <a href=""><b style="margin-left: 350px; color: black;">전체</b></a><br>
+                <div class="container" >
+                    <table class="table"  align="center" style="width: 100%;">
+                      <thead class="thead-light">
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>제목입니다</td>
+                            <td>차은우</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>제목입니다1</td>
+                            <td>차은우2</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+            </div>
+        </div>
+        <div id="footer"></div>
+    </div>
+        
+    <script>
+    // Get references to HTML elements
+    const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImage = document.getElementById('previewImage');
+        const deleteButton = document.getElementById('deleteButton');
+
+        // Event listener for file input change
+        imageInput.addEventListener('change', function() {
+            const file = imageInput.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Event listener for delete button click
+        deleteButton.addEventListener('click', function() {
+            // Clear the file input
+            imageInput.value = '';
+            
+            // Hide the preview
+            imagePreview.style.display = 'none';
+        });
+
+        // Event listener for 'x' key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'x') {
+                // Trigger the delete action
+                deleteButton.click();
+            }
+        });
+    </script>
+    
+</body>
+</html>
