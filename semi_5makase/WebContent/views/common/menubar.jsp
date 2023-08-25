@@ -65,6 +65,10 @@
         cursor: pointer;
     }
 
+    #form1 input{
+      
+    }
+com.semi_5makase.
 </style>
 <body>
     <div class="menubar-area">
@@ -72,8 +76,8 @@
             <img src="resources/img/logo.png">
         </div>
         <div class="searchbar-area">
-            <form action="">
-                <input type="text" placeholder="     지역, 음식 또는 식당명을 입력해주세요. " style="border: 0px;">
+            <form id="form1" method="post" action="restSearch">
+                <input type="text" name="searchVal" placeholder="     지역, 음식 또는 식당명을 입력해주세요. " style="border: 0px;">
                 <button type="submit"><img src="resources/img/searchIcon.png"></button>
             </form>
         </div>

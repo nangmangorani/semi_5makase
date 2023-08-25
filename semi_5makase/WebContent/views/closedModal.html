@@ -33,6 +33,7 @@
             border: 1px solid #888;
             width: 30%; /* Could be more or less, depending on screen size */                          
         }
+        
         #close_modal{
             color: #222228;
             background-color: white;
@@ -51,6 +52,20 @@
             border-radius: 10px;
 
         }
+        #close{
+            float: right;
+            width: 30px;
+            height: 20px;
+            background-color: white;
+            border: none;
+        }
+        #closeImg{
+            width: 100%;
+            height: 100%;
+            
+            
+        }
+
         
         /* style="cursor:pointer;
         background-color:#DDDDDD;t
@@ -67,7 +82,13 @@
  
       <!-- Modal content -->
       <div class="modal-content">
-                <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">폐업신고 - 신고</span></b></span></p>
+        <button id="close" onclick="closed();"><img id="closeImg" src="../resources/img/closed.jpg" alt=""></button>
+                <p style="text-align: center;">
+                    
+                    <span style="font-size: 15pt;"><b><span style="font-size: 13pt;">폐업신고 - 신고</span></b>
+                    
+                </span>
+            </p>
                 <textarea name="" id="modelText" cols="40" rows="10" style="resize: none;" placeholder="수정이 필요한 내용을 적어주세요.&#13;&#10;예)맛집이름,주소,전화번호 등"></textarea>
                 
                 <input type="checkbox" name="" id=""> 폐업신고
@@ -75,7 +96,7 @@
                 <br>
                 
                 <hr>
-            <div id ="close_modal" onClick="close_pop();">
+            <div id ="close_modal" onclick="close_pop();">
                 <span class="pop_bt">
                      보내기
                 </span>
@@ -92,11 +113,16 @@
         //팝업 Close 기능
         function close_pop(flag) {
              $('#myModal').hide();
-        };
+        }
+        function closed(){
+            $("#myModal").hide();
+        }
 
         $("#openModal").click(function(){
             $('#myModal').show();
         });
+
+        
         
       </script>
 </body>
