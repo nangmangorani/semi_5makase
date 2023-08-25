@@ -1,7 +1,10 @@
+<%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String contextPath = request.getContextPath(); // /jsp  (action에서 )
+	String contextPath = request.getContextPath(); 
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>
     <!DOCTYPE html>
     <html lang="en">
@@ -138,13 +141,13 @@
                 </form>
             </div>
             <div class="member-area" align="center">
-            <%if(loginMember == null){ %>
+			<%if(loginMember == null){ %>
           		<!-- case2. 로그인 전  -->
                 <button type='button' id="modal_btn" data-target="#loginModal">로그인</button>
-                <%}else{ %>
-			        <!-- case2. 로그인 후  -->
+              <%}else{ %>
+                <!-- case2. 로그인 후  -->
 			        <div>
-			            <b><%= loginMember.getUserName() %>님</b>의 방문을 환영합니다. <br><br>
+			            <b><%= loginMember.getMemName()%>님</b>의 방문을 환영합니다. <br><br>
 			            <div align="center">
 			                <a href="<%=contextPath %>/myPage.me">마이페이지</a>
 			                <a href="<%=contextPath %>/logout.me">로그아웃</a>
@@ -154,18 +157,17 @@
                 
                 
                 
-                
                 <div class="black_bg"></div>
                 <div class="modal_wrap">
                     <div class="modal_close"><a href="#">close</a></div>
                         <div>
                             <form action="<%=contextPath %>/login.me" method="post">
                                 <div class="member_login_input" style="margin-top: 100px;">
-                                    <input type="text" class="form-control" name="username" placeholder="아이디" >
+                                    <input type="text" class="form-control" name="memId" placeholder="아이디" >
                                 </div>
                     
                                 <div class="member_login_input">
-                                    <input type="password" class="form-control" name="password" placeholder="비밀번호">
+                                    <input type="password" class="form-control" name="memPwd" placeholder="비밀번호">
                                 </div>
                                 <br>
                                 <div class="member_login_btn"> 

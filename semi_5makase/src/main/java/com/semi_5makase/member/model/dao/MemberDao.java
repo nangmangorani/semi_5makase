@@ -60,4 +60,53 @@ public class MemberDao {
 		return list;
 	}
 	
+	public Member loginMember(Connection conn, String memId, String memPwd) {
+		
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("loginMember");
+		
+		try {
+			pstmt =  conn.prepareStatement(sql);
+			
+			pstmt.setString(1, memId);
+			pstmt.setString(2, memPwd);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("mem_no"),
+						rset.getString("mem_grade"),
+						rset.getString("mem_id"),
+						rset.getString("mem_pwd"),
+						rset.getString("mem_name"),
+						rset.getString("gender"),
+						rset.getInt("age"),
+						rset.getString("nickname"),
+						rset.getString("email"),
+						rset.getString("phone"),
+						rset.getString("address"),
+						rset.getDate("enroll_date"),
+						rset.getString("status"),
+						rset.getString("quit_reason")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+		
+		
+	}
+	
+	
+	
+	
+	
 }

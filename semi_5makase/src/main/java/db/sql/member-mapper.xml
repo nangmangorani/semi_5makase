@@ -11,4 +11,27 @@
 	  FROM MEMBER
 
 </entry>
+
+<entry key="loginMember">
+SELECT 
+	   MEM_NO
+     , MEM_GRADE
+     , MEM_ID
+     , MEM_PWD
+     , MEM_NAME
+     , GENDER
+     , AGE
+     , NICKNAME
+     , EMAIL
+     , PHONE
+     , ADDRESS
+     , ENROLL_DATE
+     , STATUS
+     , QUIT_REASON
+FROM MEMBER
+WHERE MEM_ID = ?
+  AND MEM_PWD = ?
+  AND STATUS = 'Y'
+</entry>
+
 </properties>
