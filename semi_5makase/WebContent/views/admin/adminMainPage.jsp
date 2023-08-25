@@ -1,3 +1,5 @@
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,9 +133,13 @@
                   <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                                 <ul class="list-group">
-                                    <li class="list-group-item" style="text-align: center;"><a href="">회원 관리</a></li>
+                                	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
+                                    <li class="list-group-item" style="text-align: center;"><a href="/5makase/memberlist.ad">회원 관리</a></li>
+                                    
                                     <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
+                                    
                                     <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                                    
                                 </ul>
                     </div>
                   </div>
