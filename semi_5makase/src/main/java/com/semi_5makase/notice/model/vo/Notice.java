@@ -21,6 +21,19 @@ public class Notice {
 		this.noticeTitle = noticeTitle;
 		this.createDate = createDate;
 	}
+	
+	
+
+
+
+	public Notice(int noticeNo, String noticeTitle, String noticeContent, int noticeViews, Date createDate) {
+		super();
+		this.noticeNo = noticeNo;
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+		this.noticeViews = noticeViews;
+		this.createDate = createDate;
+	}
 
 
 
