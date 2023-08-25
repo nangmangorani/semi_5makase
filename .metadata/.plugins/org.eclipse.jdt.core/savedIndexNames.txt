@@ -1,0 +1,8 @@
+INDEX VERSION 1.131+C:\Users\user1\Desktop\semii\semi_5makase\.metadata\.plugins\org.eclipse.jdt.core
+3596299966.index
+3226951256.index
+3373006713.index
+1236032921.index
+1865797976.index
+2367783050.index
+497767293.index
