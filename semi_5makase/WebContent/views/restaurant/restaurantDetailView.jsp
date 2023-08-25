@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,13 +197,46 @@
             height: 60%;
             padding-top: 12px;
         }
-        #star{
+
+
+        /* #star{
             width: 100px;
             height: 40%;
             background: url(https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/common/rating-off@2x.png) repeat-x left;
             background-size: 20px;
             vertical-align: middle;
+        } */
+
+        .star-rating {
+
+        display:flex;
+        flex-direction: row-reverse;
+        font-size:1.5em;
+        justify-content:space-around;
+        padding:0 .2em;
+        text-align:center;
+        width:5em;
         }
+
+        .star-rating input {
+        display:none;
+        }
+
+        .star-rating label {
+        color:#ccc;
+        cursor:pointer;
+        }
+
+        .star-rating :checked ~ label {
+        color:#f90;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+        color:#fc0;
+        }
+
+
         #taste{
             width: 30%;
             height: 100%;
@@ -378,12 +413,21 @@
                     </div>
                     <div id="nameStar" style="line-height: 45px;">
                         <div id="userName" style="padding-left: 5px;">
-                            <strong style="font-size: 22px;">UserId</strong>
+                            <strong style="font-size: 22px;">사용자아이디</strong>
                         </div>
                         
-                        <div id="star">
-                            
-                        </div>
+                        <div class="star-rating">
+                            <input type="radio" id="5-stars" name="rating" value="5" />
+                            <label for="5-stars" class="star">&#9733;</label>
+                            <input type="radio" id="4-stars" name="rating" value="4" />
+                            <label for="4-stars" class="star">&#9733;</label>
+                            <input type="radio" id="3-stars" name="rating" value="3" />
+                            <label for="3-stars" class="star">&#9733;</label>
+                            <input type="radio" id="2-stars" name="rating" value="2" />
+                            <label for="2-stars" class="star">&#9733;</label>
+                            <input type="radio" id="1-star" name="rating" value="1" />
+                            <label for="1-star" class="star">&#9733;</label>
+                          </div>
                         
                     </div>
                     <div id="taste" align="right" style="padding-right: 20px;">
