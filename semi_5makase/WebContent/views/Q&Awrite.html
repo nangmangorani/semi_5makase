@@ -96,7 +96,17 @@
             top: 5px;
             right: 5px;
         }
-
+        #image_preview{
+            margin-right: 310px;
+        }
+        #hide{
+            margin-left: 350px;
+        }
+        #att_zone {
+        width: 660px;
+        min-height: 150px;
+        padding: 10px;
+        }
 
     </style>
 </head>
@@ -113,21 +123,21 @@
                 <b style="margin-right: 384px;">내용 : </b><br>
                 <textarea name="content" id="textarea" placeholder="내용을 입력해주세요" cols="49" rows="10" style="resize: none;"></textarea><br><br>
 
-            
+        
+                <input type="checkbox" id="hide" name="hobby" value="hide">
+                <label for="hide">비공개</label><br><br>
                 
-
-                <b id="picture">사진 : </b>
-                <input type="file" id="imageInput" multiple>
                 
-
-                <div id="imagePreview" style="display: none;">
-                    <img id="previewImage" src="#" alt="Preview">
-                    <button id="deleteButton">x</button>
+                <div id='image_preview'>
+                    <b id="picture">사진 : </b>
+                    <label className="input-file-button" for="btnAtt">
+                      <img src="./resources/free-icon-photo.png" alt="" style="width: 50px; height: 50px; cursor: pointer;">
+                    </label>
+                    <input type='file' id='btnAtt' multiple='multiple' style="display: none;" />
+                    <div id='att_zone'></div>
                 </div>
 
 
-                <input type="checkbox" id="hide" name="hobby" value="hide">
-                <label for="hide">비공개</label><br><br>
             
 
                 <button type="button" class="btn btn-secondary" style="width: 90px;">취소</button>
@@ -170,44 +180,149 @@
     </div>
         
     <script>
-    // Get references to HTML elements
-    const imageInput = document.getElementById('imageInput');
-        const imagePreview = document.getElementById('imagePreview');
-        const previewImage = document.getElementById('previewImage');
-        const deleteButton = document.getElementById('deleteButton');
+    ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
+  imageView = function imageView(att_zone, btn){
 
-        // Event listener for file input change
-        imageInput.addEventListener('change', function() {
-            const file = imageInput.files[0];
-            
-            if (file) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                };
-                
-                reader.readAsDataURL(file);
-            }
-        });
+    var attZone = document.getElementById(att_zone);
+    var btnAtt = document.getElementById(btn)
+    var sel_files = [];
+    
+    // 이미지와 체크 박스를 감싸고 있는 div 속성
+    var div_style = 'display:inline-block;position:relative;'
+              + 'width:70px;height:70px;margin:5px;z-index:1';
 
-        // Event listener for delete button click
-        deleteButton.addEventListener('click', function() {
-            // Clear the file input
-            imageInput.value = '';
-            
-            // Hide the preview
-            imagePreview.style.display = 'none';
-        });
+    // 미리보기 이미지 속성
+    var img_style = 'width:100%;height:100%;z-index:none';
+    // 이미지안에 표시되는 체크박스의 속성
+    var chk_style = 'width:30px;height:30px;position:absolute;font-size:24px;'
+              + 'right:0px;bottom:0px;z-index:999;background-color:transparent;border:none';
 
-        // Event listener for 'x' key press
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'x') {
-                // Trigger the delete action
-                deleteButton.click();
-            }
-        });
+
+  
+    btnAtt.onchange = function (e) {
+        var files = e.target.files;
+        var fileArr = Array.prototype.slice.call(files);
+
+        // Check if the total selected files, including the ones already displayed, exceed 5
+        if (sel_files.length + fileArr.length > 6) {
+          alert('사진 5장을 초과했습니다');
+          clearFileInput(btnAtt); // Clear the input field
+          return;
+        }
+
+        for (f of fileArr) {
+          imageLoader(f);
+        }
+      }
+
+// Function to clear the input field
+function clearFileInput(input) {
+  input.value = ''; // Clear the input field
+}
+
+    
+  
+    // 탐색기에서 드래그앤 드롭 사용
+    attZone.addEventListener('dragenter', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    }, false)
+
+    attZone.addEventListener('dragover', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      
+    }, false)
+  
+    attZone.addEventListener('drop', function(e){
+      var files = {};
+      e.preventDefault();
+      e.stopPropagation();
+      var dt = e.dataTransfer;
+      files = dt.files;
+      for(f of files){
+        imageLoader(f);
+      }
+      
+    }, false)
+    
+
+    
+    /*첨부된 이미리즐을 배열에 넣고 미리보기 */
+    imageLoader = function (file) {
+  sel_files.push(file);
+  var reader = new FileReader();
+  reader.onload = function (ee) {
+    let img = document.createElement('img');
+    img.setAttribute('style', img_style);
+    img.src = ee.target.result;
+
+    // Add the hover effect to blur the image
+    img.onmouseover = function () {
+      img.style.filter = 'opacity(0.5)';
+    };
+
+    // Remove the blur effect on mouseout
+    img.onmouseout = function () {
+      img.style.filter = 'none';
+    };
+
+    attZone.appendChild(makeDiv(img, file));
+  }
+
+  reader.readAsDataURL(file);
+}
+
+    
+    /*첨부된 파일이 있는 경우 checkbox와 함께 attZone에 추가할 div를 만들어 반환 */
+    makeDiv = function(img, file){
+  var div = document.createElement('div');
+  div.setAttribute('style', div_style);
+  
+  var btn = document.createElement('input');
+  btn.setAttribute('type', 'button');
+  btn.setAttribute('value', 'x');
+  btn.setAttribute('delFile', file.name);
+  btn.setAttribute('style', chk_style);
+
+  // Add hover effect to blur the image when hovering over the button
+  btn.onmouseover = function() {
+    
+    img.style.filter = 'opacity(0.5)';
+  };
+
+  // Remove blur effect on mouseout
+  btn.onmouseout = function() {
+    img.style.filter = 'none';
+  };
+
+  btn.onclick = function(ev){
+    var ele = ev.srcElement;
+    var delFile = ele.getAttribute('delFile');
+    for(var i=0 ;i<sel_files.length; i++){
+      if(delFile== sel_files[i].name){
+        sel_files.splice(i, 1);      
+      }
+    }
+    
+    dt = new DataTransfer();
+    for(f in sel_files) {
+      var file = sel_files[f];
+      dt.items.add(file);
+    }
+    btnAtt.files = dt.files;
+    var p = ele.parentNode;
+    attZone.removeChild(p);
+  }
+  div.appendChild(img);
+  div.appendChild(btn);
+  return div;
+}
+
+  }
+  
+
+)('att_zone', 'btnAtt')
     </script>
     
 </body>
