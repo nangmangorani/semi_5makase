@@ -4,5 +4,8 @@ public class RestaurantDao {
 	
 	public void se() {
 		int i=0;
+
+	public void test1dd() {
+		
 	}
 }
