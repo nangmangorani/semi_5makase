@@ -1,5 +1,11 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page import="com.semi_5makase.member.model.vo.Member"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+%>    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +24,9 @@
             /* border: 1px solid red; */
             padding: 0%;
             margin: 0%;
+        }
+        .table tr{
+            text-align: center;
         }
         .accordion-body{
             padding: 0;
@@ -103,16 +112,14 @@
             padding: 25px;
             border-bottom: 1px solid rgb(230, 230, 230);
         }
-        #content_2{
-            height: 90%;
-            padding: 50px;
+        .btn-toolbar{
+            box-sizing: border-box;
         }
-        #content_2 strong{
-            font-size: 16px;
+        .btn-group{
+            margin-left: 30%;
+            margin-right: 30%;
         }
-        #content_2 div{
-            font-size: 16px;
-        }
+        
         
     </style>
 </head>
@@ -133,16 +140,9 @@
                   <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                                 <ul class="list-group">
-                                
-                                	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="/5makase/memberlist.ad">회원 관리</a></li>
-                                    
-                                    
+                                    <li class="list-group-item" style="text-align: center;"><a href="">회원 관리</a></li>
                                     <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                                    
-                                    
                                     <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
-                                    
                                 </ul>
                     </div>
                   </div>
@@ -199,34 +199,54 @@
         <!-- -------------컨텐츠 헤더------------- -->
         <div class="content">
             <div id="content_1">
-                <h4 style="font-weight: bold;" align="center">기본 정보</h4>
+                <h4 style="font-weight: bold;" align="center">회원 관리</h4>
             </div>
-            <div id="content_2" align="center">
-                <table>
-                    <tr style="height: 50px;">
-                        <td style="width: 300px;">
-                            <strong style="vertical-align: middle;">사이트 이름</strong>
-                        </td>
-                        <td style="width: 1000px;">
-                            <div id="siteName" style="background-color: rgb(230, 230, 230);">이눔세끼 - 가성비 좋은 음식을 찾고있는 당신을 위해</div>
-                        </td>
-                    </tr>
-                    <tr style="height: 50px;">
-                        <td>
-                            <strong style="vertical-align: middle;">최고 관리자</strong>
-                        <td>
-                            <div id="name" style="background-color: rgb(230, 230, 230);">관리자요</div>
-                        </td>
-                    </tr>
-                    <tr style="height: 50px;">
-                        <td>
-                            <strong style="vertical-align: middle;" >관리자 메일주소</strong>
-                        </td>
-                        <td>
-                            <div id="email" style="background-color: rgb(230, 230, 230);">이메일이요</div>
-                        </td>
-                    </tr>
-                </table> 
+            <div id="content_2"> 
+                <div align="right" style="margin: 5px;">
+                    <button type="button" class="btn btn-sm btn-secondary">회원등록</button>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">회원명</th>
+                                <th scope="col">전화번호</th>
+                                <th scope="col">지역</th>
+                                <th scope="col">성별</th>
+                                <th scope="col">회원등급</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	<!-- case1. 공지글이 없을 경우 -->
+			                <% if(list.isEmpty()) { %>
+				                <tr>
+				                    <td colspan="5">존재하는 회원이 없습니다.</td>
+				                </tr>
+							<% } else { %>
+					            <!-- case2. 공지글이 있을 경우 -->
+	                        	<% for(Member m : list) { %>
+		                            <tr>
+		                                <th scope="row"><%= m.getMemNo() %></th>
+		                                <td><%= m.getMemName() %></td>
+		                                <td><%= m.getPhone() %></td>
+		                                <td><%= m.getAddress() %></td>
+		                                <td><%= m.getGender() %></td>
+		                            </tr>
+                            	<% } %>
+                            <% } %>
+                    </table> 
+                </div>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2  btn-sm" role="group" aria-label="First group">
+                      <button type="button" class="btn btn-primary"><</button>
+                      <button type="button" class="btn btn-primary">1</button>
+                      <button type="button" class="btn btn-primary">2</button>
+                      <button type="button" class="btn btn-primary">3</button>
+                      <button type="button" class="btn btn-primary">4</button>
+                      <button type="button" class="btn btn-primary">5</button>
+                      <button type="button" class="btn btn-primary">></button>
+                </div>
             </div>
         </div>
     </div>
