@@ -1,0 +1,167 @@
+/* html{
+    width: 1100px;
+    height: 1400px;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+} */
+
+.outer{
+    width: 1100px;
+    height: 2500px;
+    margin: auto;
+    margin-top: 100px; 
+    /* margin-bottom: 100px; */
+}
+
+.outer>*{box-sizing: border-box;}
+
+.navbar{
+    background-color: rgb(240, 240, 240);
+    width: 100%;
+    height: 1.6%;
+}
+
+.navbar>div{
+    display: table-cell;
+    width: 150px;
+}
+
+.menu>a{
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    line-height: 40px;
+}
+
+.bg{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    transform: translate(-50%, -50%);
+}
+
+.bg>b{margin: 150px;}
+
+.best-area{
+    width: 100%;
+    height: 2.6%;
+}
+
+.best-area>h2{
+    color: rgb(10, 179, 122);
+    line-height: 70px;
+    font-weight: 600;
+    margin-left: 30px;
+}
+
+.top-list{
+    height: 26%;
+}
+
+.top-list img{
+    width: 470px;
+    height: 270px;
+    filter: brightness(80%);
+}
+
+.top-list ul{
+    list-style: none;
+}
+
+.top-list-info{position: relative;}
+
+.list-pic-comment{
+    position: absolute;
+    top: 30%;
+    left: 23%;
+    text-align: center;
+}
+
+.slider span{
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+
+.slider p{
+    color: white;
+    font-size: 20px;
+    display:flex;
+    justify-content:center;
+}
+
+.slick-dots{
+    margin-left: 40px;
+}
+
+#editor-select{
+    margin-left: 20px;
+    color: rgb(10, 179, 122);
+}
+
+.main_most_popular_restaurant{
+    width: 100%;
+    height: 27%;
+}
+
+.popular_restaurant_container{
+    width: 100%;
+    height: 100%;
+}
+
+.popular_restaurant_container>ul{list-style: none;}
+
+.popular_restaurant_container a{
+    text-decoration: none;
+}
+
+.popular_restaurant_container img{width: 90%;}
+
+.info>span, .info>strong{
+    font-weight: 500;
+    font-size: 20px;
+    color: black;
+    text-align: center;
+}
+
+.info>strong{color: rgb(12, 209, 209);}
+
+.info>p{
+    color: gray;
+}
+
+.fl{display: table-cell;}
+
+.restaurant-item{position: relative;}
+
+.restaurant-item-image{filter: brightness(80%);}
+
+/* .tv_info{
+    position: absolute;
+    top: 35%;
+    right: 21%;
+} */
+
+.tv_info>span, .tv_info>p{
+    color: white;
+}
+
+.tv_info>span{
+    font-size: 30px;
+    position: absolute;
+    top: 35%;
+    right: 38%;
+}
+
+.tv_info>p{
+    font-size: 20px;
+    position: absolute;
+    top: 45%;
+    right: 28%;
+    
+}

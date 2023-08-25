@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        div{
+            /* border: 1px solid red; */
+            box-sizing: border-box;
+        }
+        
+        .wrap{
+            width: 1080px;
+            height: 800px;
+            margin: auto;
+        }
+        .wrap>div{
+            width: 100%;
+        }
+        #header{
+            height: 15%;
+        }
+        #content{
+            height: 85%;
+        }
+        #header>div{
+            height: 100%;
+            float: left;
+        }
+        #header_1{
+            width: 40%;
+            text-align: right;
+        }
+        #login td{
+            text-align: left;
+            height: 60px;
+        }
+
+        .input{
+            width: 310px;
+        }
+
+        #next{
+            width: 400px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="header">
+            <div id="header_1"><img src="resources/로고2.PNG.png" style="width: 35%; height: 100%;"></div>
+        </div>
+        <div id="content">
+            <form action="" align="center">
+                <table border="0" align="center" id="login">
+                    <tr>
+                        <td><b>아이디 : </b></td>
+                        <td><input type="text" class="input" placeholder="아이디" required ></td>
+                    </tr>
+                    <tr>
+                        <td><b>비밀번호 : </b></td>
+                        <td><input type="password" class="input" placeholder="비밀번호" required></td>
+                    </tr>
+                    <tr>
+                        <td><b>비밀번호확인 : </b></td>
+                        <td><input type="password" class="input" placeholder="비밀번호확인" required></td>
+                    </tr>
+                    <tr>
+                        <td><b> 닉네임 : </b></td>
+                        <td><input type="text" class="input" placeholder="닉네임" required></td>
+                    </tr>
+
+                    <tr>
+                        <td><b>성별 : </b> </td>
+                        <td>
+                        <input type="checkbox" style="width: 15px; height: 15px;" name="gender" id="gender1" class="text1" onclick='checkOnlyOne(this)'>
+                        <label for="gender1"><b>남자</b></label>
+                        <input type="checkbox" style="width: 15px; height: 15px;" name="gender" id="gender2" class="text1" onclick='checkOnlyOne(this)'>
+                        <label for="gender2"><b>여자</b></label><br>
+                        </td>
+                        
+                    </tr>
+
+                    <tr>
+                        <td><b> 주소 : </b></td>
+                        <td><input type="text" class="input" placeholder="주소" required></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" style="width: 15px; height: 15px;" class="radio-value" name="select" value="phone"><b>휴대전화 : </b><br><br>
+                        </td>
+                        <td>
+                            <div class="check1" style="display: none;">
+
+                                <input type="text" id="phone"  placeholder="휴대전화">
+                                <br>
+                                <input type="text" id="checknum"  placeholder="인증번호"> <br>
+                                <input type="button" class="btn btn-sm btn-info" value="인증번호 받기">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" style="width: 15px; height: 15px;"  class="radio-value" name="select" value="email"><b>이메일 인증 : </b><br><br>
+                        </td>
+                        <td>
+                            <div class="email" style="display: none;">
+                                <input type="text" id="email"  placeholder="이메일을 입력하세요"><br>
+                                <input type="button" class="btn btn-sm btn-info" value="인증번호 받기">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" id="next" class="btn btn-info" >가입하기</button>
+
+            </form>
+
+        </div>
+            
+        <div id="footer"></div>
+    </div>
+
+
+    <script>
+
+        $(".radio-value").on("click", function(){
+            var valueCheck = $(".radio-value:checked").val();
+
+            if(valueCheck == "phone"){
+                $(".check1").css("display","block")
+                $(".email").css("display","none")
+            } else{
+                $(".check1").css("display","none")
+                $(".email").css("display","block")
+            }
+        })
+
+        $("#checknum, #phone").keyup(function(){
+            switch(!($("#checknum").val() && $("#phone").val())){
+                case true : $("#findById").attr("disabled", true); break;
+                case false : $("#findById").attr("disabled", false); break;
+            }
+        })
+
+        $("#email").keyup(function(){
+            switch(!($("#email").val())){
+                case true : $("#findById").attr("disabled", true); break;
+                case false : $("#findById").attr("disabled", false); break;
+            }
+        })
+        function checkOnlyOne(element) {
+  
+        const checkboxes = document.getElementsByName("gender");
+        
+        checkboxes.forEach((cb) => {
+            cb.checked = false;
+        })
+        
+        element.checked = true;
+        }
+
+
+</script>
+
+</body>
+</html>

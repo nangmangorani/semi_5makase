@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Users\user1\Desktop\semi\semi_5makase\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2835310642.index
+2281725611.index
+2417127839.index
+2705942682.index
+3226951256.index
+3117589405.index
+424808914.index
