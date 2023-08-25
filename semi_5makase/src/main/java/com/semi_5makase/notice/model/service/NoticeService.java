@@ -25,5 +25,44 @@ public class NoticeService {
 		return list;
 	}
 	
+	
+	/**
+	 * 공지사항 세부창
+	 */
+	
+	public Notice selectNotice(int noticeNo) {
+		
+		Connection conn = getConnection();
+		
+		Notice n = new NoticeDao().selectNotice(conn, noticeNo);
+		
+		close(conn);
+		
+		return n;
+	}
+	
+	/**
+	 * 공지사항 조회수 증가
+	 */
+	
+	public int increaseNoticeViews(int noticeNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().increaseNoticeViews(conn, noticeNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	
 
 }

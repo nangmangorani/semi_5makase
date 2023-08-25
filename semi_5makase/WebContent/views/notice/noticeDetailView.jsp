@@ -1,5 +1,7 @@
+<%@page import="com.semi_5makase.notice.model.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% Notice n = (Notice)request.getAttribute("n"); %>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -153,7 +155,8 @@
         </style>
     </head>
     <body>
-    
+    	
+		
         <div class="wrap">
             <div id="header" style="border-bottom: 1px solid black;">
                 <div id="header">
@@ -183,38 +186,14 @@
                 </div>
                 <div id="content_main">
                     <div id="noticeTitle"> <br>
-                        <h2>[공지] 망고플레이트 개인정보 처리방침 변경 안내</h2>
+                        <h2><%= n.getNoticeTitle() %></h2>
                     </div>
                     <div id="noticeDate">
-                        2020-02-20
+                        <%= n.getCreateDate() %>
+                        <%= n.getNoticeViews() %>
                     </div>
                     <div id="noticeMain" style="word-break:break-all;"> <br>
-                        안녕하세요. 맛있는 경험, 맛있는 삶 망고플레이트입니다. <br>
-                        망고플레이트 개인정보처리방침을 일부 변경하게 되어 이를 알려 드리고자 합니다. <br>
-                        <br>
-                        
-    
-                        1. 주요 변경 사항 <br>
-                        1) 개인정보 수집항목 현행화 <br>
-                        2) 개인정보의 제3자 제공 현행화 <br>
-                        3) 개인정보 처리위탁 업체 현행화 <br>
-                        4) 개인정보의 안전성 확보조치 세부 항목 추가 <br>
-                        <br>
-                        
-    
-                        ※ 자세한 사항은 '개인정보처리방침 보기' 내용을 통해 확인할 수 있습니다. <br>
-                        개인정보 처리방침 보기 <br>
-                        <br>
-                        
-    
-                        2. 변경 시기 <br>
-                        변경 사항은 2023년 3월 31일부터 적용됩니다. <br>
-                        <br>
-                        
-    
-                        앞으로도 지속적인 서비스 이용과 관심 부탁드립니다. <br>
-                        감사합니다.
-                        
+                        <%= n.getNoticeContent() %>
                     </div>
                     <button id="btnToNoticeList">목록으로</button>
                 </div>
