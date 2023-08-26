@@ -1,5 +1,27 @@
+<%@page import="com.semi_5makase.restaurant.model.vo.Menu"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.semi_5makase.restaurant.model.vo.Restaurant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Restaurant rest = (Restaurant)request.getAttribute("rest");
+	//음식점번호, 이름, 주소, 전화번호, 주차, 소개, 조회수, 영업시간 조회
+	
+	String restTime = (rest.getRestTime() == null) ? "" : rest.getRestTime();
+	String breakTime = (rest.getBreakTime() == null) ? "" : rest.getBreakTime();
+	
+	ArrayList<Menu> list = (ArrayList<Menu>)request.getAttribute("list");
+	// 음식점번호, 첨파번호, 메뉴, 가격, 메뉴등급번호
+	
+	int fCount = (int)request.getAttribute("favoriteCount");
+	// 즐겨찾기 수
+	
+	int rCount = (int)request.getAttribute("reviewCount");
+	// 리뷰 수
+	
+	double avg = (double)request.getAttribute("selectReviewRatingAvg");
+	// 별점 평균점수
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,13 +67,13 @@
         }
         #restaurent_content{
             width: 60%;
-            height: 20%;
+            height: 27%;
             margin: auto;
             border-bottom: 1px solid lightgray;
         }
         #review{
             width: 60%;
-            height: 60%;
+            height: 53%;
             margin: auto;
             border-bottom: 1px solid lightgray;
         }
@@ -197,6 +219,14 @@
             height: 60%;
             padding-top: 12px;
         }
+        
+        #info_table td ul{
+            list-style: none;
+        }
+
+        #info_table td{
+            text-align: right;
+        }
 
 
         /* #star{
@@ -280,6 +310,20 @@
         #reviewPhotoList img{
             width: 130px;
         }
+        
+        #info_table td ul{
+            list-style: none;
+        }
+
+        #info_table td:not(.rest_menu){
+            text-align: right;
+        }
+
+        .menu_price{
+            width: 30%;
+            display: inline-block;
+            text-align: right;
+        }
 
     </style>
 </head>
@@ -313,17 +357,17 @@
         <div id="restaurent_title">
             <div id="restaurent_name">
                 <div id="nameAndGrade">
-                        <strong id="name">곱창집이요</strong>
-                        <strong id="grade">4.7</strong>
+                        <strong id="name"><%= rest.getRestName() %></strong>
+                        <strong id="grade"><%= avg %></strong>
                 </div>
                 <div id="ass">
                     <div id="hit">
                         <img src="resources/img/eye.png" alt="" width="25px" height="25px">
-                        <span>16325</span>
+                        <span><%= rest.getRestViews() %></span>
                     </div>
                     <div id="favorite">
                         <img src="resources/img/heart.png" alt="" width="30px" height="25px">
-                        <span>12315</span>
+                        <span><%= fCount %></span>
                     </div>
                 </div>
             </div>
@@ -346,42 +390,49 @@
 
         <!-- ---------------------------- 음식점 상세 ---------------------------- -->
         <div id="restaurent_content">
-            <table id="table">
+            <table id="info_table">
                 <tr>
                     <th style="width: 110px; height: 40px;">주소</th>
-                    <td>대한민국 어딘가</td>
+                    <td><%= rest.getRestAddress() %></td>
                 </tr>
                 <tr>
                     <th style="width: 110px; height: 40px;">전화번호</th>
-                    <td>02-2222-1111</td>
+                    <td><%= rest.getRestPhone() %></td>
                 </tr>
                 <tr>
                     <th style="width: 110px; height: 40px;">메뉴</th>
-                    <td>곱창</td>
-                    <td>18,000원</td>
-                </tr>
-                <tr>
-                    <th style="width: 110px; height: 40px;"></th>
-                    <td>대창</td>
-                    <td>18,000원</td>
-                </tr>
-                <tr>
-                    <th style="width: 110px; height: 40px;"></th>
-                    <td>막창</td>
-                    <td>18,000원</td>
+                    <td class="rest_menu">
+                        <ul>
+	                        <% for(Menu m : list) { %>
+	                        	<li><span><%= m.getMenu() %></span><span class="menu_price"><%= m.getPrice() %>원</span></li>
+	                        <% } %>
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
                     <th style="width: 110px; height: 40px;">영업시간</th>
-                    <td>연중무휴</td>
+                    <td><%= rest.getOpeningTime() %></td>
                 </tr>
+             	<% if(!breakTime.equals("")) { %>
+	            <tr>
+	            	<th>브레이크 타임</th>
+	            	<td><%= breakTime %></td>
+	            </tr>        	
+	            <% } %>
+	            <% if(!restTime.equals("")) { %>
+	            <tr>
+	            	<th>휴무일</th>
+	            	<td><%= restTime %></td>
+	            </tr>        	
+	            <% } %>
                 <tr>
                     <th style="width: 110px; height: 40px;">주차가능 여부</th>
-                    <td>헬기만 가능</td>
+                    <td><%= rest.getParking() %></td>
                 </tr>
                 <tr>
                     <th style="width: 110px; height: 40px;">소개글</th>
                     <td>
-                        <textarea name="" id="" style="resize: none; width: 300px;"></textarea>
+                    <textarea style="resize: none; height:100px; width: 480px; border:none"><%= rest.getIntro() %></textarea>
                     </td>
                 </tr>
             </table>

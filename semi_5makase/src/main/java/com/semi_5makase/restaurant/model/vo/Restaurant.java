@@ -10,13 +10,17 @@ public class Restaurant {
 	private String restPhone;
 	private String parking;
 	private String intro;
-	private String restViews;
+	private int restViews;
 	private String status;
+	
+	private String openingTime;
+	private String restTime;
+	private String breakTime;
 	
 	public Restaurant() {}
 
 	public Restaurant(int restNo, int categoryNo, int tvNo, String restName, String restAddress, String restPhone,
-			String parking, String intro, String restViews, String status) {
+			String parking, String intro, int restViews, String status) {
 		super();
 		this.restNo = restNo;
 		this.categoryNo = categoryNo;
@@ -28,6 +32,23 @@ public class Restaurant {
 		this.intro = intro;
 		this.restViews = restViews;
 		this.status = status;
+	}
+	
+	
+
+	public Restaurant(int restNo, String restName, String restAddress, String restPhone, String parking, String intro,
+			int restViews, String openingTime, String restTime, String breakTime) {
+		super();
+		this.restNo = restNo;
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.restPhone = restPhone;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.openingTime = openingTime;
+		this.restTime = restTime;
+		this.breakTime = breakTime;
 	}
 
 	public int getRestNo() {
@@ -94,11 +115,11 @@ public class Restaurant {
 		this.intro = intro;
 	}
 
-	public String getRestViews() {
+	public int getRestViews() {
 		return restViews;
 	}
 
-	public void setRestViews(String restViews) {
+	public void setRestViews(int restViews) {
 		this.restViews = restViews;
 	}
 
@@ -109,13 +130,42 @@ public class Restaurant {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+
+	public String getOpeningTime() {
+		return openingTime;
+	}
+
+	public void setOpeningTime(String openingTime) {
+		this.openingTime = openingTime;
+	}
+
+	public String getRestTime() {
+		return restTime;
+	}
+
+	public void setRestTime(String restTime) {
+		this.restTime = restTime;
+	}
+
+	public String getBreakTime() {
+		return breakTime;
+	}
+
+	public void setBreakTime(String breakTime) {
+		this.breakTime = breakTime;
+	}
 
 	@Override
 	public String toString() {
 		return "Restaurant [restNo=" + restNo + ", categoryNo=" + categoryNo + ", tvNo=" + tvNo + ", restName="
 				+ restName + ", restAddress=" + restAddress + ", restPhone=" + restPhone + ", parking=" + parking
-				+ ", intro=" + intro + ", restViews=" + restViews + ", status=" + status + "]";
+				+ ", intro=" + intro + ", restViews=" + restViews + ", status=" + status + ", openingTime="
+				+ openingTime + ", restTime=" + restTime + ", breakTime=" + breakTime + "]";
 	}
+
+	
 	
 	
 }

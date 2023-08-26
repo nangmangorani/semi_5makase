@@ -33,6 +33,9 @@
 }
 </style>
 <body>
+
+	<%@ include file="menubar.jsp" %>
+	
     <div class="outer">
         <div class="navbar" align="center">
             <div class="menu"><a href="">HOME</a></div>
@@ -191,10 +194,10 @@
             <div class="popular_restaurant_container">
                 <ul>
                     <li class="fl">
-                        <a href="#해당 이미지 상세정보창">
+                        <a href="<%= contextPath %>/detail.rt?restNo=1">
                             <img src="resources/img/bibimbap.jpg">
                                 <div class="info">
-                                    <span class="title">새마을 식당</span>
+                                    <span class="title">래언 예시</span>
                                     <strong>3.8</strong>
                                     <p>서울 역삼동 - 고기 / 제육</p>
                                 </div>
