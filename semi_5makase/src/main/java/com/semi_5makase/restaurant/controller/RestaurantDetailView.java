@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.restaurant.model.dao.RestaurantDao;
 import com.semi_5makase.restaurant.model.service.RestaurantService;
-import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
 
 /**
@@ -36,24 +34,8 @@ public class RestaurantDetailView extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		
-		int restNo = Integer.parseInt(request.getParameter("restNo"));
-		
-		RestaurantService rSer = new RestaurantService();
-		
-		Restaurant rest = rSer.selectRestaurantDetail(restNo);
-		ArrayList<Menu> list = rSer.selectMenuList(restNo);
-		int favoriteCount = rSer.selectFavoriteCount(restNo);
-		int reviewCount = rSer.selectReviewCount(restNo);
-		double selectReviewRatingAvg = rSer.selectReviewRatingAvg(restNo);
-		
-		request.setAttribute("rest", rest);
-		request.setAttribute("list", list);
-		request.setAttribute("favoriteCount", favoriteCount);
-		request.setAttribute("reviewCount", reviewCount);
-		request.setAttribute("selectReviewRatingAvg", selectReviewRatingAvg);
-		
-		request.getRequestDispatcher("views/restaurant/restaurantDetailView.jsp").forward(request, response);
-		
+		Restaurant rest = new RestaurantService().selectRestaurant();
+	
 	}
 
 	/**

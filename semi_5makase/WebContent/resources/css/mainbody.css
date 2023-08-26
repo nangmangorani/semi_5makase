@@ -12,7 +12,7 @@ body{
     width: 1100px;
     height: 2500px;
     margin: auto;
-    /* margin-top: 100px; */ 
+    /* margin-top: 0px; */ 
     /* margin-bottom: 100px; */
 }
 
@@ -96,7 +96,7 @@ body{
 }
 
 .slick-dots{
-    margin-right: 10px;
+    margin-left: 40px;
 }
 
 #editor-select{
