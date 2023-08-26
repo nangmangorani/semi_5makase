@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectRestaurantDetail">
+		SELECT 
+		       REST_NO
+		     , REST_NAME
+		     , REST_ADDRESS
+		     , REST_PHONE
+		     , PARKING
+		     , INTRO
+		     , REST_VIEWS
+		     , OPENING_TIME
+		     , REST_TIME
+		     , BREAK_TIME
+		  FROM RESTAURANT
+		  JOIN OPEN_TIME USING (REST_NO)
+		 WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="selectMenuList">
+		SELECT 
+		       REST_NO
+		     , FILE_NO
+		     , MENU
+		     , PRICE
+		     , MENU_GRADE
+		  FROM MENU
+		 WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="selectFavoriteCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM FAVORITES
+		 WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="selectReviewCount">
+		SELECT 
+		       COUNT(*) count
+		  FROM REVIEW
+		 WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="selectReviewRatingAvg">
+		SELECT AVG(RATING) avg
+		  FROM REVIEW
+		  JOIN RESTAURANT USING (REST_NO)
+		 WHERE REST_NO = ?
+	</entry>
+	
+	
+</properties>
