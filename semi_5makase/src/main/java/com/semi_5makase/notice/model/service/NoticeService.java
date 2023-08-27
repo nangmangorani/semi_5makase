@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
+import com.semi_5makase.common.model.PageInfo;
 import com.semi_5makase.notice.model.dao.NoticeDao;
 import com.semi_5makase.notice.model.vo.Notice;
 
@@ -14,11 +15,11 @@ public class NoticeService {
 	/**
 	 * 공지사항 리스트 조회
 	 */
-	public ArrayList<Notice> selectNoticeList() {
+	public ArrayList<Notice> selectNoticeList(PageInfo pi) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Notice> list = new NoticeDao().selectNoticeList(conn);
+		ArrayList<Notice> list = new NoticeDao().selectNoticeList(conn, pi);
 		
 		close(conn);
 		
@@ -62,6 +63,23 @@ public class NoticeService {
 		return result;
 		
 	}
+	
+	/**
+	 * 총 게시물 개수
+	 * @return
+	 */
+	public int selectListCount() {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new NoticeDao().selectListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+		
+	}
+	
 	
 	
 

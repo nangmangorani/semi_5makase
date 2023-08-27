@@ -91,7 +91,7 @@ public class MemberDao {
 						rset.getString("address"),
 						rset.getDate("enroll_date"),
 						rset.getString("status"),
-						rset.getString("quit_reason")
+						rset.getString("quitreason")
 						);
 			}
 		} catch (SQLException e) {

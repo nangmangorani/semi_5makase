@@ -1,7 +1,8 @@
 <%@page import="com.semi_5makase.notice.model.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% Notice n = (Notice)request.getAttribute("n"); %>
+<% Notice n = (Notice)request.getAttribute("n");
+   String contextPath = request.getContextPath();%>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -176,11 +177,11 @@
                     <h5>Tel. 02-123-1234</h5>
                     <p>평일 : 9:00~18:00</p>
                 </div>
-                <div id="content_top2" style="border-left: 0px;" onclick="location.href='http://localhost:8001/jsp/';">
+                <div id="content_top2" style="border-left: 0px;" onclick="location.href='<%=contextPath%>/list.qna?cpage=1'">
                     <h5>Q&A 게시판</h5>
                     <p>생각하고 질문하세요</p>
                 </div>
-                <div id="content_top3" style="border-left: 0px;" onclick="location.href='http://localhost:8001/jsp/';">
+                <div id="content_top3" style="border-left: 0px;" onclick="location.href='<%=contextPath%>/list.faq'">
                     <h5>FAQ</h5>
                     <p>자주 묻는 질문</p>
                 </div>
@@ -195,7 +196,7 @@
                     <div id="noticeMain" style="word-break:break-all;"> <br>
                         <%= n.getNoticeContent() %>
                     </div>
-                    <button id="btnToNoticeList">목록으로</button>
+                    <button id="btnToNoticeList" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">목록으로</button>
                 </div>
             </div>
             <div id="footer">
