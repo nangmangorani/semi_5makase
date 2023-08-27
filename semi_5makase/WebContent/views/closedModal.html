@@ -11,7 +11,7 @@
  
     <style>
         /* The Modal (background) */
-        .modal {
+        .restupdate_modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
@@ -26,28 +26,27 @@
         }
     
         /* Modal Content/Box */
-        .modal-content {
+        .restupdate_modal-content {
             background-color: #fefefe;
             margin: 15% auto; /* 15% from the top and centered */
             padding: 15px;
             border: 1px solid #888;
             width: 30%; /* Could be more or less, depending on screen size */                          
         }
-        #close_modal{
+        #rest_close_modal{
             color: #222228;
             background-color: white;
-            border: none;
-            font-size: 14px;
             cursor: pointer;
             text-align: center;
- 
+            font-size: 14px;
+            border: none;
         }
-        #modelText{
+        #restupdate_modelText{
             width: 90%;
             padding: 10px;
         }
 
-        .modal-content{
+        .restupdate_modal-content{
             border-radius: 10px;
 
         }
@@ -63,23 +62,28 @@
  
 
     <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <div id="myModal" class="restupdate_modal">
  
       <!-- Modal content -->
-      <div class="modal-content">
-                <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">폐업신고 - 신고</span></b></span></p>
-                <textarea name="" id="modelText" cols="40" rows="10" style="resize: none;" placeholder="수정이 필요한 내용을 적어주세요.&#13;&#10;예)맛집이름,주소,전화번호 등"></textarea>
+      <div class="restupdate_modal-content">
+        <form action="">
+            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">폐업신고 - 신고</span></b></span></p>
+            <textarea name="" id="restupdate_modelText" cols="40" rows="10" style="resize: none;" placeholder="수정이 필요한 내용을 적어주세요.&#13;&#10;예)맛집이름,주소,전화번호 등"></textarea>
+            
+            <input type="checkbox" name=""> 폐업신고
+            <p style="font-size: 12px; color: #888;">해당 음식점이 폐업이 되었을 경우 선택해 주세요</p>
+            <br>
                 
-                <input type="checkbox" name="" id=""> 폐업신고
-                <p style="font-size: 12px; color: #888;">해당 음식점이 폐업이 되었을 경우 선택해 주세요</p>
-                <br>
-                
-                <hr>
-            <div id ="close_modal" onClick="close_pop();">
-                <span class="pop_bt">
-                     보내기
-                </span>
-            </div>
+        <hr>
+        <div align="center">
+            <button id="rest_close_modal" name="restaurantUpdate">보내기</button>
+        </div>
+        </form>
+        <!-- <div id ="close_modal" onClick="close_pop();">
+            <span class="pop_bt">
+                    보내기
+            </span>
+        </div> -->
       </div>
  
     </div>
