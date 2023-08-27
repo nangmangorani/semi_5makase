@@ -69,8 +69,9 @@ public class QnaListController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
+		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		//System.out.println(listCount + "," +  currentPage + "," +  pageLimit + "," + boardLimit + "," + maxPage + "," + startPage + "," + endPage);
+		System.out.println(listCount + "," +  currentPage + "," +  pageLimit + "," + boardLimit + "," + maxPage + "," + startPage + "," + endPage);
 		ArrayList<Qna> list = new QnaService().selectQnaList(pi);
 		
 		request.setAttribute("pi", pi);

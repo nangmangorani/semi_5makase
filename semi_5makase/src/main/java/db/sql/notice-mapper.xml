@@ -3,12 +3,21 @@
 <properties>
 
 <entry key="selectNoticeList">
-	SELECT
-	       NOTICE_NO
-	     , NOTICE_TITLE
-	     , CREATE_DATE
-	  FROM NOTICE
-	 WHERE STATUS = 'Y'
+	SELECT *
+	  FROM (
+	  		SELECT ROWNUM RNUM, A.*
+	  		  FROM (
+	  		  		SELECT
+					       NOTICE_NO
+					     , NOTICE_TITLE
+					     , CREATE_DATE
+					  FROM NOTICE
+					 WHERE STATUS = 'Y'
+					 ORDER
+	                    BY BOARD_NO DESC
+	  		       ) A
+	       )
+	       WHERE RNUM BETWEEN ? AND ?
 
 </entry>
 
