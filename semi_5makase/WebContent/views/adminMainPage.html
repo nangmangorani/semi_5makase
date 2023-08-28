@@ -17,6 +17,9 @@
             padding: 0%;
             margin: 0%;
         }
+        .table tr{
+            text-align: center;
+        }
         .accordion-body{
             padding: 0;
             margin:0;
@@ -31,7 +34,7 @@
 
         .outline{ 
             border: 1px solid rgb(230, 230, 230);
-            width: 800px; height: 600px; margin: auto;
+            width: 1000px; height: 800px; margin: auto;
         }
         .outline>div{
             /* border: 1px solid red; */
@@ -41,17 +44,17 @@
 
         .header{
             height: 15%;
-            width: 78%;
+            width: 100%;
             background-color: rgb(230, 230, 230);
         }
         .menu{
-            height: 100%;
-            width: 22%;
+            height: 85%;
+            width: 20%;
             background-color: rgb(230, 230, 230);
         }
         .content{
             height: 85%;
-            width: 78%;
+            width: 80%;
         }
 
         /* -------------헤더------------- */
@@ -62,31 +65,15 @@
         }
 
         #header_1{
-            width: 60%;
+            width: 100%;
             margin: auto;
             display: flex;
-        }
-        #header_2{
-            width: 40%;
-            box-sizing: border-box;
-        }
-        #header_2>*{
-            float: left;
-            margin-top: 30px;
-            margin-left: 15px;
         }
 
 
         /* -------------메뉴------------- */
         #menu>div{
             width: 100%;
-        }
-        #logo{
-            height: 20%;
-            background-image: url(resources/img/logo.png);
-            background-repeat: no-repeat;
-            background-size: 80%;
-            background-position: center;
         }
         #service{
             height: 80%;
@@ -97,25 +84,40 @@
             width: 100%;
         }
         #content_1{
-            height: 15%;
-            padding: 25px;
+            height: 50px;
+            padding: 15px;
             border-bottom: 1px solid rgb(230, 230, 230);
         }
-        #content_2{
-            height: 90%;
-            padding: 50px;
+        .btn-toolbar{
+            box-sizing: border-box;
         }
-        #content_2 strong{
-            font-size: 16px;
+        .btn-group{
+            margin-left: 35%;
+            margin-right: 35%;
         }
-        #content_2 div{
-            font-size: 16px;
+        #tab{
+            font-size: 20px;
         }
+        #tab td{
+            border: 30px solid white;
+        }
+        
         
     </style>
 </head>
 <body>
+
     <div class="outline">
+        
+        <!-- -------------헤더------------- -->
+        <div class="header">
+            
+            <div id="header_1">
+                <h2 style="margin: auto; font-weight: bold;">관리자 페이지</h2>
+            </div>
+            
+        </div>
+
         <!-- -------------메뉴------------- -->
         <div class="menu">
             <div id="logo">
@@ -131,9 +133,16 @@
                   <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                                 <ul class="list-group">
+                                
+                                	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
                                     <li class="list-group-item" style="text-align: center;"><a href="">회원 관리</a></li>
+                                    
+                                    
                                     <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
+                                    
+                                    
                                     <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                                    
                                 </ul>
                     </div>
                   </div>
@@ -173,48 +182,35 @@
                 </div>
               </div>
         </div>
-        
-        <!-- -------------헤더------------- -->
-        <div class="header">
-            
-            <div id="header_1">
-                <h2 style="margin: auto; font-weight: bold;">관리자 페이지</h2>
-            </div>
-            <div id="header_2">
-                <img src="resources/img/user.png" style="width: 45px; margin-top: 18px;"">
-                <div>관리자님</div>
-                <a href="">로그아웃</a>
-            </div>
-        </div>
 
         <!-- -------------컨텐츠 헤더------------- -->
         <div class="content">
             <div id="content_1">
                 <h4 style="font-weight: bold;" align="center">기본 정보</h4>
             </div>
-            <div id="content_2" align="center">
-                <table>
-                    <tr style="height: 50px;">
-                        <td style="width: 300px;">
+            <div id="content_2" align="center" style="margin-top: 30px;">
+                <table id="tab">
+                    <tr>
+                        <td align="center" style="width: 200px;">
                             <strong style="vertical-align: middle;">사이트 이름</strong>
                         </td>
-                        <td style="width: 1000px;">
-                            <div id="siteName" style="background-color: rgb(230, 230, 230);">이눔세끼 - 가성비 좋은 음식을 찾고있는 당신을 위해</div>
+                        <td style="background-color: rgb(230, 230, 230); width: 550px;">
+                            <span id="siteName">이눔세끼 - 가성비 좋은 음식을 찾고있는 당신을 위해</span>
                         </td>
                     </tr>
-                    <tr style="height: 50px;">
-                        <td>
+                    <tr>
+                        <td  align="center">
                             <strong style="vertical-align: middle;">최고 관리자</strong>
-                        <td>
-                            <div id="name" style="background-color: rgb(230, 230, 230);">관리자요</div>
+                        <td style="background-color: rgb(230, 230, 230);">
+                            <span id="name">관리자요</span>
                         </td>
                     </tr>
-                    <tr style="height: 50px;">
-                        <td>
+                    <tr>
+                        <td  align="center">
                             <strong style="vertical-align: middle;" >관리자 메일주소</strong>
                         </td>
-                        <td>
-                            <div id="email" style="background-color: rgb(230, 230, 230);">이메일이요</div>
+                        <td style="background-color: rgb(230, 230, 230);">
+                            <span id="email">이메일이요</span>
                         </td>
                     </tr>
                 </table> 

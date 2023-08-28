@@ -20,7 +20,6 @@ public class MemberService {
 		return list;
 		
 	}
-	
 	public Member loginMember(String memId, String memPwd) {
 		Connection conn = getConnection();
 		
@@ -31,7 +30,41 @@ public class MemberService {
 		
 	}
 	
+	public Member selectAdminMember(int no) {
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().selectAdminMember(conn, no);
+		
+		close(conn);
+		
+		return m;
+	}
 	
+	public int updateAdminMember(Member m) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().updateAdminMember(conn, m);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 	
-	
+	public int deleteAdminMember(int no) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().deleteAdminMember(conn, no);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 }

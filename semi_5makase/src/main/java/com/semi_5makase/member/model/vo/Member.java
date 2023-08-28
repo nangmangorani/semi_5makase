@@ -41,13 +41,27 @@ public class Member {
 		this.quitReason = quitReason;
 	}
 	
-	public Member(int memNo, String memName, String gender, String phone, String address) {
+	public Member(int memNo, String memGrade, String memName, String gender, String phone, String address) {
 		super();
 		this.memNo = memNo;
+		this.memGrade = memGrade;
 		this.memName = memName;
 		this.gender = gender;
 		this.phone = phone;
 		this.address = address;
+	}
+	
+	public Member(int memNo, String memName, String memId, String memPwd, String phone, String address, String email,
+			String memGrade) {
+		super();
+		this.memNo = memNo;
+		this.memName = memName;
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.phone = phone;
+		this.address = address;
+		this.email = email;
+		this.memGrade = memGrade;
 	}
 
 	public int getMemNo() {
