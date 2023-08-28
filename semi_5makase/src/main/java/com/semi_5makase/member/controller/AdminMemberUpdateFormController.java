@@ -1,8 +1,6 @@
 package com.semi_5makase.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +11,16 @@ import com.semi_5makase.member.model.service.MemberService;
 import com.semi_5makase.member.model.vo.Member;
 
 /**
- * Servlet implementation class AdminMemberListController
+ * Servlet implementation class AdminMemberUpdateForm
  */
-@WebServlet("/memberList.ad")
-public class AdminMemberListController extends HttpServlet {
+@WebServlet("/memberUpdateForm.ad")
+public class AdminMemberUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMemberListController() {
+    public AdminMemberUpdateFormController() {
         super();
     }
 
@@ -30,17 +28,12 @@ public class AdminMemberListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int no = Integer.parseInt(request.getParameter("num"));
 		
+		Member m = new MemberService().selectAdminMember(no);
 		
-		
-		
-		
-		
-		ArrayList<Member> list = new MemberService().selectAdminMemberList();
-		
-		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/admin/adminMemberList.jsp").forward(request, response);
-		
+		request.setAttribute("m", m);
+		request.getRequestDispatcher("views/admin/adminMemberUpdate.jsp").forward(request, response);
 	}
 
 	/**

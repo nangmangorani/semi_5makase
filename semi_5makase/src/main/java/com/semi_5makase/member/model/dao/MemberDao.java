@@ -42,6 +42,7 @@ public class MemberDao {
 			
 			while(rset.next()) {
 				list.add(new Member(rset.getInt("mem_no"),
+									rset.getString("mem_grade"),
 									rset.getString("mem_name"),
 									rset.getString("gender"),
 									rset.getString("phone"),
@@ -60,4 +61,82 @@ public class MemberDao {
 		return list;
 	}
 	
+	public Member selectAdminMember(Connection conn, int no) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("mem_no"),
+								rset.getString("mem_name"),
+								rset.getString("mem_id"),
+								rset.getString("mem_pwd"),
+								rset.getString("phone"),
+								rset.getString("address"),
+								rset.getString("email"),
+								rset.getString("mem_grade"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	public int updateAdminMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAdminMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getAddress());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getMemGrade());
+			pstmt.setInt(5, m.getMemNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteAdminMember(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteAdminMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

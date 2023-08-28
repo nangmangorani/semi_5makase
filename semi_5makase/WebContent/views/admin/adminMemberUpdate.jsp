@@ -1,3 +1,9 @@
+<%@page import="com.semi_5makase.member.model.vo.Member"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	Member m = (Member)request.getAttribute("m");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,7 +135,7 @@
                                 <ul class="list-group">
                                 
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="">회원 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="/5makase/memberList.ad">회원 관리</a></li>
                                     
                                     
                                     <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
@@ -177,51 +183,54 @@
               </div>
         </div>
 
-        <!-- -------------컨텐츠 헤더------------- -->
+            <!-- -------------컨텐츠 헤더------------- -->
         <div class="content">
-            <div id="content_1">
-                <h4 style="font-weight: bold;" align="center">회원 정보 상세</h4>
-            </div>
-            <div id="content_2" style="margin-top: 30px;"> 
-                <div align="center">
-                    <img src="../resources/img/rdetail_user.png" style="width: 45px;">
-                    <table class="table" style="width: 300px;">
+        	<form action="/5makase/memberUpdate.ad">
+        		<input type="hidden" name="num" value=<%= m.getMemNo() %>>
+                <div id="content_1">
+                    <h4 style="font-weight: bold;" align="center">회원 정보 상세</h4>
+                </div>
+                <div id="content_2" style="margin-top: 30px;"> 
+                    <div align="center">
+                        <img src="../resources/img/rdetail_user.png" style="width: 45px;">
+                        <table class="table" style="width: 300px;">
                             <tr>
                                 <th scope="col">회원명</th>
-                                <td>누군가</td>
+                                <td><%= m.getMemName() %></td>
                             </tr>
                             <tr>
                                 <th scope="col">아이디</th>
-                                <td>user01</td>
+                                <td><%= m.getMemId() %></td>
                             </tr>
                             <tr>
                                 <th scope="col">비밀번호</th>
-                                <td><input type="password"></td>
+                                <td><input type="password" value=<%= m.getMemPwd() %> disabled></td>
                             </tr>
                             <tr>
                                 <th scope="col">주소</th>
-                                <td>강남구 역삼동</td>
+                                <td><input type="text" name="address" value="<%= m.getAddress() %>"></td>
                             </tr>
                             <tr>
                                 <th scope="col">전화번호</th>
-                                <td>010-1111-2222</td>
+                                <td><input type="text" name="phone" value="<%= m.getPhone() %>"></td>
                             </tr>
                             <tr>
                                 <th scope="col">이메일</th>
-                                <td>user01234@naver.com</td>
+                                <td><input type="text" name="email" value="<%= m.getEmail() %>"></td>
                             </tr>
                             <tr>
                                 <th scope="col">회원등급</th>
-                                <td>우수회원</td>
+                                <td><input type="text" name="grade" value="<%= m.getMemGrade() %>" required></td>
                             </tr>
-                    </table> 
+                        </table> 
+                    </div>
+                    <div align="right" style="margin: 5px;">
+                        <button type="button" class="btn btn-sm btn-secondary" onclick="history.back();">취소하기</button>
+                        <button type="submit" class="btn btn-sm btn-primary" >수정하기</button>
+                    </div>
                 </div>
-                <div align="right" style="margin: 5px;">
-                    <button type="button" class="btn btn-sm btn-danger">회원삭제</button>
-                    <button type="button" class="btn btn-sm btn-primary">회원수정</button>
-                </div>
-            </div>
             
+		    </form>
         </div>
     </div>
 

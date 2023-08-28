@@ -1,9 +1,17 @@
+<%@page import="com.semi_5makase.member.model.vo.Member"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+%>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
 	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
     	crossorigin="anonymous">
@@ -96,11 +104,15 @@
             margin-right: 35%;
         }
         
+        #list-table>tbody>tr:hover{
+        background-color: gray;
+        cursor: pointer;
+    }
         
     </style>
 </head>
-<body>
 
+<body>
     <div class="outline">
         
         <!-- -------------헤더------------- -->
@@ -126,18 +138,18 @@
                   </h2>
                   <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                                <ul class="list-group">
-                                
-                                	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="">회원 관리</a></li>
-                                    
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                                    
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
-                                    
-                                </ul>
+                      <ul class="list-group">
+                      
+                      	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
+                          <li class="list-group-item" style="text-align: center;"><a href="/5makase/memberList.ad">회원 관리</a></li>
+                          
+                          
+                          <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
+                          
+                          
+                          <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                          
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -180,54 +192,78 @@
         <!-- -------------컨텐츠 헤더------------- -->
         <div class="content">
             <div id="content_1">
-                <h4 style="font-weight: bold;" align="center">회원 정보 상세</h4>
+                <h4 style="font-weight: bold;" align="center">회원 관리</h4>
             </div>
-            <div id="content_2" style="margin-top: 30px;"> 
-                <div align="center">
-                    <img src="../resources/img/rdetail_user.png" style="width: 45px;">
-                    <table class="table" style="width: 300px;">
+            <div id="content_2"> 
+                <div align="right" style="margin: 5px; margin-right: 40px ">
+                    <button type="button" class="btn btn-sm btn-secondary">회원등록</button>
+                </div>
+                <div>
+                    <table class="table" id="list-table">
+                        <thead>
                             <tr>
+                                <th scope="col">No</th>
                                 <th scope="col">회원명</th>
-                                <td>누군가</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">아이디</th>
-                                <td>user01</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">비밀번호</th>
-                                <td><input type="password"></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">주소</th>
-                                <td>강남구 역삼동</td>
-                            </tr>
-                            <tr>
                                 <th scope="col">전화번호</th>
-                                <td>010-1111-2222</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">이메일</th>
-                                <td>user01234@naver.com</td>
-                            </tr>
-                            <tr>
+                                <th scope="col">지역</th>
+                                <th scope="col">성별</th>
                                 <th scope="col">회원등급</th>
-                                <td>우수회원</td>
                             </tr>
+                        </thead>
+                        <tbody>
+                        	<!-- case1. 공지글이 없을 경우 -->
+			                <% if(list.isEmpty()) { %>
+				                <tr>
+				                    <td colspan="5">존재하는 회원이 없습니다.</td>
+				                </tr>
+							<% } else { %>
+					            <!-- case2. 공지글이 있을 경우 -->
+	                        	<% for(Member m : list) { %>
+		                            <tr>
+		                                <th scope="row"><%= m.getMemNo() %></th>
+		                                <td><%= m.getMemName() %></td>
+		                                <td><%= m.getPhone() %></td>
+		                                <td><%= m.getAddress() %></td>
+		                                <td><%= m.getGender() %></td>
+		                                <td><%= m.getMemGrade() %></td>
+		                            </tr>
+                            	<% } %>
+                            <% } %>
+                        </tbody>
+                        
                     </table> 
                 </div>
-                <div align="right" style="margin: 5px;">
-                    <button type="button" class="btn btn-sm btn-danger">회원삭제</button>
-                    <button type="button" class="btn btn-sm btn-primary">회원수정</button>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2  btn-sm" role="group" aria-label="First group">
+                      <button type="button" class="btn btn-primary"><</button>
+                      <button type="button" class="btn btn-primary">1</button>
+                      <button type="button" class="btn btn-primary">2</button>
+                      <button type="button" class="btn btn-primary">3</button>
+                      <button type="button" class="btn btn-primary">4</button>
+                      <button type="button" class="btn btn-primary">5</button>
+                      <button type="button" class="btn btn-primary">></button>
                 </div>
             </div>
-            
         </div>
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-    	crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+    >
+    </script>
+
+    <script>
+        $(function(){
+			$("#list-table>tbody>tr").click(function(){
+				
+				const num = $(this).children().eq(0).text();
+			    console.log(num);
+				location.href = '/5makase/memberDetail.ad?num=' + num;
+			})
+		})
+    </script>
 </body>
 </html>

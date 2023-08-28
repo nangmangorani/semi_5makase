@@ -4,11 +4,40 @@
 <entry key="selectAdminMemberList">
 	SELECT 
 	       MEM_NO
+	      ,MEM_GRADE
 	      ,MEM_NAME
 	      ,GENDER
 	      ,PHONE
 	      ,ADDRESS
 	  FROM MEMBER
+</entry>
 
+<entry key="selectAdminMember">
+	SELECT 
+	 	   MEM_NO
+	      ,MEM_NAME
+	      ,MEM_ID
+	      ,MEM_PWD
+	      ,PHONE
+	      ,ADDRESS
+	      ,EMAIL
+	      ,MEM_GRADE
+	  FROM MEMBER
+	 WHERE MEM_NO = ?
+</entry>
+
+<entry key="updateAdminMember">
+	UPDATE MEMBER
+	   SET ADDRESS = ?
+	       ,PHONE = ?
+	       ,EMAIL = ?
+	       ,MEM_GRADE = ?
+	 WHERE MEM_NO = ?
+</entry>
+
+<entry key="deleteAdminMember">
+	UPDATE MEMBER
+	   SET STATUS = 'N'
+	 WHERE MEM_NO = ?
 </entry>
 </properties>
