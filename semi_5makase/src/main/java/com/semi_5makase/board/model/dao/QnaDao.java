@@ -20,7 +20,7 @@ public class QnaDao {
 	
 	public QnaDao() {
 		try {
-			prop.loadFromXML(new FileInputStream(QnaDao.class.getResource("/db/sql/qna-mapper.xml").getPath()));
+			prop.loadFromXML(new FileInputStream(QnaDao.class.getResource("/db/sql/board-mapper.xml").getPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -37,6 +37,9 @@ public class QnaDao {
 		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 		int endRow = startRow + pi.getBoardLimit() - 1;
 		
+		System.out.println(startRow);
+		System.out.println(endRow);
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
@@ -49,11 +52,13 @@ public class QnaDao {
 				list.add(new Qna(rset.getInt("qna_no"),
 						 rset.getString("board_title"),
 						 rset.getDate("create_date"),
-						 rset.getString("reply"),
 						 rset.getString("open"),
+						 rset.getString("reply"),
 						 rset.getString("board_writer")
 						 ));
 			}
+			
+			System.out.println(list);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,6 +70,7 @@ public class QnaDao {
 		
 		
 	}
+	
 	
 	public int insertQna(Connection conn, Qna q) {
 		
@@ -80,7 +86,7 @@ public class QnaDao {
 			pstmt.setString(2, q.getBoardContent());
 			pstmt.setString(3, q.getOpen());
 			pstmt.setInt(4, Integer.parseInt(q.getBoardWriter()));
-			
+			System.out.println(q.getOpen()+"df1a6s");
 			result = pstmt.executeUpdate();
 			
 			
@@ -115,6 +121,68 @@ public class QnaDao {
 		}
 		return listCount;
 	}
+	
+	public int increaseQnaViews(Connection conn, int qnaNo) {
+		
+		int result = 0; 
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseQnaViews");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qnaNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public Qna selectQna(Connection conn, int qnaNo) {
+		
+		Qna q = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectQna");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, qnaNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) { // 생성자 만들어라
+				q = new Qna(rset.getInt("qna_no"),
+						    rset.getString("board_title"),
+						    rset.getString("board_content"),
+						    rset.getInt("qna_views"),
+						    rset.getDate("create_date"),
+						    rset.getString("open"),
+						    rset.getString("reply"),
+						    rset.getString("board_writer"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return q;
+		
+	}
+
+	
+	
 	
 	
 	

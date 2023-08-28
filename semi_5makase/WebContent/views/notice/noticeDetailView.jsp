@@ -1,8 +1,7 @@
 <%@page import="com.semi_5makase.notice.model.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% Notice n = (Notice)request.getAttribute("n");
-   String contextPath = request.getContextPath();%>
+<% Notice n = (Notice)request.getAttribute("n");%>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -150,27 +149,13 @@
             #footer_4{
                 margin-top: 10px;
             }
-    
-    
-            
         </style>
     </head>
     <body>
-    	
+    	<%@ include file="../common/menubar.jsp"%>
 		
         <div class="wrap">
-            <div id="header" style="border-bottom: 1px solid black;">
-                <div id="header">
-                    <div id="logo">
-                        <img src="resources/img/logo.png">
-                    </div>
-                    <div id="search">
-                        <input type="text" name="" id="searchTab">
-                        <input type="submit" name="" id="">
-                    </div>
-                    <div id="login"></div>
-                </div>
-            </div>
+            
             <div id="content">
                 <h2 style="margin-top: 15px;">이눔세끼 공지사항</h2> <br>
                 <div id="content_top1">
@@ -191,6 +176,7 @@
                     </div>
                     <div id="noticeDate">
                         <%= n.getCreateDate() %>
+                        <span>조회수</span>
                         <%= n.getNoticeViews() %>
                     </div>
                     <div id="noticeMain" style="word-break:break-all;"> <br>

@@ -4,9 +4,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% ArrayList<Qna> list = (ArrayList<Qna>)request.getAttribute("list"); 
-   String contextPath = request.getContextPath();
-   Member loginMember = (Member)session.getAttribute("loginMember");
+<% ArrayList<Qna> list = (ArrayList<Qna>)request.getAttribute("list");
    PageInfo pi = (PageInfo)request.getAttribute("pi");
    
    int currentPage = pi.getCurrentPage();
@@ -69,14 +67,15 @@
     </style>
 </head>
 <body>
+<%@ include file="../common/menubar.jsp"%>
     <div class="wrap" >
         <div id="header">
             <div id="header_1">
                 <img src="https://media.istockphoto.com/id/1357394932/ko/%EB%B2%A1%ED%84%B0/%ED%8F%89%EB%A9%B4-%EC%8A%A4%ED%83%80%EC%9D%BC%EC%9D%98-q-a-%EB%B0%B0%EB%84%88-%EC%95%84%EC%9D%B4%EC%BD%98-%ED%9D%B0%EC%83%89-%EA%B2%A9%EB%A6%AC-%EB%90%9C-%EB%B0%B0%EA%B2%BD%EC%97%90-%EC%A7%88%EB%AC%B8-%EB%B0%8F-%EB%8B%B5%EB%B3%80-%EB%B2%A1%ED%84%B0-%EA%B7%B8%EB%A6%BC%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%86%B5%EC%8B%A0-%EC%82%AC%EC%9D%B8-%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4-%EA%B0%9C%EB%85%90.jpg?s=612x612&w=0&k=20&c=EH4zDQcMZfE52XeLPp1CbS-AFSUm8c-vrEBtd9cpQ6s=" width="100%" height="100%">
             </div>
             <div id="navi" align="center">
-                <button class="btn">공지사항</button>
-                <button class="btn">자주묻는 질문</button>
+                <button class="btn" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">공지사항</button>
+                <button class="btn" onclick="location.href='<%=contextPath%>/list.faq'">자주묻는 질문</button>
 
             </div>
         </div>
@@ -106,33 +105,32 @@
                     <% } else {%>
                     <!-- case2. qna가 있을 경우 -->
 	                    <% for(Qna q : list) { %>
+	                    	<tr>
 	                        <td id="qnaNo"><%= q.getQnaNo() %></td>
 	                        <td>이건뭐임</td>
 	                        <% if(q.getOpen().equals("Y")) { %>
 	                        <td id="qnaTitle"><%= q.getBoardTitle() %></td>
-	                        <% } else {%>
-	                        <td id="qnaTitle">비공개 질문입니다.</td>
+	                        <% }else{  %>
+	                        	<td id="qnaTitle">비공개 질문입니다.</td>
 	                        <% } %>
-	                        <td><%= q.getBoardWriter() %></td>
-	                        <td><%= q.getCreateDate() %></td>
-	                        <td><%= q.getReply() %></td>
-	                        <td><%= q.getOpen()%></td>
-	                    </tr>
+		                        <td><%= q.getBoardWriter() %></td>
+		                        <td><%= q.getCreateDate() %></td>
+		                        <td><%= q.getOpen() %></td>
+		                        <td><%= q.getReply()%></td>
+	                    	</tr>
 	                    <% } %>
-                 <% } %>
+                 	<% } %>
                   </tbody>
                 </table>
-				
+			</div>
 				<script>
-				$(function() {
-		    		$("#qnaTitle").click(function(){
-						const num = $(this).siblings("#qnaNo").text();
-						
-						// /jsp/detail.no?num=클릭한글번호
-						location.href = '<%= contextPath %>/detail.qna?num='+num;
-		    		}) 
-		    	})
-		    	</script>			
+					$(function() {
+					    $(document).on("click", "#qnaTitle", function() {
+					        const num = $(this).siblings("#qnaNo").text();
+					        location.href = '<%= contextPath %>/detail.qna?num=' + num;
+					    });
+					});
+					</script>			
                 <div class="pageing-area" align="center">
 	                <ul class="pagination pagination-sm" style="margin-left: 450px;">
 	                    <% if(currentPage != 1){ %>
@@ -154,7 +152,11 @@
 	                <% } %>
 	                </ul>
                </div>
+            
         </div>
+        
+        
+        
         <div id="footer">
             <div id="footer_1">
                 <button type="submit" id="next" class="btn-sm btn-success" onclick="enroll()">등록하기</button>

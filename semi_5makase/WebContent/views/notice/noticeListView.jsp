@@ -6,7 +6,6 @@
 <%
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	String contextPath = request.getContextPath();
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -71,6 +70,7 @@
     </style>
 </head>
 <body>
+	<%@ include file = "../common/menubar.jsp" %>
     <div class="wrap"> 
         <div id="header">
             <div id="header_1" align="center" ><br>
@@ -78,13 +78,14 @@
             </div>
             
 
-
-            <div id="search">
-                <input type="text">
-                <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
-
-            </div>
-
+		<form action="<%= contextPath %>/list.no">
+		    <div id="search">
+		        <input type="text" id="noticeSearch" name="searchNo">
+		        <input type="hidden" name="cpage" value="<%= currentPage %>">
+		        <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
+		    </div>
+		</form>
+			
             
         </div>
         <div id="content_1">
@@ -136,23 +137,23 @@
               <div class="pageing-area" align="center">
 
                 <ul class="pagination pagination-sm" style="margin-left: 460px;">
-                <% if(currentPage != 1){ %>
-                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage - 1%>">&lt;</a></li>
-                <% } else {%>
-                	<li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage - 1%>">&lt;</a></li>
-                <% } %>
-                <% for(int p = startPage; p<=endPage; p++) { %>
-                	<% if(p == currentPage) { %>
-                    	<li class="page-item disabled"><a class="page-link"><%= p %></a></li>
-                    <% } else {%>
-                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%= p %>"><%= p %></a></li>
-                    <% } %>
-                <% } %>
-                <% if(currentPage != maxPage) { %>
-                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage + 1%>">&gt;</a></li>
-                <% } else {%>    
-                	<li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage + 1%>">&gt;</a></li>
-                <% } %>
+                 <% if(currentPage != 1) { %>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage - 1 %>"><</a></li>
+		        <% } else { %>
+		            <li class="page-item disabled"><a class="page-link"><</a></li>
+		        <% } %>
+		        
+		        <% for(int p = startPage; p <= endPage; p++) { %>
+		            <li class="page-item">
+		                <a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= p %>"><%= p %></a>
+		            </li>
+		        <% } %>
+		        
+		        <% if(currentPage != maxPage) { %>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage + 1 %>">></a></li>
+		        <% } else { %>
+		            <li class="page-item disabled"><a class="page-link">></a></li>
+		        <% } %>
                 </ul>
             </div>
         </div>

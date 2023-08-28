@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi_5makase.board.model.service.FaqService;
 import com.semi_5makase.common.model.PageInfo;
 import com.semi_5makase.notice.model.service.NoticeService;
 import com.semi_5makase.notice.model.vo.Notice;
@@ -44,6 +45,7 @@ public class NoticeListController extends HttpServlet {
 		int startPage;   // 페이징바의 시작수
 		int endPage;	 // 페이징바의 끝수
 		
+		
 		// * listCount : 총 게시글 개수
 		listCount = new NoticeService().selectListCount();
 		
@@ -68,10 +70,14 @@ public class NoticeListController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+		String searchNo = request.getParameter("searchNo");
+		ArrayList<Notice> list;
+		if (searchNo != null && !searchNo.isEmpty()) {
+	    	list = new NoticeService().searchNoticeList(pi,searchNo);
+	    } else {
+	    	list = new NoticeService().selectNoticeList(pi);
+	    }
 		
-		
-		// 공지사항 나열
-		ArrayList<Notice> list = new NoticeService().selectNoticeList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);

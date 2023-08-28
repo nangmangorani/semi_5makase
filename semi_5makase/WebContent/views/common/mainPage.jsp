@@ -39,8 +39,8 @@
     <div class="outer">
         <div class="navbar" align="center">
             <div class="menu"><a href="">HOME</a></div>
-            <div class="menu"><a href="">공지사항</a></div>
-            <div class="menu"><a href="">자주묻는 질문</a></div>
+            <div class="menu"><a href="<%= contextPath %>/list.no?cpage=1">공지사항</a></div>
+            <div class="menu"><a href="<%=contextPath%>/list.faq">자주묻는 질문</a></div>
             <div class="menu"><a href="">Q&A</a></div>
         </div>
         <div class="header-area">

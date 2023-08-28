@@ -25,6 +25,7 @@ public class QnaService {
 		
 		return list;
 	}
+		
 	
 	public int insertQna(Qna q) {
 		Connection conn = getConnection();
@@ -53,5 +54,50 @@ public class QnaService {
 		
 		return listCount;
 	}
+	
+	public int increaseQnaViews(int qnaNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new QnaDao().increaseQnaViews(conn, qnaNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	public Qna selectQna(int qnaNo) {
+		
+		Connection conn = getConnection();
+		
+		Qna q = new QnaDao().selectQna(conn, qnaNo);
+		
+		close(conn);
+		
+		return q;
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

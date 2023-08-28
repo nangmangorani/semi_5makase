@@ -1,5 +1,10 @@
+<%@page import="com.semi_5makase.board.model.vo.Faq"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+	ArrayList<Faq> list = (ArrayList<Faq>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,9 +82,15 @@
         }
         
         #faqMain{
-            width: 70%;
+            /*width: 70%;
             height: 80%;
             margin: auto;
+            */
+            width: 70%;
+		    min-width: 800px; /* Set a minimum width to prevent narrowing */
+		    height: auto; /* Let the height adjust based on content */
+		    margin: auto;
+		    overflow-y: auto;
             /* border-top: 2px solid black;/ */
         }
 
@@ -224,7 +235,7 @@
 
 
 <body>
-
+	<%@ include file = "../common/menubar.jsp" %>
     <div class="wrap">
         <div id="header">
             <div id="logo">
@@ -242,43 +253,47 @@
                 <h2 class="main_image_text" style="font-size:40px">자주 묻는 질문</h2>
             </div>
             
-            <div id="faqMain">
-                <div class="CFaqTableItem">
-                    <div class="CFaqTableItem__list">
-                        <em class="CFaqTableItem__category">로그인/정보</em>
-                        <p class="CFaqTableItem__question">아이디와 비밀번호가 기억나지 않아요.</p>
-                        <img class="arrow down" src="./이눔세끼화이팅/resources/img/아래쪽.png" alt="">
-                        <img class="arrow up hidden" src="./이눔세끼화이팅/resources/img/up.png">
-
-                    </div>
-                    <div class="CFaqTableItem__contents-box">
-                        <em class="CFaqTableItem__answer">답변</em>
-                        <div class="CFaqTableItem__contents">
-                            <p>로그인 화면에서 &nbsp;아이디 찾기/비밀번호 찾기를 통해 확인 가능합니다.<br>
-                            아이디 찾기는 아래 3가지 방법 중 하나로 진행해 주세요.<br>
-                            <br>
-                            ■ 휴대전화<br>
-                            회원 정보에 등록된 본인의 휴대전화 번호를 인증하는 방법입니다.<br>
-                            <br>
-                            ■ 이메일<br>
-                            회원 정보에 등록된 본인의 이메일 주소를 인증하는 방법입니다.<br>
-                            <br>
-                            ■ 본인인증<br>
-                            이용 중인 통신사와 휴대전화 번호를 인증하는 방법입니다.<br>
-                            <br>
-                            ※ 비밀번호 재설정을 완료한 휴면 회원은 휴면 해제 및 탈퇴 신청이 취소됩니다.<br>
-                            ※ 비밀번호 찾기는 휴대전화 본인 인증으로만 가능합니다.<br>
-                            <br>
-                            <span style="color:#3498db;"><strong><a href="https://www.musinsa.com/app/cs/faq?idx=59">[아이디/비밀번호 수정 FAQ 바로 가기]</a><br>
-                            <a href="https://www.musinsa.com/app/cs/faq?idx=58">[회원정보 수정 FAQ 바로 가기]</a></strong></span></p>
-                        </div>
-                    </div>
-                </div>
+           
+            
+	            <% for(Faq f : list) {%>
+	            <div id="faqMain">
+	                <div class="CFaqTableItem">
+	                    <div class="CFaqTableItem__list">
+	                        <em class="CFaqTableItem__category"><%= f.getFaqNo() %></em>
+	                        <p class="CFaqTableItem__question"><%= f.getFaqTitle() %></p>
+	                        <img class="arrow down" src="./이눔세끼화이팅/resources/img/아래쪽.png" alt="">
+	                        <img class="arrow up hidden" src="./이눔세끼화이팅/resources/img/up.png">
+	
+	                    </div>
+	                    <div class="CFaqTableItem__contents-box">
+	                        <em class="CFaqTableItem__answer">답변</em>
+	                        <div class="CFaqTableItem__contents">
+	                            <%= f.getFaqContent() %>
+	                            <span style="color:#3498db;"><strong><a href="https://www.musinsa.com/app/cs/faq?idx=59">[아이디/비밀번호 수정 FAQ 바로 가기]</a><br>
+	                            <a href="https://www.musinsa.com/app/cs/faq?idx=58">[회원정보 수정 FAQ 바로 가기]</a></strong></span></p>
+	                        </div>
+	                    </div>
+	                </div>
+	                
+	                <% } %>
+               
                 
                 <div id="searchTab2">
-                    <input type="text">
-                    <input type="submit" value="검색" id="searchBtn">
-                </div>
+				    <form id="searchForm" action="<%=contextPath%>/list.faq" method="get">
+				        <input type="text" id="searchFaq" name="searchFaq">
+				        <input type="submit" value="검색" id="searchBtn">
+				    </form>
+				</div>
+				
+				<script>
+				    document.getElementById("searchForm").addEventListener("submit", function(event) {
+				        var searchValue = document.getElementById("searchFaq").value;
+				        var actionUrl = "<%=contextPath%>/list.faq?searchFaq=" + encodeURIComponent(searchValue);
+				        this.action = actionUrl;
+				    });
+				</script>
+
+                
             </div>
             
         </div>

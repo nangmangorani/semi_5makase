@@ -11,16 +11,16 @@ import com.semi_5makase.board.model.service.QnaService;
 import com.semi_5makase.board.model.vo.Qna;
 
 /**
- * Servlet implementation class QnaInsertController
+ * Servlet implementation class QnaDetailViewController
  */
-@WebServlet("/insert.qna")
-public class QnaInsertController extends HttpServlet {
+@WebServlet("/detail.qna")
+public class QnaDetailViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaInsertController() {
+    public QnaDetailViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,28 +30,16 @@ public class QnaInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("UTF-8");
+		// qnaNo 받고 한 행 select
+		int qnaNo = Integer.parseInt( request.getParameter("num"));
 		
-		String userNo = request.getParameter("userNo");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String open = request.getParameter("open");
-		System.out.println(open);
-		
-		Qna q = new Qna(title, content, userNo, open);
-		System.out.println(q);
-		
-//		q.setBoardTitle(title);
-//		q.setBoardContent(content);
-//		q.setBoardWriter(userNo);
-//		q.setOpen(open);
-		
-		
-		
-		int result = new QnaService().insertQna(q);
+		int result = new QnaService().increaseQnaViews(qnaNo);
 		
 		if(result > 0) {
-			response.sendRedirect(request.getContextPath() + "/list.qna?cpage=1");
+			Qna q = new QnaService().selectQna(qnaNo);
+			request.setAttribute("q", q);
+			request.getRequestDispatcher("views/board/qnaDetailView.jsp").forward(request, response);
+			
 		}
 		
 		

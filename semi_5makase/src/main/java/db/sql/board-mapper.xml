@@ -2,5 +2,106 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
+<entry key="selectQnaList">
+	SELECT *
+	  FROM (
+	        SELECT ROWNUM RNUM, A.*
+	          FROM (
+	          		SELECT
+					       QNA_NO
+					     , BOARD_TITLE
+					     , CREATE_DATE
+					     , REPLY
+					     , OPEN
+					     , BOARD_WRITER
+					  FROM QNA
+					 WHERE STATUS = 'Y'
+					 ORDER
+					    BY QNA_NO DESC
+	               ) A
+	       )
+	       WHERE RNUM BETWEEN ? AND ?
+
+</entry>
+
+<entry key="selectListCount">
+	SELECT COUNT(*) "COUNT"
+		  FROM QNA
+		 WHERE STATUS = 'Y'
+</entry>
+
+<entry key="insertQna">
+	INSERT 
+	  INTO QNA
+	     (
+	       QNA_NO
+	     , BOARD_TITLE
+	     , BOARD_CONTENT
+	     , QNA_VIEWS
+	     , CREATE_DATE
+	     , STATUS
+	     , OPEN
+	     , REPLY
+	     , BOARD_WRITER
+	     )
+	VALUES
+	     (
+	       SEQ_QNO.NEXTVAL
+	     , ?
+	     , ?
+	     , 0
+	     , SYSDATE
+	     , DEFAULT
+	     , ?
+	     , DEFAULT
+	     , ?
+	     
+	     )
+
+</entry>
+
+<entry key="selectFaqList">
+	SELECT
+	       FAQ_NO
+	     , FAQ_TITLE
+	     , FAQ_CONTENT
+	  FROM FAQ
+	 WHERE FAQ_TITLE
+	  LIKE '%' || ? || '%'
+	   AND STATUS = 'Y'
+</entry>
+
+<entry key="selectFaqListNoSearch">
+	SELECT
+	       FAQ_NO
+	     , FAQ_TITLE
+	     , FAQ_CONTENT
+	  FROM FAQ
+	 WHERE STATUS = 'Y'
+</entry>
+
+<entry key="increaseQnaViews">
+	UPDATE 
+	       QNA
+	   SET QNA_VIEWS = QNA_VIEWS + 1
+	 WHERE QNA_NO = ?
+</entry>
+
+<entry key="selectQna">
+	SELECT
+	       QNA_NO
+	     , BOARD_TITLE
+	     , BOARD_CONTENT
+	     , QNA_VIEWS
+	     , CREATE_DATE
+	     , OPEN
+	     , REPLY
+	     , BOARD_WRITER
+	  FROM QNA
+	 WHERE QNA_NO = ?
+	   AND STATUS = 'Y'
+</entry>
+
+
 
 </properties>

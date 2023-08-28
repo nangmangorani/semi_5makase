@@ -26,6 +26,27 @@ public class NoticeService {
 		return list;
 	}
 	
+	/**
+	 * 검색결과 있을 경우
+	 * @param pi
+	 * @param searchNo
+	 * @return
+	 */
+	public ArrayList<Notice> searchNoticeList(PageInfo pi, String searchNo) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Notice> list = new NoticeDao().searchNoticeList(conn, pi, searchNo);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * 공지사항 세부창
@@ -79,6 +100,18 @@ public class NoticeService {
 		return listCount;
 		
 	}
+
+
+
+
+
+
+	
+
+
+
+
+	
 	
 	
 	
