@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+
+	<entry key="increaseRestaurantView">
+		UPDATE RESTAURANT
+		   SET REST_VIEWS = REST_VIEWS + 1
+		 WHERE REST_NO = ?
+	</entry>
+
 	<entry key="selectRestaurantDetail">
 		SELECT 
 		       REST_NO
@@ -50,6 +57,7 @@
 		 WHERE REST_NO = ?
 	</entry>
 	
+	<!-- 아직안씀  -->
 	<entry key="updateRestaurant">
 		UPDATE RESTAURANT
 		   SET CATEGORY_NO = (SELECT CATEGORY_NO FROM RESTAURANTUPDATE WHERE REST_NO = ?)
@@ -63,5 +71,35 @@
 		 WHERE REST_NO = ?  
 	</entry>
 	
+	<entry key="checkFavorite">
+		SELECT COUNT(*) COUNT
+		  FROM FAVORITES
+		  JOIN MEMBER USING (MEM_NO)
+		  JOIN RESTAURANT USING (REST_NO)
+		 WHERE MEM_NO = ?
+		   AND REST_NO = ?
+	</entry>
+	
+	
+	<entry key="deleteFavoriteRestaurant">
+		DELETE
+		  FROM FAVORITES
+		 WHERE MEM_NO = ?
+		   AND REST_NO = ?
+	</entry>
+	
+	<entry key="insertFavoriteRestaurant">
+		INSERT
+		  INTO FAVORITES
+		  (
+		    MEM_NO
+		  , REST_NO 
+		  )
+		VALUES
+		  (
+		    ?
+		  , ?  
+		  )
+	</entry>
 	
 </properties>

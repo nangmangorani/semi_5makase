@@ -1,3 +1,4 @@
+<%@page import="com.semi_5makase.restaurant.model.vo.Favorite"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.Menu"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.Restaurant"%>
@@ -15,6 +16,9 @@
 	
 	int fCount = (int)request.getAttribute("favoriteCount");
 	// 즐겨찾기 수
+	
+	/* Favorite checkFavorite = (Favorite)request.getAttribute("checkFavorite"); */
+	// 로그인한 유저가 해당 음식점 즐겨찾기 되어있는지 확인
 	
 	int rCount = (int)request.getAttribute("reviewCount");
 	// 리뷰 수
@@ -141,6 +145,7 @@
 
         /* ---------------------------- 즐찾, 리뷰작성 ---------------------------- */
         #likeAndReview{
+        	margin-top: 15px;
             width: 30%;
             box-sizing: border-box;
         }
@@ -148,14 +153,20 @@
             height: 100%;
             float: left;
         }
-        #like{
+        #like-area{
             width: 50%;
             padding-right: 10px;
         }
-        #wirteReview{
+        #writeReview{
             width: 50%;
             padding-left: 10px;
         }
+
+        
+        #likeAndReview p, #wirteReview p{
+        	color : gray;
+        	padding-top: 10px;
+        } 
 
         /* ---------------------------- 음식점상세 ---------------------------- */
         #table{
@@ -194,6 +205,10 @@
             width: 30%;
             line-height: 57px;
             padding-right: 20px;
+        }
+        
+        #reviewSeq>a{
+        	color:black;
         }
 
         #reviewContent>div{
@@ -324,10 +339,51 @@
             display: inline-block;
             text-align: right;
         }
+        
+        /* The Modal (background) */
+        .restupdate_modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 6; /* Sit on top, menubar의 z-index : 5 */ 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            border-radius:10;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            
+        }
+    
+        /* Modal Content/Box */
+        .restupdate_modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 15px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */                          
+        }
+        #rest_close_modal{
+            color: #222228;
+            background-color: white;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            border: none;
+        }
+        #restupdate_modelText{
+            width: 90%;
+            padding: 10px;
+        }
+
+        .restupdate_modal-content{
+            border-radius: 10px;
+        }
 
     </style>
 </head>
 <body>
+	<%@ include file="../common/menubar.jsp" %>
     <div class="wrap">
         <!-- ---------------------------- 헤더 ---------------------------- -->
         <div id="header">
@@ -370,24 +426,105 @@
                         <span><%= fCount %></span>
                     </div>
                 </div>
-            </div>
+            </div>    
+            
             
             <div id="likeAndReview">
-                <div id="like">
-                    <button style="padding: 0; border: 0;">
-                        <img src="resources/img/heart.png" style="width: 88px; height: 71px;">
-                        <p style="margin: 0;">즐겨찾기</p>
-                    </button>
+                <div id="like-area">
+                 	<% if(loginMember == null) { %>
+	                    <button type="button" style="padding: 0; border: 0;" id="restFavor" onclick="updateFavorite();">
+	                        <img src="resources/img/noheart.png" id="favoriteImg" style="width: 50px; height: 40px;">
+	                        <p id="like-content" style="margin: 0;">즐겨찾기</p>
+	                    </button>
+                    <% } else { %>
+                    	<button type="button" style="padding: 0; border: 0;" id="restFavor" onclick="updateFavorite();">
+	                        <img src="resources/img/noheart.png" id="favoriteImg" style="width: 50px; height: 40px;">
+	                        <p id="like-content" style="margin: 0;">즐겨찾기</p>
+	                    </button>
+                    	<script>
+                    	// 즐겨찾기 되어있는지 확인하는 함수 생성, 선언
+	                    	function checkFavorite(){
+	        	        		$.ajax({
+	        	        			url:"checkFavorite.rt",
+	        	        			data:{restNo:<%= rest.getRestNo() %>},
+	        	        			type:"post",
+	        	        			success: function(result){
+	        	        				if(result > 0){
+	        	        	        		$("#favoriteImg").attr("src", "resources/img/heart.png");
+	        	        	        	}else{
+	        	        	        		$("#favoriteImg").attr("src", "resources/img/noheart.png");
+	        	        	        	}
+	        	        			}
+	        	        		})	
+	                    	}	
+                    		checkFavorite();
+                    	</script>
+                    <% } %>
+                    
+			            <script>
+			             // 즐겨찾기 총 합 조회 함수
+			             	function favorCount(){
+			            	 $.ajax({
+			            		 url:"favorCount.rt",
+			            		 data:{restNo:<%= rest.getRestNo() %>},
+				    			 type:"post",
+				    			 success: function(result){
+				    				 $("#favorite span").text(result);
+				    			 }
+			            	 })
+			             }
+			            
+			            
+				         // 즐겨찾기 추가, 삭제 함수
+				    		function updateFavorite(){
+				    			$.ajax({
+				    				url:"updateFavorite.rt",
+				    				data:{restNo:<%= rest.getRestNo() %>},
+				    				type:"post",
+				    				success: function(result){
+				    					console.log(result);
+				    					if(result == "loginFirst"){
+				    						alert("로그인을 먼저 해주세요.");
+				    					}else if(result == "delete"){
+				    						alert("즐겨찾기가 해제되었습니다.")
+				    						checkFavorite();
+				    						favorCount();
+				    					}else if(result == "insert"){
+				    						alert("즐겨찾기에 추가되었습니다.")
+				    						checkFavorite();
+				    						favorCount();
+				    					}
+				    				}
+				    			})             			
+				    		}
+			            </script>
                 </div>
-                <div id="wirteReview">
-                    <button style="padding: 0; border: 0;">
-                        <img src="resources/img/pen.png" style="width: 88px; height: 71px;">
-                        <p style="margin: 0;">리뷰작성</p>
-                    </button>
-                </div>
+            <div id="writeReview">
+                 <a href="">
+                     <button style="padding: 0; border: 0;">
+                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
+                         <p id="review-content" style="margin: 0;">리뷰작성</p>
+                     </button>
+                 </a>
+             </div>
             </div>
         </div>
-
+        
+        <script>
+        		$("#writeReview").mouseover(function(){
+        			$("#review-content").css("color", "red");
+        		})
+        		$("#writeReview").mouseleave(function(){
+        			$("#review-content").css("color", "");
+        		})
+        		
+        		$("#like-area").mouseover(function(){
+        			$("#like-content").css("color", "red");
+        		})
+        		$("#like-area").mouseleave(function(){
+        			$("#like-content").css("color", "");
+        		})
+        </script>
         <!-- ---------------------------- 음식점 상세 ---------------------------- -->
         <div id="restaurent_content">
             <table id="info_table">
@@ -438,8 +575,49 @@
             </table>
 
             <div style="margin: auto; width: 30%;">
-                <button type="button" class="btn btn-sm btn-danger" style="width: 180px;">수정 및 폐업 신고</button>
+                <button type="button" id="openModal" class="btn btn-sm btn-danger" style="width: 180px;">수정 및 폐업 신고</button>
             </div>
+            <!-- The Modal -->
+		    <div id="myModal" class="restupdate_modal">
+		 
+		      <!-- Modal content -->
+		      <div class="restupdate_modal-content">
+		        <form action="">
+		            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">폐업신고 - 신고</span></b></span></p>
+		            <textarea name="" id="restupdate_modelText" cols="40" rows="10" style="resize: none;" placeholder="수정이 필요한 내용을 적어주세요.&#13;&#10;예)맛집이름,주소,전화번호 등"></textarea>
+		            <br>
+		            <input type="checkbox" name=""> 폐업신고
+		            <p style="font-size: 12px; color: #888;">해당 음식점이 폐업이 되었을 경우 선택해 주세요</p>
+		            <br>
+		                
+		        <hr>
+		        <div align="center">
+		            <button id="rest_close_modal" name="restaurantUpdate">보내기</button>
+		        </div>
+		        </form>
+		        <!-- <div id ="close_modal" onClick="close_pop();">
+		            <span class="pop_bt">
+		                    보내기
+		            </span>
+		        </div> -->
+		      </div>
+		 
+		    </div>
+		        <!--End Modal-->
+		        
+	        <script type="text/javascript">
+     
+     
+	        //팝업 Close 기능
+	        function close_pop(flag) {
+	             $('#myModal').hide();
+	        };
+	
+	        $("#openModal").click(function(){
+	            $('#myModal').show();
+	        });
+	        
+	      </script>
         </div>
 
         <!-- ---------------------------- 리뷰 ---------------------------- -->
