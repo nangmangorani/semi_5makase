@@ -46,6 +46,10 @@ public class MemberUpdateController extends HttpServlet {
 		System.out.println(m);
 		Member updateMem = new MemberService().updateMember(m);
 		
+		
+		
+		
+		
 		if(updateMem != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginMember", updateMem);

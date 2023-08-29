@@ -279,10 +279,56 @@ public class MemberDao {
 		}
 		return result;
 		
+	}
+
+	
+	
+	public int deleteReason(Connection conn, Member m) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteReason");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getQuitReason());
+			pstmt.setString(2, m.getMemId());
+			pstmt.setString(3, m.getMemPwd());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+		
+		
 		
 		
 	}
 	
 	
 	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

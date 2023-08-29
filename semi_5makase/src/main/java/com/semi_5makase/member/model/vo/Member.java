@@ -20,6 +20,7 @@ public class Member {
 	private String quitReason;
 	private String selfIntroduction;
 	
+	
 	public Member() {}
 	
 	
@@ -67,6 +68,18 @@ public class Member {
 		this.quitReason = quitReason;
 	}
 	
+	
+	
+	
+	public Member(String memId, String memPwd, String quitReason) {
+		super();
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.quitReason = quitReason;
+	}
+
+
+
 	public Member(int memNo, String memName, String gender, String phone, String address) {
 		super();
 		this.memNo = memNo;

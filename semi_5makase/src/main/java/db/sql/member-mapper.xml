@@ -28,10 +28,125 @@ SELECT
      , ENROLL_DATE
      , STATUS
      , QUIT_REASON
+     , SELF_INTRODUCTION
 FROM MEMBER
 WHERE MEM_ID = ?
   AND MEM_PWD = ?
   AND STATUS = 'Y'
 </entry>
 
+<entry key="insertMember">
+INSERT
+  INTO MEMBER
+     (
+	   MEM_NO
+     , MEM_GRADE
+     , MEM_ID
+     , MEM_PWD
+     , MEM_NAME
+     , GENDER
+     , AGE
+     , NICKNAME
+     , EMAIL
+     , PHONE
+     , ADDRESS
+     , ENROLL_DATE
+     , STATUS
+     , QUIT_REASON
+     , SELF_INTRODUCTION
+     )
+VALUES
+     (
+       SEQ_MNO.NEXTVAL
+     , '일반'
+     , ?
+     , ?
+     , ?
+     , ?
+     , ?
+     , ?
+     , ?
+     , ?
+     , ?
+     , DEFAULT
+     , 'Y'
+     , NULL
+     , NULL
+     )
+</entry>
+
+<entry key="idCheck">
+	SELECT count(*) "COUNT" 
+	  FROM MEMBER
+	 WHERE MEM_ID = ?	
+
+</entry>
+
+<entry key="updateMember">
+UPDATE MEMBER
+   SET NICKNAME = ?
+     , SELF_INTRODUCTION = ?
+     , EMAIL = ?
+     , PHONE = ?
+     , ADDRESS = ?
+ WHERE MEM_ID = ?
+</entry>
+
+<entry key="selectMember">
+ 	SELECT 
+	        MEM_NO
+         ,  MEM_GRADE
+         ,  MEM_ID
+         ,  MEM_PWD
+         ,  MEM_NAME
+         ,  GENDER
+         ,  AGE
+         ,  NICKNAME
+         ,  EMAIL
+         ,  PHONE
+         ,  ADDRESS
+         ,  ENROLL_DATE
+         ,  STATUS
+         ,  QUIT_REASON
+         ,  SELF_INTRODUCTION
+	FROM MEMBER
+	WHERE MEM_ID = ?
+	  AND STATUS = 'Y'
+</entry>
+
+<entry key="updatePwd">
+ 	 UPDATE MEMBER
+	   SET MEM_PWD = ?
+	  WHERE MEM_ID = ?
+	  AND MEM_PWD = ?
+</entry>
+
+<entry key="memDelete">
+	UPDATE MEMBER
+	   SET STATUS ='N'
+	 WHERE MEM_ID = ?
+	   AND MEM_PWD = ?
+</entry>
+
+<entry key="deleteReason">
+	UPDATE MEMBER
+	   SET QUIT_REASON = ?
+	 WHERE MEM_ID = ?
+	   AND MEM_PWD = ?
+</entry>
+
+
 </properties>
+
+
+
+
+
+
+
+
+
+
+
+
+

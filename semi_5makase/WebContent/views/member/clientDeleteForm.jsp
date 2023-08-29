@@ -6,6 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Add these lines to include Bootstrap CSS and JavaScript -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
 
 </head>
@@ -92,6 +98,7 @@
 	<%@ include file="../common/menubar.jsp" %>
 	<%
 		String memId = loginMember.getMemId(); 
+		String memPwd = loginMember.getMemPwd(); 
 	%>
     <div id="deleteWrap">
         <div id="deleteHead">
@@ -103,7 +110,10 @@
         </div>
 
         <div id="deleteBody">
-            <form action="">
+            <form action="<%=contextPath%>/memDeleteController.me">
+            <input type="hidden" name="memId" value="<%=memId %>">
+            <input type="hidden" name="memPwd" value="<%=memPwd %>">
+            
                 <h3>회원 탈퇴</h3>
                 <h5>회원 탈퇴를 원하시는 이유를 모두 골라주세요</h5>
 
@@ -119,7 +129,7 @@
                 <input type="checkbox" name="reason" id="text4" value="이용혜택이 부족해요" onclick='checkOnlyOne(this)'> 
                 <label for="text4">이용혜택이 부족해요</label><br><br>
                 
-   				 <input type="checkbox" name="reason"  id="text5" onclick='toggleTextbox(this);  checkOnlyOne(this);' >
+   				<input type="checkbox" name="reason"  id="text5" value="on" onclick='toggleTextbox(this); "copyText(this)";  checkOnlyOne(this);' >
 		        <label for="text5">기타 </label>
 		       
 				
@@ -128,14 +138,61 @@
                 <h5>이눔세끼에서 개선되면 좋을점이나 불편하셨던 점을 말씀해주세요!</h5>
                 <p id="p1">적극 반영하여 개선하도록 노력하겠습니다. <br>
                 언제든 다시 찾아와 주세요!!</p>
-                <textarea name="reason" id="my_text" cols="80" rows="4" placeholder="10자 이상 부탁드립니다 :)" disabled  style="resize: none;"></textarea>
+                <textarea name="textareaData" id="my_text" cols="80" rows="4" placeholder="10자 이상 부탁드립니다 :)" disabled  style="resize: none;"></textarea>
             <div id="deleteBody2" align="center">
                 <h4>회원 탈퇴 전 아래 유의사항을 꼭 확인해주세요.</h4>
                 <b id="text1">회원탈퇴 후 1개월간 재가입이 불가능하며,</b> 이후 재가입시 신규가입으로 처리되며<br>
                 작성한 리뷰,즐겨찾기 등 모든 정보가 초기화 됩니다. <br><br>
                 
-                <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#deleteMem" >회원탈퇴</button>
+				
+
+
+				<script>
+				 function copyText() {
+			            var textareaValue = document.getElementById("my_text").value;
+			            document.getElementById("text5").value = textareaValue;
+			        }
+
+                    console.log(text5);
+				</script>
+
+                
+                
+                <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#deleteModal">회원탈퇴</button>
             </div>
+            
+            
+		       <!-- 탈퇴 -->
+			   <div class="modal" id="deleteModal">
+		       <div class="modal-dialog">
+		       <div class="modal-content">
+		   
+		           <!-- Modal Header -->
+		           <div class="modal-header">
+		           <h4 class="modal-title">회원탈퇴</h4>
+		           <button type="button" class="close" data-dismiss="modal">&times;</button>
+		           </div>
+		   
+		           <!-- Modal body -->
+		           <div class="modal-body" align="center">
+		           <input type="hidden" name="memId" value="<%=memId %>"> <!-- 아이디 숨겨서가져가기 -->
+		           
+		               <b>탈퇴 후 복구가 불가능 합니다. <br>정말로 탈퇴하시겠습니까?</b> <br><br>
+		
+		               비밀번호 : <input type="password" name="memPwd" required> <br><br>
+		               <button type="submit" class="btn btn-sm ">탈퇴하기</button>
+		
+		
+		
+		      		 </div>
+		       </div>
+		       </div>
+		       </div>
+            
+            
+            
+            
+            
             </form>
         </div>
         <script>
@@ -177,30 +234,7 @@
     </div>
     
     
-    	<!-- 탈퇴 -->
-	   <div class="modal" id="deleteMem">
-       <div class="modal-dialog">
-       <div class="modal-content">
-   
-           <div class="modal-header">
-           <h4 class="modal-title">회원탈퇴</h4>
-           <button type="button" class="close" data-dismiss="modal">&times;</button>
-           </div>
-   
-           <div class="modal-body" align="center">
-           <form action="<%=contextPath %>/memdelete.me" method="post">
-           <input type="hidden" name="memId" value="<%=memId %>">
-           
-               <b>탈퇴 후 복구가 불가능 합니다. <br>정말로 탈퇴하시겠습니까?</b> <br><br>
 
-               비밀번호 : <input type="password" name="memPwd" required> <br><br>
-               <button type="submit" class="btn btn-sm">탈퇴하기</button>
-           </form>
-
-      		 </div>
-       </div>
-       </div>
-       </div>
     
     
     

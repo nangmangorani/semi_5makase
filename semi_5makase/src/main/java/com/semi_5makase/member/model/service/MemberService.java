@@ -101,7 +101,20 @@ public class MemberService {
 		return result;
 	}
 		
-	
+	public int deleteReason(Member m) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().deleteReason(conn,m);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+		
+		
+	}
 	
 	
 	

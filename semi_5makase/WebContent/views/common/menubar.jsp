@@ -14,14 +14,17 @@
         <title>Document</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></head>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+		
+ 
+    </head>
     <style>
         div { box-sizing: border-box; }
     
         .menubar-area {
             position: sticky;
             top: 0;
-            height: 100px;
+            height: 110px;
             width: 1100px;
             margin: auto;
             background-color: white;
@@ -129,6 +132,14 @@
         
     </style>
     <body>
+    	<% if(alertMsg != null){ %>
+	
+		<script>
+			alert("<%= alertMsg %>");
+		</script>
+		<% session.removeAttribute("alertMsg"); %>
+		<% } %>
+    
         <div class="menubar-area">
             <div class="logo-area">
                 <img src="resources/img/logo.png">
@@ -139,14 +150,15 @@
                     <button type="submit"><img src="resources/img/searchIcon.png"></button>
                 </form>
             </div>
-            <div class="member-area" align="center">
+            <div class="member-area" align="center" style="margin-top: 10px;">
 			<%if(loginMember == null){ %>
           		<!-- case2. 로그인 전  -->
                 <button type='button' id="modal_btn" data-target="#loginModal">로그인</button>
+                <button type="button" onclick="enrollPage()">회원가입</button>
               <%}else{ %>
                 <!-- case2. 로그인 후  -->
 			        <div>
-			            <b><%= loginMember.getMemName()%>님</b>의 방문을 환영합니다. <br><br>
+			            <b><%= loginMember.getMemName()%>님</b> 환영합니다. <br>
 			            <div align="center">
 			                <a href="<%=contextPath %>/myPage.me">마이페이지</a>
 			                <a href="<%=contextPath %>/logout.me">로그아웃</a>
@@ -172,11 +184,16 @@
                                 <div class="member_login_btn"> 
         
                                     <input type="submit" class="btn btn-secondary" id="btn-login" value="로그인">
-                    
-                                    <input type="button" class="btn btn-secondary" value="회원가입" onclick="location.href='/member/join'">
+                                    <input type="button" class="btn btn-secondary" value="회원가입" onclick="enrollPage()">
                     
                                 </div>
-        
+                                
+                                <script >
+						            function enrollPage(){
+						            	
+						            	location.href = "<%=contextPath%>/agreement.me";
+						            }
+						        </script>
                             </form>
                         </div>
                 </div>

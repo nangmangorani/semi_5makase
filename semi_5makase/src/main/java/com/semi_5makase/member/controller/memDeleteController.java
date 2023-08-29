@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.semi_5makase.member.model.service.MemberService;
+import com.semi_5makase.member.model.vo.Member;
 
 /**
  * Servlet implementation class memDeleteController
  */
-@WebServlet("/memDeleteController")
+@WebServlet("/memDeleteController.me")
 public class memDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,9 +31,20 @@ public class memDeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
 		String memId = request.getParameter("memId");
 		String memPwd = request.getParameter("memPwd");
+		String reason = request.getParameter("reason");
+		String textareaData = request.getParameter("textareaData");
+		
 		int result = new MemberService().memDelete(memId, memPwd);
+		
+		if(reason.equals("on")) {
+			reason = textareaData;
+		}
+		
+		Member m = new Member(memId, memPwd, reason);
+		new MemberService().deleteReason(m);
 		
 		HttpSession session = request.getSession();
 		
@@ -45,6 +57,17 @@ public class memDeleteController extends HttpServlet {
 			session.setAttribute("alertMsg", "회원탈퇴 실패했습니다");
 			response.sendRedirect(request.getContextPath()+"/myPage.me");
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 

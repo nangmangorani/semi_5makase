@@ -4,18 +4,25 @@
 <html lang="en">
 <head>
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 <style>
     #myPageWrap{
         width: 1000px;
         height: 800px;
-        border: 1px solid red;
+        /* border: 1px solid red; */
+        margin-left: 480px;
         
     }
     #myPageHead{
         width: 100%;
-        height: 18%;
-        border: 1px solid white;
+        
+        /* border: 1px solid red; */
     }
     #myPageHead>img{
         width: 200px;
@@ -26,23 +33,28 @@
     #myPageContent{
         width: 70%;
         margin : auto;
-        margin-top: 15px;
-        border: 1px solid white;
-        height: 67%;
+        margin-top: 30px;
+        /* border: 1px solid red; */
+        height: 75%;
     }
     table{
         width: 100%;
+        border-top: 1px solid  rgb(228, 227, 227);
+        border-bottom: 1px solid  rgb(228, 227, 227);
         
     }
     th{ 
         width: 30%;
-        background-color: lightgray;
+        background-color: rgb(228, 227, 227);
         height:60px;
+        text-align: center;
+        border-bottom: 1px solid rgb(228, 227, 227);
+        
     }
     tr>td{
         width: 100%;
-        background-color: aliceblue;
-        
+        /* background-color: aliceblue; */
+        border-bottom: 1px solid rgb(228, 227, 227);
         
     }
     #myPageContent2>div{
@@ -53,9 +65,18 @@
     }
     #myPageFoot{
         width: 100%;
-        background-color: gray;;
-        height: 13%;
+        /* background-color: gray; */
+        height: 15%;
     }
+
+    .soft-border {
+        border: 1px solid #ccc; 
+        border-radius: 5px;
+        padding: 5px; 
+    }
+
+
+
 
 
     @font-face {
@@ -83,48 +104,54 @@
 		
 	%>
 	
-	
-    <div id="myPageWrap" >
-        <div id="myPageHead">
-            <img src="./resources/logo.PNG.png">
+
+    <div id="myPageWrap">
+        <div id="myPageHead" >
+            
          
         </div>
 		<form id="myPage-form" action="<%= contextPath%>/update.me" method="post" >
 			<input type="hidden" name="memId" value="<%=memId %>" >
-        <div id="myPageContent" style="margin-left: 200px;" >
-            <table >
+        <div id="myPageContent" style="margin-left: 100px;"  >
+            <table style=" width: 800px; height: 500px;" >
                 <tr>
                     <th>프로필사진</th>
-                    <td><input type="file" name="profile" id=""></td>
+                    <td>
+                        <div id="imagePreview" >
+                            <img id="preview" src="" alt="Preview" style="width: 100px; height: 100px; border-radius: 50%;">
+                            <input type="file" id="profileImage" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage()">
+                        </div>
+                    </td>
                 </tr>       
+    
                 <tr>
                     <th>닉네임</th>
-                    <td><input type="text" name="nickname" value="<%=nickname %>" id="nickname1"><br>
+                    <td><input type="text" name="nickname" value="<%=nickname %>" id="nickname1"  class="soft-border"><br>
                         <label for="nickname1">이눔세끼에서 이용하실 닉네임을 입력해주세요.</label>
                     </td>
                     
                 </tr>       
                 <tr>
                     <th>자기소개</th>
-                    <td><input type="text" value="<%=selfIntroduction %>" name="selfIntroduction" id=""></td>
+                    <td><input type="text" value="<%=selfIntroduction %>"  class="soft-border" name="selfIntroduction"  class="soft-border" id=""></td>
                 </tr>       
                 <tr>
                     <th>이메일</th>
-                    <td><input type="text" value="<%=email %>" name="email" id=""></td>
+                    <td><input type="text" value="<%=email %>"  class="soft-border" name="email" id=""></td>
                 </tr>                
                 <tr>
                     <th>전화번호</th>
-                    <td><input type="text" value="<%=phone %>" name="phone" id=""></td>
+                    <td><input type="text" value="<%=phone %>"  class="soft-border" name="phone" id=""></td>
                 </tr>       
                 <tr>
                     <th>주소</th>
-                    <td><input type="text" value="<%=address %>" name="address" id=""></td>
+                    <td><input type="text" value="<%=address %>"  class="soft-border" class="soft-border" name="address" id=""></td>
                 </tr>       
             </table>
             <div id="myPageContent2">
-                <div align ="center"><button type="submit" class="btn btn-sm">정보변경</button></div>
-                <div align ="center"><button type="button" class="btn btn-sm" data-toggle="modal" data-target="#updatePwd">비밀번호 변경</button></div>
-                <div align ="center"><button type="button" class="btn btn-sm" onclick="deletePage()">회원탈퇴</button></div>
+                <div align ="center"><button type="submit" class="btn btn-sm btn-success">정보변경</button></div>
+                <div align ="center"><button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#updatePwd">비밀번호 변경</button></div>
+                <div align ="center"><button type="button" class="btn btn-sm btn-success" onclick="deletePage()">회원탈퇴</button></div>
                 <div align ="center"><a href="">내가 쓴 리뷰 조회하기</a></div>
             </div>
             
@@ -188,6 +215,27 @@
                           return false;
                       }
                   }
+
+                  // Function to preview the selected image
+                    function previewImage() {
+                        const input = document.getElementById("profileImage");
+                        const preview = document.getElementById("preview");
+
+                        if (input.files && input.files[0]) {
+                            const reader = new FileReader();
+
+                            reader.onload = function (e) {
+                                preview.src = e.target.result;
+                            };
+
+                            reader.readAsDataURL(input.files[0]);
+                        } else {
+                            preview.src = "";
+                        }
+                    }
+
+
+
                 </script>
 	    </div>
 	  </div>
