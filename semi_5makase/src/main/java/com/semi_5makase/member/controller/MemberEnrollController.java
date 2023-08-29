@@ -14,16 +14,17 @@ import com.semi_5makase.member.model.service.MemberService;
 import com.semi_5makase.member.model.vo.Member;
 
 /**
- * Servlet implementation class LoginController
+ * Servlet implementation class MemberEnrollController
  */
-@WebServlet("/login.me")
-public class LoginController extends HttpServlet {
+@WebServlet("/insert.me")
+public class MemberEnrollController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public MemberEnrollController() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -31,25 +32,39 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		String memId = request.getParameter("memId");
 		String memPwd = request.getParameter("memPwd");
-		System.out.println(memId);
-		System.out.println(memPwd);
-		Member loginMember = new MemberService().loginMember(memId,memPwd);
+		String memName = request.getParameter("memName");
+		String nickname = request.getParameter("nickname");
+		String gender = request.getParameter("gender");
+		int age = Integer.parseInt(request.getParameter("age"));
+		String address = request.getParameter("address");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
 		
-		if(loginMember == null) {
+		Member m = new Member(memId, memPwd, memName, gender, age, nickname, email, phone, address);
+		System.out.println(m);
+		int result = new MemberService().insertMember(m);
+		
+		
+		
+		if(result >0) { // 성공
 			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "로그인 실패했습니다"); // request는 포워딩 방식일때만 가능!!
+			session.setAttribute("alertMsg", "성공적으로 화원가입이 되었습니다"); 
 			response.sendRedirect(request.getContextPath());
-
-
-		}else {
+			
+			
+		}else { // 실패
 			HttpSession session = request.getSession();
-			session.setAttribute("loginMember", loginMember);
-			response.sendRedirect(request.getContextPath()); 
-
+			session.setAttribute("alertMsg", "회원가입 실패했습니다");
+			response.sendRedirect(request.getContextPath());
+			
 		}
+		
+		
 		
 		
 	}

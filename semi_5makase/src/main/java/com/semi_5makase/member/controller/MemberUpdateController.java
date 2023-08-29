@@ -14,16 +14,17 @@ import com.semi_5makase.member.model.service.MemberService;
 import com.semi_5makase.member.model.vo.Member;
 
 /**
- * Servlet implementation class LoginController
+ * Servlet implementation class MemberUpdateController
  */
-@WebServlet("/login.me")
-public class LoginController extends HttpServlet {
+@WebServlet("/update.me")
+public class MemberUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public MemberUpdateController() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -32,23 +33,31 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String memId = request.getParameter("memId");
-		String memPwd = request.getParameter("memPwd");
-		System.out.println(memId);
-		System.out.println(memPwd);
-		Member loginMember = new MemberService().loginMember(memId,memPwd);
+		request.setCharacterEncoding("UTF-8");
 		
-		if(loginMember == null) {
+		String memId = request.getParameter("memId");
+		String nickname = request.getParameter("nickname");
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+		String address = request.getParameter("address");
+		String selfIntroduction = request.getParameter("selfIntroduction");
+		
+		Member m = new Member(memId, nickname, email, phone, address, selfIntroduction);
+		System.out.println(m);
+		Member updateMem = new MemberService().updateMember(m);
+		
+		if(updateMem != null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "로그인 실패했습니다"); // request는 포워딩 방식일때만 가능!!
-			response.sendRedirect(request.getContextPath());
-
-
+			session.setAttribute("loginMember", updateMem);
+			session.setAttribute("alertMsg", "수정되었습니다");
+			
+			response.sendRedirect(request.getContextPath()+"/myPage.me");
 		}else {
 			HttpSession session = request.getSession();
-			session.setAttribute("loginMember", loginMember);
-			response.sendRedirect(request.getContextPath()); 
-
+			session.setAttribute("loginMember", updateMem);
+			session.setAttribute("alertMsg", "수정실패했습니다");
+			
+			response.sendRedirect(request.getContextPath()+"/myPage.me");
 		}
 		
 		

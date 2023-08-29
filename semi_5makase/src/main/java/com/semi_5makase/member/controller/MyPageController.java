@@ -10,20 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.semi_5makase.member.model.service.MemberService;
-import com.semi_5makase.member.model.vo.Member;
-
 /**
- * Servlet implementation class LoginController
+ * Servlet implementation class MyPageController
  */
-@WebServlet("/login.me")
-public class LoginController extends HttpServlet {
+@WebServlet("/myPage.me")
+public class MyPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public MyPageController() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -32,26 +30,15 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String memId = request.getParameter("memId");
-		String memPwd = request.getParameter("memPwd");
-		System.out.println(memId);
-		System.out.println(memPwd);
-		Member loginMember = new MemberService().loginMember(memId,memPwd);
-		
-		if(loginMember == null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "로그인 실패했습니다"); // request는 포워딩 방식일때만 가능!!
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginMember") == null) { // 로그인 전
+			session.setAttribute("alertMsg", "로그인 후 이용가능한 서비스입니다");
 			response.sendRedirect(request.getContextPath());
-
-
-		}else {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginMember", loginMember);
-			response.sendRedirect(request.getContextPath()); 
-
+		}else { // 로그인 후
+			RequestDispatcher view = request.getRequestDispatcher("views/member/clientMyPage.jsp");
+			view.forward(request, response);
 		}
-		
-		
+	
 	}
 
 	/**
