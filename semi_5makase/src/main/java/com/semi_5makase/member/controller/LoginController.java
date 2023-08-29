@@ -37,12 +37,12 @@ public class LoginController extends HttpServlet {
 		System.out.println(memId);
 		System.out.println(memPwd);
 		Member loginMember = new MemberService().loginMember(memId,memPwd);
-		System.out.println(loginMember);
+		//System.out.println(loginMember);
 		
 		if(loginMember == null) {
 			request.setAttribute("errorMsg", "로그인실패");
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			view.forward(request, response);;
+			view.forward(request, response);
 
 		}else {
 			HttpSession session = request.getSession();

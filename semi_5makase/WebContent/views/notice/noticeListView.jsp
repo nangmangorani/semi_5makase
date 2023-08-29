@@ -1,10 +1,16 @@
+<%@page import="com.semi_5makase.common.model.PageInfo"%>
 <%@page import="com.semi_5makase.notice.model.vo.Notice"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
-	String contextPath = request.getContextPath();
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
 %>    
     
 <!DOCTYPE html>
@@ -64,6 +70,7 @@
     </style>
 </head>
 <body>
+	<%@ include file = "../common/menubar.jsp" %>
     <div class="wrap"> 
         <div id="header">
             <div id="header_1" align="center" ><br>
@@ -71,13 +78,14 @@
             </div>
             
 
-
-            <div id="search">
-                <input type="text">
-                <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
-
-            </div>
-
+		<form action="<%= contextPath %>/list.no">
+		    <div id="search">
+		        <input type="text" id="noticeSearch" name="searchNo">
+		        <input type="hidden" name="cpage" value="<%= currentPage %>">
+		        <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
+		    </div>
+		</form>
+			
             
         </div>
         <div id="content_1">
@@ -107,7 +115,9 @@
            			<% } %>
                 </tbody>
               </table>
-              
+              <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+              	<button style="margin-left: 900px;" onclick="location.href='<%=contextPath%>/insertView.no'">등록하기</button>
+              <% } %>
               <script>
 		    	$(function() {
 		    		$(".table>tbody>tr").click(function(){
@@ -118,7 +128,7 @@
 						// 요청시 전달값 (키=벨류) => 쿼리스트링!!
 						
 						// /jsp/detail.no?num=클릭한글번호
-						location.href = '<%= contextPath %>/detail.no?num=' + num;
+						location.href = '<%= contextPath %>/detail.no?num='+num;
 		    		}) 
 		    	})
     
@@ -129,11 +139,27 @@
               <div class="pageing-area" align="center">
 
                 <ul class="pagination pagination-sm" style="margin-left: 460px;">
-                    <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                 <% if(currentPage != 1) { %>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage - 1 %>"><</a></li>
+		        <% } else { %>
+		            <li class="page-item disabled"><a class="page-link"><</a></li>
+		        <% } %>
+		        
+		        <% for(int p = startPage; p <= endPage; p++) { %>
+		        	<% if(p == currentPage) { %>
+		        		<li class="page-item disabled"><a class="page-link"><%= p %></a></li>
+		        	<% } else {%>
+		            <li class="page-item">
+		                <a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= p %>"><%= p %></a>
+		            </li>
+		        	<% } %>
+		        <% } %>
+		        
+		        <% if(currentPage != maxPage) { %>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage + 1 %>">></a></li>
+		        <% } else { %>
+		            <li class="page-item disabled"><a class="page-link">></a></li>
+		        <% } %>
                 </ul>
             </div>
         </div>

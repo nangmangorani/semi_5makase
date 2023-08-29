@@ -1,4 +1,4 @@
-package com.semi_5makase.notice.controller;
+package com.semi_5makase.board.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,22 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.board.model.service.FaqService;
+import com.semi_5makase.board.model.service.QnaService;
+import com.semi_5makase.board.model.vo.Qna;
 import com.semi_5makase.common.model.PageInfo;
 import com.semi_5makase.notice.model.service.NoticeService;
-import com.semi_5makase.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeListController
+ * Servlet implementation class QnaListController
  */
-@WebServlet("/list.no")
-public class NoticeListController extends HttpServlet {
+@WebServlet("/list.qna")
+public class QnaListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeListController() {
+    public QnaListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,11 +45,12 @@ public class NoticeListController extends HttpServlet {
 		int startPage;   // 페이징바의 시작수
 		int endPage;	 // 페이징바의 끝수
 		
-		
 		// * listCount : 총 게시글 개수
-		listCount = new NoticeService().selectListCount();
+		listCount = new QnaService().selectListCount();
+		
 		
 		// * currentPage : 현재 페이지 (즉, 사용자가 요청한 페이지)
+		// 여기수정!!!
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		// *pageLimit : 페이징바의 페이지 최대 개수
@@ -68,19 +69,15 @@ public class NoticeListController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
+		String searchQna = request.getParameter("searchQna");
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		String searchNo = request.getParameter("searchNo");
-		ArrayList<Notice> list;
-		if (searchNo != null && !searchNo.isEmpty()) {
-	    	list = new NoticeService().searchNoticeList(pi,searchNo);
-	    } else {
-	    	list = new NoticeService().selectNoticeList(pi);
-	    }
-		
+		System.out.println(listCount + "," +  currentPage + "," +  pageLimit + "," + boardLimit + "," + maxPage + "," + startPage + "," + endPage);
+		ArrayList<Qna> list = new QnaService().selectQnaList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/notice/noticeListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/board/qnaListView.jsp").forward(request, response);
+		
 		
 	}
 
