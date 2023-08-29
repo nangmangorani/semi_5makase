@@ -23,22 +23,22 @@
 
 <entry key="searchNoticeList">
 SELECT *
-	  FROM (
-	  		SELECT ROWNUM RNUM, A.*
-	  		  FROM (
-	  		  		SELECT
-					       NOTICE_NO
-					     , NOTICE_TITLE
-					     , CREATE_DATE
-					  FROM NOTICE
-					 WHERE STATUS = 'Y'
-					 ORDER
-	                    BY NOTICE_NO DESC
-	  		       ) A
-	       )
-	       WHERE RNUM BETWEEN ? AND ?
-             AND NOTICE_TITLE
-	        LIKE '%' || ? || '%'
+      FROM (
+            SELECT ROWNUM RNUM, A.*
+            FROM (
+            SELECT
+       NOTICE_NO
+     , NOTICE_TITLE
+     , CREATE_DATE
+  FROM NOTICE
+ WHERE STATUS = 'Y'
+   AND NOTICE_TITLE
+  LIKE '%' || ? || '%'
+ ORDER
+    BY NOTICE_NO DESC
+               ) A
+    )
+    WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <entry key="selectNotice">

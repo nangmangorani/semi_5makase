@@ -75,10 +75,10 @@ public class NoticeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			pstmt.setString(1, searchNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			pstmt.setString(3, searchNo);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -184,6 +184,17 @@ public class NoticeDao {
 		return listCount;
 		
 	}
+
+	public int insertNotice(Connection conn, Notice n) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertQna");
+		
+		
+	}
+
 
 	
 	

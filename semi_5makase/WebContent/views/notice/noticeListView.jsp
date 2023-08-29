@@ -115,7 +115,9 @@
            			<% } %>
                 </tbody>
               </table>
-              
+              <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+              	<button style="margin-left: 900px;" onclick="location.href='<%=contextPath%>/insertView.no'">등록하기</button>
+              <% } %>
               <script>
 		    	$(function() {
 		    		$(".table>tbody>tr").click(function(){
@@ -144,9 +146,13 @@
 		        <% } %>
 		        
 		        <% for(int p = startPage; p <= endPage; p++) { %>
+		        	<% if(p == currentPage) { %>
+		        		<li class="page-item disabled"><a class="page-link"><%= p %></a></li>
+		        	<% } else {%>
 		            <li class="page-item">
 		                <a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= p %>"><%= p %></a>
 		            </li>
+		        	<% } %>
 		        <% } %>
 		        
 		        <% if(currentPage != maxPage) { %>

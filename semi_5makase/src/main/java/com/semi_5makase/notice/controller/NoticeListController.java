@@ -50,7 +50,6 @@ public class NoticeListController extends HttpServlet {
 		listCount = new NoticeService().selectListCount();
 		
 		// * currentPage : 현재 페이지 (즉, 사용자가 요청한 페이지)
-		// 여기수정!!!
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		// *pageLimit : 페이징바의 페이지 최대 개수
