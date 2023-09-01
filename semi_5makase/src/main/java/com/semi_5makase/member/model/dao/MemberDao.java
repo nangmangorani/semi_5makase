@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import org.apache.catalina.filters.AddDefaultCharsetFilter;
 
+import com.semi_5makase.member.model.vo.Attachment;
 import com.semi_5makase.member.model.vo.Member;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
@@ -101,9 +102,94 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return m;
-		
-		
 	}
+	
+	public Member emailcheck(Connection conn ,String memId) {
+		Member m = null;
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("emailcheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, memId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("mem_no"),
+						rset.getString("mem_grade"),
+						rset.getString("mem_id"),
+						rset.getString("mem_pwd"),
+						rset.getString("mem_name"),
+						rset.getString("gender"),
+						rset.getInt("age"),
+						rset.getString("nickname"),
+						rset.getString("email"),
+						rset.getString("phone"),
+						rset.getString("address"),
+						rset.getDate("enroll_date"),
+						rset.getString("status"),
+						rset.getString("quit_reason")
+						);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	public Member emailcheckOne(Connection conn ,String email) {
+		Member m = null;
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("emailcheckOne");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, email);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("mem_no"),
+						rset.getString("mem_grade"),
+						rset.getString("mem_id"),
+						rset.getString("mem_pwd"),
+						rset.getString("mem_name"),
+						rset.getString("gender"),
+						rset.getInt("age"),
+						rset.getString("nickname"),
+						rset.getString("email"),
+						rset.getString("phone"),
+						rset.getString("address"),
+						rset.getDate("enroll_date"),
+						rset.getString("status"),
+						rset.getString("quit_reason")
+						);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	
+	
 	
 	
 	public int insertMember(Connection conn,  Member m) {
@@ -305,14 +391,132 @@ public class MemberDao {
 		}
 		return result;
 		
-		
-		
-		
-		
 	}
 	
 	
+	public int insertProfile(Connection conn, Attachment at, int memNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertProfile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memNo);
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
+	
+	public int updateProfile(Connection conn, Attachment at, int memNo) {
+		
+		
+		int result =0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateProfile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			pstmt.setInt(4, memNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	
+	}
+	
+	public  Attachment selectAttachment(Connection conn, int memNo) {
+		Attachment at = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				at = new Attachment();
+				at.setFileNo(rset.getInt("file_no"));
+				at.setOriginName(rset.getString("origin_name"));
+				at.setChangeName(rset.getString("change_name"));
+				at.setFilePath(rset.getNString("file_path"));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return at;
+		
+	}
+	
+	public Member selectId(Connection conn, String email) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, email);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("mem_no"),
+							   rset.getString("mem_grade"),
+							   rset.getString("mem_id"),
+							   rset.getString("mem_pwd"),
+							   rset.getString("mem_name"),
+							   rset.getString("gender"),
+							   rset.getInt("age"),
+							   rset.getString("nickname"),
+							   rset.getString("email"),
+							   rset.getString("phone"),
+							   rset.getString("address"),
+							   rset.getDate("enroll_date"),
+							   rset.getString("status"),
+							   rset.getString("quit_reason"),
+							   rset.getString("self_introduction"));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+		
+	}
 	
 	
 }

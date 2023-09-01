@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.semi_5makase.member.model.dao.MemberDao;
+import com.semi_5makase.member.model.vo.Attachment;
 import com.semi_5makase.member.model.vo.Member;
 
 public class MemberService {
@@ -30,6 +31,22 @@ public class MemberService {
 		return m;
 		
 	}
+	
+	public Member emailcheckOne(String email) {
+		Connection conn = getConnection();
+		Member m  = new MemberDao().emailcheckOne(conn ,email);
+		close(conn);
+		return m;
+	}
+	
+	public Member emailcheck(String memId) {
+		Connection conn = getConnection();
+		Member m  = new MemberDao().emailcheck(conn ,memId);
+		close(conn);
+		return m;
+	}
+	
+	
 	
 	public int insertMember(Member m) {
 		Connection conn = getConnection();
@@ -117,6 +134,67 @@ public class MemberService {
 	}
 	
 	
+	public int insertProfile(Attachment at, int memNo) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().insertProfile(conn, at,memNo);
+		
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+		
+	}
 	
+	
+	public int updateProfile(Attachment at, int memNo) {
+		Connection conn = getConnection();
+		
+		int result = 0;
+		
+		if(at != null) {
+			if(at.getFileNo() != 0) {
+				result = new MemberDao().updateProfile(conn,at, memNo);
+			}else {
+				result = new MemberDao().insertProfile(conn, at, memNo);
+			}
+			
+		}
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+		
+		
+	}
+	
+	public Attachment selectAttachment(int memNo) {
+		Connection conn = getConnection();
+		Attachment at = new MemberDao().selectAttachment(conn, memNo);
+		
+		close(conn);
+		return at;
+	}
+	
+
+	public Member selectId(String email) {
+		Connection conn = getConnection();
+		Member m = new MemberDao().selectId(conn, email);
+		
+		close(conn);
+		
+		return m;
+		
+	}
 	
 }

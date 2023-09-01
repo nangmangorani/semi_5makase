@@ -1,5 +1,8 @@
+<%@page import="com.semi_5makase.member.model.vo.Attachment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,15 +11,16 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 
 </head>
 <style>
     #myPageWrap{
         width: 1000px;
         height: 800px;
-        /* border: 1px solid red; */
-        margin-left: 480px;
+
+        margin: auto;
         
     }
     #myPageHead{
@@ -101,25 +105,28 @@
 		String email = loginMember.getEmail();
 		String phone = loginMember.getPhone();
 		String address = loginMember.getAddress();
-		
+		int memNo = loginMember.getMemNo();
+
 	%>
 	
 
     <div id="myPageWrap">
         <div id="myPageHead" >
-            
-         
         </div>
-		<form id="myPage-form" action="<%= contextPath%>/update.me" method="post" >
-			<input type="hidden" name="memId" value="<%=memId %>" >
+		<form id="myPage-form" action="<%= contextPath%>/update.me" method="post"  enctype="multipart/form-data" >
+			<input type="hidden" name="memId" value="<%= memId %>">
+			<input type="hidden" name="memNo" value="<%= memNo %>">
+			
+			
+			
         <div id="myPageContent" style="margin-left: 100px;"  >
             <table style=" width: 800px; height: 500px;" >
                 <tr>
                     <th>프로필사진</th>
                     <td>
                         <div id="imagePreview" >
-                            <img id="preview" src="" alt="Preview" style="width: 100px; height: 100px; border-radius: 50%;">
-                            <input type="file" id="profileImage" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage()">
+                            <img id="preview"  src="" alt="Preview" style="width: 100px; height: 100px; border-radius: 50%;">
+                            <input type="file" id="profileImage" name="upfile" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage()">
                         </div>
                     </td>
                 </tr>       

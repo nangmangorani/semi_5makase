@@ -46,7 +46,7 @@ public class Member {
 		this.selfIntroduction = selfIntroduction;
 	}
 
-
+	
 
 	public Member(int memNo, String memGrade, String memId, String memPwd, String memName, String gender, int age,
 			String nickname, String email, String phone, String address, Date enrollDate, String status,

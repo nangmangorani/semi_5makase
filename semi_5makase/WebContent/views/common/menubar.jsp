@@ -187,14 +187,23 @@
                                 <div class="member_login_btn"> 
         
                                     <input type="submit" class="btn btn-secondary" id="btn-login" value="로그인">
-                                    <input type="button" class="btn btn-secondary" value="회원가입" onclick="enrollPage()">
-                    
+                                    <input type="button" class="btn btn-secondary" value="회원가입" onclick="enrollPage()"> <br>
+                                    <input type="button" class="btn btn-sm" value="아이디찾기" onclick="enrollPage1()">
+                                    <input type="button" class="btn btn-sm" value="비밀번호 찿기" onclick="enrollPage2()">
+                    				
                                 </div>
                                 
                                 <script >
 						            function enrollPage(){
-						            	
 						            	location.href = "<%=contextPath%>/agreement.me";
+						            }
+									function enrollPage1(){
+						            	
+						            	location.href = "<%=contextPath%>/searchId.me";
+						            }
+									function enrollPage2(){
+						            	
+						            	location.href = "<%=contextPath%>/searchPwdOne.me";
 						            }
 						        </script>
                             </form>
@@ -215,7 +224,6 @@
     
                 document.getElementById('modal_btn').addEventListener('click', onClick);
                 document.querySelector('.modal_close').addEventListener('click', offClick);
-    
         </script>
     </body>
     </html>
