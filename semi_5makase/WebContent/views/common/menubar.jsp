@@ -1,3 +1,5 @@
+<%@page import="com.semi_5makase.board.model.vo.Faq"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -5,6 +7,7 @@
 	String contextPath = request.getContextPath(); 
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String alertMsg = (String)session.getAttribute("alertMsg");
+	
 %>
     <!DOCTYPE html>
     <html lang="en">
@@ -201,8 +204,6 @@
         </div>
     
         <script>
-            window.onload = function () {
-    
                 function onClick() {
                     document.querySelector('.modal_wrap').style.display = 'block';
                     document.querySelector('.black_bg').style.display = 'block';
@@ -215,7 +216,6 @@
                 document.getElementById('modal_btn').addEventListener('click', onClick);
                 document.querySelector('.modal_close').addEventListener('click', offClick);
     
-            };
         </script>
     </body>
     </html>

@@ -20,7 +20,7 @@
             font-style: normal;
             }
             div {
-                /* border: 1px solid black; */
+                border: 1px solid black;
                 box-sizing: border-box;
                 font-family: 'SUITE-Regular';
             }
@@ -108,15 +108,38 @@
             }
             
             #btnToNoticeList{
-                margin-top: 70px;
+                /*margin-top: 70px;
                 border: transparent;
                 width: 100px;
                 height: 40px;
                 background-color: rgb(21, 98, 189);
                 color: white;
                 border-radius: 10px;
-                margin-left: 580px;
-                
+                margin-left: 580px;*/
+          
+            }
+            
+            #btnUpdateNotice{
+            	/*margin-top: 70px;
+                border: transparent;
+                width: 100px;
+                height: 40px;
+                background-color: rgb(21, 98, 189);
+                color: white;
+                border-radius: 10px;
+                margin-left: 500px;*/
+            }
+
+            #btnUpdateNotice{
+                float: right;
+            }
+
+            #btnDeleteNotice{
+                float: right;
+            }
+
+            #btnToNoticeList{
+                float: right;
             }
     
             #noticeDate {
@@ -171,20 +194,23 @@
                     <p>자주 묻는 질문</p>
                 </div>
                 <div id="content_main">
-                    <div id="noticeTitle"> <br>
-                        <h2><%= n.getNoticeTitle() %></h2>
+                	<div>
+                           <div id="noticeTitle" name="noticeTitle"> <br>
+                               <h2><%= n.getNoticeTitle() %></h2>
+                           </div>
+                           <div id="noticeDate">
+                               <span><%= n.getCreateDate() %></span> &nbsp;
+                               <span>조회수</span>
+                               <%= n.getNoticeViews() %>
+                           </div>
+                           <div id="noticeMain" name="noticeContent" style="word-break:break-all;"> <br>
+                               <%= n.getNoticeContent() %>
+                           </div>
+                        <button id="btnUpdateNotice" onclick="location.href='<%=contextPath%>/updateview.no?cpage=<%=n.getNoticeNo() %>'">수정하기</button>
+                   		<button id="btnDeleteNotice" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">삭제하기</button>
+                        <button id="btnToNoticeList" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">목록으로</button>
                     </div>
-                    <div id="noticeDate">
-                        <%= n.getCreateDate() %>
-                        <span>조회수</span>
-                        <%= n.getNoticeViews() %>
-                    </div>
-                    <div id="noticeMain" style="word-break:break-all;"> <br>
-                        <%= n.getNoticeContent() %>
-                    </div>
-                    <button id="btnToNoticeList" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">목록으로</button>
                 </div>
-            </div>
             <div id="footer">
                 <div id="footer_1">
                     <a href=""> 데이터 제휴 문의 </a>

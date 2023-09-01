@@ -74,6 +74,20 @@ public class QnaListController extends HttpServlet {
 		System.out.println(listCount + "," +  currentPage + "," +  pageLimit + "," + boardLimit + "," + maxPage + "," + startPage + "," + endPage);
 		ArrayList<Qna> list = new QnaService().selectQnaList(pi);
 		
+		for(Qna q: list) {
+			if(q.getReply().equals("Y")) {
+				q.setReply("답변완료");
+			} else {
+				q.setReply("진행중");
+			}
+			
+			if(q.getOpen().equals("Y")) {
+				q.setOpen("공개");
+			} else {
+				q.setOpen("비공개");
+			}
+		}
+		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/board/qnaListView.jsp").forward(request, response);

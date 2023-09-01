@@ -107,7 +107,7 @@
         
         .main_image_text {
             position: absolute;
-            top: 15%;
+            top: 8%;
             left: 50%;
             transform: translate( -50%, -50% );
             color: white;
@@ -140,7 +140,23 @@
             margin-top: 10px;
         }
 
+        #searchBtn{
+            border: transparent;
+            border-radius: 5px;
+            float: right;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
+        }
 
+        #searchFaq{
+            width: 200px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
 
 
         .CFaqTableItem__list {
@@ -153,13 +169,14 @@
 
         .CFaqTableItem__category{
             width: 160px;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: 500;
             text-align: center
         }
 
         .CFaqTableItem__question {
             padding: 0 10px;
-            font-size: 14px;
+            font-size: 15px;
             flex: 1;
             margin-top: 15px;
         }
@@ -172,8 +189,8 @@
 
         .CFaqTableItem__contents {
             padding: 24px 10px;
-            font-size: 14px;
-            color: #6e6e6e
+            font-size: 15px;
+            color: #585858
         }
 
         .CFaqTableItem__contents-box {
@@ -228,7 +245,17 @@
             display: none;
         }
 
-    
+        #enrollBtn{
+            border: transparent;
+            border-radius: 5px;
+            margin-top: 11px;
+            float: left;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
+        }
         
     </style>
 </head>
@@ -237,64 +264,45 @@
 <body>
 	<%@ include file = "../common/menubar.jsp" %>
     <div class="wrap">
-        <div id="header">
-            <div id="logo">
-                <img src="./이눔세끼화이팅/resources/img/logo.png">
-            </div>
-            <div id="search">
-                <input type="text" name="" id="searchTab">
-                <input type="submit" name="" id="">
-            </div>
-            <div id="login"></div>
-        </div>
-        <div id="content">
+                <div id="content">
             <div id="picture">
-                <img src="./이눔세끼화이팅/resources/img/faq4.png" alt="">
+                <img src="resources/img/faq4.png" alt="">
                 <h2 class="main_image_text" style="font-size:40px">자주 묻는 질문</h2>
             </div>
             
-           
-            
+                       
 	            <% for(Faq f : list) {%>
 	            <div id="faqMain">
 	                <div class="CFaqTableItem">
 	                    <div class="CFaqTableItem__list">
 	                        <em class="CFaqTableItem__category"><%= f.getFaqNo() %></em>
 	                        <p class="CFaqTableItem__question"><%= f.getFaqTitle() %></p>
-	                        <img class="arrow down" src="./이눔세끼화이팅/resources/img/아래쪽.png" alt="">
-	                        <img class="arrow up hidden" src="./이눔세끼화이팅/resources/img/up.png">
+	                        <img class="arrow down" src="resources/img/아래쪽.png" alt="">
+	                        <img class="arrow up hidden" src="resources/img/up.png">
 	
 	                    </div>
 	                    <div class="CFaqTableItem__contents-box">
 	                        <em class="CFaqTableItem__answer">답변</em>
 	                        <div class="CFaqTableItem__contents">
 	                            <%= f.getFaqContent() %>
-	                            <span style="color:#3498db;"><strong><a href="https://www.musinsa.com/app/cs/faq?idx=59">[아이디/비밀번호 수정 FAQ 바로 가기]</a><br>
-	                            <a href="https://www.musinsa.com/app/cs/faq?idx=58">[회원정보 수정 FAQ 바로 가기]</a></strong></span></p>
+	                            
 	                        </div>
 	                    </div>
 	                </div>
-	                
 	                <% } %>
-               
+	                	<% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+		                	<button id="enrollBtn" onclick="location.href='<%=contextPath%>/insertview.faq'">작성하기</button>
+	                <% } %>
+            
                 
+
                 <div id="searchTab2">
 				    <form id="searchForm" action="<%=contextPath%>/list.faq" method="get">
 				        <input type="text" id="searchFaq" name="searchFaq">
 				        <input type="submit" value="검색" id="searchBtn">
 				    </form>
 				</div>
-				
-				<script>
-				    document.getElementById("searchForm").addEventListener("submit", function(event) {
-				        var searchValue = document.getElementById("searchFaq").value;
-				        var actionUrl = "<%=contextPath%>/list.faq?searchFaq=" + encodeURIComponent(searchValue);
-				        this.action = actionUrl;
-				    });
-				</script>
-
-                
-            </div>
+				            </div>
             
         </div>
         

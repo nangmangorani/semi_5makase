@@ -34,13 +34,20 @@ public class NoticeInsertController extends HttpServlet {
 		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		String NoticeWriter = request.getParameter("noticeWriter");
 		
 		Notice n = new Notice();
 		
 		n.setNoticeTitle(title);
 		n.setNoticeContent(content);
+		n.setNoticeWriter(NoticeWriter);
+		
 		
 		int result = new NoticeService().insertNotice(n);
+		
+		if(result > 0) {
+			response.sendRedirect(request.getContextPath() + "/list.no?cpage=1");
+		}
 		
 	}
 

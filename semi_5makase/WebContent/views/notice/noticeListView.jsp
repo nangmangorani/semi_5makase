@@ -11,6 +11,8 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	String searchNo = request.getParameter("searchNo");
+	if(searchNo == null) {searchNo = "";}
 %>    
     
 <!DOCTYPE html>
@@ -80,8 +82,10 @@
 
 		<form action="<%= contextPath %>/list.no">
 		    <div id="search">
-		        <input type="text" id="noticeSearch" name="searchNo">
-		        <input type="hidden" name="cpage" value="<%= currentPage %>">
+		        <!-- 검색어 입력 필드 -->
+		        <input type="text" id="noticeSearch" name="searchNo" value="<%= searchNo %>">
+		        <!-- 현재 페이지 정보 유지 -->
+		        <input type="hidden" name="cpage" value="1">
 		        <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
 		    </div>
 		</form>
@@ -140,7 +144,7 @@
 
                 <ul class="pagination pagination-sm" style="margin-left: 460px;">
                  <% if(currentPage != 1) { %>
-		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage - 1 %>"><</a></li>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage - 1 %>&searchNo=<%= searchNo %>"><</a></li>
 		        <% } else { %>
 		            <li class="page-item disabled"><a class="page-link"><</a></li>
 		        <% } %>
@@ -150,13 +154,13 @@
 		        		<li class="page-item disabled"><a class="page-link"><%= p %></a></li>
 		        	<% } else {%>
 		            <li class="page-item">
-		                <a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= p %>"><%= p %></a>
+		                <a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= p %>&searchNo=<%= searchNo %>"><%= p %></a>
 		            </li>
 		        	<% } %>
 		        <% } %>
 		        
 		        <% if(currentPage != maxPage) { %>
-		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage + 1 %>">></a></li>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage + 1 %>&searchNo=<%= searchNo %>">></a></li>
 		        <% } else { %>
 		            <li class="page-item disabled"><a class="page-link">></a></li>
 		        <% } %>

@@ -43,7 +43,15 @@ public class NoticeService {
 		return list;
 	}
 	
-	
+	public int searchListCount(String searchNo) {
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().searchListCount(conn, searchNo);
+		
+		close(conn);
+		
+		return result;
+	}
 	
 	
 	
@@ -121,7 +129,23 @@ public class NoticeService {
 	}
 
 
-
+	public int updateNotice(Notice n) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().updateNotice(conn, n);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
 
 
 	

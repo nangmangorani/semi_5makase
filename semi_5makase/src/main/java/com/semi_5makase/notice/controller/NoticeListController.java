@@ -34,6 +34,7 @@ public class NoticeListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String searchNo = request.getParameter("searchNo");
 		// 페이징처리
 		int listCount;   // 현재 총 게시글 개수
 		int currentPage; // 현재 페이지(즉, 사용자가 요청한 페이지)
@@ -47,7 +48,12 @@ public class NoticeListController extends HttpServlet {
 		
 		
 		// * listCount : 총 게시글 개수
-		listCount = new NoticeService().selectListCount();
+		if (searchNo != null && !searchNo.isEmpty()) {
+			listCount = new NoticeService().searchListCount(searchNo);
+			System.out.println(listCount+ "개수");
+		} else {
+			listCount = new NoticeService().selectListCount();
+		}
 		
 		// * currentPage : 현재 페이지 (즉, 사용자가 요청한 페이지)
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
@@ -69,7 +75,7 @@ public class NoticeListController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		String searchNo = request.getParameter("searchNo");
+		
 		ArrayList<Notice> list;
 		if (searchNo != null && !searchNo.isEmpty()) {
 	    	list = new NoticeService().searchNoticeList(pi,searchNo);
