@@ -1,6 +1,8 @@
+<%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	Member loginMember = (Member)session.getAttribute("loginMember");
 	String contextPath = request.getContextPath(); 
 %>
 <!DOCTYPE html>
@@ -32,33 +34,70 @@
             margin: auto;
         }
 
-        #title{
-            width: 300px;
+        .insertNoImg{
+            width: 100%;
+            height: 200px;
+            background-color: lightgray;
+            padding-left: 330px;
+            padding-top: 70px;
         }
 
-        textarea{
-            resize: none;
-            width: 300px;
+        .insertNoForm{
+            width: 70%;
+            height: 600px;
+            padding-left: 80px;
+            padding-top: 20px;
+            margin: auto;
         }
 
-        #noticeBtn{
-            margin-left: 345px;
+        .noTitle{
+            width: 500px;
+        }
+
+        .noContent{
+            width: 500px;
+            height: 400px;
+        }
+
+        .btn1{
+            margin-left: 350px;
+            margin-right: 10px;
+        }
+
+        .btn1, .btn2{
+            margin-top: 20px;
+        }
+
+        .btn:hover{
+            background-color: lightgray;
+        }
+
+        .noTop{
+            font-size: 35px;
         }
     </style>
 </head>
 <body>
 
     <div class="wrap">
-        <div>
-            <form action="<%= contextPath %>/insert.no" method="post">
-                <span>공지사항 제목 </span>
-                <input type="text" name="title" id="title"> <br><br>
+        <div class="insertNoImg">
+            <span class="noTop">
+                공지사항 추가하기
+            </span>
+        </div>
+            <div class="insertNoForm">
+                <form action="<%= contextPath %>/insert.no" method="post">
+                    <input type="hidden" name="noticeWriter" id="title" value="<%= loginMember.getMemNo()%>">
+                    <span>제목</span> <br>
+                    <input type="text" name="title" id="title" class="noTitle"> <br><br>
 
-                <span>공지사항 내용 </span>
-                <textarea name="content" cols="30" rows="10"></textarea> <br><br>
-                
-                <input type="submit" name="" id="noticeBtn">
-            </form>
+                    <span>내용</span> <br>
+                    <textarea name="content" cols="30" rows="10"  class="noContent"></textarea> <br><br>
+                    
+                    <button type="submit" class="btn1">작성하기</button>
+                    <button type="reset" class="btn2" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">취소하기</button>
+                </form>
+            </div>
         </div>
     </div>
 

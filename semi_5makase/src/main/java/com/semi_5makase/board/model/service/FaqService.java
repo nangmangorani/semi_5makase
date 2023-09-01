@@ -31,16 +31,29 @@ public class FaqService {
 		return list;
 		
 	}
+
+	/**
+	 * 자주묻는질문 추가하기
+	 * @param f
+	 * @return
+	 */
+	public int insertFaq(Faq f) {
+		Connection conn = getConnection();
+		
+		int result = new FaqDao().insertFaq(conn, f);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
 	
-//	public ArrayList<Faq> searchFaqList(String searchFaq) {
-//		
-//		Connection conn = getConnection();
-//		
-//		ArrayList<Faq> list = new FaqDao().searchFaqList(conn, searchFaq);
-//		
-//		close(conn);
-//		
-//		return list;
-//	}
+	
+
 
 }

@@ -1,9 +1,12 @@
+<%@page import="com.semi_5makase.common.model.vo.Attachment"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.semi_5makase.board.model.vo.Qna"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
 	Qna q = (Qna)request.getAttribute("q");
+	ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +27,7 @@
         }
 
         div {
-            /*border: 1px solid red;*/
+            /* border: 1px solid red; */
             font-family: 'SUITE-Regular';
             box-sizing: border-box;
         }
@@ -129,7 +132,7 @@
         #qnaDetail_4{width: 20%;}
 
         #qnaContent{
-            height: 80%;
+            height: 100%;
         }
 
         #qnaContent>div{
@@ -140,13 +143,21 @@
 
 
         #qnaContent_1{
-            height: 90%;
+            height: auto;
             border-bottom: 1px solid black;
         }
 
         #qnaContent_2{
-            height: 10%;
+            height: auto%;
             border-bottom: 1px solid black;
+        }
+
+        #qnaContent_3{
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid black;
+            float:left;
+            
         }
 
         #listBtn{
@@ -205,7 +216,13 @@
                             <div id="qnaContent_1"><%= q.getBoardContent() %></div>
                             <div id="qnaContent_2">
                                 <b>첨부파일</b>
-                                첨부파일..
+                                <% for(Attachment at : list) {%>
+                                	<a download="<%= at.getOriginName() %>" href="<%=contextPath%>/<%=at.getFilePath()%>/<%=at.getChangeName()%>"><%= at.getOriginName() %></a> &nbsp;
+                                <% } %>
+                            </div>
+                            <div id="qnaContent_3">
+                                <b>답변</b>
+                                <span></span>
                             </div>
                         </div>
                     </div>

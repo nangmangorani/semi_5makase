@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.semi_5makase.board.model.vo.Faq;
-import com.semi_5makase.board.model.vo.Qna;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
@@ -86,6 +85,37 @@ public class FaqDao {
 		}
 		
 		return list;
+		
+	}
+
+	/**
+	 * 자주묻는질문 추가하기
+	 * @param conn
+	 * @param f
+	 * @return
+	 */
+	public int insertFaq(Connection conn, Faq f) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertFaq");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, f.getFaqTitle());
+			pstmt.setString(2, f.getFaqContent());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+		
 		
 	}
 
