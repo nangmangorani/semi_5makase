@@ -10,9 +10,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
     	crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    	crossorigin="anonymous"></script>
     <style>
         a{
             text-decoration: none;
@@ -40,7 +44,7 @@
 
         .outline{ 
             border: 1px solid rgb(230, 230, 230);
-            width: 1000px; height: 800px; margin: auto;
+            width: 1000px; height: 850px; margin: auto;
         }
         .outline>div{
             /* border: 1px solid red; */
@@ -106,7 +110,9 @@
     </style>
 </head>
 <body>
-
+	
+	<%@ include file ="../common/menubar.jsp" %>
+	
     <div class="outline">
         
         <!-- -------------헤더------------- -->
@@ -135,7 +141,7 @@
                                 <ul class="list-group">
                                 
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="/5makase/memberList.ad">회원 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
                                     
                                     
                                     <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
@@ -156,7 +162,7 @@
                   <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul class="list-group">
-                            <li class="list-group-item" style="text-align: center;"><a href="">1:1 문의 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="">Q&A 문의 관리</a></li>
                             <li class="list-group-item" style="text-align: center;"><a href="">공지사항 관리</a></li>
                             <li class="list-group-item" style="text-align: center;"><a href="">자주 묻는 질문 관리</a></li>
                         </ul>
@@ -172,10 +178,12 @@
                     <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
                           <ul class="list-group">
-                              <li class="list-group-item" style="text-align: center;"><a href="">음식점 등록</a></li>
-                              <li class="list-group-item" style="text-align: center;"><a href="">음식점 리스트</a></li>
-                              <li class="list-group-item" style="text-align: center;"><a href="">등록 요청 리스트</a></li>
-                              <li class="list-group-item" style="text-align: center;"><a href="">수정 요청 리스트</a></li>
+                              <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
+                              
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRquestList.ad">등록 요청 리스트</a></li>
+                              
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
                           </ul>
                       </div>
                     </div>
@@ -185,15 +193,15 @@
 
             <!-- -------------컨텐츠 헤더------------- -->
         <div class="content">
-        	<form action="/5makase/memberUpdate.ad">
+        	<form action="<%= contextPath %>/memberUpdate.ad?num=<%= m.getMemNo() %>" method="post">
         		<input type="hidden" name="num" value=<%= m.getMemNo() %>>
                 <div id="content_1">
                     <h4 style="font-weight: bold;" align="center">회원 정보 상세</h4>
                 </div>
                 <div id="content_2" style="margin-top: 30px;"> 
                     <div align="center">
-                        <img src="../resources/img/rdetail_user.png" style="width: 45px;">
-                        <table class="table" style="width: 300px;">
+                        <img src="../../resources/img/rdetail_user.png" style="width: 45px;">
+                        <table class="table" style="width: 350px;">
                             <tr>
                                 <th scope="col">회원명</th>
                                 <td><%= m.getMemName() %></td>
@@ -220,23 +228,21 @@
                             </tr>
                             <tr>
                                 <th scope="col">회원등급</th>
-                                <td><input type="text" name="grade" value="<%= m.getMemGrade() %>" required></td>
+                                <td><input type="text" name="grade" value="<%= m.getMemGrade() %>"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col">회원상태</th>
+                                <td><input type="text" name="status" value="<%= m.getStatus() %>"></td>
                             </tr>
                         </table> 
                     </div>
-                    <div align="right" style="margin: 5px;">
-                        <button type="button" class="btn btn-sm btn-secondary" onclick="history.back();">취소하기</button>
-                        <button type="submit" class="btn btn-sm btn-primary" >수정하기</button>
-                    </div>
                 </div>
-            
+	           <div align="right" style="padding-right: 30px;">
+	               <button type="button" class="btn btn-sm btn-secondary" onclick="history.go(-1);">취소하기</button>
+	               <button type="submit" class="btn btn-sm btn-primary">수정하기</button>
+	           </div>
 		    </form>
         </div>
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-    	crossorigin="anonymous"></script>
 </body>
 </html>

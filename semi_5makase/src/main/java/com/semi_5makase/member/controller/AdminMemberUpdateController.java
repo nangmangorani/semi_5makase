@@ -1,6 +1,8 @@
 package com.semi_5makase.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,7 @@ public class AdminMemberUpdateController extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String grade = request.getParameter("grade");
+		String status = request.getParameter("status");
 		
 		Member m = new Member();
 		m.setMemNo(no);
@@ -41,14 +44,17 @@ public class AdminMemberUpdateController extends HttpServlet {
 		m.setPhone(phone);
 		m.setEmail(email);
 		m.setMemGrade(grade);
+		m.setStatus(status);
 		
 		int result = new MemberService().updateAdminMember(m);
 		
 		if(result > 0) {
-//			request.getSession().setAttribute("alertMsg", "회원정보를 수정하였습니다.");
-			response.sendRedirect("/5makase/memberDetail.ad?num=" + no);
+			request.getSession().setAttribute("alertMsg", "회원정보를 수정하였습니다.");
+			response.sendRedirect(request.getContextPath() + "/memberDetail.ad?num=" + no);
 		} else {
-			
+			request.setAttribute("errorMsg", "회원 정보 수정에 실패했습니다.");
+			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+			view.forward(request, response);
 		}
 		
 	}

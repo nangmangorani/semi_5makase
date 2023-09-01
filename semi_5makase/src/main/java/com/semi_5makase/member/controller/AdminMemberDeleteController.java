@@ -1,6 +1,8 @@
 package com.semi_5makase.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,10 +35,12 @@ public class AdminMemberDeleteController extends HttpServlet {
 		int result = new MemberService().deleteAdminMember(no);
 		
 		if(result > 0) {
-//			request.getSession().setAttribute("alertMsg", "회원을 삭제하였습니다.");
-			response.sendRedirect("/5makase/memberList.ad");
+			request.getSession().setAttribute("alertMsg", "회원을 삭제하였습니다.");
+			response.sendRedirect(request.getContextPath() + "/memberList.ad");
 		} else {
-			
+			request.setAttribute("errorMsg", "회원 삭제를 실패했습니다.");
+			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+			view.forward(request, response);
 		}
 	}
 

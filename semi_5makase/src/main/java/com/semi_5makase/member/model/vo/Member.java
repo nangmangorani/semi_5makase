@@ -41,7 +41,7 @@ public class Member {
 		this.quitReason = quitReason;
 	}
 	
-	public Member(int memNo, String memGrade, String memName, String gender, String phone, String address) {
+	public Member(int memNo, String memGrade, String memName, String gender, String phone, String address, String status) {
 		super();
 		this.memNo = memNo;
 		this.memGrade = memGrade;
@@ -49,10 +49,11 @@ public class Member {
 		this.gender = gender;
 		this.phone = phone;
 		this.address = address;
+		this.status = status;
 	}
 	
 	public Member(int memNo, String memName, String memId, String memPwd, String phone, String address, String email,
-			String memGrade) {
+			String memGrade, String status) {
 		super();
 		this.memNo = memNo;
 		this.memName = memName;
@@ -62,6 +63,7 @@ public class Member {
 		this.address = address;
 		this.email = email;
 		this.memGrade = memGrade;
+		this.status = status;
 	}
 
 	public int getMemNo() {

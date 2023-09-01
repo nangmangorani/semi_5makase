@@ -129,6 +129,12 @@
         
     </style>
     <body>
+    	<% if(alertMsg != null) { %>
+			<script>
+				alert("<%= alertMsg %>");
+			</script>
+			<% session.removeAttribute("alertMsg"); %>
+		<% } %>
         <div class="menubar-area">
             <div class="logo-area">
                 <img src="resources/img/logo.png">

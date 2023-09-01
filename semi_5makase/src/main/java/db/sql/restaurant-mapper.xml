@@ -63,5 +63,302 @@
 		 WHERE REST_NO = ?  
 	</entry>
 	
+	<entry key="adminSelectRestList">
+		SELECT REST_NO
+		     , REST_NAME
+		     , REST_ADDRESS
+		     , REST_PHONE
+		     , CATEGORY_NAME
+		     , STATUS
+		  FROM RESTAURANT
+		  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
+		  ORDER BY REST_NO
+	</entry>
 	
+	<entry key="adminSelectRestListPaging">
+		SELECT *
+		  FROM (
+		  	SELECT ROWNUM RNUM, A.*
+		  	FROM (
+		        SELECT REST_NO
+				     , REST_NAME
+				     , REST_ADDRESS
+				     , REST_PHONE
+				     , CATEGORY_NAME
+				     , STATUS
+				  FROM RESTAURANT
+				  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
+				  ORDER BY REST_NO
+                 )A
+	        )
+	     WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="adminSelectCategory">
+		SELECT 
+		       CATEGORY_NO
+		      ,CATEGORY_NAME
+		  FROM FOOD_CATEGORY
+	</entry>
+
+	<entry key="adminSelectTv">
+		SELECT 
+		       TV_NO
+		      ,TV_NAME
+		  FROM TV
+	</entry>
+	
+	<entry key="adminSelectRestaurant">
+		SELECT 
+		         REST_NO
+		        ,CATEGORY_NAME
+		        ,TV_NAME
+		        ,REST_NAME
+		        ,REST_ADDRESS
+		        ,REST_PHONE
+		        ,PARKING
+		        ,INTRO
+		        ,STATUS
+		        ,MENU
+		        ,PRICE
+		        ,MENU_GRADE
+		        ,OPENING_TIME
+		        ,REST_TIME
+		        ,BREAK_TIME
+		  FROM RESTAURANT
+		  JOIN MENU USING (REST_NO)
+		  JOIN OPEN_TIME USING (REST_NO)
+		  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
+		  JOIN TV USING (TV_NO)
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminSelectRestaurantMenu">
+		SELECT 
+		         REST_NO
+		        ,MENU
+		        ,PRICE
+		        ,MENU_GRADE
+		  FROM MENU
+		  JOIN RESTAURANT USING (REST_NO)
+		  WHERE REST_NO = ?
+	</entry>
+
+	<entry key="adminSelectRestRequest">
+		SELECT
+	       REST_NO
+	      ,REST_NAME
+	  FROM RESTAURANT
+	  
+	</entry>
+	
+	<entry key="adminSelectRestChange">
+		SELECT
+	       UPDATE_NO
+	      ,UPDATE_CONTENT
+	      ,REST_NO
+	      ,REST_NAME
+	  FROM UPDATE_REST
+	  JOIN RESTAURANT USING (REST_NO)
+	  ORDER BY UPDATE_NO
+	</entry>
+	
+	<entry key="adminSelectAttatchment">
+		SELECT
+		        FILE_NO
+		      , ORIGIN_NAME
+		      , CHANGE_NAME
+		      , FILE_PATH
+		  FROM ATTACHMENT
+		 WHERE REF_BNO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="adminInsertRestaurant">
+		INSERT
+		  INTO RESTAURANT 
+		  (
+		     REST_NO
+		    ,REST_NAME
+		    ,REST_ADDRESS
+		    ,REST_PHONE
+		    ,PARKING
+		    ,INTRO
+		    ,STATUS
+		    ,CATEGORY_NO
+		    ,TV_NO
+		   )
+		  VALUES
+		  (
+		    SEQ_RESTNO.NEXTVAL
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   )		
+	</entry>
+	
+	<entry key="adminInsertAttachment">
+	INSERT
+	  INTO ATTACHMENT
+	  (
+	     FILE_NO
+	    ,REF_BNO
+	    ,ORIGIN_NAME
+	    ,CHANGE_NAME
+	    ,FILE_PATH
+	    ,STATUS
+	  )
+	  VALUES
+	  (
+	     SEQ_FNO.NEXTVAL
+	    ,SEQ_RESTNO.CURRVAL
+	    ,?
+	    ,?
+	    ,?
+	    ,'Y'
+	  )
+	</entry>
+
+	<entry key="adminInsertMenu1">
+		INSERT
+		  INTO MENU
+		  (
+		  	 REST_NO
+		  	,FILE_NO
+		    ,MENU
+		    ,PRICE
+		    ,MENU_GRADE
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,SEQ_FNO.CURRVAL
+		   ,?
+		   ,?
+		   ,1
+		   )
+	</entry>
+
+	<entry key="adminInsertMenu2">
+		INSERT
+		  INTO MENU
+		  (
+		  	 REST_NO
+		  	,FILE_NO
+		    ,MENU
+		    ,PRICE
+		    ,MENU_GRADE
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,SEQ_FNO.CURRVAL
+		   ,?
+		   ,?
+		   ,2
+		   )
+	</entry>
+
+	<entry key="adminInsertMenu3">
+		INSERT
+		  INTO MENU
+		  (
+		  	 REST_NO
+		  	,FILE_NO
+		    ,MENU
+		    ,PRICE
+		    ,MENU_GRADE
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,SEQ_FNO.CURRVAL
+		   ,?
+		   ,?
+		   ,3
+		   )
+	</entry>
+
+	<entry key="adminInsertTime">
+		INSERT
+		  INTO OPEN_TIME
+		  (
+		  	 REST_NO
+		    ,OPENING_TIME
+		    ,REST_TIME
+		    ,BREAK_TIME
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,?
+		   ,?
+		   ,?
+		   )
+	</entry>
+	
+	<entry key="adminUpdateRestaurant">
+        UPDATE RESTAURANT
+		   SET REST_NAME = ?
+               ,CATEGORY_NO = ?
+               ,TV_NO = ?
+               ,REST_ADDRESS = ?
+               ,REST_PHONE = ?
+               ,PARKING = ?
+               ,INTRO = ?
+               ,STATUS = ?
+         WHERE REST_NO = ? 
+	</entry>
+	
+	<entry key="adminUpdateAttachment">
+		UPDATE ATTACHMENT
+		   SET ORIGIN_NAME = ?
+		      ,CHANGE_NAME = ?
+		      ,FILE_PATH = ?
+		 WHERE REF_BNO = ?
+	</entry>
+	
+	<entry key="adminUpdateMenu1">
+		UPDATE MENU
+		   SET  MENU = ?
+		       ,PRICE = ?
+		       ,MENU_GRADE = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminUpdateMenu2">
+		UPDATE MENU
+		   SET  MENU = ?
+		       ,PRICE = ?
+		       ,MENU_GRADE = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminUpdateMenu3">
+		UPDATE MENU
+		   SET  MENU = ?
+		       ,PRICE = ?
+		       ,MENU_GRADE = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminUpdateTime">
+		UPDATE OPEN_TIME
+		   SET	OPENING_TIME = ?
+		        ,REST_TIME = ?
+		    	,BREAK_TIME = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="selectListCount">
+		SELECT
+       		COUNT(*) count
+  		  FROM RESTAURANT
+ 		 WHERE STATUS = 'Y'
+	</entry>
 </properties>

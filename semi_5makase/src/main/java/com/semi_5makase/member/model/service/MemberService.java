@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.semi_5makase.member.model.dao.MemberDao;
 import com.semi_5makase.member.model.vo.Member;
+import com.semi_5makase.member.model.vo.Report;
 
 public class MemberService {
 	
@@ -66,5 +67,16 @@ public class MemberService {
 		}
 		close(conn);
 		return result;
+	}
+	
+	public ArrayList<Report> adminSelectReportList(){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new MemberDao().adminSelectReportList(conn);
+		
+		close(conn);
+		
+		return list;
 	}
 }

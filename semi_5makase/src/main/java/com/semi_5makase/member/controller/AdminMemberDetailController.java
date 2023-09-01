@@ -36,9 +36,8 @@ public class AdminMemberDetailController extends HttpServlet {
 			request.setAttribute("m", m);
 			request.getRequestDispatcher("views/admin/adminMemberDetail.jsp").forward(request, response);
 		} else {
-			request.setAttribute("errorMsmg", "조회 실패");
+			request.setAttribute("errorMsmg", "조회를 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-			
 		}
 		
 	}

@@ -11,10 +11,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
     	crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    	crossorigin="anonymous"></script>
     <style>
         a{
             text-decoration: none;
@@ -42,7 +45,7 @@
 
         .outline{ 
             border: 1px solid rgb(230, 230, 230);
-            width: 1000px; height: 800px; margin: auto;
+            width: 1000px; height: 850px; margin: auto;
         }
         .outline>div{
             /* border: 1px solid red; */
@@ -113,6 +116,9 @@
 </head>
 
 <body>
+
+	<%@ include file ="../common/menubar.jsp" %>
+	
     <div class="outline">
         
         <!-- -------------헤더------------- -->
@@ -141,7 +147,7 @@
                       <ul class="list-group">
                       
                       	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                          <li class="list-group-item" style="text-align: center;"><a href="/5makase/memberList.ad">회원 관리</a></li>
+                          <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
                           
                           
                           <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
@@ -162,7 +168,7 @@
                   <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul class="list-group">
-                            <li class="list-group-item" style="text-align: center;"><a href="">1:1 문의 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="">Q&A 문의 관리</a></li>
                             <li class="list-group-item" style="text-align: center;"><a href="">공지사항 관리</a></li>
                             <li class="list-group-item" style="text-align: center;"><a href="">자주 묻는 질문 관리</a></li>
                         </ul>
@@ -178,10 +184,12 @@
                     <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
                           <ul class="list-group">
-                              <li class="list-group-item" style="text-align: center;"><a href="">음식점 등록</a></li>
-                              <li class="list-group-item" style="text-align: center;"><a href="">음식점 리스트</a></li>
-                              <li class="list-group-item" style="text-align: center;"><a href="">등록 요청 리스트</a></li>
-                              <li class="list-group-item" style="text-align: center;"><a href="">수정 요청 리스트</a></li>
+                              <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
+                              
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad">등록 요청 리스트</a></li>
+                              
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
                           </ul>
                       </div>
                     </div>
@@ -195,9 +203,7 @@
                 <h4 style="font-weight: bold;" align="center">회원 관리</h4>
             </div>
             <div id="content_2"> 
-                <div align="right" style="margin: 5px; margin-right: 40px ">
-                    <button type="button" class="btn btn-sm btn-secondary">회원등록</button>
-                </div>
+                
                 <div>
                     <table class="table" id="list-table">
                         <thead>
@@ -208,6 +214,7 @@
                                 <th scope="col">지역</th>
                                 <th scope="col">성별</th>
                                 <th scope="col">회원등급</th>
+                                <th scope="col">상태</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -219,16 +226,17 @@
 							<% } else { %>
 					            <!-- case2. 공지글이 있을 경우 -->
 	                        	<% for(Member m : list) { %>
-		                            <tr>
-		                                <th scope="row"><%= m.getMemNo() %></th>
-		                                <td><%= m.getMemName() %></td>
-		                                <td><%= m.getPhone() %></td>
-		                                <td><%= m.getAddress() %></td>
-		                                <td><%= m.getGender() %></td>
-		                                <td><%= m.getMemGrade() %></td>
-		                            </tr>
+			                            <tr>
+			                                <th scope="row"><%= m.getMemNo() %></th>
+			                                <td><%= m.getMemName() %></td>
+			                                <td><%= m.getPhone() %></td>
+			                                <td><%= m.getAddress() %></td>
+			                                <td><%= m.getGender() %></td>
+			                                <td><%= m.getMemGrade() %></td>
+			                                <td><%= m.getStatus() %></td>
+			                            </tr>
+		                            <% } %>
                             	<% } %>
-                            <% } %>
                         </tbody>
                         
                     </table> 
@@ -246,24 +254,16 @@
             </div>
         </div>
     </div>
-
-
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-    crossorigin="anonymous"
-    >
-    </script>
-
     <script>
         $(function(){
 			$("#list-table>tbody>tr").click(function(){
 				
 				const num = $(this).children().eq(0).text();
 			    console.log(num);
-				location.href = '/5makase/memberDetail.ad?num=' + num;
+				location.href = '<%= contextPath %>/memberDetail.ad?num=' + num;
 			})
 		})
+
     </script>
 </body>
 </html>
