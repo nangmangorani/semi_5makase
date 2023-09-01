@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi_5makase.board.model.service.FaqService;
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.notice.model.service.NoticeService;
 import com.semi_5makase.notice.model.vo.Notice;
 

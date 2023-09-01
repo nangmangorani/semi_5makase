@@ -40,7 +40,7 @@ public class NoticeInsertController extends HttpServlet {
 		n.setNoticeTitle(title);
 		n.setNoticeContent(content);
 		
-		int result = new NoticeService().insertNotice(n);
+//		int result = new NoticeService().insertNotice(n);
 		
 	}
 

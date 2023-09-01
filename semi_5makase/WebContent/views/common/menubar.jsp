@@ -25,7 +25,7 @@
             width: 1100px;
             margin: auto;
             background-color: white;
-            z-index: 5;
+            z-index: 999;
         }
     
         .logo-area>img {
@@ -87,7 +87,7 @@
         left: 50%;
         transform: translateX(-50%);
         background: #eee;
-        z-index: 1;
+        z-index: 999;
     }
     
     
@@ -100,7 +100,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             top: 0;
             left: 0;
-            z-index: 2;
+            z-index: 999;
         }
     
         .modal_close {
@@ -129,6 +129,14 @@
         
     </style>
     <body>
+    	<% if(alertMsg != null){ %>
+		
+		<script>
+			alert("<%= alertMsg %>");
+		</script>
+			<% session.removeAttribute("alertMsg"); %> <!-- 서비스요청 성공 후 더이상 alert 안뜨게함 -->
+		<% } %>
+    	
         <div class="menubar-area">
             <div class="logo-area">
                 <img src="resources/img/logo.png">
@@ -184,8 +192,6 @@
         </div>
     
         <script>
-            window.onload = function () {
-    
                 function onClick() {
                     document.querySelector('.modal_wrap').style.display = 'block';
                     document.querySelector('.black_bg').style.display = 'block';
@@ -197,8 +203,6 @@
     
                 document.getElementById('modal_btn').addEventListener('click', onClick);
                 document.querySelector('.modal_close').addEventListener('click', offClick);
-    
-            };
         </script>
     </body>
     </html>

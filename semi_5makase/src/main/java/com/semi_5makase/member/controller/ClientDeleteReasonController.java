@@ -35,8 +35,8 @@ public class ClientDeleteReasonController extends HttpServlet {
 		String memId = request.getParameter("memId");
 		String memPwd = request.getParameter("memPwd");
 		
-		Member m = new Member(reason, memId, memPwd);
-		System.out.println(m);
+//		Member m = new Member(reason, memId, memPwd);
+//		System.out.println(m);
 		
 	
 	}

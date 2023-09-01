@@ -1,4 +1,4 @@
-<%@page import="com.semi_5makase.common.model.PageInfo"%>
+<%@page import="com.semi_5makase.common.model.vo.PageInfo"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@page import="com.semi_5makase.board.model.vo.Qna"%>
 <%@page import="java.util.ArrayList"%>
