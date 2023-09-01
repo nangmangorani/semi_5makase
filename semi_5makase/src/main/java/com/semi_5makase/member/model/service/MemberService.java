@@ -197,4 +197,21 @@ public class MemberService {
 		
 	}
 	
+	public Member resetPwd(String memId,String memPwd, String newPwd,String checkPwd) {
+		Connection conn = getConnection();
+		int result = new MemberDao().resetPwd(conn, memId, memPwd, newPwd, checkPwd);
+		
+		Member resetPwd = null;
+		
+		if(result > 0 ) {
+			commit(conn);
+			resetPwd = new MemberDao().selectMember(conn, memId);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return resetPwd;
+	}
+	
+	
 }

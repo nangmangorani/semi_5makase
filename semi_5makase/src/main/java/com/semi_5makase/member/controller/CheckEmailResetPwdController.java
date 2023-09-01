@@ -1,8 +1,6 @@
 package com.semi_5makase.member.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,16 +12,17 @@ import com.semi_5makase.member.model.service.MemberService;
 import com.semi_5makase.member.model.vo.Member;
 
 /**
- * Servlet implementation class LoginController
+ * Servlet implementation class CheckEmailResetPwdController
  */
-@WebServlet("/login.me")
-public class LoginController extends HttpServlet {
+@WebServlet("/checkEmailResetPwd.me")
+public class CheckEmailResetPwdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public CheckEmailResetPwdController() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -33,24 +32,26 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String memId = request.getParameter("memId");
+		String newPwd = request.getParameter("newPwd");
+		String checkPwd = request.getParameter("checkPwd");
 		String memPwd = request.getParameter("memPwd");
-		System.out.println(memId);
-		System.out.println(memPwd);
-		Member loginMember = new MemberService().loginMember(memId,memPwd);
+
 		
-		if(loginMember == null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "로그인 실패했습니다"); // request는 포워딩 방식일때만 가능!!
-			response.sendRedirect(request.getContextPath());
-
-
+		
+		Member resetPwd1 = new MemberService().resetPwd(memId,memPwd,newPwd,checkPwd);
+		
+		HttpSession session = request.getSession(); 
+		
+		if(resetPwd1 == null) {
+			session.setAttribute("alertMsg", "비밀번호 변경에 실패했습니다");
 		}else {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginMember", loginMember);
-			response.sendRedirect(request.getContextPath()+""); 
+			session.setAttribute("alertMsg", "비밀번호가 변경됐습니다");
 		}
+
 		
-		
+
+		response.sendRedirect(request.getContextPath());
+	
 	}
 
 	/**

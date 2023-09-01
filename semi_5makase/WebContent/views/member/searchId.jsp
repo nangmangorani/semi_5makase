@@ -118,7 +118,7 @@
         <div class="intro-area" align="center"> 아이디 찾기 </div> <br><br>
         <div class="selectMethod-area">
             <div class="selectId"><a href="location:reload()">아이디 찾기</a></div>
-            <div class="selectPwd"><a href="비밀번호 변경화면">비밀번호 찾기</a></div>
+            <div class="selectPwd"><a href="<%=contextPath%>/searchPwdOne.me">비밀번호 찾기</a></div>
         </div>
         <form action="<%=contextPath%>/searchIdResult.me" method="post" class="searchBy-area">
                 <div class="searchByEmail"> <br><br>
@@ -138,7 +138,6 @@
                     <br><br>
                 </div>
  				
-               <!--  <button type="submit" id="" class="btn btn-sm" onclick="checkNum()">인증확인</button> --> 
 				
                 <button type="submit" id="findById"  class="btn btn-primary btn-lg btn-block"  onclick="checkNum();" disabled>아이디 찾기</button>
         </form>

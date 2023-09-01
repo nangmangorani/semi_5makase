@@ -518,6 +518,32 @@ public class MemberDao {
 		
 	}
 	
+	public int resetPwd(Connection conn, String memId, String memPwd ,String newPwd,String checkPwd) {
+		int result =0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updatePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, checkPwd);
+			pstmt.setString(2, memId);
+			pstmt.setString(3, memPwd);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
 	
 }
 
