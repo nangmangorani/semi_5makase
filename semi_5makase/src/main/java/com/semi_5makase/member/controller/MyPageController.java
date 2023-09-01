@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.semi_5makase.member.model.service.MemberService;
+import com.semi_5makase.member.model.vo.Attachment;
+
 /**
  * Servlet implementation class MyPageController
  */
@@ -29,7 +32,10 @@ public class MyPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 
+		
+		
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginMember") == null) { // 로그인 전
 			session.setAttribute("alertMsg", "로그인 후 이용가능한 서비스입니다");

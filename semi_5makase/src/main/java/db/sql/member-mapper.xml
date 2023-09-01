@@ -114,6 +114,52 @@ UPDATE MEMBER
 	  AND STATUS = 'Y'
 </entry>
 
+<entry key="emailcheck">
+SELECT 
+	   MEM_NO
+     , MEM_GRADE
+     , MEM_ID
+     , MEM_PWD
+     , MEM_NAME
+     , GENDER
+     , AGE
+     , NICKNAME
+     , EMAIL
+     , PHONE
+     , ADDRESS
+     , ENROLL_DATE
+     , STATUS
+     , QUIT_REASON
+     , SELF_INTRODUCTION
+FROM MEMBER
+WHERE MEM_ID = ?
+
+</entry>
+
+<entry key="emailcheckOne">
+SELECT 
+	   MEM_NO
+     , MEM_GRADE
+     , MEM_ID
+     , MEM_PWD
+     , MEM_NAME
+     , GENDER
+     , AGE
+     , NICKNAME
+     , EMAIL
+     , PHONE
+     , ADDRESS
+     , ENROLL_DATE
+     , STATUS
+     , QUIT_REASON
+     , SELF_INTRODUCTION
+FROM MEMBER
+WHERE EMAIL = ?
+
+</entry>
+
+
+
 <entry key="updatePwd">
  	 UPDATE MEMBER
 	   SET MEM_PWD = ?
@@ -135,6 +181,76 @@ UPDATE MEMBER
 	   AND MEM_PWD = ?
 </entry>
 
+
+<entry key="insertProfile">
+INSERT
+  INTO ATTACHMENT
+  (
+    FILE_NO
+  , REF_BNO
+  , ORIGIN_NAME
+  , CHANGE_NAME
+  , FILE_PATH
+  , UPLOAD_DATE
+  , STATUS
+  , CATEGORY
+  )
+  VALUES
+  (
+    SEQ_FNO.NEXTVAL
+  , ?
+  , ?
+  , ?
+  , ?
+  , DEFAULT
+  , 'Y'
+  , 'PROFILE'
+  )
+
+</entry>
+
+
+<entry key="updateProfile">
+UPDATE ATTACHMENT
+   SET ORIGIN_NAME = ?
+     , CHANGE_NAME = ?
+     , FILE_PATH = ?
+ WHERE REF_BNO = ?
+</entry>
+
+
+<entry key="selectAttachment">
+	SELECT
+	       FILE_NO
+	     , ORIGIN_NAME
+	     , CHANGE_NAME
+	     , FILE_PATH
+	  FROM ATTACHMENT
+	 WHERE REF_BNO = ?
+	   AND STATUS = 'Y'
+</entry>
+
+<entry key="selectId">
+ 	SELECT 
+	        MEM_NO
+         ,  MEM_GRADE
+         ,  MEM_ID
+         ,  MEM_PWD
+         ,  MEM_NAME
+         ,  GENDER
+         ,  AGE
+         ,  NICKNAME
+         ,  EMAIL
+         ,  PHONE
+         ,  ADDRESS
+         ,  ENROLL_DATE
+         ,  STATUS
+         ,  QUIT_REASON
+         ,  SELF_INTRODUCTION
+	FROM MEMBER
+	WHERE EMAIL = ?
+
+</entry>
 
 </properties>
 
