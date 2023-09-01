@@ -1,4 +1,4 @@
-package com.semi_5makase.notice.controller;
+package com.semi_5makase.restaurant.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.notice.model.service.NoticeService;
-import com.semi_5makase.notice.model.vo.Notice;
+import com.semi_5makase.member.model.vo.Member;
+import com.semi_5makase.restaurant.model.service.RestaurantService;
+import com.semi_5makase.restaurant.model.vo.Restaurant;
 
 /**
- * Servlet implementation class NoticeInsertController
+ * Servlet implementation class WriteReviewController
  */
-@WebServlet("/insert.no")
-public class NoticeInsertController extends HttpServlet {
+@WebServlet("/insertReviewForm.rv")
+public class WriteReviewFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeInsertController() {
+    public WriteReviewFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,24 +31,17 @@ public class NoticeInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("UTF-8");
+		int memNo = ((Member)request.getSession().getAttribute("loginMember")).getMemNo();
+		int restNo = Integer.parseInt(request.getParameter("restNo"));
 		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String NoticeWriter = request.getParameter("noticeWriter");
+		Restaurant rest = new RestaurantService().selectRestaurantDetail(restNo);
+		String nickName =new RestaurantService().selectNickName(memNo);
 		
-		Notice n = new Notice();
+		request.setAttribute("memNo", memNo);
+		request.setAttribute("nickName", nickName);
+		request.setAttribute("rest", rest);
 		
-		n.setNoticeTitle(title);
-		n.setNoticeContent(content);
-		n.setNoticeWriter(NoticeWriter);
-		
-		
-//		int result = new NoticeService().insertNotice(n);
-		
-		if(result > 0) {
-			response.sendRedirect(request.getContextPath() + "/list.no?cpage=1");
-		}
+		request.getRequestDispatcher("views/restaurant/ReviewWritePage.jsp").forward(request, response);
 		
 	}
 

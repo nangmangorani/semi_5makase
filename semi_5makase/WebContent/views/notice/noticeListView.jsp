@@ -1,4 +1,4 @@
-<%@page import="com.semi_5makase.common.model.PageInfo"%>
+<%@page import="com.semi_5makase.common.model.vo.PageInfo"%>
 <%@page import="com.semi_5makase.notice.model.vo.Notice"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.notice.model.vo.Notice;
 
 public class NoticeDao {
@@ -212,8 +212,8 @@ public class NoticeDao {
 		return listCount;
 		
 	}
-
-	public int insertNotice(Connection conn, Notice n) {
+	// int 에서 void로 에러 피할려고 바꿈
+	public void insertNotice(Connection conn, Notice n) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;

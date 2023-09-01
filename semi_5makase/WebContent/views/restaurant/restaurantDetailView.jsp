@@ -1,3 +1,5 @@
+<%@page import="com.semi_5makase.common.model.vo.Attachment"%>
+<%@page import="com.semi_5makase.restaurant.model.vo.Review"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.Favorite"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.Menu"%>
 <%@page import="java.util.ArrayList"%>
@@ -25,6 +27,12 @@
 	
 	double avg = (double)request.getAttribute("selectReviewRatingAvg");
 	// 별점 평균점수
+	
+	ArrayList<Review> rvList = (ArrayList<Review>)request.getAttribute("rvList");
+	// 리뷰번호, 리뷰내용, 파일경로, 별점, 유저넘버
+	
+	ArrayList<Attachment> rvPicList = (ArrayList<Attachment>)request.getAttribute("rvPicList");
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,15 +79,15 @@
         }
         #restaurent_content{
             width: 60%;
-            height: 27%;
+            height: auto;
             margin: auto;
+            padding-bottom: 30px;
             border-bottom: 1px solid lightgray;
         }
         #review{
             width: 60%;
             height: 53%;
             margin: auto;
-            border-bottom: 1px solid lightgray;
         }
 
         /* ---------------------------- 사진 ---------------------------- */
@@ -87,6 +95,15 @@
             box-sizing: border-box;
             display: flex;
         }
+        
+        #photo>div{
+        }
+        
+        #photo img:hover{
+       		transition: all 0.2s linear;
+        	transform: scale(1.4);
+        }
+        
         #photo>div{
             height: 100%;
         }
@@ -182,10 +199,16 @@
             height: 5%;
             border-bottom: 1px solid lightgray;
         }
+        
+        #no_review{
+        	text-decoration: none;
+        }
+
         #reviewContent{
             height: 350px;
             margin-top: 10px;
-            border-bottom: 1px solid lightgray;
+            width: auto;
+            /* border-bottom: 1px solid lightgray; */
         }
 
         #reviewHeader>div{
@@ -214,23 +237,23 @@
         #reviewContent>div{
             width: 100%;
         }
-        #reviewContentHeader{
+        .reviewContentHeader{
             width: 50%;
             height: 25%;
         }
-        #reviewContentHeader>div{
+        .reviewContentHeader>div{
             float: left;
             box-sizing: border-box;
         }
-        #profile{
+        .profile{
             width: 15%;
             height: 100%;
         }
-        #nameStar{
+        .nameStar{
             width: 25%;
             height: 100%;
         }
-        #userName{
+        .userName{
             height: 60%;
             padding-top: 12px;
         }
@@ -252,26 +275,28 @@
             vertical-align: middle;
         } */
 
+		/* 별점 매기기 */
         .star-rating {
 
         display:flex;
-        flex-direction: row-reverse;
         font-size:1.5em;
         justify-content:space-around;
         padding:0 .2em;
         text-align:center;
         width:5em;
         }
-
+        
+		/*
         .star-rating input {
         display:none;
         }
+        */
 
         .star-rating label {
         color:#ccc;
-        cursor:pointer;
         }
-
+		
+		/*
         .star-rating :checked ~ label {
         color:#f90;
         }
@@ -280,57 +305,69 @@
         .star-rating label:hover ~ label {
         color:#fc0;
         }
+        */
 
-
-        #taste{
+        .taste{
             width: 30%;
             height: 100%;
         }
-        #tastePhoto{
+        /* #tastePhoto{
             background-image: url(https://mp-seoul-image-production-s3.mangoplate.com/web/resources/2018022864551sprites_desktop.png);
             background-position: -714px -866px;
             width: 50px;
             height: 50px;
-        }
+        } */
 
-        #good{
+        .good{
             width: 30%;
             height: 100%;
         }
-        #good>div{
+        .good>div{
             float: left;
             height: 100%;
         }
-        #goodCount{
+        .goodCount{
             width: 50%;
         }
-        #goodbtn{
+        .goodbtn{
             width: 50%;
         }
 
-        #content{
-            height: 30%;
+        .review_content{
+            height: auto;
             padding: 10px;
         }
 
-        #reviewPhotoList{
+        .reviewPhotoList{
             height: 45%;
         }
-        #reviewPhotoList>ul{
+        .reviewPhotoList>ul{
             list-style: none;
         }
-        #reviewPhotoList li{
+        .reviewPhotoList li{
             float: left;
         }
-        #reviewPhotoList img{
-            width: 130px;
+        .reviewPhotoList img{
+        	height: 150px;
+            width: 150px;
+            padding:5px;
+            transition: all 0.2s linear;
+        }
+        
+        .reviewPhotoList img:hover{
+        	transform: scale(1.4);
+        }
+        
+        .detailReview{
+        	text-decoration-line: none;
+        	color : black;
         }
         
         #info_table td ul{
             list-style: none;
         }
 
-        #info_table td:not(.rest_menu){
+        #info_table td:not(.rest_menu .rest_intro){
             text-align: right;
         }
 
@@ -379,6 +416,46 @@
         .restupdate_modal-content{
             border-radius: 10px;
         }
+        
+        /* The Modal (background) */
+        .report_modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 6; /* Sit on top, menubar의 z-index : 5 */ 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            border-radius:10;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            
+        }
+    
+        /* Modal Content/Box */
+        .report_modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 15px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */                          
+        }
+        .report_close_modal{
+            color: #222228;
+            background-color: white;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            border: none;
+        }
+        .report_modalText{
+            width: 90%;
+            padding: 10px;
+        }
+
+        .report_modal-content{
+            border-radius: 10px;
+        }
 
     </style>
 </head>
@@ -392,21 +469,13 @@
 
         <!-- ---------------------------- 사진 ---------------------------- -->
         <div id="photo">
-            <div class="photo_1">
-                <button style="padding: 0; border: 0;" >
-                    <img src="https://d12zq4w4guyljn.cloudfront.net/750_750_20230114013907154_photo_ddbfad957fb9.jpg" style="width: 200px; height: 200px;">
-                </button>
-            </div>
-            <div class="photo_2">
-                <button style="padding: 0; border: 0;" >
-                    <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20220918095227829_photo_511a23d00ae4.jpg" style="width: 200px; height: 200px;">
-                </button>
-            </div>
-            <div class="photo_3">
-                <button style="padding: 0; border: 0;" >
-                    <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20221101083848_photo1_94ecf3cdea70.jpg" style="width: 200px; height: 200px;">
-                </button>
-            </div>
+        	<% for(int i=1; i<4; i++) { %>
+	            <div class="photo_<%=i %>">
+	                <a href="<%= contextPath %>/detail.rv" style="padding: 0; border: 0;">
+	                                     
+	                </a>
+	            </div>
+        	<% } %>
         </div>
 
         <!-- ---------------------------- 음식점 이름 ---------------------------- -->
@@ -431,106 +500,36 @@
             
             <div id="likeAndReview">
                 <div id="like-area">
-                 	<% if(loginMember == null) { %>
 	                    <button type="button" style="padding: 0; border: 0;" id="restFavor" onclick="updateFavorite();">
 	                        <img src="resources/img/noheart.png" id="favoriteImg" style="width: 50px; height: 40px;">
 	                        <p id="like-content" style="margin: 0;">즐겨찾기</p>
 	                    </button>
-                    <% } else { %>
-                    	<button type="button" style="padding: 0; border: 0;" id="restFavor" onclick="updateFavorite();">
-	                        <img src="resources/img/noheart.png" id="favoriteImg" style="width: 50px; height: 40px;">
-	                        <p id="like-content" style="margin: 0;">즐겨찾기</p>
-	                    </button>
-                    	<script>
-                    	// 즐겨찾기 되어있는지 확인하는 함수 생성, 선언
-	                    	function checkFavorite(){
-	        	        		$.ajax({
-	        	        			url:"checkFavorite.rt",
-	        	        			data:{restNo:<%= rest.getRestNo() %>},
-	        	        			type:"post",
-	        	        			success: function(result){
-	        	        				if(result > 0){
-	        	        	        		$("#favoriteImg").attr("src", "resources/img/heart.png");
-	        	        	        	}else{
-	        	        	        		$("#favoriteImg").attr("src", "resources/img/noheart.png");
-	        	        	        	}
-	        	        			}
-	        	        		})	
-	                    	}	
-                    		checkFavorite();
-                    	</script>
-                    <% } %>
-                    
-			            <script>
-			             // 즐겨찾기 총 합 조회 함수
-			             	function favorCount(){
-			            	 $.ajax({
-			            		 url:"favorCount.rt",
-			            		 data:{restNo:<%= rest.getRestNo() %>},
-				    			 type:"post",
-				    			 success: function(result){
-				    				 $("#favorite span").text(result);
-				    			 }
-			            	 })
-			             }
-			            
-			            
-				         // 즐겨찾기 추가, 삭제 함수
-				    		function updateFavorite(){
-				    			$.ajax({
-				    				url:"updateFavorite.rt",
-				    				data:{restNo:<%= rest.getRestNo() %>},
-				    				type:"post",
-				    				success: function(result){
-				    					console.log(result);
-				    					if(result == "loginFirst"){
-				    						alert("로그인을 먼저 해주세요.");
-				    					}else if(result == "delete"){
-				    						alert("즐겨찾기가 해제되었습니다.")
-				    						checkFavorite();
-				    						favorCount();
-				    					}else if(result == "insert"){
-				    						alert("즐겨찾기에 추가되었습니다.")
-				    						checkFavorite();
-				    						favorCount();
-				    					}
-				    				}
-				    			})             			
-				    		}
-			            </script>
                 </div>
             <div id="writeReview">
-                 <a href="">
-                     <button style="padding: 0; border: 0;">
-                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
-                         <p id="review-content" style="margin: 0;">리뷰작성</p>
-                     </button>
-                 </a>
+            	<% if(loginMember == null) { %>
+	                 <a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>">
+	                     <button style="padding: 0; border: 0;" onclick="return writeReview();">
+	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
+	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
+	                     </button>
+	                 </a>
+                 <% } else{ %>
+                 	<a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>">
+	                     <button style="padding: 0; border: 0;">
+	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
+	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
+	                     </button>
+                 	</a>
+                 <% } %>
              </div>
             </div>
         </div>
-        
-        <script>
-        		$("#writeReview").mouseover(function(){
-        			$("#review-content").css("color", "red");
-        		})
-        		$("#writeReview").mouseleave(function(){
-        			$("#review-content").css("color", "");
-        		})
-        		
-        		$("#like-area").mouseover(function(){
-        			$("#like-content").css("color", "red");
-        		})
-        		$("#like-area").mouseleave(function(){
-        			$("#like-content").css("color", "");
-        		})
-        </script>
         <!-- ---------------------------- 음식점 상세 ---------------------------- -->
         <div id="restaurent_content">
             <table id="info_table">
                 <tr>
                     <th style="width: 110px; height: 40px;">주소</th>
-                    <td><%= rest.getRestAddress() %></td>
+                    <td style="width: 480px;"><%= rest.getRestAddress() %></td>
                 </tr>
                 <tr>
                     <th style="width: 110px; height: 40px;">전화번호</th>
@@ -568,25 +567,34 @@
                 </tr>
                 <tr>
                     <th style="width: 110px; height: 40px;">소개글</th>
-                    <td>
-                    <textarea style="resize: none; height:100px; width: 480px; border:none"><%= rest.getIntro() %></textarea>
+                    <td class="rest_intro">
+                    	<div><%= rest.getIntro() %></div>
+                    <!-- <textarea style="resize: none; height:100px; width: 480px; border:none"><%= rest.getIntro() %></textarea> -->
                     </td>
                 </tr>
+                <tr>
+                <% if(loginMember == null) { %>
+                	<td colspan=2 style="text-align:center">
+                        <button type="button" id="openModal" class="btn btn-sm btn-danger" style="width: 180px;" onclick="return writeReview();">수정 및 폐업 신고</button>
+                	</td>
+               	<% } else { %>
+               		<td colspan=2 style="text-align:center">
+                        <button type="button" id="openModal" class="btn btn-sm btn-danger" style="width: 180px;">수정 및 폐업 신고</button>
+                	</td>
+               	<% } %>
+                </tr>
             </table>
-
-            <div style="margin: auto; width: 30%;">
-                <button type="button" id="openModal" class="btn btn-sm btn-danger" style="width: 180px;">수정 및 폐업 신고</button>
-            </div>
             <!-- The Modal -->
 		    <div id="myModal" class="restupdate_modal">
 		 
 		      <!-- Modal content -->
 		      <div class="restupdate_modal-content">
-		        <form action="">
+		        <form action="update.rt">
+		        	<input type="hidden" name="restNo" value="<%= rest.getRestNo() %>">
 		            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">폐업신고 - 신고</span></b></span></p>
-		            <textarea name="" id="restupdate_modelText" cols="40" rows="10" style="resize: none;" placeholder="수정이 필요한 내용을 적어주세요.&#13;&#10;예)맛집이름,주소,전화번호 등"></textarea>
+		            <textarea name="updateRest" id="restupdate_modelText" cols="40" rows="10" style="resize: none;" placeholder="수정이 필요한 내용을 적어주세요.&#13;&#10;예)맛집이름,주소,전화번호 등"></textarea>
 		            <br>
-		            <input type="checkbox" name=""> 폐업신고
+		            <input type="checkbox" name="closed"> 폐업신고
 		            <p style="font-size: 12px; color: #888;">해당 음식점이 폐업이 되었을 경우 선택해 주세요</p>
 		            <br>
 		                
@@ -606,8 +614,7 @@
 		        <!--End Modal-->
 		        
 	        <script type="text/javascript">
-     
-     
+
 	        //팝업 Close 기능
 	        function close_pop(flag) {
 	             $('#myModal').hide();
@@ -618,6 +625,7 @@
 	        });
 	        
 	      </script>
+	      
         </div>
 
         <!-- ---------------------------- 리뷰 ---------------------------- -->
@@ -626,83 +634,263 @@
             <div id="reviewHeader">
                 <div id="reviewCount">
                     <p>
-                        리뷰 수 (<span>15</span>)
+                        리뷰 수 (<span><%= rCount %></span>)
                     </p>
                 </div>
                 <div id="reviewSeq" align="right">
-                    <a href="#">최신순</a> |
+                    <a href="#">최신순</a>
                     <a href="#">추천순</a>
                 </div>
             </div>
 
+                <% if(rvList.isEmpty()) { %>
+                	<% if(loginMember == null) { %>
+                        <p align="center" style="color:blue" onclick="return writeReview();">아직 작성된 리뷰가 없습니다. 회원님의 리뷰를 남겨주세요! <br> 리뷰 남기러 가기 </p>	
+                	<% } else { %>
+	                	<a id="no_review" href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>">
+	                		<p align="center">아직 작성된 리뷰가 없습니다. 회원님의 리뷰를 남겨주세요! <br> 리뷰 남기러 가기 </p>	
+	                	</a>
+                	<% } %>
+                <% } else { %>
+                	<% for(Review rv : rvList) { %>
             <div id="reviewContent">
-                <div id="reviewContentHeader">
-                    <div id="profile">
-                        <img src="resources/img/user.png" style="width: 70px; margin-top: 5px; margin-left: 15px;">
-                    </div>
-                    <div id="nameStar" style="line-height: 45px;">
-                        <div id="userName" style="padding-left: 5px;">
-                            <strong style="font-size: 22px;">사용자아이디</strong>
-                        </div>
-                        
-                        <div class="star-rating">
-                            <input type="radio" id="5-stars" name="rating" value="5" />
-                            <label for="5-stars" class="star">&#9733;</label>
-                            <input type="radio" id="4-stars" name="rating" value="4" />
-                            <label for="4-stars" class="star">&#9733;</label>
-                            <input type="radio" id="3-stars" name="rating" value="3" />
-                            <label for="3-stars" class="star">&#9733;</label>
-                            <input type="radio" id="2-stars" name="rating" value="2" />
-                            <label for="2-stars" class="star">&#9733;</label>
-                            <input type="radio" id="1-star" name="rating" value="1" />
-                            <label for="1-star" class="star">&#9733;</label>
-                          </div>
-                        
-                    </div>
-                    <div id="taste" align="right" style="padding-right: 20px;">
-                        <div id="tastePhoto">
+	                <div class="reviewContentHeader">
+	                    <div class="profile">
+	                        <img src="resources/img/user.png" style="width: 70px; margin-top: 5px; margin-left: 15px;">
+	                    </div>
+	                    <div class="nameStar" style="line-height: 25px; padding-left: 10px;">
+	                        <div class="userName">
+	                            <strong style="font-size: 22px;"><%= rv.getNickName() %></strong>
+	                        </div>
+	                        
+	                        <div class="star-rating">
+		                        <% for(int i = 1; i<=5; i++) { %>
+		                        	<% if(i<=rv.getRating()) { %>
+		                        		<label class="star" style="color:#f90">&#9733;</label>
+		                        	<% } else { %>
+		                        		<label class="star">&#9733;</label>
+		                        	<% } %>
+		                        <% } %>
+	                            
+	                        </div>
+	                        
+	                        
+	                    </div>
+	                    <div class="taste" align="right" style="padding-right: 20px;">
+	                    </div>
+	               		 	<div class="good">
+		                        <div class="goodCount" align="center" style="padding-top: 20px;">
+		                            <p>
+		                                추천수 (<span id="likesCount<%= rv.getReviewNo() %>"></span>)
+		                            </p>
+		                        </div>
+		                        <div class="goodbtn" align="center" style="padding-top: 20px;">
+                                    <button type="button" id="likes<%= rv.getReviewNo() %>" class="btn btn-sm btn-success" style="width: 70px;" onclick="updateLikes(<%= rv.getReviewNo() %>);">공감</button> <br>
+		                            <button type="button" id="report<%= rv.getReviewNo() %>" class="btn btn-sm btn-danger" style="width: 70px;">신고</button>
+		                        </div>
+		                    </div>
+		                    
+            <!-- The Modal -->
+		    <div id="report_modal<%= rv.getReviewNo() %>" class="report_modal">
+		 
+		      <!-- Modal content -->
+		      <div class="report_modal-content">
+		        <form action="report.rv">
+		        	<input type="hidden" name="suspectNo" value="<%= rv.getMemNo() %>">
+		        	<input type="hidden" name="restNo" value="<%= rest.getRestNo() %>">
+		            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">유저 신고</span></b></span></p>
+		            <textarea name="reportContent" class="report_modalText" cols="40" rows="10" style="resize: none;" placeholder="<%= rv.getNickName() %>님을 신고하실 내용을 적어주세요."></textarea>
+		            <br>
+		                
+		        <hr>
+		        <div align="center">
+		            <button class="report_close_modal" name="report">보내기</button>
+		        </div>
+		        </form>
+		        <!-- <div id ="close_modal" onClick="close_pop();">
+		            <span class="pop_bt">
+		                    보내기
+		            </span>
+		        </div> -->
+		      </div>
+		 
+		    </div>
+		        <!--End Modal-->
+		        
+	        <script type="text/javascript">
 
-                        </div>
-                        <div>
-                            <span>맛있다</span>
-                        </div>
-                    </div>
-                    <div id="good">
-                        <div id="goodCount" align="center" style="padding-top: 20px;">
-                            <p>
-                                추천수 (<span>10</span>)
-                            </p>
-                        </div>
-                        <div id="goodbtn" align="center" style="padding-top: 20px;">
-                            <button type="button" class="btn btn-sm btn-success" style="width: 70px;">공감</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="content" align="center">
-                    <textarea id="" style="resize: none; width: 100%; height: 100%;" ></textarea>
-                </div>
-                <div id="reviewPhotoList">
-                    <ul>
-                        <li>
-                            <button>
-                                <img src="https://d12zq4w4guyljn.cloudfront.net/750_750_20230114013907154_photo_ddbfad957fb9.jpg" alt="">
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20220918095227829_photo_511a23d00ae4.jpg" alt="">
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20221101083848_photo1_94ecf3cdea70.jpg" alt="">
-                            </button>
-                        </li>
-                    </ul>
-                </div>  
+	        //팝업 Close 기능
+	        function close_pop(flag) {
+	            $("#report_modal<%= rv.getReviewNo() %>").hide();
+	        };
+	
+	        $("#report<%= rv.getReviewNo() %>").click(function(){
+	            $("#report_modal<%= rv.getReviewNo() %>").show();
+	        });
+	        
+	      </script>
+	                
+	                </div>
+	                <div class="review_content">
+	                    <div><%= rv.getReviewContent() %></div>
+	                </div>
+	                <div class="reviewPhotoList">
+	             
+	                    <ul>
+	                        <li>
+	                        	<% for(Attachment at : rvPicList) { %>
+	                        		<a class="test1" href="<%= contextPath %>/detail.rv" style="text-decoration:none; color:black;" id="<%= rv.getReviewNo()%>">
+	                        		<%if(rv.getReviewNo() == at.getRefBoardNo()) { %> 	
+	                         			<img src="<%= contextPath %><%= at.getFilePath() %>">
+	                        		<%} %>
+	                         	</a>
+	                        	<% } %>
+	                        
+	                         	<!-- 사진이 있는 경우 -->
+	                         	
+	                        </li>
+	                    </ul>
+	                </div>
+	                <hr>
             </div>
+                	<% } %>
+                <% } %>
         </div>
     </div>
+    
+    
+    
+     <script>
+     	
+     	// 즐겨찾기 추가, 삭제 함수
+		function updateFavorite(){
+			$.ajax({
+				url:"updateFavorite.rt",
+				data:{restNo:<%= rest.getRestNo() %>},
+				type:"post",
+				success: function(result){
+					console.log(result);
+					if(result == "loginFirst"){
+						alert("로그인을 먼저 해주세요.");
+					}else if(result == "delete"){
+						alert("즐겨찾기가 해제되었습니다.")
+						checkFavorite();
+						favorCount();
+					}else if(result == "insert"){
+						alert("즐겨찾기에 추가되었습니다.")
+						checkFavorite();
+						favorCount();
+					}
+				}
+			})             			
+		}
+     	
+		 // 즐겨찾기 되어있는지 확인하는 함수 생성, 선언
+	 	function checkFavorite(){
+		  console.log("zzz")
+	 		$.ajax({
+	 			url:"checkFavorite.rt",
+	 			data:{restNo:<%= rest.getRestNo() %>},
+	 			type:"post",
+	 			success: function(result){
+	 				if(result > 0){
+	 	        		$("#favoriteImg").attr("src", "resources/img/heart.png");
+	 	        	}else{
+	 	        		$("#favoriteImg").attr("src", "resources/img/noheart.png");
+	 	        	}
+	 			}
+	 		})	
+	 	}	
+     
+			checkFavorite();
+
+		  // 즐겨찾기 총 합 조회 함수
+		  	function favorCount(){
+		 	 $.ajax({
+		 		 url:"favorCount.rt",
+		 		 data:{restNo:<%= rest.getRestNo() %>},
+					 type:"post",
+					 success: function(result){
+						 $("#favorite span").text(result);
+					 }
+		 	 })
+		  }
+		 
+		// 리뷰 좋아요 되어있는지 확인하는 함수 생성, 선언
+    	function checkLikes(CapReviewNo){
+    		$.ajax({
+    			url:"checkLikes.rv",
+    			data:{reviewNo:CapReviewNo},
+    			type:"post",
+    			success: function(result){
+    				if(result > 0){
+    	        		$("#likes" + CapReviewNo).text("좋아요완료");
+    	        	}else{
+    	        		$("#likes" + CapReviewNo).text("좋아요해제완료");
+    	        	}
+    			}
+    		})	
+    	}	
+		checkLikes();
+   
+     
+      	// 좋아요 총 합 조회 함수
+      	function LikesCount(CapReviewNo){
+	     	 $.ajax({
+	    		 url:"likesCount.rv",
+	    		 data:{reviewNo:CapReviewNo},
+				 type:"post",
+				 success: function(result){
+				 console.log("좋아요수" + result)
+				 $("#likesCount" + CapReviewNo).text(result);
+				 }
+	     	 })
+      	}
+		
+		 // 좋아요 추가, 삭제 함수
+		function updateLikes(reviewNo){
+			$.ajax({
+				url:"updateLikes.rv",
+				data:{reviewNo:reviewNo},
+				type:"post",
+				success: function(result){
+					var CapReviewNo = reviewNo;
+					console.log(result);
+					if(result == "loginFirst"){
+						alert("로그인을 먼저 해주세요.");
+					}else if(result == "delete"){
+						alert("좋아요가 해제되었습니다.")
+						LikesCount(CapReviewNo);
+						checkLikes(CapReviewNo);
+					}else if(result == "insert"){
+						alert("좋아요에 추가되었습니다.")
+						LikesCount(CapReviewNo);
+						checkLikes(CapReviewNo);
+					}
+				}
+			})             			
+		}
+		
+		function writeReview(){
+				alert("로그인을 해주시기 바랍니다.");
+				return false;
+		}
+
+		$("#writeReview").mouseover(function(){
+			$("#review-content").css("color", "red");
+		})
+		$("#writeReview").mouseleave(function(){
+			$("#review-content").css("color", "");
+		})
+		
+		$("#like-area").mouseover(function(){
+			$("#like-content").css("color", "red");
+		})
+		$("#like-area").mouseleave(function(){
+			$("#like-content").css("color", "");
+		})
+		
+		
+     </script>
 </body>
 </html>

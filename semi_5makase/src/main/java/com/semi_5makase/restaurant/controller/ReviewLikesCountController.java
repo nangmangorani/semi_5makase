@@ -1,4 +1,4 @@
-package com.semi_5makase.notice.controller;
+package com.semi_5makase.restaurant.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.notice.model.service.NoticeService;
-import com.semi_5makase.notice.model.vo.Notice;
+import com.semi_5makase.restaurant.model.service.RestaurantService;
 
 /**
- * Servlet implementation class NoticeInsertController
+ * Servlet implementation class ReviewLikesCountController
  */
-@WebServlet("/insert.no")
-public class NoticeInsertController extends HttpServlet {
+@WebServlet("/likesCount.rv")
+public class ReviewLikesCountController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeInsertController() {
+    public ReviewLikesCountController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,25 +28,14 @@ public class NoticeInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int reviewNo = Integer.parseInt(request.getParameter("restNo"));
+		int result = new RestaurantService().selectLikesCount(reviewNo);
 		
-		request.setCharacterEncoding("UTF-8");
+		System.out.println("좋수" + reviewNo);
+		System.out.println("좋수" + result);
 		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String NoticeWriter = request.getParameter("noticeWriter");
-		
-		Notice n = new Notice();
-		
-		n.setNoticeTitle(title);
-		n.setNoticeContent(content);
-		n.setNoticeWriter(NoticeWriter);
-		
-		
-//		int result = new NoticeService().insertNotice(n);
-		
-		if(result > 0) {
-			response.sendRedirect(request.getContextPath() + "/list.no?cpage=1");
-		}
+		response.getWriter().print(result);
 		
 	}
 

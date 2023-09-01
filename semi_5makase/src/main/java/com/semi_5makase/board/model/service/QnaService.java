@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.semi_5makase.board.model.dao.QnaDao;
 import com.semi_5makase.board.model.vo.Qna;
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.common.model.vo.Attachment;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
