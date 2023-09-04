@@ -18,6 +18,14 @@ public class Menu {
 		this.price = price;
 		this.menuGrade = menuGrade;
 	}
+	
+	public Menu(int restNo, String menu, String price, int menuGrade) {
+		super();
+		this.restNo = restNo;
+		this.menu = menu;
+		this.price = price;
+		this.menuGrade = menuGrade;
+	}
 
 	public int getRestNo() {
 		return restNo;

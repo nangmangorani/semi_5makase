@@ -68,7 +68,14 @@ public class Member {
 		this.quitReason = quitReason;
 	}
 	
-	
+	public Member(int memNo, String memGrade, String memName, String gender, String phone, String address) {
+		this.memNo = memNo;
+		this.memGrade = memGrade;
+		this.memName = memName;
+		this.gender = gender;
+		this.phone = phone;
+		this.address = address;
+	}
 	
 	
 	public Member(String memId, String memPwd, String quitReason) {
@@ -89,8 +96,19 @@ public class Member {
 		this.address = address;
 	}
 	
+	public Member(int memNo, String memName, String memId, String memPwd, String phone, String address, String email,
+			String memGrade) {
+		super();
+		this.memNo = memNo;
+		this.memName = memName;
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.phone = phone;
+		this.address = address;
+		this.email = email;
+		this.memGrade = memGrade;
 	
-	
+	}
 
 	public Member(String memId, String nickname, String email, String phone, String address, String selfIntroduction) {
 		super();
@@ -117,9 +135,39 @@ public class Member {
 		this.phone = phone;
 		this.address = address;
 	}
+	
+	public Member(int memNo, String memGrade, String memName, String gender, String phone, String memId,
+			String status) {
+		super();
+		this.memNo = memNo;
+		this.memGrade = memGrade;
+		this.memName = memName;
+		this.gender = gender;
+		this.phone = phone;
+		this.memId = memId;
+		this.status = status;
+	}
+	
+	
 
-	
-	
+
+
+	public Member(int memNo, String memName, String memId, String memPwd, String phone, String address, String email,
+			String memGrade, String status) {
+		super();
+		this.memNo = memNo;
+		this.memName = memName;
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.phone = phone;
+		this.address = address;
+		this.email = email;
+		this.memGrade = memGrade;
+		this.status = status;
+	}
+
+
+
 	public String getSelfIntroduction() {
 		return selfIntroduction;
 	}

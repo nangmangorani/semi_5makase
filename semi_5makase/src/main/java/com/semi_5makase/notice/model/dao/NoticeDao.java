@@ -212,8 +212,8 @@ public class NoticeDao {
 		return listCount;
 		
 	}
-	// int 에서 void로 에러 피할려고 바꿈
-	public void insertNotice(Connection conn, Notice n) {
+	
+	public int insertNotice(Connection conn, Notice n) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;

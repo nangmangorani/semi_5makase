@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.member.model.dao.MemberDao;
 import com.semi_5makase.member.model.vo.Member;
+import com.semi_5makase.member.model.vo.Report;
 
 public class MemberService {
 	
@@ -32,6 +33,31 @@ public class MemberService {
 		
 	}
 	
+	public Member selectAdminMember(int no) {
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().selectAdminMember(conn, no);
+		
+		close(conn);
+		
+		return m;
+	}
+	
+	public int updateAdminMember(Member m) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().updateAdminMember(conn, m);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+			
 	public Member emailcheckOne(String email) {
 		Connection conn = getConnection();
 		Member m  = new MemberDao().emailcheckOne(conn ,email);
@@ -215,5 +241,75 @@ public class MemberService {
 		return resetPwd;
 	}
 	
+	public int deleteAdminMember(int no) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().deleteAdminMember(conn, no);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public Report adminSelectReportDetail(int reportNo) {
+		Connection conn = getConnection();
+		
+		Report rep = new MemberDao().adminSelectReportDetail(conn, reportNo);
+		
+		close(conn);
+		
+		return rep;
+	}
+	
+	public int selectReportListCount() {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new MemberDao().selectReportListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	public ArrayList<Report> adminSelectReportList(){
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new MemberDao().adminSelectReportList(conn);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public int adminUpdaterReport(Report rep) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().adminUpdaterReport(conn, rep);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	public int selectListCount() {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new MemberDao().selectListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+	}
 	
 }

@@ -208,7 +208,7 @@
             <strong class="restaurent"><%= rest.getRestName() %></strong>
             <span class="subMessage">에 대한 리뷰를 작성해주세요.</span>
         </div>
-        <form id="form" action="<%= contextPath %>/insertReview.rv" method="post" enctype="multipart/form-data">
+        <form id="form" action="<%= contextPath %>/insertReview.rv" method="post" enctype="multipart/form-data" onsubmit="return enroll()">
         	<input type="hidden" name="restNo" value="<%= rest.getRestNo() %>">
 	        <div class="contentWrap">
 	            <div class="formWrap">
@@ -315,6 +315,19 @@
                             case false : $(".enroll").attr("disabled", false); break;
                         }
                     })
+                    
+                    function enroll(){
+						
+						const star = $("input[type='radio']:checked");
+						const text = $(".review").val();
+						
+						if(!star.length || !text){
+							alert("별점과 리뷰내용을 등록해주세요!");
+							return false;
+						}
+						
+					}
+ 
                 </script>
 	        </div>
         </form>

@@ -45,7 +45,7 @@ public class NoticeInsertController extends HttpServlet {
 		n.setNoticeWriter(NoticeWriter);
 		
 		
-//		int result = new NoticeService().insertNotice(n);
+		int result = new NoticeService().insertNotice(n);
 		
 		if(result > 0) {
 			request.getSession().setAttribute("alertMsg", "성공적으로 추가되었습니다.");

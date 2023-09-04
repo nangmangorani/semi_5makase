@@ -13,6 +13,7 @@ import org.apache.catalina.filters.AddDefaultCharsetFilter;
 
 import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.member.model.vo.Member;
+import com.semi_5makase.member.model.vo.Report;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
@@ -30,36 +31,6 @@ public class MemberDao {
 		}
 	}
 	
-	public ArrayList<Member> selectAdminMemberList(Connection conn){
-		ArrayList<Member> list = new ArrayList<Member>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectAdminMemberList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new Member(rset.getInt("mem_no"),
-									rset.getString("mem_name"),
-									rset.getString("gender"),
-									rset.getString("phone"),
-									rset.getString("address")
-									));
-			}
-			
-			rset = pstmt.executeQuery();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
 	
 	public Member loginMember(Connection conn, String memId, String memPwd) {
 		
@@ -548,11 +519,248 @@ public class MemberDao {
 		return result;
 	}
 	
+	public ArrayList<Member> selectAdminMemberList(Connection conn){
+		ArrayList<Member> list = new ArrayList<Member>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAdminMemberList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Member(rset.getInt("mem_no"),
+									rset.getString("mem_grade"),
+									rset.getString("mem_name"),
+									rset.getString("gender"),
+									rset.getString("phone"),
+									rset.getString("mem_id"),
+									rset.getString("status")
+									));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 	
+	public Member selectAdminMember(Connection conn, int no) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("mem_no"),
+								rset.getString("mem_name"),
+								rset.getString("mem_id"),
+								rset.getString("mem_pwd"),
+								rset.getString("phone"),
+								rset.getString("address"),
+								rset.getString("email"),
+								rset.getString("mem_grade"),
+								rset.getString("status"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+	}
 	
+	public int updateAdminMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAdminMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getAddress());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getMemGrade());
+			pstmt.setString(5, m.getStatus());
+			pstmt.setInt(6, m.getMemNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteAdminMember(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteAdminMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public Report adminSelectReportDetail(Connection conn, int reportNo) {
+		Report rep = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminSelectReportDetailList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reportNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rep = new Report(rset.getInt("report_no"),
+									rset.getString("reporter"),
+									rset.getString("suspect"),
+									rset.getString("report_content"),
+									rset.getDate("report_date"),
+									rset.getString("result")
+									);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return rep;
+	}
+	
+	public int selectReportListCount(Connection conn) {
+			
+			int listCount = 0;
+			
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String sql = prop.getProperty("selectReportListCount");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt("count");
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return listCount;
+		}
+	
+public ArrayList<Report> adminSelectReportList(Connection conn){
+		
+		ArrayList<Report> list = new ArrayList<Report>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("adminSelectReportList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Report(rset.getInt("report_no"),
+									rset.getString("reporter"),
+									rset.getString("suspect"),
+									rset.getString("report_content"),
+									rset.getDate("report_date"),
+									rset.getString("result")
+									));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int adminUpdaterReport(Connection conn, Report rep) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminUpdaterReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, rep.getResult());
+			pstmt.setInt(2, rep.getReportNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int selectListCount(Connection conn) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
 	
 }
-
 
 
 

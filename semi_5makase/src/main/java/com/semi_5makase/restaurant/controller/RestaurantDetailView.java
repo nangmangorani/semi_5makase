@@ -17,6 +17,7 @@ import com.semi_5makase.restaurant.model.vo.Favorite;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
 import com.semi_5makase.restaurant.model.vo.Review;
+import com.semi_5makase.restaurant.model.vo.ReviewNo;
 
 /**
  * Servlet implementation class RestaurantDetailView
@@ -51,22 +52,27 @@ public class RestaurantDetailView extends HttpServlet {
 			int favoriteCount = rSer.selectFavoriteCount(restNo); // 즐겨찾기 수
 			int reviewCount = rSer.selectReviewCount(restNo); // 리뷰 수
 			double selectReviewRatingAvg = Math.round(rSer.selectReviewRatingAvg(restNo) * 10) / 10; // 별점 평균
-			ArrayList<Review> rvList = rSer.selectReviewList(restNo);	
-			ArrayList<Attachment> rvPicList = rSer.selectReviewAttachment();
-			
-//			for(int i=0; i<rvList.size(); i++) {
-//				System.out.println("번호" + rvList.get(i).getRestNo() + rvList.get(i).getReviewImg());
-//			}
+			ArrayList<Review> rvList = rSer.selectReviewList(restNo);
+			ArrayList<ReviewNo> rvNoList = rSer.selectReviewNoList(restNo);		
+			ArrayList<Attachment> rvPicList = rSer.selectReviewAttachment(restNo);
+			ArrayList<Attachment> profileList = rSer.selectProfileAttachment();
 
-			request.setAttribute("rest", rest);
+			request.getSession().setAttribute("rest", rest);
+			request.getSession().setAttribute("selectReviewRatingAvg", selectReviewRatingAvg);
+			
+//			request.setAttribute("rest", rest);
 			request.setAttribute("list", list);
 			request.setAttribute("favoriteCount", favoriteCount);		
 			request.setAttribute("reviewCount", reviewCount);
-			request.setAttribute("selectReviewRatingAvg", selectReviewRatingAvg);
+//			request.setAttribute("selectReviewRatingAvg", selectReviewRatingAvg);
 			request.setAttribute("rvList", rvList);
+			request.setAttribute("rvNoList", rvNoList);
 			request.setAttribute("rvPicList", rvPicList);
+			request.setAttribute("profileList", profileList);
 			
-			System.out.println(rvList);
+			
+			
+//			System.out.println(rvList);
 //			System.out.println(rvPicList);
 			
 			request.getRequestDispatcher("views/restaurant/restaurantDetailView.jsp").forward(request, response);	

@@ -1,4 +1,3 @@
-<%@page import="com.semi_5makase.board.model.vo.Faq"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -23,6 +22,10 @@
     </head>
     <style>
         div { box-sizing: border-box; }
+    
+    	.home{
+    		cursor:pointer;
+    	}
     
         .menubar-area {
             position: sticky;
@@ -78,7 +81,7 @@
         .searchbar-area button {
             position: absolute;
             top: 50%;
-            right: 200px;
+            right: 220px;
             transform: translateY(-60%);
             border: 0;
             cursor: pointer;
@@ -137,6 +140,15 @@
         .form-control{
             width: 300px;
         }
+
+        .tothetop{
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            z-index: 999;
+            bottom: 30px;
+            right: 30px;    
+        }
         
         #searchIcon{
         	margin-right: 20px;
@@ -154,7 +166,7 @@
     	
         <div class="menubar-area">
             <div class="logo-area">
-                <img src="resources/img/logo.png">
+                <img src="resources/img/logo.png" class="home">
             </div>
             <div class="searchbar-area">
                 <form action="">
@@ -202,8 +214,11 @@
                                     <input type="button" class="btn btn-sm" value="비밀번호 찿기" onclick="enrollPage2()">
                     				
                                 </div>
-                                
                                 <script >
+                                	$(".home").click(function(){
+                                		location.href="<%= contextPath %>"
+                                	})
+                                
 						            function enrollPage(){
 						            	location.href = "<%=contextPath%>/agreement.me";
 						            }
@@ -222,7 +237,11 @@
                 </div>
             
         </div>
-    
+        
+         <a href="#">
+            <img src="resources/img/tothetop.png" class="tothetop">
+        </a>
+
         <script>
                 function onClick() {
                     document.querySelector('.modal_wrap').style.display = 'block';
