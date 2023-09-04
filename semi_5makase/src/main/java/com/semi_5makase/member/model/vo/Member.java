@@ -90,7 +90,6 @@ public class Member {
 	public Member(int memNo, String memName, String gender, String phone, String address) {
 		super();
 		this.memNo = memNo;
-		this.memGrade = memGrade;
 		this.memName = memName;
 		this.gender = gender;
 		this.phone = phone;
