@@ -11,11 +11,12 @@ import java.util.Properties;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.restaurant.model.vo.AdminRequestRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminUpdateRestaurant;
-import com.semi_5makase.restaurant.model.vo.Attachment;
+
 import com.semi_5makase.restaurant.model.vo.Category;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
@@ -39,7 +40,172 @@ private Properties prop = new Properties();
 		}
 	}
 	
-public Restaurant selectRestaurantDetail(int restNo, Connection conn) {
+	/** 메뉴 리스트 조회하는 메소드
+	 * @param restNo
+	 * @param conn
+	 * @return
+	 */
+	public ArrayList<Menu> selectMenuList(int restNo, Connection conn){
+		
+		ArrayList<Menu> list = new ArrayList<Menu>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMenuList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Menu(rset.getInt("REST_NO"),
+								  rset.getInt("FILE_NO"),
+								  rset.getString("MENU"),
+								  rset.getString("PRICE"),
+								  rset.getInt("MENU_GRADE")
+								  ));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Review> selectReviewList(int restNo, Connection conn){
+		
+		ArrayList<Review> rvList = new ArrayList<Review>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReviewList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Review rv = new Review();
+				rv.setReviewNo(rset.getInt("REVIEW_NO"));
+				rv.setReviewContent(rset.getString("REVIEW_CONTENT"));
+				rv.setRating(rset.getInt("RATING"));
+				rv.setNickName(rset.getString("NICKNAME"));
+				rv.setMemNo(rset.getInt("MEM_NO"));
+				
+				rvList.add(rv);
+				
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return rvList;
+	}
+	
+	public int increaseRestaurantView(int restNo, Connection conn) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseRestaurantView");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	/** 특정 유저가 해당 음식점의 즐겨찾기 여부를 확인하는 메소드
+	 * @param memNo
+	 * @param restNo
+	 * @param conn
+	 * @return
+	 */
+	public int checkFavoriteRestaurant(int memNo, int restNo, Connection conn) {
+		
+		int favor = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("checkFavorite");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memNo);
+			pstmt.setInt(2, restNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				favor = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return favor;
+	}
+	
+	public int checkReviewLikes(int memNo, int reviewNo, Connection conn) {
+		
+		int likes = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("checkLikes");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memNo);
+			pstmt.setInt(2, reviewNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				likes = rset.getInt("count");
+			}
+			
+			System.out.println("좋아요 : " + likes);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return likes;
+		
+	}
+	
+	public Restaurant selectRestaurantDetail(int restNo, Connection conn) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -194,7 +360,7 @@ public Restaurant selectRestaurantDetail(int restNo, Connection conn) {
 		
 	}
 	
-	public int deleteFavoriteRestaurant(Connection conn, int memNo, int restNo) {
+	public int deleteFavoriteRestaurant(int memNo, int restNo, Connection conn) {
 		int del = 0;
 		PreparedStatement pstmt = null;
 		
@@ -214,6 +380,59 @@ public Restaurant selectRestaurantDetail(int restNo, Connection conn) {
 			close(pstmt);
 		}
 		return del;
+	}
+	
+	public int insertReport(int memNo, int susNo, String report, Connection conn) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memNo);
+			pstmt.setInt(2, susNo);
+			pstmt.setString(3, report);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	public int selectLikesCount(int reviewNo, Connection conn) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectLikesCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, reviewNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
 	}
 		
 	
@@ -892,7 +1111,7 @@ public int adminUpdateAttachment(Connection conn, ArrayList<Attachment> list) {
 			pstmt.setString(1, at.getOriginName());
 			pstmt.setString(2, at.getChangeName());
 			pstmt.setString(3, at.getFilePath());
-			pstmt.setInt(4, at.getRefBoardNo());
+			pstmt.setInt(4, at.getRefBno());
 			
 			result = pstmt.executeUpdate();
 			
@@ -1473,28 +1692,28 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 	
 	// 음식점 등록요청
 	
-		public int insertRestTemp(Connection conn, RestaurantTemp r) {
-			PreparedStatement pstmt = null;
-			int result = 0;
-			
-			String sql = prop.getProperty("insertRestTemp");
-			
-			try {
-				pstmt=conn.prepareStatement(sql);
-				
-				pstmt.setString(1, r.getRestName());
-				pstmt.setString(2, r.getRestInfo());
-				result = pstmt.executeUpdate();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally{
-				close(pstmt);
-			}
-			return result;
-			
-				
-		}
+//		public int insertRestTemp(Connection conn, RestaurantTemp r) {
+//			PreparedStatement pstmt = null;
+//			int result = 0;
+//			
+//			String sql = prop.getProperty("insertRestTemp");
+//			
+//			try {
+//				pstmt=conn.prepareStatement(sql);
+//				
+//				pstmt.setString(1, r.getRestName());
+//				pstmt.setString(2, r.getRestInfo());
+//				result = pstmt.executeUpdate();
+//				
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}finally{
+//				close(pstmt);
+//			}
+//			return result;
+//			
+//				
+//		}
 		
 		// 음식점 등록요청 시 사진 등록 (attachment)
 		public int insertAttachment(Connection conn, ArrayList<Attachment> list) {
@@ -1628,7 +1847,7 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 				while(rset.next()) {
 					Attachment at = new Attachment();
 					at.setFilePath(rset.getString("REVIEWIMGS"));
-					at.setRefBoardNo(rset.getInt("REVIEW_NO"));
+					at.setRefBno(rset.getInt("REVIEW_NO"));
 					list.add(at);
 				}
 				
