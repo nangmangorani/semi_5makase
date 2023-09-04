@@ -45,7 +45,7 @@
 
         .outline{ 
             border: 1px solid rgb(230, 230, 230);
-            width: 1000px; height: 800px; margin: auto;
+            width: 1000px; height: 850px; margin: auto;
         }
         .outline>div{
             /* border: 1px solid red; */
@@ -142,13 +142,13 @@
                                 <ul class="list-group">
                                 
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                                     
                                     
                                     <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
                                     
                                     
-                                    <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                                     
                                 </ul>
                     </div>
@@ -182,9 +182,9 @@
                               <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
                               <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad">등록 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad?cpage=1">등록 요청 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad?cpage=1">수정 요청 리스트</a></li>
                           </ul>
                       </div>
                     </div>

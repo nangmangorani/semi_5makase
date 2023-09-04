@@ -300,4 +300,16 @@ public class MemberService {
 		
 		return result;
 	}
+	
+	public int selectListCount() {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new MemberDao().selectListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
 }

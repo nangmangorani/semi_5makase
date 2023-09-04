@@ -136,7 +136,7 @@ public class Member {
 		this.address = address;
 	}
 	
-	public Member(int memNo, String memGrade, String memName, String gender, String phone, String address,
+	public Member(int memNo, String memGrade, String memName, String gender, String phone, String memId,
 			String status) {
 		super();
 		this.memNo = memNo;
@@ -144,7 +144,7 @@ public class Member {
 		this.memName = memName;
 		this.gender = gender;
 		this.phone = phone;
-		this.address = address;
+		this.memId = memId;
 		this.status = status;
 	}
 	
