@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.semi_5makase.member.model.dao.MemberDao;
 import com.semi_5makase.member.model.vo.Attachment;
 import com.semi_5makase.member.model.vo.Member;
+import com.semi_5makase.member.model.vo.Report;
 
 public class MemberService {
 	
@@ -50,7 +51,11 @@ public class MemberService {
 		if(result > 0) {
 			commit(conn);
 		} else {
-
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 			
 	public Member emailcheckOne(String email) {
@@ -247,6 +252,52 @@ public class MemberService {
 			rollback(conn);
 		}
 		close(conn);
+		return result;
+	}
+	
+	public Report adminSelectReportDetail(int reportNo) {
+		Connection conn = getConnection();
+		
+		Report rep = new MemberDao().adminSelectReportDetail(conn, reportNo);
+		
+		close(conn);
+		
+		return rep;
+	}
+	
+	public int selectReportListCount() {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new MemberDao().selectReportListCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	public ArrayList<Report> adminSelectReportList(){
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new MemberDao().adminSelectReportList(conn);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public int adminUpdaterReport(Report rep) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().adminUpdaterReport(conn, rep);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
 		return result;
 	}
 }

@@ -1,4 +1,3 @@
-<%@page import="com.semi_5makase.board.model.vo.Faq"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

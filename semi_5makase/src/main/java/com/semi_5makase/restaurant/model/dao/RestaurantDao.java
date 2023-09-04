@@ -11,11 +11,16 @@ import java.util.Properties;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
-import com.semi_5makase.common.model.vo.Attachment;
-import com.semi_5makase.restaurant.model.vo.Favorite;
+import com.semi_5makase.common.model.vo.PageInfo;
+import com.semi_5makase.restaurant.model.vo.AdminRequestRestaurant;
+import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
+import com.semi_5makase.restaurant.model.vo.AdminUpdateRestaurant;
+import com.semi_5makase.restaurant.model.vo.Attachment;
+import com.semi_5makase.restaurant.model.vo.Category;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
-import com.semi_5makase.restaurant.model.vo.Review;
+import com.semi_5makase.restaurant.model.vo.TV;
+import com.semi_5makase.restaurant.model.vo.Time;
 
 public class RestaurantDao {
 	
@@ -32,33 +37,6 @@ private Properties prop = new Properties();
 		}
 	}
 	
-	public int increaseRestaurantView(int restNo, Connection conn) {
-		
-		int count = 0;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("increaseRestaurantView");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, restNo);
-			
-			count = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		return count;
-	}
-	
-	/** 음식점 세부정보 조회 메소드
-	 * @param restNo 음식점 번호
-	 * @param conn
-	 * @return
-	 */
 	public Restaurant selectRestaurantDetail(int restNo, Connection conn) {
 		
 		PreparedStatement pstmt = null;
@@ -110,51 +88,9 @@ private Properties prop = new Properties();
 		return rest;
 	}
 	
-	/** 메뉴 리스트 조회하는 메소드
-	 * @param restNo
-	 * @param conn
-	 * @return
-	 */
-	public ArrayList<Menu> selectMenuList(int restNo, Connection conn){
-		
-		ArrayList<Menu> list = new ArrayList<Menu>();
-		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectMenuList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, restNo);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new Menu(rset.getInt("REST_NO"),
-								  rset.getInt("FILE_no"),
-								  rset.getString("MENU"),
-								  rset.getString("PRICE"),
-								  rset.getInt("MENU_GRADE")
-								  ));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
+
 	
 	
-	/** 특정 음식점의 즐겨찾기 수를 조회하는 메소드 
-	 * @param restNo
-	 * @param conn
-	 * @return
-	 */
 	public int selectFavoriteCount(int restNo, Connection conn) {
 		
 		int count = 0;
@@ -177,113 +113,11 @@ private Properties prop = new Properties();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
 		return count;
 	}
 	
-	public int selectLikesCount(int reviewNo, Connection conn) {
-		
-		int count = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectLikesCount");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, reviewNo);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				count = rset.getInt("count");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return count;
-	}
-	
-	/** 특정 유저가 해당 음식점의 즐겨찾기 여부를 확인하는 메소드
-	 * @param memNo
-	 * @param restNo
-	 * @param conn
-	 * @return
-	 */
-	public int checkFavoriteRestaurant(int memNo, int restNo, Connection conn) {
-		
-		int favor = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("checkFavorite");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, memNo);
-			pstmt.setInt(2, restNo);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				favor = rset.getInt("count");
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return favor;
-	}
-	
-	public int checkReviewLikes(int memNo, int reviewNo, Connection conn) {
-		
-		int likes = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("checkLikes");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, memNo);
-			pstmt.setInt(2, reviewNo);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				likes = rset.getInt("count");
-			}
-			
-			System.out.println("좋아요 : " + likes);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return likes;
-		
-	}
-	
-	
-	/** 특정 음식점의 리뷰 총 개수를 조회하는 메소드
-	 * @param restNo
-	 * @param conn
-	 * @return
-	 */
 	public int selectReviewCount(int restNo, Connection conn) {
 		
 		int count = 0;
@@ -306,17 +140,11 @@ private Properties prop = new Properties();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
 		return count;
 	}
 	
-	/** 해당 음식점 리뷰의 평균 점수를 조회하는 메소드
-	 * @param restNo
-	 * @param conn
-	 * @return
-	 */
 	public double selectReviewRatingAvg(int restNo, Connection conn) {
 		
 		double avg = 0;
@@ -339,135 +167,162 @@ private Properties prop = new Properties();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
 		return avg;
 	}
 	
-	/** 해당 음식점의 즐겨찾기를 삭제(취소) 하는 메소드
-	 * @param memNo
-	 * @param restNo
-	 * @param conn
-	 * @return
-	 */
-	public int deleteFavoriteRestaurant(int memNo, int restNo, Connection conn) {
+	public ArrayList<AdminRestaurant> adminSelectRestList(Connection conn){
 		
-		int del = 0;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("deleteFavoriteRestaurant");
-		
-		System.out.println("m" + memNo);
-		System.out.println("r" + restNo);
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, memNo);
-			pstmt.setInt(2, restNo);
-			
-			del = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		return del;
-	}
-	
-	public int deleteLikes(int memNo, int reviewNo, Connection conn) {
-		
-		int del = 0;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("deleteLikes");
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, memNo);
-			pstmt.setInt(2, reviewNo);
-			
-			del = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		return del;
-	}
-	
-	/** 해당 음식점의 즐겨찾기를 등록(찜) 하는 메소드
-	 * @param memNo
-	 * @param restNo
-	 * @param conn
-	 * @return
-	 */
-	public int insertFavoriteRestaurant(int memNo, int restNo, Connection conn) {
-		
-		int put = 0;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("insertFavoriteRestaurant");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, memNo);
-			pstmt.setInt(2, restNo);
-			
-			put = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		return put;
-	}
-	
-	public int insertLikes(int memNo, int reviewNo, Connection conn) {
-		
-		int put = 0;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("insertLikes");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, memNo);
-			pstmt.setInt(2, reviewNo);
-			
-			put = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		return put;
-	}
-	
-	public String selectNickName(int memNo, Connection conn) {
-		
-		String nickName = null;
+		ArrayList<AdminRestaurant> list = new ArrayList<AdminRestaurant>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectNickName");
+		
+		String sql = prop.getProperty("adminSelectRestList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, memNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new AdminRestaurant(rset.getInt("rest_no"),
+											 rset.getString("rest_name"),
+											 rset.getString("rest_address"),
+											 rset.getString("rest_phone"),
+											 rset.getString("category_name"),
+											 rset.getString("status")
+											 ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<AdminRestaurant> adminSelectRestList(Connection conn, PageInfo pi){
+		
+		ArrayList<AdminRestaurant> list = new ArrayList<AdminRestaurant>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("adminSelectRestListPaging");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new AdminRestaurant(rset.getInt("rest_no"),
+											 rset.getString("rest_name"),
+											 rset.getString("rest_address"),
+											 rset.getString("rest_phone"),
+											 rset.getString("category_name"),
+											 rset.getString("status")
+											 ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Category> adminSelectCategory(Connection conn){
+			
+			ArrayList<Category> clist = new ArrayList<Category>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("adminSelectCategory");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					clist.add(new Category(rset.getInt("category_no"),
+										  rset.getString("category_name")
+										  ));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return clist;
+		}
+	
+	public ArrayList<TV> adminSelectTv(Connection conn){
+		
+		ArrayList<TV> tlist = new ArrayList<TV>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("adminSelectTv");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				tlist.add(new TV(rset.getInt("tv_no"),
+								rset.getString("tv_name")
+								));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return tlist;
+	}
+	
+	public AdminRestaurant adminSelectRestaurant(Connection conn, int restNo) {
+		
+		AdminRestaurant ar = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("adminSelectRestaurant");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				nickName = rset.getString("NICKNAME");
+				ar = new AdminRestaurant(rset.getInt("rest_no"),
+										 rset.getString("category_name"),
+										 rset.getString("tv_name"),
+										 rset.getString("rest_name"),
+										 rset.getString("rest_address"),
+										 rset.getString("rest_phone"),
+										 rset.getString("parking"),
+										 rset.getString("intro"),
+										 rset.getString("status"),
+										 rset.getString("menu"),
+										 rset.getInt("price"),
+										 rset.getInt("menu_grade"),
+										 rset.getString("opening_time"),
+										 rset.getString("rest_time"),
+										 rset.getString("break_time"));
+						
 			}
 			
 		} catch (SQLException e) {
@@ -476,23 +331,156 @@ private Properties prop = new Properties();
 			close(rset);
 			close(pstmt);
 		}
-		return nickName;
+		return ar;
 	}
-	
-	public int insertReview(Review rv, Connection conn) {
+
+	public ArrayList<Menu> adminSelectRestaurantMenu(Connection conn, int restNo){
 		
-		int result = 0;
+		ArrayList<Menu> list = new ArrayList<Menu>();
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		
-		String sql = prop.getProperty("insertReview");
+		String sql = prop.getProperty("adminSelectRestaurantMenu");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, rv.getRestNo());
-			pstmt.setString(2, rv.getReviewContent());
-			pstmt.setInt(3, rv.getRating());
-			pstmt.setInt(4, rv.getMemNo());
+			pstmt.setInt(1, restNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Menu(rset.getInt("rest_no"),
+								rset.getString("menu"),
+								rset.getInt("price"),
+								rset.getInt("menu_grade")
+								));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<AdminRequestRestaurant> adminSelectRestRequest(Connection conn, PageInfo pi) {
+		
+		ArrayList<AdminRequestRestaurant> list = new ArrayList<AdminRequestRestaurant>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminSelectRestRequestPaging");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new AdminRequestRestaurant(rset.getInt("rtemp_no"),
+													rset.getString("rtemp_name"),
+													rset.getString("rtemp_info")
+													));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<AdminUpdateRestaurant> adminSelectRestChange(Connection conn, PageInfo pi) {
+		
+		ArrayList<AdminUpdateRestaurant> list = new ArrayList<AdminUpdateRestaurant>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminSelectRestChangePaging");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new AdminUpdateRestaurant(rset.getInt("update_no"),
+													rset.getString("update_content"),
+													rset.getInt("rest_no"),
+													rset.getString("rest_name")
+													));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Attachment> adminSelectAttatchment(Connection conn, int restNo) {
+		
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminSelectAttatchment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setChangeName(rset.getString("change_name"));
+				at.setFilePath(rset.getString("file_path"));
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	
+	public int adminInsertRestaurant(Connection conn, AdminRestaurant ar) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("adminInsertRestaurant");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, ar.getRestName());
+			pstmt.setString(2, ar.getRestAddress());
+			pstmt.setString(3, ar.getRestPhone());
+			pstmt.setString(4, ar.getParking());
+			pstmt.setString(5, ar.getIntro());
+			pstmt.setString(6, ar.getStatus());
+			pstmt.setString(7, ar.getCategory());
+			pstmt.setString(8, ar.getTv());
 			
 			result = pstmt.executeUpdate();
 			
@@ -501,27 +489,48 @@ private Properties prop = new Properties();
 		} finally {
 			close(pstmt);
 		}
-		
 		return result;
-		
 	}
 	
-public int insertAttachmentList(ArrayList<Attachment> list, Connection conn) {
+	public int adminInsertAttachment(Connection conn, Attachment at) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("insertAttachmentList");
-		
+		String sql = prop.getProperty("adminInsertAttachment2");
+		System.out.println(result + "#########");
 		try {
-			for(Attachment at : list) { // at = list.get(0), at = list.get(1) ...
-				// 미완성
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, at.getOriginName());
 				pstmt.setString(2, at.getChangeName());
 				pstmt.setString(3, at.getFilePath());
-				pstmt.setString(4, at.getCategory());
+				
+				result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminInsertAttachment(Connection conn, ArrayList<Attachment> list) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("adminInsertAttachment");
+		System.out.println(result + "$$$$$$$$$$");
+		try {
+			for(Attachment at : list) {
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
 				
 				result = pstmt.executeUpdate();
 			}
@@ -534,63 +543,261 @@ public int insertAttachmentList(ArrayList<Attachment> list, Connection conn) {
 		return result;
 	}
 	
-	public ArrayList<Review> selectReviewList(int restNo, Connection conn){
+	public int adminInsertMenu1(Connection conn, Menu m1) {
 		
-		ArrayList<Review> rvList = new ArrayList<Review>();
-		
+		int result = 0;
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectReviewList");
+		String sql = prop.getProperty("adminInsertMenu1");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, restNo);
+			pstmt.setString(1, m1.getMenu());
+			pstmt.setInt(2, m1.getPrice());
 			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				
-				Review rv = new Review();
-				rv.setReviewNo(rset.getInt("REVIEW_NO"));
-				rv.setReviewContent(rset.getString("REVIEW_CONTENT"));
-				rv.setRating(rset.getInt("RATING"));
-				rv.setNickName(rset.getString("NICKNAME"));
-				rv.setMemNo(rset.getInt("MEM_NO"));
-				
-				rvList.add(rv);
-				
-				System.out.println(rv);
-			}		
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
-		return rvList;
+		return result;
 	}
-
-	public ArrayList<Attachment> selectReviewAttachment(int reviewNo, Connection conn) {
-		
-		ArrayList<Attachment> list = new ArrayList<Attachment>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectReviewAttachment2");
+	
+	public int adminInsertMenu2(Connection conn, Menu m2) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("adminInsertMenu2");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
 				
+				pstmt.setString(1, m2.getMenu());
+				pstmt.setInt(2, m2.getPrice());
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		}
+
+	public int adminInsertMenu3(Connection conn, Menu m3) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminInsertMenu3");
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			//pstmt.setInt(1, reviewNo);
+			pstmt.setString(1, m3.getMenu());
+			pstmt.setInt(2, m3.getPrice());
 			
-			rset=pstmt.executeQuery();
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminInsertTime(Connection conn, Time ar3) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminInsertTime");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, ar3.getOpenTime());
+			pstmt.setString(2, ar3.getRestTime());
+			pstmt.setString(3, ar3.getBreakTime());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminUpdateRestaurant(Connection conn, AdminRestaurant ar) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("adminUpdateRestaurant");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, ar.getRestName());
+			pstmt.setString(2, ar.getCategory());
+			pstmt.setString(3, ar.getTv());
+			pstmt.setString(4, ar.getRestAddress());
+			pstmt.setString(5, ar.getRestPhone());
+			pstmt.setString(6, ar.getParking());
+			pstmt.setString(7, ar.getIntro());
+			pstmt.setString(8, ar.getStatus());
+			pstmt.setInt(9, ar.getRestNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminUpdateAttachment(Connection conn, ArrayList<Attachment> list) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("adminUpdateAttachment");
+		
+		try {
+			for(Attachment at : list) {
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
+				pstmt.setInt(4, at.getRefBoardNo());
+				
+				result = pstmt.executeUpdate();
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminUpdateMenu1(Connection conn, Menu m1) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminUpdateMenu1");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m1.getMenu());
+			pstmt.setInt(2, m1.getPrice());
+			pstmt.setInt(3, m1.getMenuGrade());
+			pstmt.setInt(4, m1.getRestNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminUpdateMenu2(Connection conn, Menu m2) {
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("adminUpdateMenu2");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, m2.getMenu());
+				pstmt.setInt(2, m2.getPrice());
+				pstmt.setInt(3, m2.getMenuGrade());
+				pstmt.setInt(4, m2.getRestNo());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		}
 
-			while(rset.next()) {
-				Attachment at = new Attachment();
-				at.setFilePath(rset.getString("REVIEWIMGS"));
-				at.setRefBoardNo(rset.getInt("REVIEW_NO"));
-				list.add(at);
+	public int adminUpdateMenu3(Connection conn, Menu m3) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminUpdateMenu3");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m3.getMenu());
+			pstmt.setInt(2, m3.getPrice());
+			pstmt.setInt(3, m3.getMenuGrade());
+			pstmt.setInt(4, m3.getRestNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminUpdateTime(Connection conn, Time ar3) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminUpdateTime");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, ar3.getOpenTime());
+			pstmt.setString(2, ar3.getRestTime());
+			pstmt.setString(3, ar3.getBreakTime());
+			pstmt.setInt(4, ar3.getRestNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectListCount(Connection conn) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
 			}
 			
 		} catch (SQLException e) {
@@ -599,56 +806,56 @@ public int insertAttachmentList(ArrayList<Attachment> list, Connection conn) {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return listCount;
 	}
 	
-	public int updateRestaurant(int memNo, String update, int restNo, String closed, Connection conn) {
+	public int selectChangeListCount(Connection conn) {
 		
-		int result = 0;
+		int listCount = 0;
+		
 		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("updateRestaurant");
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectChangeListCount");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
 			
-			pstmt.setString(1, update);
-			pstmt.setInt(2, restNo);
-			pstmt.setInt(3, memNo);
-			
-			result = pstmt.executeUpdate();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
+			close(rset);
 			close(pstmt);
 		}
-		return result;
+		return listCount;
 	}
-	
-	public int insertReport(int memNo, int susNo, String report, Connection conn) {
+
+	public int selectRequestListCount(Connection conn) {
 		
-		int result = 0;
+		int listCount = 0;
+		
 		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("insertReport");
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectRequestListCount");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
 			
-			pstmt.setInt(1, memNo);
-			pstmt.setInt(2, susNo);
-			pstmt.setString(3, report);
-			
-			result = pstmt.executeUpdate();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
+			close(rset);
 			close(pstmt);
 		}
-		return result;
-		
+		return listCount;
 	}
-	
 }

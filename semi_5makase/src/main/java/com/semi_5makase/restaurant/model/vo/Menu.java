@@ -5,15 +5,23 @@ public class Menu {
 	private int restNo;
 	private int fileNo;
 	private String menu;
-	private String price;
+	private int price;
 	private int menuGrade;
 	
 	public Menu() {}
 
-	public Menu(int restNo, int fileNo, String menu, String price, int menuGrade) {
+	public Menu(int restNo, int fileNo, String menu, int price, int menuGrade) {
 		super();
 		this.restNo = restNo;
 		this.fileNo = fileNo;
+		this.menu = menu;
+		this.price = price;
+		this.menuGrade = menuGrade;
+	}
+	
+	public Menu(int restNo, String menu, int price, int menuGrade) {
+		super();
+		this.restNo = restNo;
 		this.menu = menu;
 		this.price = price;
 		this.menuGrade = menuGrade;
@@ -43,11 +51,11 @@ public class Menu {
 		this.menu = menu;
 	}
 
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
