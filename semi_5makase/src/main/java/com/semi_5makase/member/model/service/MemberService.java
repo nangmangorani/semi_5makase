@@ -21,6 +21,7 @@ public class MemberService {
 		return list;
 		
 	}
+	
 	public Member loginMember(String memId, String memPwd) {
 		Connection conn = getConnection();
 		

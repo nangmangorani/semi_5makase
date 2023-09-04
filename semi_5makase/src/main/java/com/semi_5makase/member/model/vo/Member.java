@@ -69,7 +69,12 @@ public class Member {
 	}
 	
 	public Member(int memNo, String memGrade, String memName, String gender, String phone, String address) {
-	
+		this.memNo = memNo;
+		this.memGrade = memGrade;
+		this.memName = memName;
+		this.gender = gender;
+		this.phone = phone;
+		this.address = address;
 	}
 	
 	
