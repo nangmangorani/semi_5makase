@@ -90,21 +90,26 @@
         left: 50%;
         transform: translateX(-50%);
         background: #eee;
-        z-index: 1;
+      	z-index: 11;
+        
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+        border: 2px solid #ccc; /* 테두리 추가 */
+  		border-radius: 50px; /* 라운드 모서리 추가 */
     }
-    
-    
-        .black_bg {
-            display: none;
-            position: absolute;
-            content: "";
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            top: 0;
-            left: 0;
-            z-index: 2;
-        }
+
+			.black_bg {
+		    display: none;
+		    position: fixed; /* 변경: fixed로 설정 */
+		    content: "";
+		    width: 100%;
+		    height: 100%;
+		    background-color: rgba(0, 0, 0, 0.5);
+		    top: 0;
+		    left: 0;
+		    z-index: 10; 
+		}
+	   		
+   
     
         .modal_close {
             width: 26px;
@@ -130,6 +135,10 @@
             width: 300px;
         }
         
+        #searchIcon{
+        	margin-right: 20px;
+        }
+        
     </style>
     <body>
     	<% if(alertMsg != null){ %>
@@ -147,7 +156,7 @@
             <div class="searchbar-area">
                 <form action="">
                     <input type="text" placeholder="     지역, 음식 또는 식당명을 입력해주세요. " style="border: 0px;">
-                    <button type="submit"><img src="resources/img/searchIcon.png"></button>
+                    <button type="submit" id="searchIcon"><img src="resources/img/searchIcon.png"></button>
                 </form>
             </div>
             <div class="member-area" align="center" style="margin-top: 10px;">
@@ -170,6 +179,7 @@
                 
                 <div class="black_bg"></div>
                 <div class="modal_wrap">
+                
                     <div class="modal_close"><a href="#">close</a></div>
                         <div>
                             <form action="<%=contextPath %>/login.me" method="post">
@@ -206,7 +216,8 @@
                             </form>
                         </div>
                 </div>
-            </div>
+                </div>
+            
         </div>
     
         <script>

@@ -4,6 +4,7 @@
     
 <%
 	Member m = (Member)request.getAttribute("m");
+	String contextPath = request.getContextPath(); 
 %>
 
 <!DOCTYPE html>
@@ -82,28 +83,44 @@
 <body>
     <div class="wrap-area">
         <div class="intro-area" align="center"> 비밀번호 재설정 </div> <br><br>
-        <form action="" method="post" class="searchBy-area">
-        	<!-- 	<input type="hidden" name="memPwd" value="">  -->
+        <form action="<%=contextPath %>/checkEmailResetPwd.me" method="post" class="searchBy-area">
+        	 <input type="hidden" name="memId" id="memId" value="<%=m.getMemId()%>">
+        	 <input type="hidden" name="memPwd" id="memPwd" value="<%=m.getMemPwd()%>">
                 <div class="searchByPhone"> <br><br>
                     <h5>새로운 비밀번호를 입력해주세요.</h5> <br>
-                    <div id="inputNewPwd-area">아이디 : <b>아이디값 받아오기</b>
-                        <input type="text" id="newPwd" class="form-control form-control-lg" placeholder="새 비밀번호">
+                    <div id="inputNewPwd-area">아이디 : <b><%=m.getMemId() %></b>
+                        <input type="password" name="newPwd" id="newPwd" class="form-control form-control-lg" placeholder="새 비밀번호">
                         <span id="X1" onclick="cleanPwd();"><b>X</b></span>
                         <br>
-                        <input type="text" id="checkPwd" class="form-control form-control-lg" placeholder="새 비밀번호 확인">
+                        <input type="password" name="checkPwd" id="checkPwd" class="form-control form-control-lg" placeholder="새 비밀번호 확인">
                         <span id="X2" onclick="cleanPwd2();"><b>X</b></span>
                     </div> <br>
                 </div>
-                <button type="submit" id="resetPwd" class="btn btn-primary btn-lg btn-block" disabled>비밀번호 재설정하기</button>
+                <button type="submit" id="resetPwd" class="btn btn-primary btn-lg btn-block" onclick="checkNum();" disabled>비밀번호 재설정하기</button>
         </form>
     </div>
+  
+    
+    
+    
     <script>
-            $("#newPwd, #checkPwd").keyup(function(){
-                switch(!($("#newPwd").val() && $("#checkPwd").val())){
-                    case false : $("#resetPwd").attr("disabled", false); break;
-                    case true : $("#resetPwd").attr("disabled", true); break;
-                }
-            })
+    	
+		
+			function checkNum() {
+			 var inputValueOne = $("#newPwd").val();
+			 var inputValueTwo = $("#checkPwd").val();
+			$("#checkNumber").keyup(checkNum);
+			
+			 if (inputValueOne == inputValueTwo) {
+			     $("#resetPwd").prop("disabled", false);
+			 } else {
+			     $("#resetPwd").prop("disabled", true);
+			 }
+			}
+			  $("#newPwd").keyup(checkNum);
+			  $("#checkPwd").keyup(checkNum);
+			
+			
 
             function cleanPwd(){
                 $("#newPwd").val('').focus();

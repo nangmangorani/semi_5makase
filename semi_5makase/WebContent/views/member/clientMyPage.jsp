@@ -1,8 +1,12 @@
+<%@page import="com.oreilly.servlet.multipart.FilePart"%>
 <%@page import="com.semi_5makase.member.model.vo.Attachment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Attachment pf = (Attachment)request.getAttribute("pf");
+%>   
 
-    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,6 +112,8 @@
 		int memNo = loginMember.getMemNo();
 
 	%>
+	
+
 	
 
     <div id="myPageWrap">

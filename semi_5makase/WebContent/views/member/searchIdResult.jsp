@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%
 	Member m = (Member)request.getAttribute("m");
+	String contextPath = request.getContextPath(); 
 %>
 
 
@@ -62,8 +63,8 @@
                     </tr>
                 </table>
             </div> <br><br>
-            <div align="center">비밀번호가 기억나지 않으세요? <a href="비밀번호찾기 페이지">비밀번호 찾기</a></div> <br>
+            <div align="center">비밀번호가 기억나지 않으세요? <a href="<%=contextPath%>/searchPwdOne.me">비밀번호 찾기</a></div> <br>
             <div id="button">
-                <button type="button" class="btn btn-primary btn-lg btn-block"><a href="로그인 페이지">로그인</a></button>
+                <button type="button" class="btn btn-primary btn-lg btn-block"><a href="<%=contextPath%>">로그인</a></button>
             </div>
     </div>

@@ -180,10 +180,12 @@ public class MemberService {
 	
 	public Attachment selectAttachment(int memNo) {
 		Connection conn = getConnection();
-		Attachment at = new MemberDao().selectAttachment(conn, memNo);
+		System.out.println(memNo);
+		Attachment pf = new MemberDao().selectAttachment(conn, memNo);
+		System.out.println(pf+"서비스");
 		
 		close(conn);
-		return at;
+		return pf;
 	}
 	
 
@@ -196,5 +198,22 @@ public class MemberService {
 		return m;
 		
 	}
+	
+	public Member resetPwd(String memId,String memPwd, String newPwd,String checkPwd) {
+		Connection conn = getConnection();
+		int result = new MemberDao().resetPwd(conn, memId, memPwd, newPwd, checkPwd);
+		
+		Member resetPwd = null;
+		
+		if(result > 0 ) {
+			commit(conn);
+			resetPwd = new MemberDao().selectMember(conn, memId);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return resetPwd;
+	}
+	
 	
 }
