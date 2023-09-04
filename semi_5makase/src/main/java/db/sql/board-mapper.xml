@@ -2,5 +2,191 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
+<entry key="selectQnaList">
+	SELECT *
+	  FROM (
+	        SELECT ROWNUM RNUM, A.*
+	          FROM (
+	          		SELECT
+					       QNA_NO
+					     , BOARD_TITLE
+					     , CREATE_DATE
+					     , REPLY
+					     , OPEN
+					     , MEM_ID
+					  FROM QNA Q
+                      JOIN MEMBER ON(BOARD_WRITER = MEM_NO)
+   					 WHERE Q.STATUS = 'Y'
+					 ORDER
+					    BY QNA_NO DESC
+	               ) A
+	       )
+	       WHERE RNUM BETWEEN ? AND ?
+
+</entry>
+
+<entry key="selectListCount">
+	SELECT COUNT(*) "COUNT"
+		  FROM QNA
+		 WHERE STATUS = 'Y'
+</entry>
+
+<entry key="insertBoard">
+	INSERT 
+	  INTO QNA
+	     (
+	       QNA_NO
+	     , BOARD_TITLE
+	     , BOARD_CONTENT
+	     , QNA_VIEWS
+	     , CREATE_DATE
+	     , STATUS
+	     , OPEN
+	     , REPLY
+	     , BOARD_WRITER
+	     )
+	VALUES
+	     (
+	       SEQ_QNO.NEXTVAL
+	     , ?
+	     , ?
+	     , 0
+	     , SYSDATE
+	     , 'Y'
+	     , ?
+	     , DEFAULT
+	     , ? 
+	     )
+
+</entry>
+
+<entry key="insertAttachment">
+	INSERT
+  INTO ATTACHMENT
+     (
+       FILE_NO
+     , REF_BNO
+     , ORIGIN_NAME
+     , CHANGE_NAME
+     , FILE_PATH
+     , UPLOAD_DATE
+     , STATUS
+     , CATEGORY
+     )
+VALUES
+     (
+       SEQ_FNO.NEXTVAL
+     , SEQ_QNO.CURRVAL
+     , ?
+     , ?
+     , ?
+     , SYSDATE
+     , 'Y'
+     , 'QNA'
+     )
+
+</entry>
+
+<entry key="selectAttachment">
+	SELECT 
+	       FILE_NO
+	     , ORIGIN_NAME
+	     , CHANGE_NAME
+	     , FILE_PATH
+	  FROM ATTACHMENT
+	 WHERE REF_BNO = ?
+	   AND CATEGORY = 'QNA'
+	   AND STATUS = 'Y'
+</entry>
+
+<entry key="selectFaqList">
+	SELECT
+	       FAQ_NO
+	     , FAQ_TITLE
+	     , FAQ_CONTENT
+	  FROM FAQ
+	 WHERE FAQ_TITLE
+	  LIKE '%' || ? || '%'
+	   AND STATUS = 'Y'
+</entry>
+
+<entry key="selectFaqListNoSearch">
+	SELECT
+	       FAQ_NO
+	     , FAQ_TITLE
+	     , FAQ_CONTENT
+	  FROM FAQ
+	 WHERE STATUS = 'Y'
+</entry>
+
+<entry key="increaseQnaViews">
+	UPDATE 
+	       QNA
+	   SET QNA_VIEWS = QNA_VIEWS + 1
+	 WHERE QNA_NO = ?
+</entry>
+
+<entry key="selectQna">
+	SELECT
+       QNA_NO
+     , BOARD_TITLE
+     , BOARD_CONTENT
+     , QNA_VIEWS
+     , CREATE_DATE
+     , OPEN
+     , REPLY
+     , MEM_ID
+  FROM QNA Q
+  JOIN MEMBER ON(MEM_NO = BOARD_WRITER)
+ WHERE QNA_NO = ?
+   AND Q.STATUS = 'Y'
+</entry>
+
+<entry key="insertFaq">
+	INSERT
+	  INTO FAQ
+	     (
+	       FAQ_NO
+	     , FAQ_TITLE
+	     , FAQ_CONTENT
+	     , STATUS
+	     , FAQ_WRITER
+	     )
+	VALUES
+	     (
+	       SEQ_FAQNO.NEXTVAL
+	     , ?
+	     , ?
+	     , DEFAULT
+	     , ?
+	     )
+</entry>
+
+<entry key="deleteFaq">
+	UPDATE FAQ
+	   SET STATUS = 'N'
+	 WHERE FAQ_NO = ?
+</entry>
+
+<entry key="updateQna">
+	UPDATE QNA
+	   SET BOARD_TITLE = ?
+	     , BOARD_CONTENT = ?
+	 WHERE QNA_NO = ?
+</entry>
+
+<entry key="deleteQna">
+	UPDATE QNA
+	   SET STATUS = 'N'
+	 WHERE QNA_NO = ?
+</entry>
+
+<entry key="deleteAttachment">
+	UPDATE ATTACHMENT
+	   SET
+	       STATUS = 'N'
+	 WHERE REF_BNO = ?
+	   AND CATEGORY = 'QNA'
+</entry>
 
 </properties>

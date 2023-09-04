@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi_5makase.board.model.service.QnaService;
 import com.semi_5makase.board.model.vo.Qna;
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.notice.model.service.NoticeService;
 
 /**
@@ -69,10 +69,24 @@ public class QnaListController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		
+		String searchQna = request.getParameter("searchQna");
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		System.out.println(listCount + "," +  currentPage + "," +  pageLimit + "," + boardLimit + "," + maxPage + "," + startPage + "," + endPage);
 		ArrayList<Qna> list = new QnaService().selectQnaList(pi);
+		
+		for(Qna q: list) {
+			if(q.getReply().equals("Y")) {
+				q.setReply("답변완료");
+			} else {
+				q.setReply("진행중");
+			}
+			
+			if(q.getOpen().equals("Y")) {
+				q.setOpen("공개");
+			} else {
+				q.setOpen("비공개");
+			}
+		}
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);

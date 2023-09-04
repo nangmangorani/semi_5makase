@@ -1,4 +1,4 @@
-<%@page import="com.semi_5makase.common.model.PageInfo"%>
+<%@page import="com.semi_5makase.common.model.vo.PageInfo"%>
 <%@page import="com.semi_5makase.notice.model.vo.Notice"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,12 +6,13 @@
 <%
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	String contextPath = request.getContextPath();
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	String searchNo = request.getParameter("searchNo");
+	if(searchNo == null) {searchNo = "";}
 %>    
     
 <!DOCTYPE html>
@@ -71,6 +72,7 @@
     </style>
 </head>
 <body>
+	<%@ include file = "../common/menubar.jsp" %>
     <div class="wrap"> 
         <div id="header">
             <div id="header_1" align="center" ><br>
@@ -78,13 +80,16 @@
             </div>
             
 
-
-            <div id="search">
-                <input type="text">
-                <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
-
-            </div>
-
+		<form action="<%= contextPath %>/list.no">
+		    <div id="search">
+		        <!-- 검색어 입력 필드 -->
+		        <input type="text" id="noticeSearch" name="searchNo" value="<%= searchNo %>">
+		        <!-- 현재 페이지 정보 유지 -->
+		        <input type="hidden" name="cpage" value="1">
+		        <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
+		    </div>
+		</form>
+			
             
         </div>
         <div id="content_1">
@@ -104,9 +109,11 @@
                   </tr>
                 	<% } else { %>
                 		<!-- case2. 글지글이 있을 경우 -->
+                		<% int listNum = 1; %>
                 		<% for(Notice n : list) { %>
                			<tr>
-		                     <td><%= n.getNoticeNo() %></td>
+		                     <td style="display:none"><%= n.getNoticeNo() %></td>
+		                     <td><%= listNum++ %></td>
 		                     <td><%= n.getNoticeTitle() %></td>
 		                     <td><%= n.getCreateDate() %></td>
 		                 </tr>
@@ -114,7 +121,9 @@
            			<% } %>
                 </tbody>
               </table>
-              
+              <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+              	<button style="margin-left: 900px;" onclick="location.href='<%=contextPath%>/insertView.no'">등록하기</button>
+              <% } %>
               <script>
 		    	$(function() {
 		    		$(".table>tbody>tr").click(function(){
@@ -136,23 +145,27 @@
               <div class="pageing-area" align="center">
 
                 <ul class="pagination pagination-sm" style="margin-left: 460px;">
-                <% if(currentPage != 1){ %>
-                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage - 1%>">&lt;</a></li>
-                <% } else {%>
-                	<li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage - 1%>">&lt;</a></li>
-                <% } %>
-                <% for(int p = startPage; p<=endPage; p++) { %>
-                	<% if(p == currentPage) { %>
-                    	<li class="page-item disabled"><a class="page-link"><%= p %></a></li>
-                    <% } else {%>
-                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%= p %>"><%= p %></a></li>
-                    <% } %>
-                <% } %>
-                <% if(currentPage != maxPage) { %>
-                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage + 1%>">&gt;</a></li>
-                <% } else {%>    
-                	<li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.no?cpage=<%=currentPage + 1%>">&gt;</a></li>
-                <% } %>
+                 <% if(currentPage != 1) { %>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage - 1 %>&searchNo=<%= searchNo %>"><</a></li>
+		        <% } else { %>
+		            <li class="page-item disabled"><a class="page-link"><</a></li>
+		        <% } %>
+		        
+		        <% for(int p = startPage; p <= endPage; p++) { %>
+		        	<% if(p == currentPage) { %>
+		        		<li class="page-item disabled"><a class="page-link"><%= p %></a></li>
+		        	<% } else {%>
+		            <li class="page-item">
+		                <a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= p %>&searchNo=<%= searchNo %>"><%= p %></a>
+		            </li>
+		        	<% } %>
+		        <% } %>
+		        
+		        <% if(currentPage != maxPage) { %>
+		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage + 1 %>&searchNo=<%= searchNo %>">></a></li>
+		        <% } else { %>
+		            <li class="page-item disabled"><a class="page-link">></a></li>
+		        <% } %>
                 </ul>
             </div>
         </div>

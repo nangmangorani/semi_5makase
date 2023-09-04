@@ -37,18 +37,17 @@ public class LoginController extends HttpServlet {
 		System.out.println(memId);
 		System.out.println(memPwd);
 		Member loginMember = new MemberService().loginMember(memId,memPwd);
-		//System.out.println(loginMember);
 		
 		if(loginMember == null) {
-			request.setAttribute("errorMsg", "로그인실패");
-			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			view.forward(request, response);
+			HttpSession session = request.getSession();
+			session.setAttribute("alertMsg", "로그인 실패했습니다"); // request는 포워딩 방식일때만 가능!!
+			response.sendRedirect(request.getContextPath());
+
 
 		}else {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginMember", loginMember);
-			response.sendRedirect(request.getContextPath()); 
-
+			response.sendRedirect(request.getContextPath()+""); 
 		}
 		
 		

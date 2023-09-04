@@ -12,6 +12,7 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+    
     <script>
         $(document).ready(function(){
 	          $('.slick').slick({
@@ -30,6 +31,7 @@
     height: 15%;
     background-image: url("resources/img/pork-cutlet2.jpg");
     background-size: cover;
+    
 }
 </style>
 <body>
@@ -39,9 +41,9 @@
     <div class="outer">
         <div class="navbar" align="center">
             <div class="menu"><a href="">HOME</a></div>
-            <div class="menu"><a href="">공지사항</a></div>
-            <div class="menu"><a href="">자주묻는 질문</a></div>
-            <div class="menu"><a href="">Q&A</a></div>
+            <div class="menu"><a href="<%= contextPath %>/list.no?cpage=1">공지사항</a></div>
+            <div class="menu"><a href="<%=contextPath%>/list.faq">자주묻는 질문</a></div>
+            <div class="menu"><a href="<%= contextPath %>/list.qna?cpage=1">Q&A</a></div>
         </div>
         <div class="header-area">
             <div class="bg">솔직한 리뷰, 믿을 수 있는 평점 <br> <b>이눔세끼</b> </div>

@@ -17,6 +17,34 @@ public class Qna {
 	public Qna() {}
 	
 	
+	
+
+	public Qna(String boardTitle, String boardContent, String boardWriter, String open) {
+		super();
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardWriter = boardWriter;
+		this.open = open;
+		
+	}
+
+
+
+
+	public Qna(int qnaNo, String boardTitle, String boardContent, int qnaViews, Date createDate, String open,
+			String reply, String boardWriter) {
+		super();
+		this.qnaNo = qnaNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.qnaViews = qnaViews;
+		this.createDate = createDate;
+		this.open = open;
+		this.reply = reply;
+		this.boardWriter = boardWriter;
+	}
+
+
 
 	public Qna(int qnaNo, String boardTitle, Date createDate, String open, String reply, String boardWriter) {
 		super();

@@ -18,8 +18,35 @@ public class Member {
 	private Date enrollDate;
 	private String status;
 	private String quitReason;
+	private String selfIntroduction;
+	
 	
 	public Member() {}
+	
+	
+
+	public Member(int memNo, String memGrade, String memId, String memPwd, String memName, String gender, int age,
+			String nickname, String email, String phone, String address, Date enrollDate, String status,
+			String quitReason, String selfIntroduction) {
+		super();
+		this.memNo = memNo;
+		this.memGrade = memGrade;
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.memName = memName;
+		this.gender = gender;
+		this.age = age;
+		this.nickname = nickname;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+		this.enrollDate = enrollDate;
+		this.status = status;
+		this.quitReason = quitReason;
+		this.selfIntroduction = selfIntroduction;
+	}
+
+	
 
 	public Member(int memNo, String memGrade, String memId, String memPwd, String memName, String gender, int age,
 			String nickname, String email, String phone, String address, Date enrollDate, String status,
@@ -42,6 +69,20 @@ public class Member {
 	}
 	
 	public Member(int memNo, String memGrade, String memName, String gender, String phone, String address) {
+	
+	}
+	
+	
+	public Member(String memId, String memPwd, String quitReason) {
+		super();
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.quitReason = quitReason;
+	}
+
+
+
+	public Member(int memNo, String memName, String gender, String phone, String address) {
 		super();
 		this.memNo = memNo;
 		this.memGrade = memGrade;
@@ -62,6 +103,43 @@ public class Member {
 		this.address = address;
 		this.email = email;
 		this.memGrade = memGrade;
+	
+	
+
+	public Member(String memId, String nickname, String email, String phone, String address, String selfIntroduction) {
+		super();
+		this.memId = memId;
+		this.nickname = nickname;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+		this.selfIntroduction = selfIntroduction;
+	}
+
+
+
+	public Member(String memId, String memPwd, String memName, String gender, int age, String nickname, String email,
+			String phone, String address) {
+		super();
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.memName = memName;
+		this.gender = gender;
+		this.age = age;
+		this.nickname = nickname;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+	}
+
+	
+	
+	public String getSelfIntroduction() {
+		return selfIntroduction;
+	}
+
+	public void setSelfIntroduction(String selfIntroduction) {
+		this.selfIntroduction = selfIntroduction;
 	}
 
 	public int getMemNo() {
@@ -181,8 +259,10 @@ public class Member {
 		return "Member [memNo=" + memNo + ", memGrade=" + memGrade + ", memId=" + memId + ", memPwd=" + memPwd
 				+ ", memName=" + memName + ", gender=" + gender + ", age=" + age + ", nickname=" + nickname + ", email="
 				+ email + ", phone=" + phone + ", address=" + address + ", enrollDate=" + enrollDate + ", status="
-				+ status + ", quitReason=" + quitReason + "]";
+				+ status + ", quitReason=" + quitReason + ", selfIntroduction=" + selfIntroduction + "]";
 	}
+
+
 
 	
 }

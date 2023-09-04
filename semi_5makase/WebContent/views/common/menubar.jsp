@@ -1,3 +1,5 @@
+<%@page import="com.semi_5makase.board.model.vo.Faq"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -5,6 +7,7 @@
 	String contextPath = request.getContextPath(); 
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String alertMsg = (String)session.getAttribute("alertMsg");
+	
 %>
     <!DOCTYPE html>
     <html lang="en">
@@ -14,18 +17,21 @@
         <title>Document</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></head>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+		
+ 
+    </head>
     <style>
         div { box-sizing: border-box; }
     
         .menubar-area {
             position: sticky;
             top: 0;
-            height: 100px;
+            height: 110px;
             width: 1100px;
             margin: auto;
             background-color: white;
-            z-index: 5;
+            z-index: 999;
         }
     
         .logo-area>img {
@@ -87,21 +93,26 @@
         left: 50%;
         transform: translateX(-50%);
         background: #eee;
-        z-index: 1;
+      	z-index: 11;
+        
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+        border: 2px solid #ccc; /* 테두리 추가 */
+  		border-radius: 50px; /* 라운드 모서리 추가 */
     }
-    
-    
-        .black_bg {
-            display: none;
-            position: absolute;
-            content: "";
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            top: 0;
-            left: 0;
-            z-index: 2;
-        }
+
+			.black_bg {
+		    display: none;
+		    position: fixed; /* 변경: fixed로 설정 */
+		    content: "";
+		    width: 100%;
+		    height: 100%;
+		    background-color: rgba(0, 0, 0, 0.5);
+		    top: 0;
+		    left: 0;
+		    z-index: 10; 
+		}
+	   		
+   
     
         .modal_close {
             width: 26px;
@@ -127,8 +138,20 @@
             width: 300px;
         }
         
+        #searchIcon{
+        	margin-right: 20px;
+        }
+        
     </style>
     <body>
+    	<% if(alertMsg != null){ %>
+		
+		<script>
+			alert("<%= alertMsg %>");
+		</script>
+			<% session.removeAttribute("alertMsg"); %> <!-- 서비스요청 성공 후 더이상 alert 안뜨게함 -->
+		<% } %>
+    	
         <div class="menubar-area">
             <div class="logo-area">
                 <img src="resources/img/logo.png">
@@ -136,17 +159,18 @@
             <div class="searchbar-area">
                 <form action="">
                     <input type="text" placeholder="     지역, 음식 또는 식당명을 입력해주세요. " style="border: 0px;">
-                    <button type="submit"><img src="resources/img/searchIcon.png"></button>
+                    <button type="submit" id="searchIcon"><img src="resources/img/searchIcon.png"></button>
                 </form>
             </div>
-            <div class="member-area" align="center">
+            <div class="member-area" align="center" style="margin-top: 10px;">
 			<%if(loginMember == null){ %>
           		<!-- case2. 로그인 전  -->
                 <button type='button' id="modal_btn" data-target="#loginModal">로그인</button>
+                <button type="button" onclick="enrollPage()">회원가입</button>
               <%}else{ %>
                 <!-- case2. 로그인 후  -->
 			        <div>
-			            <b><%= loginMember.getMemName()%>님</b>의 방문을 환영합니다. <br><br>
+			            <b><%= loginMember.getMemName()%>님</b> 환영합니다. <br>
 			            <div align="center">
 			                <a href="<%=contextPath %>/myPage.me">마이페이지</a>
 			                <a href="<%=contextPath %>/logout.me">로그아웃</a>
@@ -158,6 +182,7 @@
                 
                 <div class="black_bg"></div>
                 <div class="modal_wrap">
+                
                     <div class="modal_close"><a href="#">close</a></div>
                         <div>
                             <form action="<%=contextPath %>/login.me" method="post">
@@ -172,20 +197,33 @@
                                 <div class="member_login_btn"> 
         
                                     <input type="submit" class="btn btn-secondary" id="btn-login" value="로그인">
-                    
-                                    <input type="button" class="btn btn-secondary" value="회원가입" onclick="location.href='/member/join'">
-                    
+                                    <input type="button" class="btn btn-secondary" value="회원가입" onclick="enrollPage()"> <br>
+                                    <input type="button" class="btn btn-sm" value="아이디찾기" onclick="enrollPage1()">
+                                    <input type="button" class="btn btn-sm" value="비밀번호 찿기" onclick="enrollPage2()">
+                    				
                                 </div>
-        
+                                
+                                <script >
+						            function enrollPage(){
+						            	location.href = "<%=contextPath%>/agreement.me";
+						            }
+									function enrollPage1(){
+						            	
+						            	location.href = "<%=contextPath%>/searchId.me";
+						            }
+									function enrollPage2(){
+						            	
+						            	location.href = "<%=contextPath%>/searchPwdOne.me";
+						            }
+						        </script>
                             </form>
                         </div>
                 </div>
-            </div>
+                </div>
+            
         </div>
     
         <script>
-            window.onload = function () {
-    
                 function onClick() {
                     document.querySelector('.modal_wrap').style.display = 'block';
                     document.querySelector('.black_bg').style.display = 'block';
@@ -197,8 +235,6 @@
     
                 document.getElementById('modal_btn').addEventListener('click', onClick);
                 document.querySelector('.modal_close').addEventListener('click', offClick);
-    
-            };
         </script>
     </body>
     </html>

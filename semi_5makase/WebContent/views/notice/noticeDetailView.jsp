@@ -1,8 +1,7 @@
 <%@page import="com.semi_5makase.notice.model.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% Notice n = (Notice)request.getAttribute("n");
-   String contextPath = request.getContextPath();%>
+<% Notice n = (Notice)request.getAttribute("n");%>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -21,7 +20,7 @@
             font-style: normal;
             }
             div {
-                /* border: 1px solid black; */
+                /*border: 1px solid black;*/
                 box-sizing: border-box;
                 font-family: 'SUITE-Regular';
             }
@@ -107,17 +106,40 @@
                 margin: auto;
                 margin-top: 9%;
             }
-            
-            #btnToNoticeList{
-                margin-top: 70px;
+
+            #buttonContainer {
+                text-align: right;
+                margin-top: 20px;
+            }
+
+            #btnUpdateNotice{
                 border: transparent;
+                border-radius: 5px;
+                width: 100px;
+                height: 40px;
+                background-color: rgb(55, 173, 44);
+                font-weight: 500;
+                color: white;
+            }
+
+            #btnDeleteNotice{
+                border: transparent;
+                border-radius: 5px;
+                width: 100px;
+                height: 40px;
+                background-color: rgb(206, 1, 1);
+                font-weight: 500;
+                color: white;
+            }
+
+            #btnToNoticeList{
+                border: transparent;
+                border-radius: 5px;
                 width: 100px;
                 height: 40px;
                 background-color: rgb(21, 98, 189);
+                font-weight: 500;
                 color: white;
-                border-radius: 10px;
-                margin-left: 580px;
-                
             }
     
             #noticeDate {
@@ -150,27 +172,13 @@
             #footer_4{
                 margin-top: 10px;
             }
-    
-    
-            
         </style>
     </head>
     <body>
-    	
+    	<%@ include file="../common/menubar.jsp"%>
 		
         <div class="wrap">
-            <div id="header" style="border-bottom: 1px solid black;">
-                <div id="header">
-                    <div id="logo">
-                        <img src="resources/img/logo.png">
-                    </div>
-                    <div id="search">
-                        <input type="text" name="" id="searchTab">
-                        <input type="submit" name="" id="">
-                    </div>
-                    <div id="login"></div>
-                </div>
-            </div>
+            
             <div id="content">
                 <h2 style="margin-top: 15px;">이눔세끼 공지사항</h2> <br>
                 <div id="content_top1">
@@ -186,19 +194,27 @@
                     <p>자주 묻는 질문</p>
                 </div>
                 <div id="content_main">
-                    <div id="noticeTitle"> <br>
-                        <h2><%= n.getNoticeTitle() %></h2>
+                	<div>
+                          <div id="noticeTitle" name="noticeTitle"> <br>
+                              <h2><%= n.getNoticeTitle() %></h2>
+                          </div>
+                          <div id="noticeDate">
+                              <span><%= n.getCreateDate() %></span> &nbsp;
+                              <span>조회수</span>
+                              <%= n.getNoticeViews() %>
+                          </div>
+                          <div id="noticeMain" name="noticeContent" style="word-break:break-all;"> <br>
+                              <%= n.getNoticeContent() %>
+                          </div>
+                          <div id="buttonContainer">
+                            <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+                            <button id="btnUpdateNotice" onclick="location.href='<%=contextPath%>/updateview.no?cpage=<%=n.getNoticeNo() %>'">수정하기</button>
+                            <button id="btnDeleteNotice" onclick="location.href='<%=contextPath%>/delete.no?cpage=<%=n.getNoticeNo() %>'">삭제하기</button>
+                            <% } %>
+                            <button id="btnToNoticeList" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">목록으로</button>
+                        </div>
                     </div>
-                    <div id="noticeDate">
-                        <%= n.getCreateDate() %>
-                        <%= n.getNoticeViews() %>
-                    </div>
-                    <div id="noticeMain" style="word-break:break-all;"> <br>
-                        <%= n.getNoticeContent() %>
-                    </div>
-                    <button id="btnToNoticeList" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">목록으로</button>
                 </div>
-            </div>
             <div id="footer">
                 <div id="footer_1">
                     <a href=""> 데이터 제휴 문의 </a>

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+
+	<entry key="increaseRestaurantView">
+		UPDATE RESTAURANT
+		   SET REST_VIEWS = REST_VIEWS + 1
+		 WHERE REST_NO = ?
+	</entry>
+
 	<entry key="selectRestaurantDetail">
 		SELECT 
 		       REST_NO
@@ -43,6 +50,13 @@
 		 WHERE REST_NO = ?
 	</entry>
 	
+	<entry key="selectLikesCount">
+		SELECT 
+		       COUNT(*) count
+          FROM REVIEW_UP
+         WHERE REVIEW_NO = ?
+	</entry>
+	
 	<entry key="selectReviewRatingAvg">
 		SELECT AVG(RATING) avg
 		  FROM REVIEW
@@ -50,6 +64,7 @@
 		 WHERE REST_NO = ?
 	</entry>
 	
+	<!-- 아직안씀  -->
 	<entry key="updateRestaurant">
 		UPDATE RESTAURANT
 		   SET CATEGORY_NO = (SELECT CATEGORY_NO FROM RESTAURANTUPDATE WHERE REST_NO = ?)
@@ -63,5 +78,207 @@
 		 WHERE REST_NO = ?  
 	</entry>
 	
+	<entry key="checkFavorite">
+		SELECT COUNT(*) COUNT
+		  FROM FAVORITES
+		  JOIN MEMBER USING (MEM_NO)
+		  JOIN RESTAURANT USING (REST_NO)
+		 WHERE MEM_NO = ?
+		   AND REST_NO = ?
+	</entry>
+	
+	<entry key="checkLikes">
+		SELECT COUNT(*) COUNT
+		  FROM REVIEW_UP R
+          JOIN REVIEW USING (REVIEW_NO)
+          JOIN MEMBER M ON (R.MEM_NO = M.MEM_NO) 
+		 WHERE M.MEM_NO = ?
+		   AND REVIEW_NO = ?
+	</entry>
+	
+	
+	<entry key="deleteFavoriteRestaurant">
+		DELETE
+		  FROM FAVORITES
+		 WHERE MEM_NO = ?
+		   AND REST_NO = ?
+	</entry>
+	
+	<entry key="deleteLikes">
+		DELETE
+		  FROM REVIEW_UP
+		 WHERE MEM_NO = ?
+		   AND REVIEW_NO = ?
+	</entry>
+	
+	<entry key="insertFavoriteRestaurant">
+		INSERT
+		  INTO FAVORITES
+		  (
+		    MEM_NO
+		  , REST_NO 
+		  )
+		VALUES
+		  (
+		    ?
+		  , ?  
+		  )
+	</entry>
+	
+	<entry key="insertLikes">
+		INSERT
+	      INTO REVIEW_UP
+	      (
+	        MEM_NO
+	      , REVIEW_NO 
+	      )
+	    VALUES
+	      (
+	        ?
+	      , ? 
+	      )
+	</entry>
+	
+	<entry key="selectNickName">
+		SELECT NICKNAME
+		  FROM MEMBER
+		 WHERE MEM_NO = ?
+	</entry>
+	
+	<entry key="insertReview">
+		INSERT
+		  INTO REVIEW
+		  (
+		    REVIEW_NO
+		  , REST_NO
+		  , REVIEW_CONTENT
+		  , RATING
+		  , REVIEW_DATE
+		  , MEM_NO
+		  )
+		VALUES
+		  (
+		    SEQ_REVNO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , DEFAULT
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertAttachmentList">
+	INSERT
+		  INTO ATTACHMENT
+		  (
+		    FILE_NO
+		  , REF_BNO
+		  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , FILE_PATH
+		  , UPLOAD_DATE
+		  , STATUS
+		  , CATEGORY
+		  )
+		VALUES
+		  (
+		    SEQ_FNO.NEXTVAL
+		  , SEQ_REVNO.CURRVAL
+		  , ?
+		  , ?
+		  , ?
+		  , DEFAULT
+		  , DEFAULT
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="selectReviewList">
+		SELECT DISTINCT
+		       REVIEW_NO
+		     , REVIEW_CONTENT
+		     , RATING
+		     , NICKNAME
+		     , MEM_NO
+		  FROM REVIEW
+		  JOIN MEMBER USING (MEM_NO)
+		  LEFT JOIN ATTACHMENT ON (REVIEW_NO = REF_BNO)
+		 WHERE REST_NO = ?
+		 ORDER
+		    BY REVIEW_NO DESC 
+	</entry>
+	
+	<entry key="selectReviewAttachment">
+	SELECT
+	       '/' || FILE_PATH || '/' || CHANGE_NAME "REVIEWIMGS"
+	  FROM ATTACHMENT
+      JOIN REVIEW ON (REF_BNO = REVIEW_NO)
+	 WHERE REVIEW_NO = ?
+	 ORDER
+    	BY REF_BNO DESC
+	</entry>
+	
+	<entry key="selectReviewAttachment1">
+	SELECT
+	       FILE_NO
+	     , REF_BNO
+	     , ORIGIN_NAME
+	     , CHANGE_NAME
+	     , FILE_PATH
+	  FROM ATTACHMENT
+	 WHERE STATUS = 'Y'
+	 ORDER
+    	BY REF_BNO DESC
+	</entry>
+	
+	
+	
+	<entry  key="selectReviewAttachment2">
+	SELECT
+	       '/' || FILE_PATH || '/' || CHANGE_NAME "REVIEWIMGS"
+           , REVIEW_NO
+	  FROM ATTACHMENT
+      JOIN REVIEW ON (REF_BNO = REVIEW_NO)
+	 ORDER
+    	BY REF_BNO DESC
+	</entry>
+	
+	<entry key="updateRestaurant">
+		INSERT
+		  INTO UPDATE_REST
+		  (
+		    UPDATE_NO
+		  , UPDATE_CONTENT
+		  , REST_NO
+		  , MEM_NO
+		  )
+		VALUES
+		  (
+		    SEQ_UNO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertReport">
+		INSERT
+		  INTO REPORT
+		  (
+		    REPORT_NO
+		  , REPORTER
+		  , SUSPECT
+		  , REPORT_CONTENT
+		  , RESULT
+		  )
+		VALUES
+		  (
+		    SEQ_REPNO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , NULL
+		  )
+	</entry>
 	
 </properties>

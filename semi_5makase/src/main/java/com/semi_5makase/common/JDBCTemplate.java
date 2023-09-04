@@ -30,6 +30,8 @@ public class JDBCTemplate {
 											   prop.getProperty("username"),
 											   prop.getProperty("password"));
 			
+			conn.setAutoCommit(false);
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {

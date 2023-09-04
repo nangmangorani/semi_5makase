@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import org.apache.catalina.filters.AddDefaultCharsetFilter;
+import org.apache.tomcat.dbcp.dbcp2.PStmtKey;
 
 import com.semi_5makase.member.model.vo.Member;
+import com.semi_5makase.member.model.vo.Report;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
@@ -46,7 +48,8 @@ public class MemberDao {
 									rset.getString("mem_name"),
 									rset.getString("gender"),
 									rset.getString("phone"),
-									rset.getString("address")
+									rset.getString("address"),
+									rset.getString("status")
 									));
 			}
 			
@@ -126,7 +129,8 @@ public class MemberDao {
 								rset.getString("phone"),
 								rset.getString("address"),
 								rset.getString("email"),
-								rset.getString("mem_grade"));
+								rset.getString("mem_grade"),
+								rset.getString("status"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,7 +154,8 @@ public class MemberDao {
 			pstmt.setString(2, m.getPhone());
 			pstmt.setString(3, m.getEmail());
 			pstmt.setString(4, m.getMemGrade());
-			pstmt.setInt(5, m.getMemNo());
+			pstmt.setString(5, m.getStatus());
+			pstmt.setInt(6, m.getMemNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -182,4 +187,147 @@ public class MemberDao {
 		}
 		return result;
 	}
+	
+	public ArrayList<Report> adminSelectReportList(Connection conn){
+		
+		ArrayList<Report> list = new ArrayList<Report>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("adminSelectReportList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Report(rset.getInt("report_no"),
+									rset.getString("reporter"),
+									rset.getString("suspect"),
+									rset.getString("report_content"),
+									rset.getDate("report_date"),
+									rset.getString("result")
+									));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public Report adminSelectReportDetail(Connection conn, int reportNo) {
+		Report rep = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("adminSelectReportDetailList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reportNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rep = new Report(rset.getInt("report_no"),
+									rset.getString("reporter"),
+									rset.getString("suspect"),
+									rset.getString("report_content"),
+									rset.getDate("report_date"),
+									rset.getString("result")
+									);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return rep;
+	}
+	
+	public int adminUpdaterReport(Connection conn, Report rep) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("adminUpdaterReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, rep.getResult());
+			pstmt.setInt(2, rep.getReportNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectListCount(Connection conn) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	public int selectReportListCount(Connection conn) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectReportListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

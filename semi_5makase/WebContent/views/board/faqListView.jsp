@@ -1,5 +1,10 @@
+<%@page import="com.semi_5makase.board.model.vo.Faq"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+	ArrayList<Faq> list = (ArrayList<Faq>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +24,7 @@
             font-style: normal;
         }
         div{
-            /* border: 1px solid red;/ */
+            /*border: 1px solid red;*/
             box-sizing: border-box;
             font-family: 'SUITE-Regular';
         }
@@ -77,9 +82,16 @@
         }
         
         #faqMain{
-            width: 70%;
+            /*width: 70%;
             height: 80%;
             margin: auto;
+            */
+            width: 70%;
+		    min-width: 800px; /* Set a minimum width to prevent narrowing */
+		    height: auto; /* Let the height adjust based on content */
+		    margin: auto;
+		    overflow-y: auto;
+
             /* border-top: 2px solid black;/ */
         }
 
@@ -96,7 +108,7 @@
         
         .main_image_text {
             position: absolute;
-            top: 15%;
+            top: 8%;
             left: 50%;
             transform: translate( -50%, -50% );
             color: white;
@@ -129,7 +141,23 @@
             margin-top: 10px;
         }
 
+        #searchBtn{
+            border: transparent;
+            border-radius: 5px;
+            float: right;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
+        }
 
+        #searchFaq{
+            width: 200px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
 
 
         .CFaqTableItem__list {
@@ -142,13 +170,14 @@
 
         .CFaqTableItem__category{
             width: 160px;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: 500;
             text-align: center
         }
 
         .CFaqTableItem__question {
             padding: 0 10px;
-            font-size: 14px;
+            font-size: 15px;
             flex: 1;
             margin-top: 15px;
         }
@@ -156,13 +185,13 @@
 
         .CFaqTableItem {
             width: 100%;
-            border-bottom: 1px solid #f5f5f5;
+            border-bottom: 1px solid #b9b9b994;
         }
 
         .CFaqTableItem__contents {
             padding: 24px 10px;
-            font-size: 14px;
-            color: #6e6e6e
+            font-size: 15px;
+            color: #363535
         }
 
         .CFaqTableItem__contents-box {
@@ -217,68 +246,129 @@
             display: none;
         }
 
-    
+        #enrollBtn{
+            border: transparent;
+            border-radius: 5px;
+            margin-top: 11px;
+            float: left;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
+        }
+        
+        #deleteBtn{
+        	margin-top: 11px;
+        	border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(206, 1, 1);
+            font-weight: 500;
+            color: white;
+            margin-left:10px;
+        }
         
     </style>
 </head>
 
 
 <body>
-
+	<%@ include file = "../common/menubar.jsp" %>
     <div class="wrap">
-        <div id="header">
-            <div id="logo">
-                <img src="./이눔세끼화이팅/resources/img/logo.png">
-            </div>
-            <div id="search">
-                <input type="text" name="" id="searchTab">
-                <input type="submit" name="" id="">
-            </div>
-            <div id="login"></div>
-        </div>
-        <div id="content">
+                <div id="content">
             <div id="picture">
-                <img src="./이눔세끼화이팅/resources/img/faq4.png" alt="">
+                <img src="resources/img/faq4.png" alt="">
                 <h2 class="main_image_text" style="font-size:40px">자주 묻는 질문</h2>
             </div>
             
-            <div id="faqMain">
-                <div class="CFaqTableItem">
-                    <div class="CFaqTableItem__list">
-                        <em class="CFaqTableItem__category">로그인/정보</em>
-                        <p class="CFaqTableItem__question">아이디와 비밀번호가 기억나지 않아요.</p>
-                        <img class="arrow down" src="./이눔세끼화이팅/resources/img/아래쪽.png" alt="">
-                        <img class="arrow up hidden" src="./이눔세끼화이팅/resources/img/up.png">
+                <% int listNum = 1; %>       
+	            <% for(Faq f : list) {%>
+	            <div id="faqMain">
+	                <div class="CFaqTableItem">
+	                    <div class="CFaqTableItem__list">
+	                    <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+		                    <form action="<%=contextPath%>/delete.faq" id="deleteAction">
+	                            <input type="checkbox" name="deleteFaq" id="deleteChkBox" value="<%= f.getFaqNo() %>">
+	                            <input type="hidden" name="faqNo" value="<%= f.getFaqNo() %>">
+	                        </form>
+                        <% } %>
+	                        <em class="CFaqTableItem__category"><%= listNum++ %></em>
+	                        <p class="CFaqTableItem__question"><%= f.getFaqTitle() %></p>
+	                        <img class="arrow down" src="resources/img/아래쪽.png" alt="">
+	                        <img class="arrow up hidden" src="resources/img/up.png">
+	                    </div>
+	                    <div class="CFaqTableItem__contents-box">
+	                        <em class="CFaqTableItem__answer">답변</em>
+	                        <div class="CFaqTableItem__contents">
+	                            <%= f.getFaqContent() %>
+	                        </div>
+	                    </div>
+	                </div>
 
-                    </div>
-                    <div class="CFaqTableItem__contents-box">
-                        <em class="CFaqTableItem__answer">답변</em>
-                        <div class="CFaqTableItem__contents">
-                            <p>로그인 화면에서 &nbsp;아이디 찾기/비밀번호 찾기를 통해 확인 가능합니다.<br>
-                            아이디 찾기는 아래 3가지 방법 중 하나로 진행해 주세요.<br>
-                            <br>
-                            ■ 휴대전화<br>
-                            회원 정보에 등록된 본인의 휴대전화 번호를 인증하는 방법입니다.<br>
-                            <br>
-                            ■ 이메일<br>
-                            회원 정보에 등록된 본인의 이메일 주소를 인증하는 방법입니다.<br>
-                            <br>
-                            ■ 본인인증<br>
-                            이용 중인 통신사와 휴대전화 번호를 인증하는 방법입니다.<br>
-                            <br>
-                            ※ 비밀번호 재설정을 완료한 휴면 회원은 휴면 해제 및 탈퇴 신청이 취소됩니다.<br>
-                            ※ 비밀번호 찾기는 휴대전화 본인 인증으로만 가능합니다.<br>
-                            <br>
-                            <span style="color:#3498db;"><strong><a href="https://www.musinsa.com/app/cs/faq?idx=59">[아이디/비밀번호 수정 FAQ 바로 가기]</a><br>
-                            <a href="https://www.musinsa.com/app/cs/faq?idx=58">[회원정보 수정 FAQ 바로 가기]</a></strong></span></p>
-                        </div>
-                    </div>
-                </div>
-                
+
+	                <% } %>
+	                	<% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+		                	<button id="enrollBtn" onclick="location.href='<%=contextPath%>/insertview.faq'">작성하기</button>
+		                	<button id="deleteBtn" onclick="submitForm()">삭제하기</button>
+	                <% } %>
+
+                    <script>
+	                    function submitForm() {
+	                    	
+	                    	var checkedCheckboxes = document.querySelectorAll("input[name='deleteFaq']:checked");
+	                        var faqNos = [];
+
+	                        checkedCheckboxes.forEach(function(checkbox) {
+	                            var faqNo = $(checkbox).closest(".CFaqTableItem__list").find("input[name='faqNo']").val();
+	                            faqNos.push(faqNo);
+	                            console.log(faqNo);
+	                            console.log(faqNos);
+	                            console.log('여긴 submitform');
+	                        });
+
+	                        // Check if at least one checkbox is selected.
+	                        if (faqNos.length > 0) {
+	                            // Serialize the array and set it as a hidden input field value.
+	                            var faqNosString = faqNos.join(",");
+	                            var form = document.getElementById("deleteAction");
+	                            var input = document.createElement("input");
+	                            input.type = "hidden";
+	                            input.name = "faqNos"; // This should match the parameter name in your controller
+	                            input.value = faqNosString;
+	                            form.appendChild(input);
+	                            console.log(faqNos);
+	                            console.log('여긴 form')
+	                            
+
+	                            // Submit the form.
+	                            form.submit();
+	                        } else {
+	                            alert("삭제할 게시글을 한 개 이상 선택해주세요.");
+	                        }
+	                    }
+	                        
+	
+	                        // 적어도 하나 이상의 체크박스가 선택되었는지 확인합니다.
+	                        //if (faqNos.length > 0) {
+	                            // 양식 내의 'faqNo'라는 이름을 가진 요소에 FAQ 번호들을 쉼표로 구분된 문자열로 설정합니다.
+	                            //var form = document.getElementById("deleteAction");
+	                            //form.elements["faqNo"].value = faqNos.join(",");
+	                            //form.submit();
+	                       // } else {
+	                            // 체크된 FAQ가 없는 경우, 경고 메시지를 표시하거나 상황에 따라 처리합니다.
+	                           // alert("삭제할 FAQ를 하나 이상 선택하세요.");
+	                       // }
+	                    
+
+                    </script>
                 <div id="searchTab2">
-                    <input type="text">
-                    <input type="submit" value="검색" id="searchBtn">
-                </div>
+				    <form id="searchForm" action="<%=contextPath%>/list.faq" method="get">
+				        <input type="text" id="searchFaq" name="searchFaq">
+				        <input type="submit" value="검색" id="searchBtn">
+				    </form>
+				</div>
             </div>
             
         </div>
@@ -307,14 +397,16 @@
 
     <script>
 
-        window.onload = function() {
-            $(".CFaqTableItem").on("click", function(event) {
-                var clickedItem = $(event.currentTarget);
+    window.onload = function() {
+        $(".CFaqTableItem").on("click", function(event) {
+            var clickedItem = $(event.currentTarget);
 
+            if (!$(event.target).is("input[type='checkbox']")) {
+                // Clicking outside of the checkbox area
                 if (clickedItem.hasClass("CFaqTableItem--active")) {
                     clickedItem.removeClass("CFaqTableItem--active");
 
-                    // Change the arrow images
+                    // Reset the arrow images
                     clickedItem.find(".arrow.down").removeClass("hidden");
                     clickedItem.find(".arrow.up").addClass("hidden");
 
@@ -339,9 +431,12 @@
                     var contentsBoxHeight = clickedItem.find(".CFaqTableItem__contents-box").height();
                     $("#footer").css("margin-top", contentsBoxHeight + "px");
                 }
-            });
-};
+            }
+        });
+    };
         
+
+
 
     </script>
 </body>

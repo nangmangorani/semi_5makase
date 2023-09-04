@@ -1,9 +1,10 @@
+<%@page import="com.semi_5makase.board.model.vo.Faq"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-String contextPath = request.getContextPath();
-Member loginMember = (Member)session.getAttribute("loginMember");
+	ArrayList<Faq> faqList = (ArrayList<Faq>)request.getAttribute("faqList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,17 +115,22 @@ Member loginMember = (Member)session.getAttribute("loginMember");
         min-height: 150px;
         padding: 10px;
         }
+        
+        .noContent{
+        	resize: none;
+        }
 
     </style>
 </head>
 <body>  
+<%@ include file="../common/menubar.jsp"%>
     <div class="wrap">
         <div id="header"></div>
         <div id="content">
             <br>
             <div id="content_1"align="center">
                 <br>
-                <form action="<%= contextPath %>/insert.qna" method="post">
+                <form action="<%= contextPath %>/insert.qna" method="post" enctype="multipart/form-data">
                 	<input type="hidden" name="userNo" value="<%= loginMember.getMemNo() %>">
                   <b>제목 : </b>
                   <input type="text" id="title" name="title"><br><br>
@@ -132,40 +138,19 @@ Member loginMember = (Member)session.getAttribute("loginMember");
                   <b style="margin-right: 384px;">내용 : </b><br>
                   <textarea name="content" id="textarea" placeholder="내용을 입력해주세요" cols="49" rows="10" style="resize: none;"></textarea><br><br>
   
-          
-                  <input type="checkbox" id="hide" name="open" value="Y">
-                  <label for="hide">비공개</label><br><br>
-
-                  <script>
-                  	document.addEventListener("DOMContentLoaded", function() {
-                	    const hideCheckbox = document.getElementById("hide");
-                	    const openInput = document.querySelector("input[name='open']");
-
-                	    // 체크박스 상태에 따라 openInput 값을 업데이트하는 함수
-                	    function updateOpenValue() {
-                	        openInput.value = hideCheckbox.checked ? "N" : "Y";
-                	    }
-
-                	    // 체크박스 변경 이벤트에 대한 리스너 추가
-                	    hideCheckbox.addEventListener("change", function() {
-                	        updateOpenValue(); // 체크박스 상태 변경 시 값을 업데이트
-                	        console.log("Checkbox state:", hideCheckbox.checked);
-                	        console.log("openInput.value:", openInput.value);
-                	    });
-
-                	    // 페이지 로드 시 openInput 값을 업데이트
-                	    updateOpenValue();
-                	});
-					</script>
-
+		          <input type="radio" name="open" value="Y"> 공개
+		          <input type="radio" name="open" value="N" checked> 비공개 <br>
+                  
+                  
                   
                   
                   <div id='image_preview'>
-                      <b id="picture">사진 : </b>
-                      <label className="input-file-button" for="btnAtt">
-                        <img src="./resources/free-icon-photo.png" alt="" style="width: 50px; height: 50px; cursor: pointer;">
-                      </label>
-                      <input type='file' id='btnAtt' multiple='multiple' style="display: none;" name="picture" />
+                      <b id="picture">사진 : </b>      
+                      <input type='file' class='btnAtt' name="upfile1" />
+                      <input type='file' class='btnAtt' name="upfile2" />
+                      <input type='file' class='btnAtt' name="upfile3" />
+                      <input type='file' class='btnAtt' name="upfile4" />
+                      <input type='file' class='btnAtt' name="upfile5" />
                       <div id='att_zone'></div>
                   </div>
                   <button type="button" class="btn btn-secondary" style="width: 90px;">취소</button>
@@ -179,27 +164,24 @@ Member loginMember = (Member)session.getAttribute("loginMember");
 
             <div id="content_2" align="center">
                 <br>
-                <b>자주묻는 질문</b> <a href=""><b style="margin-left: 350px; color: black;">전체</b></a><br>
+                <b>자주묻는 질문</b> <a href="<%=contextPath%>/list.faq"><b style="margin-left: 350px; color: black;">전체</b></a><br>
                 <div class="container" >
-                    <table class="table"  align="center" style="width: 100%;">
+                    <table class="table" align="center" style="width: 100%;">
                       <thead class="thead-light">
                         <tr>
                             <th>번호</th>
                             <th>제목</th>
-                            <th>작성자</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>제목입니다</td>
-                            <td>차은우</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>제목입니다1</td>
-                            <td>차은우2</td>
-                        </tr>
+                        	<% int listNo = 1; %>
+                        	<% for(Faq f : faqList) { %>
+                        	<tr>
+                            <td><%= listNo++ %></td>
+                            <td><%= f.getFaqTitle()%></td>
+                            </tr>
+                            <% } %>
+                        
                       </tbody>
                     </table>
 
