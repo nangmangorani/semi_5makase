@@ -101,7 +101,7 @@
 		
     <div class="wrap-area">
         <div class="intro-area" align="center"> 비밀번호 찾기 </div> <br><br>
-        <form action="<%=contextPath%>/checkNumPwd.me" method="post" class="searchBy-area">
+        <form action="<%=contextPath%>/numberCheckPwd.me" method="post" class="searchBy-area">
         
                 <div class="searchByEmail"> <br><br>
                     <span style="width: 15px; height: 15px;" class="radio-value" name="select" value="email">&nbsp;<b style="font-size: 20px;">이메일 인증</b></span><br><br>
@@ -111,17 +111,17 @@
                         <input type="text" name="email" id="email" class="form-control form-control-lg" placeholder="이메일">
                         <span id="X2" onclick="cleanEmail();"><b>X</b></span>
                         
-              		    <button type="button" id="" class="btn btn-sm" onclick="emailCheck()" style="margin-left: 430px;">인증번호 받기</button>
+              		    <button type="button" id=""  class="btn btn-sm" onclick="emailCheck()" style="margin-left: 430px;">인증번호 받기</button>
                         <br>
                         <input type="hidden" name="memId" id="memId" value="<%=memId%>">
-                        <input type="text" id="checkNumber" class="form-control form-control-lg" placeholder="인증번호">
+                        <input type="text" name="checkNumber" id="checkNumber" class="form-control form-control-lg" placeholder="인증번호">
                         <span id="X1" onclick="cleanName();"><b>X</b></span>
                     </div>
                     <br><br>
                 </div>
  				
 				
-                <button type="submit" id="findByPwd"  class="btn btn-primary btn-lg btn-block"  onclick="checkNum();" disabled>비밀번호 찾기</button>
+                <button type="submit" id="findByPwd"  class="btn btn-primary btn-lg btn-block"  onclick="checkNum();" >비밀번호 찾기</button>
         </form>
 
         
@@ -140,21 +140,8 @@
             })
         }  
         
+
 /*
-        function checkNum(){
-            $.ajax({
-                url:"numCheck.me",
-                data:{
-                	checkNumber:$("#checkNumber").val()
-                
-                },
-                type:"post"
-
-            })
-        }
-        
-*/
-
 			
 			var authenticationKey = "<%= session.getAttribute("AuthenticationKey") %>";
 			
@@ -169,7 +156,7 @@
 			}
 			$("#checkNumber").keyup(checkNum);
 			
-			
+			*/
 			
             function cleanName(){
                 $("#checkNumber").val('').focus();

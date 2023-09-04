@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.semi_5makase.member.model.service.MemberService;
 import com.semi_5makase.member.model.vo.Member;
@@ -32,7 +33,10 @@ public class searchIdResultController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String email = request.getParameter("email");
+		// 두 번째 서블릿
+		HttpSession session = request.getSession();
+		String email = (String) session.getAttribute("email");
+
 		
 		Member m = new MemberService().selectId(email);
 		

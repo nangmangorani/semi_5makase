@@ -92,7 +92,8 @@ public class MemberDao {
 						rset.getString("address"),
 						rset.getDate("enroll_date"),
 						rset.getString("status"),
-						rset.getString("quit_reason")
+						rset.getString("quit_reason"),
+						rset.getString("self_introduction")
 						);
 			}
 		} catch (SQLException e) {
@@ -446,7 +447,7 @@ public class MemberDao {
 	
 	}
 	
-	public  Attachment selectAttachment(Connection conn, int memNo) {
+	public Attachment selectAttachment(Connection conn, int memNo) {
 		Attachment at = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -457,13 +458,16 @@ public class MemberDao {
 			pstmt.setInt(1, memNo);
 			rset = pstmt.executeQuery();
 			
+			
 			if(rset.next()) {
 				at = new Attachment();
 				at.setFileNo(rset.getInt("file_no"));
 				at.setOriginName(rset.getString("origin_name"));
 				at.setChangeName(rset.getString("change_name"));
-				at.setFilePath(rset.getNString("file_path"));
+				at.setFilePath(rset.getString("file_path"));
 			}
+			
+			System.out.println(at+"다오 at확인");
 			
 			
 		} catch (SQLException e) {
@@ -517,6 +521,32 @@ public class MemberDao {
 		return m;
 		
 	}
+	
+	public int resetPwd(Connection conn, String memId, String memPwd ,String newPwd,String checkPwd) {
+		int result =0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updatePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, checkPwd);
+			pstmt.setString(2, memId);
+			pstmt.setString(3, memPwd);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
 	
 	
 }

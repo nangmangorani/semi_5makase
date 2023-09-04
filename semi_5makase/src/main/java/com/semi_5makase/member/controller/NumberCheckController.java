@@ -35,9 +35,11 @@ public class NumberCheckController extends HttpServlet {
 
         String AuthenticationKey = (String)request.getSession().getAttribute("AuthenticationKey");
         String AuthenticationUser = request.getParameter("checkNumber");
+        String email = request.getParameter("email");
+        
         
         System.out.println(AuthenticationKey);
-        System.out.println(AuthenticationUser);
+        System.out.println(AuthenticationUser +"222");
         
         if(!AuthenticationKey.equals(AuthenticationUser))
         {
@@ -49,16 +51,14 @@ public class NumberCheckController extends HttpServlet {
         }else {
         	System.out.println("인증번호 일치");
     		HttpSession session = request.getSession();
-    		session.setAttribute("alertMsg", "인증번호 일치하지 않습니다");
+    		
+    		session.setAttribute("email", email);
+    		
+    		request.getSession().setAttribute("AuthenticationKey", AuthenticationKey);
     		response.sendRedirect(request.getContextPath()+"/searchIdResult.me");
 			
 			
-			
-//    		RequestDispatcher view = request.getRequestDispatcher("views/member/searchIdResult.jsp");
-//    		view.forward(request, response);
 
-			request.getSession().setAttribute("AuthenticationKey", AuthenticationKey);
-			response.sendRedirect(request.getContextPath() + "/searchId.me");
         }
         
 

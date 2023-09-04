@@ -31,6 +31,7 @@
     height: 15%;
     background-image: url("resources/img/pork-cutlet2.jpg");
     background-size: cover;
+    
 }
 </style>
 <body>

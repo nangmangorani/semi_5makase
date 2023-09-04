@@ -118,9 +118,9 @@
         <div class="intro-area" align="center"> 아이디 찾기 </div> <br><br>
         <div class="selectMethod-area">
             <div class="selectId"><a href="location:reload()">아이디 찾기</a></div>
-            <div class="selectPwd"><a href="비밀번호 변경화면">비밀번호 찾기</a></div>
+            <div class="selectPwd"><a href="<%=contextPath%>/searchPwdOne.me">비밀번호 찾기</a></div>
         </div>
-        <form action="<%=contextPath%>/searchIdResult.me" method="post" class="searchBy-area">
+        <form action="<%=contextPath%>/numCheck.me" method="post" class="searchBy-area">
                 <div class="searchByEmail"> <br><br>
                     <span style="width: 15px; height: 15px;" class="radio-value" name="select" value="email">&nbsp;<b style="font-size: 20px;">이메일 인증</b></span><br><br>
                     <div style="font-size: small;">회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야, 인증번호를 받을 수 있습니다.</div><br>
@@ -132,15 +132,14 @@
               		    <button type="button" id="" class="btn btn-sm" onclick="emailCheck()" style="margin-left: 430px;">인증번호 받기</button>
                         <br>
                         
-                        <input type="text" id="checkNumber" class="form-control form-control-lg" placeholder="인증번호">
+                        <input type="text" name="checkNumber" id="checkNumber" class="form-control form-control-lg" placeholder="인증번호">
                         <span id="X1" onclick="cleanName();"><b>X</b></span>
                     </div>
                     <br><br>
                 </div>
  				
-               <!--  <button type="submit" id="" class="btn btn-sm" onclick="checkNum()">인증확인</button> --> 
 				
-                <button type="submit" id="findById"  class="btn btn-primary btn-lg btn-block"  onclick="checkNum();" disabled>아이디 찾기</button>
+                <button type="submit" id="findById"  class="btn btn-primary btn-lg btn-block"  onclick="checkNum();" >아이디 찾기</button>
         </form>
 
         
@@ -158,37 +157,7 @@
             })
         }  
         
-/*
-        function checkNum(){
-            $.ajax({
-                url:"numCheck.me",
-                data:{
-                	checkNumber:$("#checkNumber").val()
-                
-                },
-                type:"post"
 
-            })
-        }
-        
-*/
-
-			
-			var authenticationKey = "<%= session.getAttribute("AuthenticationKey") %>";
-			
-			function checkNum() {
-			 var inputValue = $("#checkNumber").val();
-			
-			 if (inputValue === authenticationKey) {
-			     $("#findById").prop("disabled", false);
-			 } else {
-			     $("#findById").prop("disabled", true);
-			 }
-			}
-			$("#checkNumber").keyup(checkNum);
-			
-			
-			
 			
 
 
