@@ -158,10 +158,35 @@ VALUES
 	     , ?
 	     , ?
 	     , DEFAULT
-	     , 1
+	     , ?
 	     )
 </entry>
 
+<entry key="deleteFaq">
+	UPDATE FAQ
+	   SET STATUS = 'N'
+	 WHERE FAQ_NO = ?
+</entry>
 
+<entry key="updateQna">
+	UPDATE QNA
+	   SET BOARD_TITLE = ?
+	     , BOARD_CONTENT = ?
+	 WHERE QNA_NO = ?
+</entry>
+
+<entry key="deleteQna">
+	UPDATE QNA
+	   SET STATUS = 'N'
+	 WHERE QNA_NO = ?
+</entry>
+
+<entry key="deleteAttachment">
+	UPDATE ATTACHMENT
+	   SET
+	       STATUS = 'N'
+	 WHERE REF_BNO = ?
+	   AND CATEGORY = 'QNA'
+</entry>
 
 </properties>

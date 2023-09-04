@@ -147,9 +147,27 @@ public class NoticeService {
 		
 	}
 
-
+	/**
+	 * 공지사항 삭제하기
+	 */
 	
-
+	public int deleteNotice(int noticeNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().deleteNotice(conn, noticeNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
 
 
 

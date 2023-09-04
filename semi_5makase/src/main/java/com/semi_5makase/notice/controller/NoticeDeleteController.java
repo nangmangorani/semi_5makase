@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi_5makase.notice.model.service.NoticeService;
-import com.semi_5makase.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeInsertController
+ * Servlet implementation class NoticeDeleteController
  */
-@WebServlet("/insert.no")
-public class NoticeInsertController extends HttpServlet {
+@WebServlet("/delete.no")
+public class NoticeDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeInsertController() {
+    public NoticeDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,30 +31,20 @@ public class NoticeInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("UTF-8");
+		int noticeNo = Integer.parseInt(request.getParameter("cpage"));
 		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String NoticeWriter = request.getParameter("noticeWriter");
-		
-		Notice n = new Notice();
-		
-		n.setNoticeTitle(title);
-		n.setNoticeContent(content);
-		n.setNoticeWriter(NoticeWriter);
-		
-		
-		int result = new NoticeService().insertNotice(n);
+		int result = new NoticeService().deleteNotice(noticeNo);
 		
 		if(result > 0) {
-			request.getSession().setAttribute("alertMsg", "성공적으로 추가되었습니다.");
+			request.getSession().setAttribute("alertMsg", "성공적으로 삭제되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/list.no?cpage=1");
 		} else {
 			// 실패
-			request.setAttribute("errorMsg", "게시글 추가에 실패했습니다.");
+			request.setAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			view.forward(request, response);
 		}
+		
 	}
 
 	/**

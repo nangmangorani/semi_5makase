@@ -125,10 +125,55 @@ public class QnaService {
 	}
 	
 	
+	/**
+	 * qna 수정하기
+	 */
+	
+	public int updateQna(Qna q, ArrayList<Attachment> list) {
+		Connection conn = getConnection();
+		int result1 = 0;
+		int result2 = 1;
+		
+		result1 = new QnaDao().updateQna(conn, q);	
+		System.out.println(result1); // 1이겠지
+		if(list != null && list.size() != 0) {
+			result2 = new QnaDao().updateAttachment(conn, list);
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+	}
 	
 	
 	
 	
+	/**
+	 * qna 삭제하기
+	 */
+	
+	public int deleteQna(int qnaNo) {
+		Connection conn = getConnection();
+		
+		int result = new QnaDao().deleteQna(conn, qnaNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
 	
 	
 	

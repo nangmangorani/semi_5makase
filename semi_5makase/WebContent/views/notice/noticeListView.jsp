@@ -109,9 +109,11 @@
                   </tr>
                 	<% } else { %>
                 		<!-- case2. 글지글이 있을 경우 -->
+                		<% int listNum = 1; %>
                 		<% for(Notice n : list) { %>
                			<tr>
-		                     <td><%= n.getNoticeNo() %></td>
+		                     <td style="display:none"><%= n.getNoticeNo() %></td>
+		                     <td><%= listNum++ %></td>
 		                     <td><%= n.getNoticeTitle() %></td>
 		                     <td><%= n.getCreateDate() %></td>
 		                 </tr>

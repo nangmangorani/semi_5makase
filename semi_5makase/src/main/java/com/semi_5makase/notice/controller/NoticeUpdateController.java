@@ -1,6 +1,8 @@
 package com.semi_5makase.notice.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,7 +49,13 @@ public class NoticeUpdateController extends HttpServlet {
 		int result = new NoticeService().updateNotice(n);
 		
 		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "성공적으로 수정되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/detail.no?num=" + noticeNo);
+		} else {
+			// 실패
+			request.setAttribute("errorMsg", "게시글 수정에 실패했습니다.");
+			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+			view.forward(request, response);
 		}
 		
 	}

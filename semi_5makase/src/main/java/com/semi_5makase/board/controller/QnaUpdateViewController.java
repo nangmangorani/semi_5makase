@@ -1,7 +1,7 @@
-package com.semi_5makase.notice.controller;
+package com.semi_5makase.board.controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.notice.model.service.NoticeService;
-import com.semi_5makase.notice.model.vo.Notice;
+import com.semi_5makase.board.model.service.QnaService;
+import com.semi_5makase.board.model.vo.Qna;
+import com.semi_5makase.common.model.vo.Attachment;
 
 /**
- * Servlet implementation class NoticeUpdateViewController
+ * Servlet implementation class QnaUpdateViewController
  */
-@WebServlet("/updateview.no")
-public class NoticeUpdateViewController extends HttpServlet {
+@WebServlet("/updateview.qna")
+public class QnaUpdateViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeUpdateViewController() {
+    public QnaUpdateViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +33,17 @@ public class NoticeUpdateViewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int noticeNo = Integer.parseInt(request.getParameter("cpage"));
-		Notice n = new NoticeService().selectNotice(noticeNo);
+		int qnaNo = Integer.parseInt(request.getParameter("cpage"));
 		
-		//n.setNoticeNo(noticeNo);
-		request.setAttribute("n", n);
+		Qna q = new QnaService().selectQna(qnaNo);
 		
-		request.getRequestDispatcher("views/notice/noticeUpdateView.jsp").forward(request, response);
-	
+		ArrayList<Attachment> list = new QnaService().selectAttachment(qnaNo);
+		
+		request.setAttribute("list", list);
+		System.out.println("나는 업데이트뷰컨트롤러" + list);
+		request.setAttribute("q", q);
+		request.getRequestDispatcher("views/board/qnaUpdateView.jsp").forward(request, response);
+		
 	}
 
 	/**

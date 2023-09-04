@@ -256,7 +256,7 @@ public class NoticeDao {
 			
 			pstmt.setString(1, n.getNoticeTitle());
 			pstmt.setString(2, n.getNoticeContent());
-			pstmt.setInt(3, Integer.parseInt(n.getNoticeWriter()));
+			pstmt.setInt(3, n.getNoticeNo());
 			
 			result = pstmt.executeUpdate();
 			System.out.println(result);
@@ -266,8 +266,32 @@ public class NoticeDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	
+	/**
+	 * 공지사항 삭제하기
+	 */
+	
+	public int deleteNotice(Connection conn, int noticeNo) {
 		
+		int result = 0;
+		PreparedStatement pstmt = null;
 		
+		String sql = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

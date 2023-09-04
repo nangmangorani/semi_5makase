@@ -24,7 +24,7 @@
             font-style: normal;
         }
         div{
-            /* border: 1px solid red;/ */
+            /*border: 1px solid red;*/
             box-sizing: border-box;
             font-family: 'SUITE-Regular';
         }
@@ -91,6 +91,7 @@
 		    height: auto; /* Let the height adjust based on content */
 		    margin: auto;
 		    overflow-y: auto;
+
             /* border-top: 2px solid black;/ */
         }
 
@@ -184,13 +185,13 @@
 
         .CFaqTableItem {
             width: 100%;
-            border-bottom: 1px solid #f5f5f5;
+            border-bottom: 1px solid #b9b9b994;
         }
 
         .CFaqTableItem__contents {
             padding: 24px 10px;
             font-size: 15px;
-            color: #585858
+            color: #363535
         }
 
         .CFaqTableItem__contents-box {
@@ -257,6 +258,18 @@
             color: white;
         }
         
+        #deleteBtn{
+        	margin-top: 11px;
+        	border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(206, 1, 1);
+            font-weight: 500;
+            color: white;
+            margin-left:10px;
+        }
+        
     </style>
 </head>
 
@@ -270,39 +283,93 @@
                 <h2 class="main_image_text" style="font-size:40px">자주 묻는 질문</h2>
             </div>
             
-                       
+                <% int listNum = 1; %>       
 	            <% for(Faq f : list) {%>
 	            <div id="faqMain">
 	                <div class="CFaqTableItem">
 	                    <div class="CFaqTableItem__list">
-	                        <em class="CFaqTableItem__category"><%= f.getFaqNo() %></em>
+	                    <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+		                    <form action="<%=contextPath%>/delete.faq" id="deleteAction">
+	                            <input type="checkbox" name="deleteFaq" id="deleteChkBox" value="<%= f.getFaqNo() %>">
+	                            <input type="hidden" name="faqNo" value="<%= f.getFaqNo() %>">
+	                        </form>
+                        <% } %>
+	                        <em class="CFaqTableItem__category"><%= listNum++ %></em>
 	                        <p class="CFaqTableItem__question"><%= f.getFaqTitle() %></p>
 	                        <img class="arrow down" src="resources/img/아래쪽.png" alt="">
 	                        <img class="arrow up hidden" src="resources/img/up.png">
-	
 	                    </div>
 	                    <div class="CFaqTableItem__contents-box">
 	                        <em class="CFaqTableItem__answer">답변</em>
 	                        <div class="CFaqTableItem__contents">
 	                            <%= f.getFaqContent() %>
-	                            
 	                        </div>
 	                    </div>
 	                </div>
+
+
 	                <% } %>
 	                	<% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
 		                	<button id="enrollBtn" onclick="location.href='<%=contextPath%>/insertview.faq'">작성하기</button>
+		                	<button id="deleteBtn" onclick="submitForm()">삭제하기</button>
 	                <% } %>
-            
-                
 
+                    <script>
+	                    function submitForm() {
+	                    	
+	                    	var checkedCheckboxes = document.querySelectorAll("input[name='deleteFaq']:checked");
+	                        var faqNos = [];
+
+	                        checkedCheckboxes.forEach(function(checkbox) {
+	                            var faqNo = $(checkbox).closest(".CFaqTableItem__list").find("input[name='faqNo']").val();
+	                            faqNos.push(faqNo);
+	                            console.log(faqNo);
+	                            console.log(faqNos);
+	                            console.log('여긴 submitform');
+	                        });
+
+	                        // Check if at least one checkbox is selected.
+	                        if (faqNos.length > 0) {
+	                            // Serialize the array and set it as a hidden input field value.
+	                            var faqNosString = faqNos.join(",");
+	                            var form = document.getElementById("deleteAction");
+	                            var input = document.createElement("input");
+	                            input.type = "hidden";
+	                            input.name = "faqNos"; // This should match the parameter name in your controller
+	                            input.value = faqNosString;
+	                            form.appendChild(input);
+	                            console.log(faqNos);
+	                            console.log('여긴 form')
+	                            
+
+	                            // Submit the form.
+	                            form.submit();
+	                        } else {
+	                            alert("삭제할 게시글을 한 개 이상 선택해주세요.");
+	                        }
+	                    }
+	                        
+	
+	                        // 적어도 하나 이상의 체크박스가 선택되었는지 확인합니다.
+	                        //if (faqNos.length > 0) {
+	                            // 양식 내의 'faqNo'라는 이름을 가진 요소에 FAQ 번호들을 쉼표로 구분된 문자열로 설정합니다.
+	                            //var form = document.getElementById("deleteAction");
+	                            //form.elements["faqNo"].value = faqNos.join(",");
+	                            //form.submit();
+	                       // } else {
+	                            // 체크된 FAQ가 없는 경우, 경고 메시지를 표시하거나 상황에 따라 처리합니다.
+	                           // alert("삭제할 FAQ를 하나 이상 선택하세요.");
+	                       // }
+	                    
+
+                    </script>
                 <div id="searchTab2">
 				    <form id="searchForm" action="<%=contextPath%>/list.faq" method="get">
 				        <input type="text" id="searchFaq" name="searchFaq">
 				        <input type="submit" value="검색" id="searchBtn">
 				    </form>
 				</div>
-				            </div>
+            </div>
             
         </div>
         
@@ -330,14 +397,16 @@
 
     <script>
 
-        window.onload = function() {
-            $(".CFaqTableItem").on("click", function(event) {
-                var clickedItem = $(event.currentTarget);
+    window.onload = function() {
+        $(".CFaqTableItem").on("click", function(event) {
+            var clickedItem = $(event.currentTarget);
 
+            if (!$(event.target).is("input[type='checkbox']")) {
+                // Clicking outside of the checkbox area
                 if (clickedItem.hasClass("CFaqTableItem--active")) {
                     clickedItem.removeClass("CFaqTableItem--active");
 
-                    // Change the arrow images
+                    // Reset the arrow images
                     clickedItem.find(".arrow.down").removeClass("hidden");
                     clickedItem.find(".arrow.up").addClass("hidden");
 
@@ -362,9 +431,12 @@
                     var contentsBoxHeight = clickedItem.find(".CFaqTableItem__contents-box").height();
                     $("#footer").css("margin-top", contentsBoxHeight + "px");
                 }
-            });
-};
+            }
+        });
+    };
         
+
+
 
     </script>
 </body>
