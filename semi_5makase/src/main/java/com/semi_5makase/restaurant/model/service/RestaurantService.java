@@ -35,6 +35,17 @@ public class RestaurantService {
 		return rest;
 	}
 	
+	public ArrayList<Restaurant> selectMainTvRestInfo() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Restaurant> tvList = new RestaurantDao().selectMainTvRestInfo(conn);
+		
+		close(conn);
+		return tvList;
+		
+	}
+	
 	public ArrayList<Menu> selectMenuList(int restNo){
 		
 		Connection conn = getConnection();

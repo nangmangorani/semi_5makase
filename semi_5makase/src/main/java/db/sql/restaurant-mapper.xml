@@ -25,6 +25,24 @@
 		 WHERE REST_NO = ?
 	</entry>
 	
+	<entry key="selectMainTvRestInfo">
+		SELECT REST_NAME, ADDRESS, TV_NAME, CATEGORY_NAME, ROUND(AVG(RATING),1) "AVG"
+		  FROM (
+		  SELECT 
+		       CATEGORY_NAME
+		     , TV_NAME
+		     , REST_NAME
+		     , SUBSTR(REST_ADDRESS, 1, INSTR(REST_ADDRESS, '구')) "ADDRESS"
+		     , RATING
+		  FROM RESTAURANT
+		  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
+		  JOIN TV USING (TV_NO)
+		  JOIN REVIEW USING (REST_NO)
+		 WHERE TV_NO IS NOT NULL
+		  ) E
+		GROUP BY CATEGORY_NAME, TV_NAME, REST_NAME, ADDRESS
+	</entry>
+	
 	<entry key="selectMenuList">
 		SELECT 
 		       REST_NO

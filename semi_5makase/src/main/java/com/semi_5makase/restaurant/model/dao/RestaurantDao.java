@@ -2,6 +2,7 @@ package com.semi_5makase.restaurant.model.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -77,6 +78,42 @@ private Properties prop = new Properties();
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public ArrayList<Restaurant> selectMainTvRestInfo(Connection conn) {
+		
+		ArrayList<Restaurant> tvList = new ArrayList<Restaurant>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMainTvRestInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				tvList.add(new Restaurant(rset.getString("REST_NAME"),
+										  rset.getString("ADDRESS"),
+										  rset.getString("TV_NAME"),
+										  rset.getString("CATEGORY_NAME"),
+										  rset.getDouble("AVG")
+										  ));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		System.out.println("TV리스트" + tvList);
+		
+		return tvList;
+		
 	}
 	
 	public ArrayList<Review> selectReviewList(int restNo, Connection conn){

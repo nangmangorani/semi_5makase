@@ -46,10 +46,7 @@ public class ReviewPictureController extends HttpServlet {
 		picList = new RestaurantService().selectReviewAttachment(restNo);
 		
 		totalList.add(revList);
-		totalList.add(picList);
-		
-		
-		System.out.println("서블렛 totalList : " + totalList);
+		totalList.add(picList);	
 		
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(totalList, response.getWriter());

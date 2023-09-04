@@ -1027,7 +1027,7 @@
 	                    <ul>
 	                        <li>
 	                        	<% for(Attachment at : rvPicList) { %>
-	                        		<span href="#none" style="text-decoration:none; color:black;" id="<%= rv.getReviewNo()%>" class="pl<%= at.getRefBno()%>">
+	                        		<span  style="color:black;" id="<%= rv.getReviewNo()%>" class="pl<%= at.getRefBno()%>">
 	                        		<%if(rv.getReviewNo() == at.getRefBno()) { %> 	
 	                         			<img src="<%= contextPath %><%= at.getFilePath()%>" class="reviewModal">
 	                        		<% } %>

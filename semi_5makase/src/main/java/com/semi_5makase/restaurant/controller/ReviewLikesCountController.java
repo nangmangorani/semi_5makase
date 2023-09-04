@@ -33,9 +33,6 @@ public class ReviewLikesCountController extends HttpServlet {
 		
 		int result = new RestaurantService().selectLikesCount(reviewNo);
 		
-		System.out.println("좋수" + reviewNo);
-		System.out.println("좋수" + result);
-		
 		response.getWriter().print(result);
 		
 	}
