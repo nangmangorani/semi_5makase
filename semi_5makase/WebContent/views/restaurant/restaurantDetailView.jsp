@@ -740,7 +740,7 @@
 	                        <li>
 	                        	<% for(Attachment at : rvPicList) { %>
 	                        		<a class="test1" href="<%= contextPath %>/detail.rv" style="text-decoration:none; color:black;" id="<%= rv.getReviewNo()%>">
-	                        		<%if(rv.getReviewNo() == at.getRefBoardNo()) { %> 	
+	                        		<%if(rv.getReviewNo() == at.getRefBno()) { %> 	
 	                         			<img src="<%= contextPath %><%= at.getFilePath() %>">
 	                        		<%} %>
 	                         	</a>
