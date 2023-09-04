@@ -195,16 +195,15 @@ public class RestaurantService {
 		Connection conn = getConnection();
 		
 		int result1 = new RestaurantDao().adminUpdateRestaurant(conn, ar);
-		int del = new RestaurantDao().deleteLikes(memNo, reviewNo, conn);
 		
-		if(del>0) {
+		if(result1>0) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		
 		close(conn);
-		return del;
+		return result1;
 		
 	}
 	
@@ -251,39 +250,59 @@ public class RestaurantService {
 		
 	}
 	
+	public int deleteLikes(int memNo, int reviewNo) {
+			
+			Connection conn = getConnection();
+			
+			int del = new RestaurantDao().deleteLikes(memNo, reviewNo, conn);
+			
+			if(del>0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+			
+			close(conn);
+			return del;
+			
+		}
+	
 	public int insertReview(Review rv, ArrayList<Attachment> list) {
-
-		
+	
+			
+			Connection conn = getConnection();
+			
+			int result1 = new RestaurantDao().insertReview(rv, conn);
+			int result2 = 1;
+	
+			
+			if(!list.isEmpty()) {
+				result2 = new RestaurantDao().insertAttachmentList(list, conn);
+			}
+			
+			if(result1 > 0 && result2 > 0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+			
+			close(conn);
+			return result1 * result2;
+		}
+	
+	public int adminUpdateRestaurant(AdminRestaurant ar) {
 		Connection conn = getConnection();
 		
-		int result1 = new RestaurantDao().insertReview(rv, conn);
-		int result2 = 1;
-
+		int result = new RestaurantDao().adminUpdateRestaurant(conn, ar);
 		
-		if(!list.isEmpty()) {
-			
-			result2 = new RestaurantDao().adminUpdateAttachment(conn, list);
-			result2 = new RestaurantDao().insertAttachmentList(list, conn);
-		}
-		
-		if(result1 > 0 && result2 > 0) {
+		if(result > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		close(conn);
-		return result1 * result2;
-		
-	}
+		return result;
 	
-	public int adminUpdateRestaurant(AdminRestaurant ar) {
-		Connection conn = getConnection();
-		
-		ArrayList<Review> rvList = new RestaurantDao().selectReviewList(restNo, conn);
-		
-		close(conn);
-		return rvList;
-		
 	}
 
 	public Review selectModalReivew(int restNo, int refBno) {
@@ -352,10 +371,10 @@ public class RestaurantService {
 		
 		Connection conn = getConnection();
 		
-		int result = new RestaurantDao().adminUpdateRestaurant(conn, ar);
+		int result = new RestaurantDao().updateRestaurant(memNo, update, restNo, closed, conn);
 		
 		if(result > 0) {
-			commit(conn);
+			commit(conn);			
 		} else {
 			rollback(conn);
 		}
@@ -455,6 +474,7 @@ public class RestaurantService {
 		close(conn);
 		
 		return listCount;
+	}
 	// 관우님꺼
 	
 public ArrayList<Restaurant> selectRestSearch(String searchVal) {
