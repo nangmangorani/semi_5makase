@@ -614,7 +614,7 @@
         	<% for(int i=0; i<rvPicList.size(); i++) { %>
         		<% if (i < 3) { %>
 	            <div id="photo_<%=i%>">
-	                <a href="#none" class="reviewModal" style="padding: 0; border: 0;" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getrefBno() %>, <%= rvList.get(i).getMemNo() %>)">
+	                <a href="#none" class="reviewModal" style="padding: 0; border: 0;" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getRefBno() %>, <%= rvList.get(i).getMemNo() %>)">
                       	<img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
 	                </a>
 	            </div>
@@ -637,7 +637,7 @@
                         <div class="picList">
                             <% for(int i=0; i<rvPicList.size(); i++) { %>
                             	<% if (i < 10) { %>
-                            	<a href="#none" style="text-decoration:none;" class="pl<%= rvPicList.get(i).getrefBno()%>" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getrefBno() %>)">
+                            	<a href="#none" style="text-decoration:none;" class="pl<%= rvPicList.get(i).getRefBno()%>" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getRefBno() %>)">
 	                            	<img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
                             	</a>
                             	<% } %>
@@ -940,7 +940,7 @@
 	                <div class="reviewContentHeader">
 	                    <div class="profile">
 	                    	<% for(Attachment pf : pfList) { %>
-	                    		<% if(rv.getMemNo() == pf.getrefBno()) { %>
+	                    		<% if(rv.getMemNo() == pf.getRefBno()) { %>
 	                    			<img src="<%= contextPath %><%= pf.getFilePath() %>" style="width: 70px; margin-top: 5px; margin-left: 15px;">
 	                    		<% } %>
 	                    	<% } %>
@@ -1027,8 +1027,8 @@
 	                    <ul>
 	                        <li>
 	                        	<% for(Attachment at : rvPicList) { %>
-	                        		<span href="#none" style="text-decoration:none; color:black;" id="<%= rv.getReviewNo()%>" class="pl<%= at.getrefBno()%>">
-	                        		<%if(rv.getReviewNo() == at.getrefBno()) { %> 	
+	                        		<span href="#none" style="text-decoration:none; color:black;" id="<%= rv.getReviewNo()%>" class="pl<%= at.getRefBno()%>">
+	                        		<%if(rv.getReviewNo() == at.getRefBno()) { %> 	
 	                         			<img src="<%= contextPath %><%= at.getFilePath()%>" class="reviewModal">
 	                        		<% } %>
 		                         	</span>

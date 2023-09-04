@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 import javax.websocket.CloseReason.CloseCode;
 
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.restaurant.model.dao.RestaurantDao;
 import com.semi_5makase.restaurant.model.vo.AdminRequestRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminUpdateRestaurant;
-import com.semi_5makase.restaurant.model.vo.Attachment;
 import com.semi_5makase.restaurant.model.vo.Category;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
@@ -35,6 +35,92 @@ public class RestaurantService {
 		return rest;
 	}
 	
+	public ArrayList<Menu> selectMenuList(int restNo){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Menu> list = new RestaurantDao().selectMenuList(restNo, conn);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Review> selectReviewList(int restNo){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Review> rvList = new RestaurantDao().selectReviewList(restNo, conn);
+		
+		close(conn);
+		return rvList;
+		
+	}
+	
+	public int insertReport(int memNo, int susNo, String report) {
+		Connection conn = getConnection();
+		
+		int result = new RestaurantDao().insertReport(memNo, susNo, report, conn);
+		
+		if(result > 0) {
+			commit(conn);			
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int selectLikesCount(int reviewNo) {
+	
+		Connection conn = getConnection(); 
+		
+		int likes = new RestaurantDao().selectLikesCount(reviewNo, conn);
+		
+		close(conn);
+		return likes;
+	}
+	
+	public int increaseRestaurantView(int restNo) {
+		
+		Connection conn = getConnection();
+		
+		int count = new RestaurantDao().increaseRestaurantView(restNo, conn);
+		
+		if(count > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return count;
+	}
+	
+	public int deleteFavoriteRestaurant(int memNo, int restNo) {
+		
+		Connection conn = getConnection();
+		
+		int del = new RestaurantDao().deleteFavoriteRestaurant(memNo, restNo, conn);
+		
+		if(del>0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return del;
+		
+	}
+	
+	public int checkReviewLikes(int memNo, int reviewNo) {
+		
+		Connection conn = getConnection();
+		
+		int likes = new RestaurantDao().checkReviewLikes(memNo, reviewNo, conn);
+		
+		close(conn);
+		return likes;
+	}
 
 	
 	public int selectFavoriteCount(int restNo) {
@@ -65,6 +151,17 @@ public class RestaurantService {
 		
 		close(conn);
 		return avg;
+	}
+	
+	public int checkFavoriteRestaurant(int memNo, int restNo) {
+		
+		Connection conn = getConnection();
+		
+		int favor = new RestaurantDao().checkFavoriteRestaurant(memNo, restNo, conn);
+		
+		close(conn);
+		return favor;
+		
 	}
 	
 	public ArrayList<AdminRestaurant> adminSelectRestList() {
@@ -541,25 +638,25 @@ public ArrayList<Restaurant> selectRestSearch(String searchVal) {
 //	}
 	
 	// 음식점 등록요청 
-	public int insertRestTemp(RestaurantTemp r, ArrayList<Attachment> list) {
-		Connection conn = getConnection();
-		int result1 = new RestaurantDao().insertRestTemp(conn, r);
-		int result2 = 1;
-		
-		if(list != null && list.size() != 0) {
-			result2 = new RestaurantDao().insertAttachment(conn, list);
-		}
-		
-		if(result1>0 && result2>0) {
-			commit(conn);
-		}else {
-			rollback(conn);
-		}
-		
-		close(conn);
-		
-		return result1 * result2;
-	}
+//	public int insertRestTemp(RestaurantTemp r, ArrayList<Attachment> list) {
+//		Connection conn = getConnection();
+//		int result1 = new RestaurantDao().insertRestTemp(conn, r);
+//		int result2 = 1;
+//		
+//		if(list != null && list.size() != 0) {
+//			result2 = new RestaurantDao().insertAttachment(conn, list);
+//		}
+//		
+//		if(result1>0 && result2>0) {
+//			commit(conn);
+//		}else {
+//			rollback(conn);
+//		}
+//		
+//		close(conn);
+//		
+//		return result1 * result2;
+//	}
 	
 	public String selectRestThumbnail(int restNo) {
 		Connection conn = getConnection();

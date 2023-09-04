@@ -16,7 +16,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.semi_5makase.common.MyFileRenamePolicy;
 import com.semi_5makase.restaurant.model.service.RestaurantService;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
-import com.semi_5makase.restaurant.model.vo.Attachment;
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.restaurant.model.vo.Category;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.TV;
@@ -114,7 +114,7 @@ public class AdminRestaurantAdd extends HttpServlet {
 				
 				if(multiRequest.getOriginalFileName(key)!=null) {
 					
-					Attachment at = new Attachment();
+					at = new Attachment();
 					at.setOriginName(multiRequest.getOriginalFileName(key));
 					at.setChangeName(multiRequest.getFilesystemName(key));
 					at.setFilePath("resources/board_upfiles");

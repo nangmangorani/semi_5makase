@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi_5makase.restaurant.model.service.RestaurantService;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
-import com.semi_5makase.restaurant.model.vo.Attachment;
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.restaurant.model.vo.Category;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.TV;

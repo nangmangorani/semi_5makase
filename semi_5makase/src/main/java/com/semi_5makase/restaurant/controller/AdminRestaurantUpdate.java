@@ -17,7 +17,7 @@ import com.semi_5makase.common.MyFileRenamePolicy;
 import com.semi_5makase.restaurant.model.dao.RestaurantDao;
 import com.semi_5makase.restaurant.model.service.RestaurantService;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
-import com.semi_5makase.restaurant.model.vo.Attachment;
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Time;
 
