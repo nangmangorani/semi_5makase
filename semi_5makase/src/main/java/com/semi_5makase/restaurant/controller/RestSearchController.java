@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi_5makase.restaurant.model.service.RestaurantService;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
 
 /**
@@ -32,9 +33,9 @@ public class RestSearchController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String searchVal = request.getParameter("searchVal");
 		
-		ArrayList<Restaurant> locationList = new RestaurantService().selectRestSearch();
-		ArrayList<Restaurant> foodList = new RestaurantService().selectRestSearch();
-		ArrayList<Restaurant> restaurantList = new RestaurantService().selectRestSearch();
+//		ArrayList<Restaurant> locationList = new RestaurantService().selectRestSearch();
+//		ArrayList<Restaurant> foodList = new RestaurantService().selectRestSearch();
+//		ArrayList<Restaurant> restaurantList = new RestaurantService().selectRestSearch();
 		
 		
 		//지역,음식 또는 식당명

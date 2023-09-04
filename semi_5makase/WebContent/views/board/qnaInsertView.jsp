@@ -115,6 +115,10 @@
         min-height: 150px;
         padding: 10px;
         }
+        
+        .noContent{
+        	resize: none;
+        }
 
     </style>
 </head>
@@ -135,7 +139,7 @@
                   <textarea name="content" id="textarea" placeholder="내용을 입력해주세요" cols="49" rows="10" style="resize: none;"></textarea><br><br>
   
 		          <input type="radio" name="open" value="Y"> 공개
-		          <input type="radio" name="open" value="N"> 비공개 <br>
+		          <input type="radio" name="open" value="N" checked> 비공개 <br>
                   
                   
                   
@@ -170,10 +174,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        
+                        	<% int listNo = 1; %>
                         	<% for(Faq f : faqList) { %>
                         	<tr>
-                            <td><%= f.getFaqNo() %></td>
+                            <td><%= listNo++ %></td>
                             <td><%= f.getFaqTitle()%></td>
                             </tr>
                             <% } %>

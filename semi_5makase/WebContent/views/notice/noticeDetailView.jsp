@@ -20,7 +20,7 @@
             font-style: normal;
             }
             div {
-                border: 1px solid black;
+                /*border: 1px solid black;*/
                 box-sizing: border-box;
                 font-family: 'SUITE-Regular';
             }
@@ -106,40 +106,40 @@
                 margin: auto;
                 margin-top: 9%;
             }
-            
-            #btnToNoticeList{
-                /*margin-top: 70px;
-                border: transparent;
-                width: 100px;
-                height: 40px;
-                background-color: rgb(21, 98, 189);
-                color: white;
-                border-radius: 10px;
-                margin-left: 580px;*/
-          
-            }
-            
-            #btnUpdateNotice{
-            	/*margin-top: 70px;
-                border: transparent;
-                width: 100px;
-                height: 40px;
-                background-color: rgb(21, 98, 189);
-                color: white;
-                border-radius: 10px;
-                margin-left: 500px;*/
+
+            #buttonContainer {
+                text-align: right;
+                margin-top: 20px;
             }
 
             #btnUpdateNotice{
-                float: right;
+                border: transparent;
+                border-radius: 5px;
+                width: 100px;
+                height: 40px;
+                background-color: rgb(55, 173, 44);
+                font-weight: 500;
+                color: white;
             }
 
             #btnDeleteNotice{
-                float: right;
+                border: transparent;
+                border-radius: 5px;
+                width: 100px;
+                height: 40px;
+                background-color: rgb(206, 1, 1);
+                font-weight: 500;
+                color: white;
             }
 
             #btnToNoticeList{
-                float: right;
+                border: transparent;
+                border-radius: 5px;
+                width: 100px;
+                height: 40px;
+                background-color: rgb(21, 98, 189);
+                font-weight: 500;
+                color: white;
             }
     
             #noticeDate {
@@ -195,20 +195,24 @@
                 </div>
                 <div id="content_main">
                 	<div>
-                           <div id="noticeTitle" name="noticeTitle"> <br>
-                               <h2><%= n.getNoticeTitle() %></h2>
-                           </div>
-                           <div id="noticeDate">
-                               <span><%= n.getCreateDate() %></span> &nbsp;
-                               <span>조회수</span>
-                               <%= n.getNoticeViews() %>
-                           </div>
-                           <div id="noticeMain" name="noticeContent" style="word-break:break-all;"> <br>
-                               <%= n.getNoticeContent() %>
-                           </div>
-                        <button id="btnUpdateNotice" onclick="location.href='<%=contextPath%>/updateview.no?cpage=<%=n.getNoticeNo() %>'">수정하기</button>
-                   		<button id="btnDeleteNotice" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">삭제하기</button>
-                        <button id="btnToNoticeList" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">목록으로</button>
+                          <div id="noticeTitle" name="noticeTitle"> <br>
+                              <h2><%= n.getNoticeTitle() %></h2>
+                          </div>
+                          <div id="noticeDate">
+                              <span><%= n.getCreateDate() %></span> &nbsp;
+                              <span>조회수</span>
+                              <%= n.getNoticeViews() %>
+                          </div>
+                          <div id="noticeMain" name="noticeContent" style="word-break:break-all;"> <br>
+                              <%= n.getNoticeContent() %>
+                          </div>
+                          <div id="buttonContainer">
+                            <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+                            <button id="btnUpdateNotice" onclick="location.href='<%=contextPath%>/updateview.no?cpage=<%=n.getNoticeNo() %>'">수정하기</button>
+                            <button id="btnDeleteNotice" onclick="location.href='<%=contextPath%>/delete.no?cpage=<%=n.getNoticeNo() %>'">삭제하기</button>
+                            <% } %>
+                            <button id="btnToNoticeList" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">목록으로</button>
+                        </div>
                     </div>
                 </div>
             <div id="footer">

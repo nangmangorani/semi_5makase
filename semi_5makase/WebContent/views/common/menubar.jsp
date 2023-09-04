@@ -31,7 +31,7 @@
             width: 1100px;
             margin: auto;
             background-color: white;
-            z-index: 5;
+            z-index: 999;
         }
     
         .logo-area>img {
@@ -145,13 +145,13 @@
     </style>
     <body>
     	<% if(alertMsg != null){ %>
-	
+		
 		<script>
 			alert("<%= alertMsg %>");
 		</script>
-		<% session.removeAttribute("alertMsg"); %>
+			<% session.removeAttribute("alertMsg"); %> <!-- 서비스요청 성공 후 더이상 alert 안뜨게함 -->
 		<% } %>
-    
+    	
         <div class="menubar-area">
             <div class="logo-area">
                 <img src="resources/img/logo.png">

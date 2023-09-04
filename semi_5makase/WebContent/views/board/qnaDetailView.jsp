@@ -140,6 +140,40 @@
             line-height: 45px;
         }
 
+        #buttonContainer{
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        #btnUpdateQna{
+            border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(55, 173, 44);
+            font-weight: 500;
+            color: white;
+        }
+
+        #btnDeleteQna{
+            border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(206, 1, 1);
+            font-weight: 500;
+            color: white;
+        }
+
+        #btnToQnaList{
+            border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
+        }
 
 
         #qnaContent_1{
@@ -163,6 +197,13 @@
         #listBtn{
             margin-top: 20px;
             margin-left: 600px;
+            border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
         }
 
         #footer{
@@ -227,7 +268,13 @@
                         </div>
                     </div>
                     <div id="content_main2">
-                        <button id="listBtn" onclick="location.href='<%=contextPath%>/list.qna?cpage=1'">목록가기</button>
+                        <div id="buttonContainer">
+                            <% if(loginMember.getMemId().equals(q.getBoardWriter()) || loginMember.getMemId().equals("admin")) {  %>
+                                    <button id="btnUpdateQna" onclick="location.href='<%=contextPath%>/updateview.qna?cpage=<%=q.getQnaNo()%>'">수정하기</button>
+                                    <button id="btnDeleteQna" onclick="location.href='<%=contextPath%>/delete.qna?cpage=<%=q.getQnaNo()%>'">삭제하기</button>
+                            <% } %>
+                            <button id="btnToQnaList" onclick="location.href='<%=contextPath%>/list.qna?cpage=1'">목록가기</button>
+                        </div>
                     </div>
                 </div>
             </div>

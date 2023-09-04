@@ -105,6 +105,7 @@ public class FaqDao {
 			
 			pstmt.setString(1, f.getFaqTitle());
 			pstmt.setString(2, f.getFaqContent());
+			pstmt.setInt(3, Integer.parseInt(f.getFaqWriter()));
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -114,11 +115,38 @@ public class FaqDao {
 		}
 		
 		return result;
-		
-		
-		
 	}
 
+	
+	/**
+	 * faq 삭제하기
+	 */
+	
+	public int deleteFaq(Connection conn, int[] faqNoArray) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteFaq");
+		
+		try {
+			for(int i = 0; i<faqNoArray.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, faqNoArray[i]);
+				
+				result = pstmt.executeUpdate();
+				if(result == 0) {
+					return result;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 	
 	
 	

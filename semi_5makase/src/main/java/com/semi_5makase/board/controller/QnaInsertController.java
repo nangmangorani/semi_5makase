@@ -3,6 +3,7 @@ package com.semi_5makase.board.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,8 +61,6 @@ public class QnaInsertController extends HttpServlet {
 			q.setBoardWriter(userNo);
 			q.setOpen(open);
 			
-			System.out.println("q: " + q);
-			
 			ArrayList<Attachment> list = new ArrayList<Attachment>();
 			
 			
@@ -80,10 +79,15 @@ public class QnaInsertController extends HttpServlet {
 			}
 			
 			int result = new QnaService().insertBoard(q, list);
+			
 			if(result > 0) {
-				// 성공 => /jsp/list.bo?cpage=1 url 재요청 => 목록페이지
-				
+				request.getSession().setAttribute("alertMsg", "성공적으로 추가되었습니다.");
 				response.sendRedirect(request.getContextPath() + "/list.qna?cpage=1");
+			} else {
+				// 실패
+				request.setAttribute("errorMsg", "게시글 추가에 실패했습니다.");
+				RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+				view.forward(request, response);
 			}
 			
 		}

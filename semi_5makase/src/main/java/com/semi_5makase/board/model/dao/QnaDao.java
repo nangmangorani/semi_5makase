@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.semi_5makase.board.model.vo.Qna;
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.common.model.vo.Attachment;
 
 
@@ -266,6 +266,90 @@ public class QnaDao {
 			close(pstmt);
 		}
 		return list;
+		
+	}
+	
+	/**
+	 * qna 수정하기
+	 */
+	public int updateQna(Connection conn, Qna q) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateQna");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, q.getBoardTitle());
+			pstmt.setString(2, q.getBoardContent());
+			pstmt.setInt(3, q.getQnaNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+		
+	}
+	
+	/**
+	 * qna 사진 수정
+	 */
+	public int updateAttachment(Connection conn, ArrayList<Attachment> list) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteAttachment");
+		
+		try {
+			for(Attachment at : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, at.getRefBno());
+				
+				result = pstmt.executeUpdate();
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println(result + "ㅋㅋㅋㅋㅋㅋㅋㅋ나는 dao");
+		return result;
+		
+	}
+	
+	
+	/**
+	 * qna삭제
+	 * @param conn
+	 * @param qnaNo
+	 * @return
+	 */
+	public int deleteQna(Connection conn, int qnaNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteQna");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, qnaNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 		
 	}
 	

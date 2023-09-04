@@ -32,14 +32,7 @@ public class NoticeUpdateViewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("여기는 뷰컨트롤러~~~~~~~~~ㅎㅎㅋㅠㅠㅠ");
-		
 		int noticeNo = Integer.parseInt(request.getParameter("cpage"));
-		
-		
-		
-		System.out.println(noticeNo+"여기는 뷰컨트롤러~~~~~~~~~ㅎㅎㅋㅠㅠㅠ");
-		
 		Notice n = new NoticeService().selectNotice(noticeNo);
 		
 		//n.setNoticeNo(noticeNo);

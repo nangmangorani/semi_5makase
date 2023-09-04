@@ -53,6 +53,26 @@ public class FaqService {
 		return result;
 	}
 	
+	/**
+	 * 자주묻는질문 삭제하기
+	 */
+	
+	public int deleteFaq(int[] faqNoArray) {
+		
+		Connection conn = getConnection();
+		
+		int result = new FaqDao().deleteFaq(conn, faqNoArray);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
 	
 
 

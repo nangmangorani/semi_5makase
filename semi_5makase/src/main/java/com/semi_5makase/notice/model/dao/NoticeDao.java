@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.notice.model.vo.Notice;
 
 public class NoticeDao {
@@ -212,8 +212,8 @@ public class NoticeDao {
 		return listCount;
 		
 	}
-
-	public int insertNotice(Connection conn, Notice n) {
+	// int 에서 void로 에러 피할려고 바꿈
+	public void insertNotice(Connection conn, Notice n) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -256,7 +256,7 @@ public class NoticeDao {
 			
 			pstmt.setString(1, n.getNoticeTitle());
 			pstmt.setString(2, n.getNoticeContent());
-			pstmt.setInt(3, Integer.parseInt(n.getNoticeWriter()));
+			pstmt.setInt(3, n.getNoticeNo());
 			
 			result = pstmt.executeUpdate();
 			System.out.println(result);
@@ -266,8 +266,32 @@ public class NoticeDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	
+	/**
+	 * 공지사항 삭제하기
+	 */
+	
+	public int deleteNotice(Connection conn, int noticeNo) {
 		
+		int result = 0;
+		PreparedStatement pstmt = null;
 		
+		String sql = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

@@ -75,7 +75,6 @@
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp"%>
-
     
     <div class="wrap">
         <div class="insertFaqImg">
@@ -85,10 +84,11 @@
         </div>
         <div class="insertFaqForm">
             <form action="<%= contextPath %>/insert.faq">
+            	<input type="hidden" name="faqWriter" method="post" value="<%=loginMember.getMemNo()%>"> 
                 제목 <br>
                 <input type="text" name="faqTitle" method="post" class="faqTitle"> <br><br>
                 내용 <br>
-                <textarea name="faqContent" cols="30" rows="10" class="faqContent"></textarea> <br>
+                <textarea name="faqContent" cols="30" rows="10" class="faqContent" method="post"></textarea> <br>
                 <button type="submit" class="btn1">작성하기</button>
                 <button type="reset" class="btn2" onclick="location.href='<%=contextPath%>/list.faq'">취소하기</button>
             </form>

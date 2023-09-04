@@ -1,6 +1,8 @@
 package com.semi_5makase.notice.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,12 +45,17 @@ public class NoticeInsertController extends HttpServlet {
 		n.setNoticeWriter(NoticeWriter);
 		
 		
-		int result = new NoticeService().insertNotice(n);
+//		int result = new NoticeService().insertNotice(n);
 		
 		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "성공적으로 추가되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/list.no?cpage=1");
+		} else {
+			// 실패
+			request.setAttribute("errorMsg", "게시글 추가에 실패했습니다.");
+			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+			view.forward(request, response);
 		}
-		
 	}
 
 	/**
