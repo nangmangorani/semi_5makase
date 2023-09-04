@@ -37,12 +37,19 @@ public class ReviewLikesUpdateController extends HttpServlet {
 		}
 		
 		int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
+		int rvMemNo = Integer.parseInt(request.getParameter("memNo"));
+		
+		System.out.println("립멤넘" + rvMemNo);
+		
+		
 		
 //		System.out.println("리뷰멤넘 : " + memNo);
 //		System.out.println("리뷰넘 : " + reviewNo);
 		
 		if(memNo == 0) { // 로그인 안돼있다면
 			response.getWriter().print("loginFirst");
+		} else if(rvMemNo == memNo) {
+			response.getWriter().print("same");
 		} else {
 			int result = new RestaurantService().checkReviewLikes(memNo, reviewNo);
 			

@@ -47,7 +47,7 @@ public class InsertReportController extends HttpServlet {
 			request.getSession().setAttribute("alertMsg", "유저리뷰 신고가 성공적으로 작성되었습니다!");
 			response.sendRedirect(request.getContextPath() + "/detail.rt?restNo=" + restNo);
 		} else {
-			request.setAttribute("errorMsg", "유저리뷰 신고에에 실패했습니다.");
+			request.setAttribute("errorMsg", "유저리뷰 신고에 실패했습니다.");
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			view.forward(request, response);
 		}

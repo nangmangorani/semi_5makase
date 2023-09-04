@@ -16,6 +16,7 @@ import com.semi_5makase.restaurant.model.vo.Favorite;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
 import com.semi_5makase.restaurant.model.vo.Review;
+import com.semi_5makase.restaurant.model.vo.ReviewNo;
 
 public class RestaurantDao {
 	
@@ -358,9 +359,6 @@ private Properties prop = new Properties();
 		
 		String sql = prop.getProperty("deleteFavoriteRestaurant");
 		
-		System.out.println("m" + memNo);
-		System.out.println("r" + restNo);
-		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
@@ -480,7 +478,7 @@ private Properties prop = new Properties();
 	}
 	
 	public int insertReview(Review rv, Connection conn) {
-		
+
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -561,7 +559,6 @@ public int insertAttachmentList(ArrayList<Attachment> list, Connection conn) {
 				
 				rvList.add(rv);
 				
-				System.out.println(rv);
 			}		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -571,8 +568,76 @@ public int insertAttachmentList(ArrayList<Attachment> list, Connection conn) {
 		}
 		return rvList;
 	}
+	
+	public Review selectModalReivew(int restNo, int refBno, Connection conn) {
+		
+		Review rv = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectModalReivew");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			pstmt.setInt(2, refBno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rv = new Review(rset.getInt("REVIEW_NO"),
+								rset.getString("REVIEW_CONTENT"),
+								rset.getInt("RATING"),
+								rset.getString("REVIEW_DATE"),
+								rset.getInt("MEM_NO"),
+								rset.getString("NICKNAME")
+								);
+						
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return rv;
+		
+	}
+	
+	public ArrayList<ReviewNo> selectReviewNoList(int restNo, Connection conn){
+		
+		ArrayList<ReviewNo> rvNoList = new ArrayList<ReviewNo>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReviewNoList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
 
-	public ArrayList<Attachment> selectReviewAttachment(int reviewNo, Connection conn) {
+				rvNoList.add(new ReviewNo(rset.getInt("REVIEW_NO")));			
+			}		
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return rvNoList;
+	}
+
+	public ArrayList<Attachment> selectReviewAttachment(int restNo, Connection conn) {
 		
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 		PreparedStatement pstmt = null;
@@ -582,16 +647,105 @@ public int insertAttachmentList(ArrayList<Attachment> list, Connection conn) {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			//pstmt.setInt(1, reviewNo);
+			pstmt.setInt(1, restNo);
 			
 			rset=pstmt.executeQuery();
 
 			while(rset.next()) {
 				Attachment at = new Attachment();
 				at.setFilePath(rset.getString("REVIEWIMGS"));
-				at.setRefBoardNo(rset.getInt("REVIEW_NO"));
+				at.setrefBno(rset.getInt("REVIEW_NO"));
 				list.add(at);
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int selectMemNo(int refBno, Connection conn) {
+		
+		int memNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMemNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, refBno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				memNo = rset.getInt("MEM_NO");
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return memNo;
+	}
+	
+	public ArrayList<Attachment> selectProfileAttachment(Connection conn) {
+		
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectProfileAttachment");
+				
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset=pstmt.executeQuery();
+
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setFilePath(rset.getString("REVIEWIMGS"));
+				at.setrefBno(rset.getInt("REF_BNO"));
+				list.add(at);
+			}
+			System.out.println("정상다오" + list);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public Attachment selectModalProfile(int refBno, Connection conn) {
+		
+		Attachment list = new Attachment();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectModalProfile");
+				
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, refBno);
+			
+			rset=pstmt.executeQuery();
+
+			if(rset.next()) {
+				list.setFilePath(rset.getString("REVIEWIMGS"));
+				list.setrefBno(rset.getInt("REF_BNO"));
+								
+			}
+			
+			System.out.println("모프다오" + list);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -649,6 +803,407 @@ public int insertAttachmentList(ArrayList<Attachment> list, Connection conn) {
 		}
 		return result;
 		
+	}
+	
+	public ArrayList<Restaurant> selectRestSearch(Connection conn, String searchVal) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Restaurant> list = new ArrayList<Restaurant>();
+		String sql = prop.getProperty("selectSearchRest");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + searchVal + "%");
+			pstmt.setString(2, "%" + searchVal + "%");
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Restaurant(rset.getInt("rest_no")
+										,rset.getInt("category_no")
+										,rset.getInt("tv_no")
+										,rset.getString("tv_name")
+										,rset.getString("rest_name")
+										,rset.getString("rest_address")
+										,rset.getString("rest_phone")
+										,rset.getString("parking")
+										,rset.getString("intro")
+										,rset.getInt("rest_views")
+										,rset.getString("status")
+										,rset.getString("category_name")
+										,rset.getInt("AVG")
+										,rset.getInt("COUNT")
+										,rset.getInt("FCOUNT")
+										,rset.getString("TITLE_IMG")
+										)
+						);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		for(int i = 0; i<list.size(); i++) {
+			System.out.println("나 여기야ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ" + list.get(i).getTitleImg());
+		}
+		
+		return list;
+		
+	}
+	
+	//평점 순 정렬
+	public ArrayList<Restaurant> ratingList(Connection conn, String searchVal) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Restaurant> ratingList = new ArrayList<Restaurant>();
+		String sql = prop.getProperty("ratingList");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			System.out.println(searchVal);
+			pstmt.setString(1, "%" + searchVal + "%");
+			pstmt.setString(2, "%" + searchVal + "%");
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				ratingList.add(new Restaurant(rset.getInt("rest_no")
+										,rset.getInt("category_no")
+										,rset.getInt("tv_no")
+										,rset.getString("tv_name")
+										,rset.getString("rest_name")
+										,rset.getString("rest_address")
+										,rset.getString("rest_phone")
+										,rset.getString("parking")
+										,rset.getString("intro")
+										,rset.getInt("rest_views")
+										,rset.getString("status")
+										,rset.getString("category_name")
+										,rset.getInt("AVG")
+										,rset.getInt("COUNT")
+										,rset.getInt("FCOUNT")
+										)
+						);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+	
+		return ratingList;
+		
+	}
+	
+	public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Restaurant> viewList = new ArrayList<Restaurant>();
+		String sql = prop.getProperty("viewList");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "%" + searchVal + "%");
+			pstmt.setString(2, "%" + searchVal + "%");
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				viewList.add(new Restaurant(rset.getInt("rest_no")
+										,rset.getInt("category_no")
+										,rset.getInt("tv_no")
+										,rset.getString("tv_name")
+										,rset.getString("rest_name")
+										,rset.getString("rest_address")
+										,rset.getString("rest_phone")
+										,rset.getString("parking")
+										,rset.getString("intro")
+										,rset.getInt("rest_views")
+										,rset.getString("status")
+										,rset.getString("category_name")
+										,rset.getInt("AVG")
+										,rset.getInt("COUNT")
+										,rset.getInt("FCOUNT")
+										
+										)
+						);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+	
+		return viewList;
+		
+	}
+	
+
+	//카테고리 선택 시 리스트
+	public ArrayList<Restaurant> selectCategory(Connection conn, int categoryVal) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Restaurant> list = new ArrayList<Restaurant>();
+		
+		String sql = prop.getProperty("selectCategory");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryVal);
+			rset = pstmt.executeQuery();
+			System.out.println(categoryVal);
+			while(rset.next()) {
+				list.add(new Restaurant(rset.getInt("rest_no")
+										,rset.getInt("category_no")
+										,rset.getInt("tv_no")
+										,rset.getString("tv_name")
+										,rset.getString("rest_name")
+										,rset.getString("rest_address")
+										,rset.getString("rest_phone")
+										,rset.getString("parking")
+										,rset.getString("intro")
+										,rset.getInt("rest_views")
+										,rset.getString("status")
+										,rset.getString("category_name")
+										,rset.getInt("AVG")
+										,rset.getInt("COUNT")
+										,rset.getInt("FCOUNT")
+										));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+//		for(int i=0; i<list.size(); i++) {
+//			System.out.println(list.get(i));
+//			System.out.println(list.size() +" 카테고리 검색");
+//		}
+		return list;
+		
+	}
+	
+	public ArrayList<Restaurant> selectFavoritList(Connection conn, String searchVal) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectFavoritList");
+		ArrayList<Restaurant> list = new ArrayList<Restaurant>();
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + searchVal + "%");
+			pstmt.setString(2, "%" + searchVal + "%");
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Restaurant(rset.getInt("rest_no")
+										,rset.getInt("category_no")
+										,rset.getInt("tv_no")
+										,rset.getString("tv_name")
+										,rset.getString("rest_name")
+										,rset.getString("rest_address")
+										,rset.getString("rest_phone")
+										,rset.getString("parking")
+										,rset.getString("intro")
+										,rset.getInt("rest_views")
+										,rset.getString("status")
+										,rset.getString("category_name")
+										,rset.getInt("AVG")
+										,rset.getInt("COUNT")
+										,rset.getInt("count1")
+										
+										));
+			
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;		
+	}
+	
+	//사이드 메뉴 옵션 모두 선택 후 조회리스트
+	public ArrayList<Restaurant> selectOptionList(Connection conn, String searchVal, int ageVal, int ageVal2, int categoryVal, String locationVal, int tvVal) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Restaurant> list = new ArrayList<Restaurant>();
+		String sql = prop.getProperty("selectOptionList");
+
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "%" + searchVal + "%");
+			pstmt.setString(2, "%" + locationVal + "%");
+			pstmt.setString(3, "%" + searchVal + "%");
+			pstmt.setString(4, "%" + locationVal + "%");
+			pstmt.setInt(5, categoryVal);
+			pstmt.setInt(6, tvVal);
+			pstmt.setInt(7, ageVal);
+			pstmt.setInt(8, ageVal2);
+			
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Restaurant(
+							rset.getInt("REST_NO"),
+							rset.getInt("CATEGORY_NO"),
+							rset.getInt("TV_NO"),
+							rset.getString("TV_NAME"),
+							rset.getString("REST_NAME"),
+							rset.getString("REST_ADDRESS"),
+							rset.getString("REST_PHONE"),
+							rset.getString("PARKING"),
+							rset.getString("INTRO"),
+							rset.getInt("REST_VIEWS"),
+							rset.getString("STATUS"),
+							rset.getString("CATEGORY_NAME"),
+							rset.getInt("AVG"),
+							rset.getInt("COUNT"),
+							rset.getInt("FCOUNT")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		for(int i=0; i<list.size(); i++) {
+			System.out.println("여기야@!#!@#@!#" + list.get(i));
+		}
+		
+		return list;
+	}
+	
+	
+	
+	// 음식점 등록요청
+	
+	public int insertRestTemp(Connection conn, RestaurantTemp r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = prop.getProperty("insertRestTemp");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, r.getRestName());
+			pstmt.setString(2, r.getRestInfo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
+		
+			
+	}
+	
+	// 음식점 등록요청 시 사진 등록 (attachment)
+	public int insertAttachment(Connection conn, ArrayList<Attachment> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAttachment");
+	
+		try {
+			for(Attachment at : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
+				result = pstmt.executeUpdate();
+
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+				
+		
+	}
+	
+	public String selectRestThumbnail(Connection conn, int restNo){
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectRestThumbnail");
+		String fileName = "";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				fileName = rset.getString("fileName");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return fileName;
+	}
+	
+	public ArrayList<Attachment> selectRestAttachment(Connection conn){
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Attachment> atList = new ArrayList<Attachment>();
+		
+		String sql = prop.getProperty("selectRestAttachment");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				atList.add(new Attachment(rset.getInt("file_no")
+										 ,rset.getInt("ref_bno")
+										 ,rset.getString("origin_name")
+										 ,rset.getString("change_name")
+										 ,rset.getString("file_Path")
+										 ,rset.getDate("upload_date")
+										 ,rset.getString("status")
+										 ,rset.getString("category")
+										 ,rset.getInt("file_Level")
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println(atList+"atList213123213");
+		return atList;
+		
+				
 	}
 	
 }

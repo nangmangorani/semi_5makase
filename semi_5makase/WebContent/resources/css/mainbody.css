@@ -14,7 +14,7 @@ body{
     margin: auto;
     z-index:9;
     /* margin-top: 100px; */ 
-    /* margin-bottom: 100px; */
+    margin-bottom: 900px;
 }
 
 .outer>*{box-sizing: border-box;}

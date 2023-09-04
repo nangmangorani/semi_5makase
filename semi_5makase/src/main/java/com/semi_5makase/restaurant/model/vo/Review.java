@@ -7,7 +7,6 @@ public class Review {
 	private String reviewContent;
 	private int rating;
 	private String reviewDate; // String 으로 받음
-	// private String Taste; 일단 빼고 하기
 	private int memNo;
 
 	private String nickName;
@@ -29,6 +28,16 @@ public class Review {
 		this.reviewNo = reviewNo;
 		this.reviewContent = reviewContent;
 		this.rating = rating;
+		this.nickName = nickName;
+	}
+	
+	public Review(int reviewNo, String reviewContent, int rating, String reviewDate, int memNo, String nickName) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.rating = rating;
+		this.reviewDate = reviewDate;
+		this.memNo = memNo;
 		this.nickName = nickName;
 	}
 

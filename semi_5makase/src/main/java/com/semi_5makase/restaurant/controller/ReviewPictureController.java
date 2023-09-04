@@ -43,7 +43,7 @@ public class ReviewPictureController extends HttpServlet {
 		ArrayList totalList = new ArrayList<>();
 		
 		revList = new RestaurantService().selectReviewList(restNo);
-		picList = new RestaurantService().selectReviewAttachment();
+		picList = new RestaurantService().selectReviewAttachment(restNo);
 		
 		totalList.add(revList);
 		totalList.add(picList);
