@@ -1,8 +1,6 @@
 package com.semi_5makase.restaurant.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi_5makase.restaurant.model.service.RestaurantService;
-import com.semi_5makase.restaurant.model.vo.Restaurant;
 
 /**
- * Servlet implementation class RestSearchController
+ * Servlet implementation class ReviewLikesCountController
  */
-@WebServlet("/restSearch.do")
-public class RestSearchController extends HttpServlet {
+@WebServlet("/likesCount.rv")
+public class ReviewLikesCountController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RestSearchController() {
+    public ReviewLikesCountController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,14 +28,15 @@ public class RestSearchController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String searchVal = request.getParameter("searchVal");
+
+		int reviewNo = Integer.parseInt(request.getParameter("restNo"));
+		int result = new RestaurantService().selectLikesCount(reviewNo);
 		
-//		ArrayList<Restaurant> locationList = new RestaurantService().selectRestSearch();
-//		ArrayList<Restaurant> foodList = new RestaurantService().selectRestSearch();
-//		ArrayList<Restaurant> restaurantList = new RestaurantService().selectRestSearch();
+		System.out.println("좋수" + reviewNo);
+		System.out.println("좋수" + result);
 		
+		response.getWriter().print(result);
 		
-		//지역,음식 또는 식당명
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package com.semi_5makase.notice.controller;
+package com.semi_5makase.restaurant.controller;
 
 import java.io.IOException;
 
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.notice.model.service.NoticeService;
-import com.semi_5makase.notice.model.vo.Notice;
+import com.semi_5makase.member.model.vo.Member;
+import com.semi_5makase.restaurant.model.service.RestaurantService;
 
 /**
- * Servlet implementation class NoticeInsertController
+ * Servlet implementation class UpdateRestaurantController
  */
-@WebServlet("/insert.no")
-public class NoticeInsertController extends HttpServlet {
+@WebServlet("/update.rt")
+public class UpdateRestaurantController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeInsertController() {
+    public UpdateRestaurantController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,31 +31,23 @@ public class NoticeInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setCharacterEncoding("UTF-8");
-		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String NoticeWriter = request.getParameter("noticeWriter");
-		
-		Notice n = new Notice();
-		
-		n.setNoticeTitle(title);
-		n.setNoticeContent(content);
-		n.setNoticeWriter(NoticeWriter);
-		
-		
-//		int result = new NoticeService().insertNotice(n);
+
+		int memNo = ((Member)request.getSession().getAttribute("loginMember")).getMemNo();
+		int restNo = Integer.parseInt(request.getParameter("restNo"));
+		String update = request.getParameter("updateRest");
+		String closed = request.getParameter("closed");
+
+		int result = new RestaurantService().updateRestaurant(memNo, update, restNo, closed);
 		
 		if(result > 0) {
-			request.getSession().setAttribute("alertMsg", "성공적으로 추가되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/list.no?cpage=1");
+			request.getSession().setAttribute("alertMsg", "음식점 수정 제안이 성공적으로 작성되었습니다!");
+			response.sendRedirect(request.getContextPath() + "/detail.rt?restNo=" + restNo);
 		} else {
-			// 실패
-			request.setAttribute("errorMsg", "게시글 추가에 실패했습니다.");
+			request.setAttribute("errorMsg", "음식점 수정 제안 등록에 실패했습니다.");
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			view.forward(request, response);
 		}
+		
 	}
 
 	/**

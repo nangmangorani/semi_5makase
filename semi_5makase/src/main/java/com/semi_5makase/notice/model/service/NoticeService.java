@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
 
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.notice.model.dao.NoticeDao;
 import com.semi_5makase.notice.model.vo.Notice;
 
@@ -110,23 +110,23 @@ public class NoticeService {
 	}
 
 	
-	public int insertNotice(Notice n) {
-		
-		Connection conn = getConnection();
-		
-		int result = new NoticeDao().insertNotice(conn, n);
-		
-		if(result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
-		
-		close(conn);
-		
-		return result;
-		
-	}
+//	public int insertNotice(Notice n) {
+//		
+//		Connection conn = getConnection();
+//		
+//		int result = new NoticeDao().insertNotice(conn, n);
+//		
+//		if(result > 0) {
+//			commit(conn);
+//		} else {
+//			rollback(conn);
+//		}
+//		
+//		close(conn);
+//		
+//		return result;
+//		
+//	}
 
 
 	public int updateNotice(Notice n) {

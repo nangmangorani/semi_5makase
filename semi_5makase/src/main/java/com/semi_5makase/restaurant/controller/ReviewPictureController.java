@@ -9,20 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.restaurant.model.service.RestaurantService;
-import com.semi_5makase.restaurant.model.vo.Restaurant;
+import com.semi_5makase.restaurant.model.vo.Review;
 
 /**
- * Servlet implementation class RestSearchController
+ * Servlet implementation class ReviewPictureController
  */
-@WebServlet("/restSearch.do")
-public class RestSearchController extends HttpServlet {
+@WebServlet("/picture.rv")
+public class ReviewPictureController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RestSearchController() {
+    public ReviewPictureController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,14 +33,27 @@ public class RestSearchController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String searchVal = request.getParameter("searchVal");
+
+		int restNo = Integer.parseInt(request.getParameter("restNo"));
 		
-//		ArrayList<Restaurant> locationList = new RestaurantService().selectRestSearch();
-//		ArrayList<Restaurant> foodList = new RestaurantService().selectRestSearch();
-//		ArrayList<Restaurant> restaurantList = new RestaurantService().selectRestSearch();
+		System.out.println("ajax restNo : " + restNo);
+		
+		ArrayList<Review> revList = new ArrayList<Review>();
+		ArrayList<Attachment> picList = new ArrayList<Attachment>();
+		ArrayList totalList = new ArrayList<>();
+		
+		revList = new RestaurantService().selectReviewList(restNo);
+		picList = new RestaurantService().selectReviewAttachment();
+		
+		totalList.add(revList);
+		totalList.add(picList);
 		
 		
-		//지역,음식 또는 식당명
+		System.out.println("서블렛 totalList : " + totalList);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(totalList, response.getWriter());
+		
 	}
 
 	/**

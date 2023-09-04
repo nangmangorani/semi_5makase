@@ -1,4 +1,4 @@
-package com.semi_5makase.common.model;
+package com.semi_5makase.common.model.vo;
 
 public class PageInfo {
 	
