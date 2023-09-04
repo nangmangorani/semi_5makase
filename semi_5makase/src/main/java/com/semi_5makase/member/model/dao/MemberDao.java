@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import org.apache.catalina.filters.AddDefaultCharsetFilter;
 
-import com.semi_5makase.member.model.vo.Attachment;
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.member.model.vo.Member;
 
 import static com.semi_5makase.common.JDBCTemplate.*;
@@ -430,10 +430,13 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			System.out.println("dao or" + at.getOriginName());
+			System.out.println("dao ch" + at.getChangeName());
+			System.out.println("dao mn" + memNo);
+			
 			pstmt.setString(1, at.getOriginName());
 			pstmt.setString(2, at.getChangeName());
-			pstmt.setString(3, at.getFilePath());
-			pstmt.setInt(4, memNo);
+			pstmt.setInt(3, memNo);
 			
 			result = pstmt.executeUpdate();
 			
@@ -467,7 +470,6 @@ public class MemberDao {
 				at.setFilePath(rset.getString("file_path"));
 			}
 			
-			System.out.println(at+"다오 at확인");
 			
 			
 		} catch (SQLException e) {

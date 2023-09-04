@@ -5,8 +5,8 @@ import static com.semi_5makase.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.member.model.dao.MemberDao;
-import com.semi_5makase.member.model.vo.Attachment;
 import com.semi_5makase.member.model.vo.Member;
 
 public class MemberService {
@@ -155,11 +155,12 @@ public class MemberService {
 	public int updateProfile(Attachment at, int memNo) {
 		Connection conn = getConnection();
 		
+		System.out.println("서비스" + at);
 		int result = 0;
 		
 		if(at != null) {
 			if(at.getFileNo() != 0) {
-				result = new MemberDao().updateProfile(conn,at, memNo);
+				result = new MemberDao().updateProfile(conn, at, memNo);
 			}else {
 				result = new MemberDao().insertProfile(conn, at, memNo);
 			}
@@ -182,7 +183,6 @@ public class MemberService {
 		Connection conn = getConnection();
 		System.out.println(memNo);
 		Attachment pf = new MemberDao().selectAttachment(conn, memNo);
-		System.out.println(pf+"서비스");
 		
 		close(conn);
 		return pf;

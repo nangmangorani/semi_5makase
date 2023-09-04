@@ -1,10 +1,10 @@
+<%@page import="com.semi_5makase.common.model.vo.Attachment"%>
 <%@page import="com.oreilly.servlet.multipart.FilePart"%>
-<%@page import="com.semi_5makase.member.model.vo.Attachment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Attachment pf = (Attachment)request.getAttribute("pf");
-%>   
+	Attachment at = (Attachment)request.getAttribute("pf");
+%>
 
 
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
     #myPageContent{
         width: 70%;
         margin : auto;
-        margin-top: 30px;
+        
         /* border: 1px solid red; */
         height: 75%;
     }
@@ -110,7 +110,7 @@
 		String phone = loginMember.getPhone();
 		String address = loginMember.getAddress();
 		int memNo = loginMember.getMemNo();
-
+		
 	%>
 	
 
@@ -119,30 +119,43 @@
     <div id="myPageWrap">
         <div id="myPageHead" >
         </div>
-		<form id="myPage-form" action="<%= contextPath%>/update.me" method="post"  enctype="multipart/form-data" >
+			
+		       <form id="profile-form" action="<%= contextPath%>/updateProfile.me" method="post" enctype="multipart/form-data">
+		        <input type="hidden" name="memNo" value="<%= memNo %>">
+		        <div id="myPageContent" style="margin-left: 100px;">
+		            <table style="width: 800px; height: 100px;">
+		                <tr>
+		                    <th>프로필사진</th>
+		                    <td>
+		                        <div id="imagePreview">
+		                            <img id="preview" src="<%= contextPath %>/<%= at.getFilePath() %>/<%= at.getChangeName() %>" alt="미리보기" style="width: 100px; height: 100px; border-radius: 50%;">
+		                            
+		                           <% if(at != null){ %>
+		                            <input type="hidden" name = "originFileNo" value="<%= at.getFileNo() %>">
+		                           <% } %> 
+		                            <input type="file" id="profileImage" name="upfile" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage()">
+                                    <div  align ="right" style="margin-right: 100px;"><button type="submit" class="btn btn-sm btn-success">프로필변경</button></div>
+		                        </div>
+		                    </td>
+		                </tr>
+		            </table>
+		         </div>
+		       </form>
+            
+            
+            
+            
+		<form id="myPage-form" action="<%= contextPath%>/update.me" method="post"  >
 			<input type="hidden" name="memId" value="<%= memId %>">
 			<input type="hidden" name="memNo" value="<%= memNo %>">
 			
-			
-			
-        <div id="myPageContent" style="margin-left: 100px;"  >
+        	<div id="myPageContent" style="margin-left: 100px;">
             <table style=" width: 800px; height: 500px;" >
-                <tr>
-                    <th>프로필사진</th>
-                    <td>
-                        <div id="imagePreview" >
-                            <img id="preview"  src="" alt="Preview" style="width: 100px; height: 100px; border-radius: 50%;">
-                            <input type="file" id="profileImage" name="upfile" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage()">
-                        </div>
-                    </td>
-                </tr>       
-    
                 <tr>
                     <th>닉네임</th>
                     <td><input type="text" name="nickname" value="<%=nickname %>" id="nickname1"  class="soft-border"><br>
                         <label for="nickname1">이눔세끼에서 이용하실 닉네임을 입력해주세요.</label>
-                    </td>
-                    
+               		</td>
                 </tr>       
                 <tr>
                     <th>자기소개</th>
@@ -167,20 +180,19 @@
                 <div align ="center"><button type="button" class="btn btn-sm btn-success" onclick="deletePage()">회원탈퇴</button></div>
                 <div align ="center"><a href="">내가 쓴 리뷰 조회하기</a></div>
             </div>
-            
-        </div>
+        	</div>
         </form>
-         <script >
+        <script>
             function deletePage(){
-            	
-            	location.href = "<%=contextPath%>/deleteform.me";
+                
+                location.href = "<%=contextPath%>/deleteform.me";
             }
-        </script>
+            </script>
         
         <div id="myPageFoot">
             
         </div>
-    </div>
+        </div>
     
     <!-- 비번변경 -->
   	<div class="modal" id="updatePwd">
