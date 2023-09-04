@@ -17,6 +17,14 @@ public class Restaurant {
 	private String restTime;
 	private String breakTime;
 	
+	// 관우님꺼
+	private String tvName;
+	private String categoryName;
+	private int avg;
+	private int count;
+	private int fcount;
+	private String titleImg;
+	
 	public Restaurant() {}
 
 	public Restaurant(int restNo, int categoryNo, int tvNo, String restName, String restAddress, String restPhone,
@@ -49,6 +57,175 @@ public class Restaurant {
 		this.openingTime = openingTime;
 		this.restTime = restTime;
 		this.breakTime = breakTime;
+	}
+	
+	// 관우님꺼
+	public Restaurant(int restNo, int categoryNo, int tvNo, String tvName, String restName, String restAddress,
+			String restPhone, String parking, String intro, int restViews, String status, String categoryName, int avg,
+			int count, int fcount, String titleImg) {
+		super();
+		this.restNo = restNo;
+		this.categoryNo = categoryNo;
+		this.tvNo = tvNo;
+		this.tvName = tvName;
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.restPhone = restPhone;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.status = status;
+		this.categoryName = categoryName;
+		this.avg = avg;
+		this.count = count;
+		this.fcount = fcount;
+		this.titleImg = titleImg;
+	}
+	
+	public Restaurant(String titleImg) {
+		super();
+		this.titleImg = titleImg;
+	}
+
+	public String getTitleImg() {
+		return titleImg;
+	}
+
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
+	}
+
+	public Restaurant(int restNo, int categoryNo, int tvNo, String tvName, String restName, String restAddress,
+			String restPhone, String parking, String intro, int restViews, String status, String categoryName, int fcount) {
+		super();
+		this.restNo = restNo;
+		this.categoryNo = categoryNo;
+		this.tvNo = tvNo;
+		this.tvName = tvName;
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.restPhone = restPhone;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.status = status;
+		this.categoryName = categoryName;
+		this.fcount=fcount;
+	}
+
+	public int getFcount() {
+		return fcount;
+	}
+
+	public void setFcount(int fcount) {
+		this.fcount = fcount;
+	}
+
+	public Restaurant(int restNo, int categoryNo, int tvNo, String tvName, String restName, String restAddress,
+			String restPhone, String parking, String intro, int restViews, String status, String categoryName, int avg,
+			int count, int fcount) {
+		super();
+		this.restNo = restNo;
+		this.categoryNo = categoryNo;
+		this.tvNo = tvNo;
+		this.tvName = tvName;
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.restPhone = restPhone;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.status = status;
+		this.categoryName = categoryName;
+		this.avg = avg;
+		this.count = count;
+		this.fcount = fcount;
+	}
+	
+	public Restaurant(int restNo, int categoryNo, int tvNo, String tvName, String restName, String restAddress,
+			String restPhone, String parking, String intro, int restViews, String status, String categoryName, int avg,
+			int count) {
+		super();
+		this.restNo = restNo;
+		this.categoryNo = categoryNo;
+		this.tvNo = tvNo;
+		this.tvName = tvName;
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.restPhone = restPhone;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.status = status;
+		this.categoryName = categoryName;
+		this.avg = avg;
+		this.count = count;
+	}
+
+	public String getTvName() {
+		return tvName;
+	}
+
+	public void setTvName(String tvName) {
+		this.tvName = tvName;
+	}
+
+	public Restaurant(int restNo, int categoryNo, int tvNo, String restName, String restAddress, String restPhone,
+			String parking, String intro, int restViews, String status, String categoryName, int avg, int count) {
+		super();
+		this.restNo = restNo;
+		this.categoryNo = categoryNo;
+		this.tvNo = tvNo;
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.restPhone = restPhone;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.status = status;
+		this.categoryName = categoryName;
+		this.avg = avg;
+		this.count = count;
+	}
+
+	public Restaurant(int restNo, int categoryNo, int tvNo, String restName, String restAddress, String restPhone,
+			String parking, String intro, int restViews, String status, String categoryName) {
+		super();
+		this.restNo = restNo;
+		this.categoryNo = categoryNo;
+		this.tvNo = tvNo;
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.restPhone = restPhone;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.status = status;
+		this.categoryName=categoryName;
+	}
+
+	public int getAvg() {
+		return avg;
+	}
+
+	public void setAvg(int avg) {
+		this.avg = avg;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public int getRestNo() {

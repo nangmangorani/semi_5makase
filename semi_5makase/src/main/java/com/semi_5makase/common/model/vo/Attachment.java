@@ -3,7 +3,6 @@ package com.semi_5makase.common.model.vo;
 import java.sql.Date;
 
 public class Attachment {
-
 	private int fileNo;
 	private int refBno;
 	private String originName;
@@ -12,11 +11,14 @@ public class Attachment {
 	private Date uploadDate;
 	private String status;
 	private String category;
+	private int fileLevel;
+	
+	private String reviewImgs;
 	
 	public Attachment() {}
 
-	public Attachment(int fileNo, int refBno, String originName, String changeName, String filePath, Date uploadDate,
-			String status, String category) {
+	public Attachment(int fileNo, int refBno, String originName, String changeName, String filePath,
+			Date uploadDate, String status, String category, int fileLevel) {
 		super();
 		this.fileNo = fileNo;
 		this.refBno = refBno;
@@ -26,6 +28,18 @@ public class Attachment {
 		this.uploadDate = uploadDate;
 		this.status = status;
 		this.category = category;
+		this.fileLevel = fileLevel;
+	}
+	
+	public Attachment(String reviewImgs) {
+		super();
+		this.reviewImgs = reviewImgs;
+	}
+	
+	public Attachment(String reviewImgs, int refBno) {
+		super();
+		this.reviewImgs = reviewImgs;
+		this.refBno = refBno;
 	}
 
 	public int getFileNo() {
@@ -91,14 +105,29 @@ public class Attachment {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
+	public String getReviewImgs() {
+		return reviewImgs;
+	}
+
+	public void setReviewImgs(String reviewImgs) {
+		this.reviewImgs = reviewImgs;
+	}
+	
+	public int getFileLevel() {
+		return fileLevel;
+	}
+
+	public void setFileLevel(int fileLevel) {
+		this.fileLevel = fileLevel;
+	}
 
 	@Override
 	public String toString() {
-		return "Attachment [fileNo=" + fileNo + ", refBno=" + refBno + ", originName=" + originName + ", changeName="
-				+ changeName + ", filePath=" + filePath + ", uploadDate=" + uploadDate + ", status=" + status
-				+ ", category=" + category + "]";
+		return "Attachment [fileNo=" + fileNo + ", refBno=" + refBno + ", originName=" + originName
+				+ ", changeName=" + changeName + ", filePath=" + filePath + ", uploadDate=" + uploadDate + ", status="
+				+ status + ", category=" + category + "]";
 	}
-	
-	
+
 	
 }

@@ -1,5 +1,9 @@
+<%@page import="com.semi_5makase.restaurant.model.vo.Restaurant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -196,10 +200,38 @@
             <div class="popular_restaurant_container">
                 <ul>
                     <li class="fl">
-                        <a href="<%= contextPath %>/detail.rt?restNo=1">
+                        <a href="<%= contextPath %>/detail.rt?restNo=2">
                             <img src="resources/img/bibimbap.jpg">
                                 <div class="info">
-                                    <span class="title">래언 예시</span>
+                                    <span class="title1"></span>
+                                    <strong>3.8</strong>
+                                    <p>서울 역삼동 - 고기 / 제육</p>
+                                </div>
+                        </a>
+                        <!-- 
+                        <script>
+                        	$.ajax({
+                        		url:"mainInfo.rv",
+                        		data:{restNo:2},
+                        		success:function(result){
+                        			const rn = result.restName
+                        			$(".title1").text(rn);
+                        			
+                        			console.log(rn);
+                        		}, error:function(){
+                        			console.log("실패");
+                        		}
+                        	})	
+
+                        </script>
+                         -->
+                        
+                    </li>
+                    <li class="fl">
+                        <a href="#해당 이미지 상세정보창">
+                            <img src="resources/img/bibimbap.jpg">
+                                <div class="info">
+                                    <span class="title2">새마을 식당</span>
                                     <strong>3.8</strong>
                                     <p>서울 역삼동 - 고기 / 제육</p>
                                 </div>
@@ -209,17 +241,7 @@
                         <a href="#해당 이미지 상세정보창">
                             <img src="resources/img/bibimbap.jpg">
                                 <div class="info">
-                                    <span class="title">새마을 식당</span>
-                                    <strong>3.8</strong>
-                                    <p>서울 역삼동 - 고기 / 제육</p>
-                                </div>
-                        </a>
-                    </li>
-                    <li class="fl">
-                        <a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title">새마을 식당</span>
+                                    <span class="title3">새마을 식당</span>
                                     <strong>3.8</strong>
                                     <p>서울 역삼동 - 고기 / 제육</p>
                                 </div>
@@ -231,7 +253,7 @@
                         <a href="#해당 이미지 상세정보창">
                             <img src="resources/img/bibimbap.jpg">
                                 <div class="info">
-                                    <span class="title">새마을 식당</span>
+                                    <span class="title4">새마을 식당</span>
                                     <strong>3.8</strong>
                                     <p>서울 역삼동 - 고기 / 제육</p>
                                 </div>
@@ -241,7 +263,7 @@
                         <a href="#해당 이미지 상세정보창">
                             <img src="resources/img/bibimbap.jpg">
                                 <div class="info">
-                                    <span class="title">새마을 식당</span>
+                                    <span class="title5">새마을 식당</span>
                                     <strong>3.8</strong>
                                     <p>서울 역삼동 - 고기 / 제육</p>
                                 </div>
@@ -251,7 +273,7 @@
                         <a href="#해당 이미지 상세정보창">
                             <img src="resources/img/bibimbap.jpg">
                                 <div class="info">
-                                    <span class="title">새마을 식당</span>
+                                    <span class="title6">새마을 식당</span>
                                     <strong>3.8</strong>
                                     <p>서울 역삼동 - 고기 / 제육</p>
                                 </div>
@@ -401,5 +423,8 @@
         </div>
     </section>
     </div>
+    
+    <%@ include file="footer.jsp" %>
+    
 </body>
 </html>

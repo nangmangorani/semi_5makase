@@ -19,6 +19,8 @@ import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
 import com.semi_5makase.restaurant.model.vo.TV;
 import com.semi_5makase.restaurant.model.vo.Time;
+import com.semi_5makase.restaurant.model.vo.Review;
+import com.semi_5makase.restaurant.model.vo.ReviewNo;
 
 public class RestaurantService {
 	
@@ -193,11 +195,75 @@ public class RestaurantService {
 		Connection conn = getConnection();
 		
 		int result1 = new RestaurantDao().adminUpdateRestaurant(conn, ar);
+		int del = new RestaurantDao().deleteLikes(memNo, reviewNo, conn);
+		
+		if(del>0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return del;
+		
+	}
+	
+	public int insertFavoriteRestaurant(int memNo, int restNo) {
+		
+		Connection conn = getConnection();
+		
+		int put = new RestaurantDao().insertFavoriteRestaurant(memNo, restNo, conn);
+		
+		if(put>0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return put;
+	}
+	
+	public int insertLikes(int memNo, int reviewNo) {
+		
+		Connection conn = getConnection();
+		
+		int put = new RestaurantDao().insertLikes(memNo, reviewNo, conn);
+		
+		if(put>0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return put;
+	}
+	
+	public String selectNickName(int memNo) {
+		
+		Connection conn = getConnection();
+		
+		String nickName = new RestaurantDao().selectNickName(memNo, conn);
+		
+		close(conn);
+		return nickName;
+		
+	}
+	
+	public int insertReview(Review rv, ArrayList<Attachment> list) {
+
+		
+		Connection conn = getConnection();
+		
+		int result1 = new RestaurantDao().insertReview(rv, conn);
 		int result2 = 1;
+
 		
 		if(!list.isEmpty()) {
 			
 			result2 = new RestaurantDao().adminUpdateAttachment(conn, list);
+			result2 = new RestaurantDao().insertAttachmentList(list, conn);
 		}
 		
 		if(result1 > 0 && result2 > 0) {
@@ -211,6 +277,78 @@ public class RestaurantService {
 	}
 	
 	public int adminUpdateRestaurant(AdminRestaurant ar) {
+		Connection conn = getConnection();
+		
+		ArrayList<Review> rvList = new RestaurantDao().selectReviewList(restNo, conn);
+		
+		close(conn);
+		return rvList;
+		
+	}
+
+	public Review selectModalReivew(int restNo, int refBno) {
+		
+		Connection conn = getConnection();
+		
+		Review rv = new RestaurantDao().selectModalReivew(restNo, refBno, conn);
+		
+		close(conn);
+		return rv;
+		
+	}
+	
+	public ArrayList<ReviewNo> selectReviewNoList(int restNo){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<ReviewNo> rvNoList = new RestaurantDao().selectReviewNoList(restNo, conn);
+		
+		close(conn);
+		return rvNoList;
+		
+	}
+	
+	public ArrayList<Attachment> selectReviewAttachment(int restNo) {
+
+		Connection conn = getConnection();
+		
+		ArrayList<Attachment> list = new RestaurantDao().selectReviewAttachment(restNo, conn);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Attachment> selectProfileAttachment() {
+
+		Connection conn = getConnection();
+		
+		ArrayList<Attachment> list = new RestaurantDao().selectProfileAttachment(conn);
+		
+		close(conn);
+		return list;
+	}
+	
+	public int selectMemNo (int refBno) {
+		
+		Connection conn = getConnection();
+		
+		int memNo = new RestaurantDao().selectMemNo(refBno, conn);
+		
+		return memNo;
+	}
+	
+	
+	public Attachment selectModalProfile(int refBno) {
+
+		Connection conn = getConnection();
+		
+		Attachment list = new RestaurantDao().selectModalProfile(refBno, conn);
+		
+		close(conn);
+		return list;
+	}
+	
+	public int updateRestaurant(int memNo, String update, int restNo, String closed) {
 		
 		Connection conn = getConnection();
 		
@@ -317,6 +455,112 @@ public class RestaurantService {
 		close(conn);
 		
 		return listCount;
+	// 관우님꺼
+	
+public ArrayList<Restaurant> selectRestSearch(String searchVal) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Restaurant> list = new RestaurantDao().selectRestSearch(conn, searchVal);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Restaurant> ratingList(String searchVal) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Restaurant> list = new RestaurantDao().ratingList(conn, searchVal);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Restaurant> viewList(String searchVal) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Restaurant> list = new RestaurantDao().viewList(conn, searchVal);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Restaurant> selectCategory(int categoryVal) {
+		Connection conn = getConnection();
+		
+		ArrayList<Restaurant> list = new RestaurantDao().selectCategory(conn, categoryVal);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Restaurant> favoritList(String searchVal){
+		Connection conn = getConnection();
+		ArrayList<Restaurant> list = new RestaurantDao().selectFavoritList(conn, searchVal);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Restaurant> selectOptionList(String searchVal,int ageVal, int ageVal2, int categoryVal, String locationVal, int tvVal){
+		Connection conn = getConnection();
+		ArrayList<Restaurant> list = new RestaurantDao().selectOptionList(conn, searchVal, ageVal, ageVal2, categoryVal, locationVal, tvVal);
+		
+		close(conn);
+		return list;
+	}
+	
+	//뺄까 고민중 의미가없음
+//	public ArrayList<Restaurant> reviewList(String searchVal) {
+//		Connection conn = getConnection();
+//		ArrayList<Restaurant> list = new RestaurantDao().reviewList(conn, searchVal);
+//		
+//		return list;
+//	}
+	
+	// 음식점 등록요청 
+	public int insertRestTemp(RestaurantTemp r, ArrayList<Attachment> list) {
+		Connection conn = getConnection();
+		int result1 = new RestaurantDao().insertRestTemp(conn, r);
+		int result2 = 1;
+		
+		if(list != null && list.size() != 0) {
+			result2 = new RestaurantDao().insertAttachment(conn, list);
+		}
+		
+		if(result1>0 && result2>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+	}
+	
+	public String selectRestThumbnail(int restNo) {
+		Connection conn = getConnection();
+		
+		String fileName = new RestaurantDao().selectRestThumbnail(conn, restNo);
+		
+		close(conn);
+		
+		return fileName;
+	} 
+	
+	public ArrayList<Attachment> selectRestAttachment() {
+		Connection conn = getConnection();
+		
+		ArrayList<Attachment> atList = new RestaurantDao().selectRestAttachment(conn);
+		
+		close(conn);
+		
+		return atList;
+		
+		
 	}
 	
 }

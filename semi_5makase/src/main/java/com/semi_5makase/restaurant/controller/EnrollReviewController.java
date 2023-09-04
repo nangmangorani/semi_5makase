@@ -60,7 +60,7 @@ public class EnrollReviewController extends HttpServlet {
 			rv.setRestNo(restNo);
 			rv.setReviewContent(multiRequest.getParameter("reviewContent"));
 			
-			ArrayList<Attachment> list = null;
+			ArrayList<Attachment> list = new ArrayList<Attachment>();
 			Attachment at = null;
 			
 			for(int i=1; i<=4; i++) {
@@ -68,7 +68,6 @@ public class EnrollReviewController extends HttpServlet {
 				String key = "file" + i;
 				
 				if(multiRequest.getOriginalFileName(key) != null) {
-					list = new ArrayList<Attachment>();
 					at = new Attachment();
 					
 					at.setOriginName(multiRequest.getOriginalFileName(key));
@@ -78,14 +77,14 @@ public class EnrollReviewController extends HttpServlet {
 					
 					list.add(at);
 				}
-				
 			}
 			
 //			for(int j=1; j<=3; j++) {
 //				System.out.println("첨파 담긴거" + list.get(j).getOriginName());						
 //			}
-			
+
 			int result = new RestaurantService().insertReview(rv, list);
+
 			
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "리뷰가 성공적으로 작성되었습니다!");

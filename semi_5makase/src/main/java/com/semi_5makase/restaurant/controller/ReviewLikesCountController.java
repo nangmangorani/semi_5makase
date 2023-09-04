@@ -29,7 +29,8 @@ public class ReviewLikesCountController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		int reviewNo = Integer.parseInt(request.getParameter("restNo"));
+		int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
+		
 		int result = new RestaurantService().selectLikesCount(reviewNo);
 		
 		System.out.println("좋수" + reviewNo);

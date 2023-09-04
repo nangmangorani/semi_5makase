@@ -114,15 +114,14 @@ public class AdminRestaurantAdd extends HttpServlet {
 				
 				if(multiRequest.getOriginalFileName(key)!=null) {
 					
-					Attachment at2 = new Attachment();
+					Attachment at = new Attachment();
 					at.setOriginName(multiRequest.getOriginalFileName(key));
 					at.setChangeName(multiRequest.getFilesystemName(key));
 					at.setFilePath("resources/board_upfiles");
 					
-					list.add(at2);
+					list.add(at);
 				}
 			}
-			System.out.println(list + "!!!!!!!!!!!!!!");
 			
 			int result = new RestaurantService().adminInsertRestaurant(ar, m1, m2, m3, t, list);
 			
