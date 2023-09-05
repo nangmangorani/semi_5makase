@@ -401,10 +401,6 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			System.out.println("dao or" + at.getOriginName());
-			System.out.println("dao ch" + at.getChangeName());
-			System.out.println("dao mn" + memNo);
-			
 			pstmt.setString(1, at.getOriginName());
 			pstmt.setString(2, at.getChangeName());
 			pstmt.setInt(3, memNo);

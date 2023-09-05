@@ -33,9 +33,9 @@
         font-family: 'Ansungtangmyun-Bold';
     }
 
-    button{
+    .delbtn{
         padding: 0.25rem 0.5rem;
-        font-size: .775rem;
+        font-size: 25px;
         line-height: 1.5;
         border-radius: 0.5rem;
         color: #fff;
@@ -162,7 +162,7 @@
 
                 
                 
-                <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#deleteModal">회원탈퇴</button>
+                <button type="button" id="delbtn"  class="btn btn-sm" data-toggle="modal" data-target="#deleteModal">회원탈퇴</button>
             </div>
             
             
@@ -174,7 +174,7 @@
 		           <!-- Modal Header -->
 		           <div class="modal-header">
 		           <h4 class="modal-title">회원탈퇴</h4>
-		           <button type="button" class="close" data-dismiss="modal">&times;</button>
+		           <button type="button" id="delbtn" class="close" data-dismiss="modal">&times;</button>
 		           </div>
 		   
 		           <!-- Modal body -->
@@ -184,7 +184,7 @@
 		               <b>탈퇴 후 복구가 불가능 합니다. <br>정말로 탈퇴하시겠습니까?</b> <br><br>
 		
 		               비밀번호 : <input type="password" name="memPwd" required> <br><br>
-		               <button type="submit" class="btn btn-sm ">탈퇴하기</button>
+		               <button type="submit" id="delbtn" class="btn btn-sm ">탈퇴하기</button>
 		
 		
 		
@@ -240,7 +240,7 @@
     
 
     
-    
+    <%@ include file="../common/footer.jsp" %>
     
     
     

@@ -119,12 +119,12 @@
     <div id="myPageWrap">
         <div id="myPageHead" >
         </div>
-			
 		       <form id="profile-form" action="<%= contextPath%>/updateProfile.me" method="post" enctype="multipart/form-data">
 		        <input type="hidden" name="memNo" value="<%= memNo %>">
 		        <div id="myPageContent" style="margin-left: 100px;">
 		            <table style="width: 800px; height: 100px;">
 		                <tr>
+		                	<% if(at != null) { %>
 		                    <th>프로필사진</th>
 		                    <td>
 		                        <div id="imagePreview">
@@ -137,6 +137,16 @@
                                     <div  align ="right" style="margin-right: 100px;"><button type="submit" class="btn btn-sm btn-success">프로필변경</button></div>
 		                        </div>
 		                    </td>
+		                    <% } else { %>
+		                    <th>프로필사진</th>
+		                    <td>
+		                        <div id="imagePreview">
+		                            <img id="preview" src="" alt="미리보기" style="width: 100px; height: 100px; border-radius: 50%;">
+		                            <input type="file" id="profileImage" name="upfile" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage()">
+                                    <div  align ="right" style="margin-right: 100px;"><button type="submit" class="btn btn-sm btn-success">프로필변경</button></div>
+		                        </div>
+		                    </td>
+		                    <% } %>
 		                </tr>
 		            </table>
 		         </div>
@@ -267,7 +277,7 @@
 	</div>
 	
 	
-
+	<%@ include file="../common/footer.jsp" %>
     
     
     

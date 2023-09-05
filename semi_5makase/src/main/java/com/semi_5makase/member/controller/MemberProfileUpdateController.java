@@ -51,6 +51,7 @@ public class MemberProfileUpdateController extends HttpServlet {
 			int memNo = Integer.parseInt(multiRequest.getParameter("memNo"));
 			
 			Attachment at = null;
+			System.out.println(multiRequest.getParameter("originFileNo")+"여기여기~~~~");
 			
 			if(multiRequest.getOriginalFileName("upfile") !=null) { // 넘어온 첨부파일이 있다
 				
