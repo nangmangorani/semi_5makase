@@ -261,7 +261,7 @@
             height: 100%;
         }
         .nameStar{
-            width: 25%;
+            width: 50%;
             height: 100%;
         }
         .userName{
@@ -318,10 +318,6 @@
         }
         */
 
-        .taste{
-            width: 30%;
-            height: 100%;
-        }
         /* #tastePhoto{
             background-image: url(https://mp-seoul-image-production-s3.mangoplate.com/web/resources/2018022864551sprites_desktop.png);
             background-position: -714px -866px;
@@ -652,7 +648,7 @@
                         <span>
                             <img class="modal_profile profile" src="">
                         </span>
-                        <span class="nickName">
+                        <span class="nickName" style="font-size:22px;">
                         
                         </span>
                         <span class="star-rating">
@@ -961,8 +957,6 @@
 	                        </div>
 	                        
 	                        
-	                    </div>
-	                    <div class="taste" align="right" style="padding-right: 15px;">
 	                    </div>
 	               		 	<div class="good">
 		                        <div class="goodCount" align="center" style="padding-top: 15px;">
