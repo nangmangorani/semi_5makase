@@ -200,35 +200,7 @@
             <h2 id="editor-select">TV에 나온 음식점</h2>
             <div class="popular_restaurant_container">
                 <ul>
-                <% for(int i=0; i<3; i++) { %>
-                    <li class="fl">
-                        <a href="<%= contextPath %>/detail.rt?restNo=2">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
-                                    <strong><%= tvList.get(i).getAvg2() %></strong>
-                                    <p><%= tvList.get(i).getRestAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
-                                </div>
-                        </a>
-                    </li>          
-                <% } %>
-                </ul>
-                <ul>
-                	<% for(int i=3; i<6; i++) { %>
-                    <li class="fl">
-                        <a href="<%= contextPath %>/detail.rt?restNo=2">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title1"></span>
-                                    <strong>3.8</strong>
-                                    <p>서울 역삼동 - 고기 / 제육</p>
-                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
-                                    <strong><%= tvList.get(i).getAvg2() %></strong>
-                                    <p><%= tvList.get(i).getRestAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
-                                </div>
-                        </a>
-                    </li>          
-                <% } %>
+                
                 </ul>
                         <!-- 
                         <script>

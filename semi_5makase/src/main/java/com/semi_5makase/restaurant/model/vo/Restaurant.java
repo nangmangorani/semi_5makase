@@ -13,6 +13,7 @@ public class Restaurant {
 	private int restViews;
 	private String status;
 	
+	private String mainAddress;
 	private String openingTime;
 	private String restTime;
 	private String breakTime;
@@ -44,13 +45,10 @@ public class Restaurant {
 		this.status = status;
 	}
 	
-	
-
-
-	public Restaurant(String restName, String restAddress, String tvName, String categoryName, double avg2) {
+	public Restaurant(String restName, String mainAddress, String tvName, String categoryName, double avg2) {
 		super();
 		this.restName = restName;
-		this.restAddress = restAddress;
+		this.mainAddress = mainAddress;
 		this.tvName = tvName;
 		this.categoryName = categoryName;
 		this.avg2 = avg2;
@@ -352,6 +350,14 @@ public class Restaurant {
 
 	public void setAvg2(double avg2) {
 		this.avg2 = avg2;
+	}
+	
+	public String getMainAddress() {
+		return mainAddress;
+	}
+
+	public void setMainAddress(String mainAddress) {
+		this.mainAddress = mainAddress;
 	}
 
 	@Override
