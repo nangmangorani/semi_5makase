@@ -407,7 +407,7 @@
         }
 
         .modalBtn {
-            width: 225px;
+            width: 95%;
             height: 33px;
             margin-top: 5px;
             border-radius: 5px;
@@ -432,6 +432,11 @@
             background-color: rgb(0, 205, 205);
             color: white;
             margin-left: 11px;
+            width : 95%;
+            margin-top:20px;
+            height:50px;
+            
+            
         }
 
         #selectedPhotos {
@@ -556,6 +561,17 @@
         .heart.filled::after {
             background-color: rgb(215, 68, 62);
             /* Filled color: pink */
+        }
+        #subBtn{
+            background-color: rgb(25, 183, 194);
+            border: none;
+            color:white;
+            width: 225px;
+            height: 40px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 25px;
+
         }
     </style>
 </head>
@@ -818,7 +834,7 @@
                     </form>
                 </div>
                 <button class="addBtn2" style="margin: auto;">펼치기</button>
-                <button id="subBtn" style="margin: auto; margin-top:30px">선택한 조건으로 검색</button>
+                <button id="subBtn">선택한 조건으로 검색</button>
             </div>
             <div id="mainContent">
                 <div class="order">
@@ -1228,8 +1244,10 @@
 
 
                         <br>
-                        <button class="mmm" id="mmm">닫기</button>
-                        <button class="modalBtn" id="modalBtn3">제출</button>
+                        
+                        <button class="modalBtn" id="modalBtn3">등록요청</button>
+                       
+                     	
 
                     </form>
                     

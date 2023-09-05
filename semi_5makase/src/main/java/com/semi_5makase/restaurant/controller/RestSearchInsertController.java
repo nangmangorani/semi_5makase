@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
@@ -71,9 +72,15 @@ public class RestSearchInsertController extends HttpServlet {
 			}
 			
 			int result = new RestaurantService().insertRestTemp(r, list);
+			HttpSession session = request.getSession();
 			
 			if(result > 0) {
+				System.out.println("성공한건가");
+				session.setAttribute("alertMsg", "성공적으로 등록요청 되었습니다.");
 				response.sendRedirect(request.getContextPath());
+			}else {
+				session.setAttribute("alertMsg", "등록요청 실패했습니다.");
+				response.sendRedirect(request.getContextPath() + "/restSearch.do");
 			}
 			
 		}
