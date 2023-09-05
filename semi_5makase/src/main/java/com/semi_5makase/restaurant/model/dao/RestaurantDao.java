@@ -14,6 +14,7 @@ import static com.semi_5makase.common.JDBCTemplate.*;
 
 import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.common.model.vo.PageInfo;
+import com.semi_5makase.restTemp.RestaurantTemp;
 import com.semi_5makase.restaurant.model.vo.AdminRequestRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminUpdateRestaurant;
@@ -1673,23 +1674,25 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 	
 	//사이드 메뉴 옵션 모두 선택 후 조회리스트
 	public ArrayList<Restaurant> selectOptionList(Connection conn, String searchVal, int ageVal, int ageVal2, int categoryVal, String locationVal, int tvVal) {
+		System.out.println("selectOptionList 시작");
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		ArrayList<Restaurant> list = new ArrayList<Restaurant>();
 		String sql = prop.getProperty("selectOptionList");
 
 		
+		System.out.println(searchVal + "##" +  locationVal);
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, "%" + searchVal + "%");
-			pstmt.setString(2, "%" + locationVal + "%");
-			pstmt.setString(3, "%" + searchVal + "%");
-			pstmt.setString(4, "%" + locationVal + "%");
-			pstmt.setInt(5, categoryVal);
-			pstmt.setInt(6, tvVal);
-			pstmt.setInt(7, ageVal);
-			pstmt.setInt(8, ageVal2);
+			pstmt.setString(2, "%" + searchVal + "%");
+			pstmt.setString(3, "%" + locationVal + "%");
+			pstmt.setInt(4, categoryVal);
+			pstmt.setInt(5, tvVal);
+			pstmt.setInt(6, ageVal);
+			pstmt.setInt(7, ageVal2);
 			
 			rset=pstmt.executeQuery();
 			
@@ -1727,31 +1730,6 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 		return list;
 	}
 	
-	// 음식점 등록요청
-	
-//		public int insertRestTemp(Connection conn, RestaurantTemp r) {
-//			PreparedStatement pstmt = null;
-//			int result = 0;
-//			
-//			String sql = prop.getProperty("insertRestTemp");
-//			
-//			try {
-//				pstmt=conn.prepareStatement(sql);
-//				
-//				pstmt.setString(1, r.getRestName());
-//				pstmt.setString(2, r.getRestInfo());
-//				result = pstmt.executeUpdate();
-//				
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}finally{
-//				close(pstmt);
-//			}
-//			return result;
-//			
-//				
-//		}
-		
 		// 음식점 등록요청 시 사진 등록 (attachment)
 		public int insertAttachment(Connection conn, ArrayList<Attachment> list) {
 			int result = 0;
@@ -1895,6 +1873,31 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 				close(pstmt);
 			}
 			return list;
+		}
+		
+		// 음식점 등록요청
+		
+		public int insertRestTemp(Connection conn, RestaurantTemp r) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String sql = prop.getProperty("insertRestTemp");
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				
+				pstmt.setString(1, r.getRestName());
+				pstmt.setString(2, r.getRestInfo());
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+			}
+			return result;
+			
+				
 		}
 
 	

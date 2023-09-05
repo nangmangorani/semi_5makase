@@ -10,6 +10,7 @@ import javax.websocket.CloseReason.CloseCode;
 
 import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.common.model.vo.PageInfo;
+import com.semi_5makase.restTemp.RestaurantTemp;
 import com.semi_5makase.restaurant.model.dao.RestaurantDao;
 import com.semi_5makase.restaurant.model.vo.AdminRequestRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
@@ -690,5 +691,26 @@ public ArrayList<Restaurant> selectRestSearch(String searchVal) {
 		
 		
 	}
+	
+	// 음식점 등록요청 
+		public int insertRestTemp(RestaurantTemp r, ArrayList<Attachment> list) {
+			Connection conn = getConnection();
+			int result1 = new RestaurantDao().insertRestTemp(conn, r);
+			int result2 = 1;
+			
+			if(list != null && list.size() != 0) {
+				result2 = new RestaurantDao().insertAttachment(conn, list);
+			}
+			
+			if(result1>0 && result2>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			
+			close(conn);
+			
+			return result1 * result2;
+		}
 	
 }
