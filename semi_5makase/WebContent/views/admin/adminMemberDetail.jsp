@@ -159,9 +159,9 @@
                   <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul class="list-group">
-                            <li class="list-group-item" style="text-align: center;"><a href="">Q&A 문의 관리</a></li>
-                            <li class="list-group-item" style="text-align: center;"><a href="">공지사항 관리</a></li>
-                            <li class="list-group-item" style="text-align: center;"><a href="">자주 묻는 질문 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.qna?cpage=1">Q&A 문의 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.no?cpage=1">공지사항 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.faq">자주 묻는 질문 관리</a></li>
                         </ul>
                     </div>
                   </div>
@@ -195,7 +195,6 @@
             </div>
             <div id="content_2" style="margin-top: 30px;"> 
                 <div align="center">
-                    <img src="../../resources/img/rdetail_user.png" style="width: 45px;">
                     <table class="table" style="width: 350px;">
                             <tr>
                                 <th scope="col">회원명</th>
@@ -238,8 +237,8 @@
                     <a class="btn btn-sm btn-secondary" href="<%= contextPath %>/memberList.ad?cpage=1 %>">뒤로가기</a>
                 </div>
             </div>
-            
         </div>
     </div>
+    <%@ include file ="../common/footer.jsp" %>
 </body>
 </html>

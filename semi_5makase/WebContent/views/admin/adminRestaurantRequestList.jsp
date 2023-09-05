@@ -178,9 +178,9 @@
                   <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul class="list-group">
-                            <li class="list-group-item" style="text-align: center;"><a href="">Q&A 문의 관리</a></li>
-                            <li class="list-group-item" style="text-align: center;"><a href="">공지사항 관리</a></li>
-                            <li class="list-group-item" style="text-align: center;"><a href="">자주 묻는 질문 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.qna?cpage=1">Q&A 문의 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.no?cpage=1">공지사항 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.faq">자주 묻는 질문 관리</a></li>
                         </ul>
                     </div>
                   </div>
@@ -262,6 +262,7 @@
             </div>
         </div>
     </div>
+    <%@ include file ="../common/footer.jsp" %>
     <script>
         $(function(){
 			$("#list-table>tbody>tr").click(function(){
