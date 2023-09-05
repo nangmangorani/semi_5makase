@@ -1130,7 +1130,7 @@
 	<entry key="selectCategoryList">
 		SELECT 
             R.REST_NO AS REST_NO
-           ,C.CATEGORY_NO AS CATEGORY_NAME
+           ,C.CATEGORY_NAME AS CATEGORY_NAME
            ,T.TV_NAME AS TV_NAME
            ,R.REST_NAME AS REST_NAME
            ,R.MAIN_ADDRESS AS MAIN_ADDRESS
@@ -1152,9 +1152,10 @@
 	  WHERE C.CATEGORY_NO = ?
 	  AND R.STATUS = 'Y'
 	  AND AT.FILE_LEVEL = 2
+      AND MENU_GRADE = 1
       GROUP BY 
       		 R.REST_NO
-           ,C.CATEGORY_NO
+           ,C.CATEGORY_NAME
            ,R.TV_NO
            ,T.TV_NAME
            ,R.REST_NAME
@@ -1165,6 +1166,8 @@
            ,R.REST_VIEWS
            ,MENU
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME
+     ORDER BY
+           REST_VIEWS DESC;
 	</entry>
 	
 	<entry key="selectChinese">
