@@ -36,12 +36,11 @@ public class QnaUpdateViewController extends HttpServlet {
 		int qnaNo = Integer.parseInt(request.getParameter("cpage"));
 		
 		Qna q = new QnaService().selectQna(qnaNo);
+		Attachment at = new QnaService().selectAttachment(qnaNo);
 		
-		ArrayList<Attachment> list = new QnaService().selectAttachment(qnaNo);
-		
-		request.setAttribute("list", list);
-		System.out.println("나는 업데이트뷰컨트롤러" + list);
 		request.setAttribute("q", q);
+		request.setAttribute("at", at);
+		
 		request.getRequestDispatcher("views/board/qnaUpdateView.jsp").forward(request, response);
 		
 	}

@@ -52,7 +52,6 @@ public class QnaUpdateController extends HttpServlet {
 			String boardTitle = multiRequest.getParameter("title");
 			String boardContent = multiRequest.getParameter("content");
 			int qnaNo = Integer.parseInt(multiRequest.getParameter("qnaNo"));
-			
 			Qna q = new Qna();
 			
 			q.setBoardWriter(boardWriter);
@@ -60,24 +59,27 @@ public class QnaUpdateController extends HttpServlet {
 			q.setBoardContent(boardContent);
 			q.setQnaNo(qnaNo);
 			
-			ArrayList<Attachment> list = new ArrayList<Attachment>();
+			Attachment at = null;
 			
-			for(int i =1; i<=5; i++) {
-				String key = "upfile" + i;
-				
-				if(multiRequest.getOriginalFileName(key) != null) {
-					Attachment at = new Attachment();
+				if(multiRequest.getOriginalFileName("upfile") != null) {
+					at = new Attachment();
 					at.setRefBno(qnaNo);
-					at.setOriginName(multiRequest.getOriginalFileName(key));
-					at.setChangeName(multiRequest.getFilesystemName(key));
+					at.setOriginName(multiRequest.getOriginalFileName("upfile"));
+					at.setChangeName(multiRequest.getFilesystemName("upfile"));
 					at.setFilePath("resources/qnaAttachment");
-					list.add(at);
+					
+					if(multiRequest.getParameter("originFileNo") != null) {
+						// 기존에 첨부파일이 있었을 경우 => Update Attachment (기존의 첨부파일 번호 필요)
+						at.setFileNo(Integer.parseInt(multiRequest.getParameter("originFileNo")));
+					} else {
+						// 기존에 첨부파일이 없었을 경우 => Insert Attachment (현재 게시글 번호 필요)
+						at.setRefBno(qnaNo);
+					}
+					System.out.println("여기도 컨트롤러" + multiRequest.getParameter("originFileNo"));
 				}
-			}
-			System.out.println("여긴 업데이트컨트롤러" + list);
 			
 			
-			int result = new QnaService().updateQna(q, list);
+			int result = new QnaService().updateQna(q, at);
 			
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "성공적으로 수정되었습니다.");

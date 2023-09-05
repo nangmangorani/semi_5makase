@@ -11,6 +11,7 @@
 	      ,MEM_ID
 	      ,STATUS
 	  FROM MEMBER
+	 ORDER BY MEM_NO
 </entry>
 
 <entry key="selectAdminId">
@@ -355,6 +356,12 @@ UPDATE ATTACHMENT
       JOIN MEMBER SM ON (SUSPECT = SM.MEM_NO)
      WHERE REPORT_NO = ?
 	  ORDER BY REPORT_NO
+</entry>
+
+<entry key="adminUpdaterReport">
+	UPDATE REPORT
+	   SET RESULT = ?
+	 WHERE REPORT_NO = ?
 </entry>
 </properties>
 

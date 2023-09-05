@@ -145,12 +145,9 @@
                   
                   
                   <div id='image_preview'>
-                      <b id="picture">사진 : </b>      
-                      <input type='file' class='btnAtt' name="upfile1" />
-                      <input type='file' class='btnAtt' name="upfile2" />
-                      <input type='file' class='btnAtt' name="upfile3" />
-                      <input type='file' class='btnAtt' name="upfile4" />
-                      <input type='file' class='btnAtt' name="upfile5" />
+                      <b id="picture">사진</b>      
+                      <input type='file' class='btnAtt' name="upfile" />
+                      
                       <div id='att_zone'></div>
                   </div>
                   <button type="button" class="btn btn-secondary" style="width: 90px;">취소</button>

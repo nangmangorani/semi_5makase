@@ -182,9 +182,9 @@
                   <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul class="list-group">
-                            <li class="list-group-item" style="text-align: center;"><a href="">Q&A 문의 관리</a></li>
-                            <li class="list-group-item" style="text-align: center;"><a href="">공지사항 관리</a></li>
-                            <li class="list-group-item" style="text-align: center;"><a href="">자주 묻는 질문 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.qna?cpage=1">Q&A 문의 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.no?cpage=1">공지사항 관리</a></li>
+                            <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/list.faq">자주 묻는 질문 관리</a></li>
                         </ul>
                     </div>
                   </div>
@@ -328,14 +328,13 @@
                                 <td><input type="text" name="status" value="<%= ar.getStatus() %>"></td>
                             </tr>
                         </table>
-                        
                 </form>
             <div align="right" style="padding-right: 30px;">
                <button type="button" class="btn btn-sm btn-secondary" onclick="history.back();">취소하기</button>
                <button type="submit" class="btn btn-sm btn-primary">수정하기</button>
            </div>
-               
         </div> 
     </div>
+    <%@ include file ="../common/footer.jsp" %>
 </body>
 </html>

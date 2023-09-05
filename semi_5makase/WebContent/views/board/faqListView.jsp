@@ -312,6 +312,7 @@
 	                	<% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
 		                	<button id="enrollBtn" onclick="location.href='<%=contextPath%>/insertview.faq'">작성하기</button>
 		                	<button id="deleteBtn" onclick="submitForm()">삭제하기</button>
+		                	
 	                <% } %>
 
                     <script>
@@ -348,20 +349,6 @@
 	                            alert("삭제할 게시글을 한 개 이상 선택해주세요.");
 	                        }
 	                    }
-	                        
-	
-	                        // 적어도 하나 이상의 체크박스가 선택되었는지 확인합니다.
-	                        //if (faqNos.length > 0) {
-	                            // 양식 내의 'faqNo'라는 이름을 가진 요소에 FAQ 번호들을 쉼표로 구분된 문자열로 설정합니다.
-	                            //var form = document.getElementById("deleteAction");
-	                            //form.elements["faqNo"].value = faqNos.join(",");
-	                            //form.submit();
-	                       // } else {
-	                            // 체크된 FAQ가 없는 경우, 경고 메시지를 표시하거나 상황에 따라 처리합니다.
-	                           // alert("삭제할 FAQ를 하나 이상 선택하세요.");
-	                       // }
-	                    
-
                     </script>
                 <div id="searchTab2">
 				    <form id="searchForm" action="<%=contextPath%>/list.faq" method="get">
