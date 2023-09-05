@@ -40,6 +40,8 @@ public class RestOptionController extends HttpServlet {
 		String locationVal = request.getParameter("locationVal");
 		int tvVal = Integer.parseInt(request.getParameter("tvVal"));
 		
+		System.out.println("tvVal : " + tvVal);
+		
 		
 		ArrayList<Restaurant> optionList = new RestaurantService().selectOptionList(searchVal,ageVal,ageVal2,categoryVal,locationVal,tvVal);
 		ArrayList<Attachment> atList = new RestaurantService().selectRestAttachment();
