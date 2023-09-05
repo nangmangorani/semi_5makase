@@ -614,7 +614,7 @@
         	<% for(int i=0; i<rvPicList.size(); i++) { %>
         		<% if (i < 3) { %>
 	            <div id="photo_<%=i%>">
-	                <a href="#none" class="reviewModal" style="padding: 0; border: 0;" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getRefBno() %>, <%= rvList.get(i).getMemNo() %>)">
+	                <a href="#none" class="reviewModal" style="padding: 0; border: 0;" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getRefBno() %>)">
                       	<img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
 	                </a>
 	            </div>
