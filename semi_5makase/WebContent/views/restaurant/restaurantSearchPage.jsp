@@ -1,5 +1,16 @@
+<%@page import="com.semi_5makase.common.model.vo.Attachment"%>
+<%@page import="javax.naming.spi.DirStateFactory.Result"%>
+<%@page import="com.semi_5makase.restaurant.model.vo.Restaurant"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<Restaurant> locationList = (ArrayList<Restaurant>)request.getAttribute("locationList");
+	ArrayList<Restaurant> ratingList = (ArrayList<Restaurant>)request.getAttribute("ratingList");
+	String searchVal = (String)request.getAttribute("searchVal");
+	ArrayList<Restaurant> list = (ArrayList<Restaurant>)request.getAttribute("list");
+	ArrayList<Attachment> atList = (ArrayList<Attachment>)request.getAttribute("atList");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +23,24 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script>
+               
+                
+                
+                function test(){
+                	$.ajax({
+                		url:"test.do",
+                		data:{restNo:$(".test").val()},
+                		success:function(result){
+                			console.log(result)
+                		},
+                		error:function(){
+                			console.log("이미지 조회용 ajax 통신 실패!")
+                		}
+                	})
+                }
+                	
+                </script>
 
     <style>
         @font-face {
@@ -235,7 +264,7 @@
         }
 
         .textLine>span {
-            margin-left: 20px;
+            margin-left: 5px;
             width: 100%;
         }
 
@@ -264,7 +293,7 @@
 
         .imgLeft>img {
             width: 85%;
-            height: 85%;
+            height: 145px;
             margin-left: 13px;
             margin-top: 11px;
             border-radius: 10px;
@@ -433,7 +462,7 @@
         }
 
         #photoInput {
-            display: none;
+            
         }
 
 
@@ -533,16 +562,23 @@
 
 <body>
     <div class="wrap">
-        <div id="header">
+    <%@ include file="/views/common/menubar.jsp" %>
+        <!-- <div id="header">
             <div id="logo">
-                <img src="./이눔세끼화이팅/resources/img/logo.png">
+                <img src="./resources/img/logo.png">
             </div>
+            
+            
             <div id="search">
                 <input type="text" name="" id="searchTab">
                 <input type="submit" name="" id="">
             </div>
             <div id="login"></div>
-        </div>
+        </div> -->
+        
+        
+        
+        
         <div id="content">
             <div id="category">
                 <div id="category_1">
@@ -551,66 +587,161 @@
 
                     <form action="" class="ageCheckForm">
                         <label for="category_1_1">
-                            <input type="checkbox" class="category_1" id="category_1_1"> 20대
+                            <input type="radio" name="categoryAge" class="category_1" id="category_1_1"  value="20"> 20대
                         </label>
 
                         <label for="category_1_2">
-                            <input type="checkbox" class="category_1" style="margin-left: 70px;" id="category_1_2"> 30대
+                            <input type="radio" name="categoryAge" class="category_1" style="margin-left: 70px;" id="category_1_2" value="30"> 30대
                             <br>
                         </label>
 
                         <label for="category_1_3">
-                            <input type="checkbox" class="category_1" id="category_1_3"> 40대
+                            <input type="radio" name="categoryAge" class="category_1" id="category_1_3" value="40"> 40대
                         </label>
 
                         <label for="category_1_4">
-                            <input type="checkbox" class="category_1" style="margin-left: 70px;" id="category_1_4"> 50대
+                            <input type="radio" name="categoryAge" class="category_1" style="margin-left: 70px;" id="category_1_4" value="50"> 50대
                             <br>
                         </label>
 
                         <label for="category_1_5">
-                            <input type="checkbox" class="category_1" id="category_1_5"> 60대 이상
+                            <input type="radio" name="categoryAge" class="category_1" id="category_1_5" value="60"> 60대 이상
                         </label>
                     </form>
                 </div>
+				
 
-                <div id="category_2">
-                    <form action="" class="genderCheckForm">
-                        <label for="category_2_1">
-                            <input type="radio" class="category_2" name="gender" id="category_2_1"> 남자
-                        </label>
-                        <label for="category_2_2">
-                            <input type="radio" class="category_2" name="gender" style="margin-left: 70px;"
-                                id="category_2_2"> 여자 <br>
-                        </label>
-                    </form>
-                </div>
+				
+				
+				
+                
+                
+                
                 <div id="category_3">
                     <div class="Title_Bullet" style="background-color: rgb(10, 199, 206);"></div>
                     <h5>&nbsp;카테고리</h5>
                     <label for="category_3_1">
-                        <input type="radio" class="category_3" name="gender" id="category_3_1"> 한식
+                        <input type="radio" class="category_3" name="category" id="category_3_1" value="1"> 한식
                     </label>
                     <label for="category_3_2">
-                        <input type="radio" class="category_3" name="gender" id="category_3_2"
+                        <input type="radio" class="category_3" name="category" id="category_3_2"
                             style="margin-left: 70px;"> 밥집
                     </label>
                     <br>
                     <label for="category_3_3">
-                        <input type="radio" class="category_3" name="gender" id="category_3_3"> 일식
+                        <input type="radio" class="category_3" name="category" id="category_3_3" value="3"> 일식
                     </label>
                     <label for="category_3_4">
-                        <input type="radio" class="category_3" name="gender" id="category_3_4"
-                            style="margin-left: 70px;"> 중식
+                        <input type="radio" class="category_3" name="category" id="category_3_4"
+                            style="margin-left: 70px;" value="2"> 중식
                     </label>
                     <br>
                     <label for="category_3_5">
-                        <input type="radio" class="category_3" name="gender" id="category_3_5"> 양식
+                        <input type="radio" class="category_3" name="category" id="category_3_5" value="4"> 양식
                     </label>
                     <label for="category_3_6">
-                        <input type="radio" class="category_3" name="gender" id="category_3_6"
+                        <input type="radio" class="category_3" name="category" id="category_3_6"
                             style="margin-left: 70px;"> 분식
                     </label>
+                    
+                    <script>
+                 
+                    $(function(){
+                    	$(".category_3").click(function(){
+                    		var contextPath = "<%= contextPath %>/";
+                    		console.log("Ddd");
+                    		var selectVal = $(this).val();
+                    		$.ajax({
+                    			url:"restTvOption.do",
+                    			type:"get",
+                    			data:{
+                    				category:selectVal
+                    			},
+                    			success: function(result) {
+                    				let rest = result[0];
+                    				let at = result[1];
+                    				console.log("rest");
+                    				console.log(rest);
+                    				
+                    				console.log("at");
+                    				console.log(at);
+                    			    $("#restItem").html("");
+                    			    let val = "";
+                    			    
+                    			    for(let i=0; i<rest.length; i++){
+                    			    	let imgSrc = "";
+                    			    	console.log("i result : " + i)
+
+                    			        val += '<div class="restaurant">';
+                    			        val += '<div class="imgLine">';
+                    			        for(let j=0; j<at.length; j++){                    			    		
+                    			    		if(rest[i].restNo == at[j].refBno){
+                    			    			imgSrc = contextPath + at[j].filePath +  '/' + at[j].changeName;
+                    			        		
+                    			    			console.log(at[j].changeName)
+                    			    			console.log(rest[i].restNo + "!!")
+                    			    		}
+                    			    	}
+                    			        
+                    			        if(imgSrc != ""){
+                    			        		val += '<div class="imgLeft"><img src='  + imgSrc + '></div>';	
+                    			        }else{
+                    			        		val += '<div class="imgLeft"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160402_19%2Fmaddara_1459606960178nrrdB_JPEG%2FUntitled-1.jpg&type=sc960_832"></div>';
+                    			        }
+                    			        
+                    			        val += '<div class="imgRight">';
+                    			        val += '<div class="imgRight_1" style="margin-top: 10px;">';
+                    			        val += '<span> ' + (i+1) + '. ' + rest[i].restName + '</span>';
+                    			        
+                    			        val += '</div>';
+                    			        val += '<div class="imgRight_2">';
+                    			        if(rest[i].tvName != null){
+                    			        val += '<span> ' + rest[i].categoryName + ' </span>,  <strong style="color:orange">'+rest[i].tvName + ' 방영</strong></div>';
+                    			    	}
+                    			        val += '<div class="imgRight_3">';
+                    			        
+                    			        if (rest[i].parking == "가능") {
+                    			            val += '<span style="color:blue">#주차가능</span></div>';
+                    			        }else{
+                    			        	val += '<span style="color:red">#주차불가</span></div>';
+                    			        }
+                    			        
+                    			        val += '<div class="imgRight_4" style="margin-top: 10px;">';
+                    			        val += '<img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png">';
+                    			        val += ' '+ rest[i].avg +' ('+rest[i].count+'명) ';
+                    			        val += '  ';
+                    			        val += '<img src="./resources/img/heart.png" alt="">';
+                    			        val += ' ' +rest[i].fcount + '';
+                    			        val += '  ';
+                    			        val += '<img src="./resources/img/view.png" alt="">';
+                    			        val += '&nbsp;&nbsp;<span style="color:gray; font-size:13px;">조회수 : '+rest[i].restViews+'<span>';
+                    			        val += '</div>';
+
+                    			        val += '</div></div>';
+                    			        val += '<div class="textLine"><span> ' + rest[i].intro + ' </span></div></div>';
+                    			        val += '</div>';
+                    			 
+                    			    }
+
+
+                    			    $("#restItem").html(val);
+                    			   	
+                    			   	$("#result").html("<span>*** 검색결과 : "+rest.length+" 개 </span>");
+                    			   	
+                    			   	
+                    			   
+                    			},
+                    			error : function(){
+                    				alert("ajax 실패 ");
+                    			}
+                    			
+                    			});
+                    		})
+                    		
+        				})	
+                    	
+                    </script>
+                    
                 </div>
                 <div id="hiddenCategory">
                     <label for="category_3_7">
@@ -637,12 +768,12 @@
                     <h5>&nbsp;지역</h5>
                     <select name="location" class="location">
                         <option value="" selected>선택안함</option>
-                        <option value="kangnam">강남구</option>
-                        <option value="seocho">서초구</option>
-                        <option value="songpa">송파구</option>
-                        <option value="mapo">마포구</option>
-                        <option value="ddm">동대문구</option>
-                        <option value="gwanak">관악구</option>
+                        <option value="강남구">강남구</option>
+                        <option value="서초구">서초구</option>
+                        <option value="송파구">송파구</option>
+                        <option value="마포구">마포구</option>
+                        <option value="동대문구">동대문구</option>
+                        <option value="관악구">관악구</option>
                     </select>
                 </div>
                 <div id="category_5">
@@ -650,19 +781,19 @@
                     <h5>&nbsp;TV맛집</h5>
                     <form action="">
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 생활의달인
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="1"> 생활의달인
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 수요미식회
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="2"> 수요미식회
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 미쉐린
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="3"> 미쉐린
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 최자로드
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="4"> 최자로드
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 성시경의먹을텐데
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="5"> 성시경의먹을텐데
                         </label><br>
                     </form>
                 </div>
@@ -670,71 +801,306 @@
                 <div id="hiddenTv">
                     <form action="">
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 백종원의3대천왕
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="6"> 백종원의3대천왕
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 식객허영만의백반기행
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="7"> 식객허영만의백반기행
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 백년가게
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="8"> 백년가게
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 맛있는녀석들
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="9"> 맛있는녀석들
                         </label><br>
                         <label for="">
-                            <input type="checkbox" class="category_5" name="" id=""> 한국인의밥상
+                            <input type="radio" class="category_5" name="categoryTv" id="" value="10"> 한국인의밥상
                         </label><br>
                     </form>
                 </div>
                 <button class="addBtn2" style="margin: auto;">펼치기</button>
+                <button id="subBtn" style="margin: auto; margin-top:30px">선택한 조건으로 검색</button>
             </div>
             <div id="mainContent">
                 <div class="order">
                     <div class="left"><img
                             src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/web/react_components/Order/order.png"
                             class="orderImg"> 정렬</div>
-                    <button>조회수순</button>
-                    <button>평점순</button>
-                    <button>즐겨찾기순</button>
-                    <button>리뷰순</button>
+                    <button class="sortBtn" onclick="listSort(1, this);">조회수순</button>
+                    <button class="sortBtn" onclick="listSort(2, this);">평점순</button>
+                    <button class="sortBtn" onclick="listSort(3, this);">즐겨찾기순</button>
+                    
+                    
+                    <script>
+                    //선택한 조건으로 검색 버튼 눌렀을때
+                 	
+                    $("#subBtn").click(function(){
+                    	var contextPath = "<%=contextPath%>/";
+                    	let val1 = "";
+                    	let val2 = "";
+                    	let val3 = "";
+                    	let val4 = "";
+                    	
+  						$(".category_1:checked").each(function(){
+    						val1 = $(this).val();	
+    						console.log(val1);
+  						})
+  						$(".category_3:checked").each(function(){
+  							val2 = $(this).val();
+  							console.log(val2);
+  						})
+  						
+  						val3 = $(".location>option:selected").val();
+  						console.log(val3);
+  						
+  						$(".category_5:checked").each(function(){
+  						val4 = $(this).val();
+  							console.log(val4);
+  						})
+  						
+  						$.ajax({
+  							url:"restOption.do",
+  							data:{
+  								searchVal:'<%=searchVal%>',
+  								ageVal:val1,
+  								categoryVal:val2,
+  								locationVal:val3,
+  								tvVal:val4
+  							},
+  							success: function(result) {
+                				let rest = result[0];
+                				let at = result[1];
+                				console.log("rest");
+                				console.log(rest);
+                				
+                				console.log("at");
+                				console.log(at);
+                			    $("#restItem").html("");
+                			    let val = "";
+                			    
+                			    for(let i=0; i<rest.length; i++){
+                			    	let imgSrc = "";
+                			    	console.log("i result : " + i)
+
+                			        val += '<div class="restaurant">';
+                			        val += '<div class="imgLine">';
+                			        for(let j=0; j<at.length; j++){                    			    		
+                			    		if(rest[i].restNo == at[j].refBno){
+                			    			imgSrc = contextPath + at[j].filePath +  '/' + at[j].changeName;
+                			        		
+                			    			console.log(at[j].changeName)
+                			    			console.log(rest[i].restNo + "!!")
+                			    		}
+                			    	}
+                			        
+                			        if(imgSrc != ""){
+                			        		val += '<div class="imgLeft"><img src='  + imgSrc + '></div>';	
+                			        }else{
+                			        		val += '<div class="imgLeft"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160402_19%2Fmaddara_1459606960178nrrdB_JPEG%2FUntitled-1.jpg&type=sc960_832"></div>';
+                			        }
+                			        
+                			        val += '<div class="imgRight">';
+                			        val += '<div class="imgRight_1" style="margin-top: 10px;">';
+                			        val += '<span> ' + (i+1) + '. ' + rest[i].restName + '</span>';
+                			        
+                			        val += '</div>';
+                			        val += '<div class="imgRight_2">';
+                			        if(rest[i].tvName != null){
+                			        val += '<span> ' + rest[i].categoryName + ' </span>,  <strong style="color:orange">'+rest[i].tvName + ' 방영</strong></div>';
+                			    	}
+                			        val += '<div class="imgRight_3">';
+                			        
+                			        if (rest[i].parking == "가능") {
+                			            val += '<span style="color:blue">#주차가능</span></div>';
+                			        }else{
+                			        	val += '<span style="color:red">#주차불가</span></div>';
+                			        }
+                			        
+                			        val += '<div class="imgRight_4" style="margin-top: 10px;">';
+                			        val += '<img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png">';
+                			        val += ' '+ rest[i].avg +' ('+rest[i].count+'명) ';
+                			        val += '  ';
+                			        val += '<img src="./resources/img/heart.png" alt="">';
+                			        val += ' ' +rest[i].fcount + '';
+                			        val += '  ';
+                			        val += '<img src="./resources/img/view.png" alt="">';
+                			        val += '&nbsp;&nbsp;<span style="color:gray; font-size:13px;">조회수 : '+rest[i].restViews+'<span>';
+                			        val += '</div>';
+
+                			        val += '</div></div>';
+                			        val += '<div class="textLine"><span> ' + rest[i].intro + ' </span></div></div>';
+                			        val += '</div>';
+                			 
+                			    }
+
+                			    $("#restItem").html(val);
+                			   	
+                			   	$("#result").html("<span>*** 검색결과 : "+rest.length+" 개 </span>");
+                			   
+                			},
+  							error:function(){
+  								
+  							}
+  						})
+  						
+					});
+
+                    // 정렬 버튼 눌렀을때
+                 	function listSort(num, e){
+                 		var contextPath = "<%= contextPath %>/";
+                 		$(".sortBtn").css("backgroundColor", "");
+                 		$(e).css("backgroundColor", "lightblue");
+                 		
+                 		$.ajax({
+                 			url:"restSearch.do",
+                 			type:"get",
+                 			data:{
+                 				val:num,
+                 				searchVal:'<%=searchVal%>'
+                 			},
+                 			success: function(result) {
+                 				
+                				let rest = result[0];
+                				let at = result[1];
+                				console.log("rest");
+                				console.log(rest);
+                				
+                				console.log("at으아아아각");
+                				console.log(at);
+                				
+                			    $("#restItem").html("");
+                			    let val = "";
+                			    
+                			    console.log("반복문시작12#@!#123");
+                			    for(let i=0; i<rest.length; i++){
+                			    	console.log("첫번째반복문" + rest[i].restNo);
+                			    	let imgSrc = "";
+                			    	console.log("i result : " + i);
+			
+                			        val += '<div class="restaurant">';
+                			        val += '<div class="imgLine">';
+                			        
+                			        
+                			        for(let j=0; j<at.length; j++){
+                			        	console.log("두번째반복문" + at[j].restName);
+                			    		if(rest[i].restNo == at[j].refBno){
+                			    			console.log("at랑 rest랑 딱맞을떄"+ at[j].refBno);
+                			    			imgSrc = contextPath + at[j].filePath +  '/' + at[j].changeName;
+                			    		}
+                			    	}
+                			        console.log(imgSrc + "이미지ㅣㅣㅣ");
+                			        if(imgSrc != ""){
+                			        		val += '<div class="imgLeft"><img src='  + imgSrc + '></div>';	
+                			        }else{
+                			        		val += '<div class="imgLeft"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160402_19%2Fmaddara_1459606960178nrrdB_JPEG%2FUntitled-1.jpg&type=sc960_832"></div>';
+                			        }
+                			        
+                			        val += '<div class="imgRight">';
+                			        val += '<div class="imgRight_1" style="margin-top: 10px;">';
+                			        val += '<span> ' + (i+1) + '. ' + rest[i].restName + '</span>';
+                			        
+                			        val += '</div>';
+                			        val += '<div class="imgRight_2">';
+                			        if(rest[i].tvName != null){
+                			        val += '<span> ' + rest[i].categoryName + ' </span>,  <strong style="color:orange">'+rest[i].tvName + ' 방영</strong></div>';
+                			    	}
+                			        val += '<div class="imgRight_3">';
+                			        
+                			        if (rest[i].parking == "가능") {
+                			            val += '<span style="color:blue">#주차가능</span></div>';
+                			        }else{
+                			        	val += '<span style="color:red">#주차불가</span></div>';
+                			        }
+                			        
+                			        val += '<div class="imgRight_4" style="margin-top: 10px;">';
+                			        val += '<img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png">';
+                			        val += ' '+ rest[i].avg +' ('+rest[i].count+'명) ';
+                			        val += '  ';
+                			        val += '<img src="./resources/img/heart.png" alt="">';
+                			        val += ' ' +rest[i].fcount + '';
+                			        val += '  ';
+                			        val += '<img src="./resources/img/view.png" alt="">';
+                			        val += '&nbsp;&nbsp;<span style="color:gray; font-size:13px;">조회수 : '+rest[i].restViews+'<span>';
+                			        val += '</div>';
+
+                			        val += '</div></div>';
+                			        val += '<div class="textLine"><span> ' + rest[i].intro + ' </span></div></div>';
+                			        val += '</div>';
+                			 
+                			    }
+
+                			    $("#restItem").html(val);
+                			   	
+                			   	$("#result").html("<span>*** 검색결과 : "+rest.length+" 개 </span>");
+                			
+                			},
+                 			error:function(){
+                 				console.log("ajax 실패");
+                 			}
+                 		})
+                 	}
+                    </script>
+                    
                 </div>
                 <div id="result">
                     <span>
-                        *** 검색결과 : ***개
+                        *** 검색결과 : <%=locationList.size() %>개
                     </span>
                 </div>
+                
+                <div id = "restItem">
+                <% int count = 1; %>
+                <%for(int i=0; i<locationList.size(); i++){ %>
+                
+		         	
                 <div class="restaurant">
                     <div class="imgLine">
                         <div class="imgLeft">
-                            <img
-                                src="https://d12zq4w4guyljn.cloudfront.net/300_300_20230813205739_photo1_e85403339e4d.jpg">
+                        	
+                        	<script>
+                    		 	
+	                        console.log('<%=locationList.get(i).getTitleImg()%>');
+	                        	
+                        	</script>
+                        	
+                        	<%if(locationList.get(i).getTitleImg().length() > 1){%>
+                            	<img src="<%=contextPath%>/<%=locationList.get(i).getTitleImg()%>">
+                            <%}else{%>
+                            	<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160402_19%2Fmaddara_1459606960178nrrdB_JPEG%2FUntitled-1.jpg&type=sc960_832">
+                            <%}%>
                         </div>
-                        <div class="imgRight">
+                        	<div class="imgRight">
                             <div class="imgRight_1" style="margin-top: 10px;">
-                                <span>1. 주원식당</span>
-                                <span class="heart-container" onclick="handleContainerClick(event)">
-                                    <span class="heart"></span>
-                                </span>
+                           
+                            <span><%=count %>. <%=locationList.get(i).getRestName() %></span>
+                            <span class="heart-container" onclick="handleContainerClick(event)">
+                                
+                            </span>
+                                
                             </div>
+                            
                             <div class="imgRight_2">
-                                <span>짬뽕순두부</span>, &nbsp;
-                                <strong>순두부짬뽕</strong>
+                                <span></span> &nbsp;
+                                <strong></strong>
                             </div>
                             <div class="imgRight_3">
-                                <span>#한국인의밥상</span>,
-                                <span>#가족외식</span>,
-                                <span>#무료주차</span>
+                            <%if(locationList.get(i).getTvName() != null){ %>
+                                <span>#<%=locationList.get(i).getTvName() %></span>
+                            <%}%>
+                                <%if(locationList.get(i).getParking().equals("가능")){ %>
+                                <span style="color: blue;">#주차가능</span>
+                                <%}else{%>
+                                <span style="color: red">#주차불가</span>
+                                <%}%>
                             </div>
                             <div class="imgRight_4" style="margin-top: 10px;">
-                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png"
-                                    alt="">
-                                4.2 (13명)
+                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png">
+                                <%=locationList.get(i).getAvg() %> (<%=locationList.get(i).getCount() %>명)
                                 &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/view1.png" alt="">
-                                121,732
+                                <img src="./resources/img/heart.png" alt="">
+                                <%=locationList.get(i).getFcount() %>
                                 &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/heart.png" alt="">
-                                657
+                                <img src="./resources/img/view1.png" alt="">
+                                <%=locationList.get(i).getRestViews() %>
 
                             </div>
 
@@ -742,10 +1108,21 @@
                     </div>
                     <div class="textLine">
                         <span>
-                            연예인 주원이 하는곳인줄 알고 갔는데 강주원이있네요..
+                            <%=locationList.get(i).getIntro() %>
                         </span>
                     </div>
                 </div>
+                	<% count++; %>
+                <%}%>
+                </div>
+            
+                <script>
+                $(function(){
+                	$("#restItem").on("click", ".restaurant", function(){
+                		alert('ㅎㅇ');
+                	});
+                })
+                </script>
                 
                 <!-- <button class="searchPlus">검색결과 더보기</button> <br> -->
                 <nav aria-label="...">
@@ -816,7 +1193,9 @@
 
         })
     </script>
-    <!-- 회원탈퇴용 Modal -->
+    
+    
+    <!-- 음식점 추가하기 Modal -->
     <div class="modal" id="addRestaurantModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -829,27 +1208,32 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form action="restSearchInsertRest.re" method="post" enctype="multipart/form-data">
+                    
                         <span>식당이름</span> <br>
-                        <input type="text" name="" id="inputRestaurantName" placeholder="등록하려는 식당명을 입력하세요."> <br><br>
+                        <input type="text" name="restName" id="inputRestaurantName" placeholder="등록하려는 식당명을 입력하세요."> <br><br>
+                        
                         <span>식당정보</span> <br>
-                        <textarea name="" id="inputRestaurantInf" cols="30" rows="10"
+                        <textarea name="restInfo" id="inputRestaurantInf" cols="30" rows="10"
                             placeholder="식당에 대한 정보를 자유롭게 써주세요."></textarea> <br>
-                        <div id="selectedPhotos"></div>
-                        <label for="photoInput" class="fileLabel">
-                            <img src="./이눔세끼화이팅/resources/img/iconmonstr-plus-lined-240.png" alt="">
-                        </label>
-                        <input type="file" id="photoInput" multiple>
-                        <span class="photoInputCount"></span>
+
+                        <input type="file" id="photoInput" name="file1"/>
+                        <input type="file" id="photoInput" name="file2"/>
+                        <input type="file" id="photoInput" name="file3"/>
+                        <input type="file" id="photoInput" name="file4"/>
+                        <input type="file" id="photoInput" name="file5"/>
+                        
 
                         <script src="script.js"></script>
 
 
                         <br>
-                        <button class="modalBtn" id="modalBtn2">닫기</button>
+                        <button class="mmm" id="mmm">닫기</button>
                         <button class="modalBtn" id="modalBtn3">제출</button>
 
                     </form>
+                    
+                    
                 </div>
             </div>
         </div>
