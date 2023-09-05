@@ -1,8 +1,9 @@
+<%@page import="com.semi_5makase.restaurant.model.service.RestaurantService"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.Restaurant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
+	ArrayList<Restaurant> tvList = new RestaurantService().selectMainTvRestInfo();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -196,9 +197,24 @@
         <br>
         <hr>
         <section class="main_most_popular_restaurant">
-            <h2 id="editor-select">에디터가 선정한 식당</h2>
+            <h2 id="editor-select">TV에 나온 음식점</h2>
             <div class="popular_restaurant_container">
                 <ul>
+                <% for(int i=0; i<3; i++) { %>
+                    <li class="fl">
+                        <a href="<%= contextPath %>/detail.rt?restNo=2">
+                            <img src="resources/img/bibimbap.jpg">
+                                <div class="info">
+                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
+                                    <strong><%= tvList.get(i).getAvg2() %></strong>
+                                    <p><%= tvList.get(i).getRestAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
+                                </div>
+                        </a>
+                    </li>          
+                <% } %>
+                </ul>
+                <ul>
+                	<% for(int i=3; i<6; i++) { %>
                     <li class="fl">
                         <a href="<%= contextPath %>/detail.rt?restNo=2">
                             <img src="resources/img/bibimbap.jpg">
@@ -206,8 +222,14 @@
                                     <span class="title1"></span>
                                     <strong>3.8</strong>
                                     <p>서울 역삼동 - 고기 / 제육</p>
+                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
+                                    <strong><%= tvList.get(i).getAvg2() %></strong>
+                                    <p><%= tvList.get(i).getRestAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
                                 </div>
                         </a>
+                    </li>          
+                <% } %>
+                </ul>
                         <!-- 
                         <script>
                         	$.ajax({
@@ -225,60 +247,6 @@
 
                         </script>
                          -->
-                        
-                    </li>
-                    <li class="fl">
-                        <a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title2">새마을 식당</span>
-                                    <strong>3.8</strong>
-                                    <p>서울 역삼동 - 고기 / 제육</p>
-                                </div>
-                        </a>
-                    </li>
-                    <li class="fl">
-                        <a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title3">새마을 식당</span>
-                                    <strong>3.8</strong>
-                                    <p>서울 역삼동 - 고기 / 제육</p>
-                                </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="fl">
-                        <a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title4">새마을 식당</span>
-                                    <strong>3.8</strong>
-                                    <p>서울 역삼동 - 고기 / 제육</p>
-                                </div>
-                        </a>
-                    </li>
-                    <li class="fl">
-                        <a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title5">새마을 식당</span>
-                                    <strong>3.8</strong>
-                                    <p>서울 역삼동 - 고기 / 제육</p>
-                                </div>
-                        </a>
-                    </li>
-                    <li class="fl">
-                        <a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title6">새마을 식당</span>
-                                    <strong>3.8</strong>
-                                    <p>서울 역삼동 - 고기 / 제육</p>
-                                </div>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </section>

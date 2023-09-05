@@ -10,6 +10,7 @@ import javax.websocket.CloseReason.CloseCode;
 
 import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.common.model.vo.PageInfo;
+import com.semi_5makase.restTemp.RestaurantTemp;
 import com.semi_5makase.restaurant.model.dao.RestaurantDao;
 import com.semi_5makase.restaurant.model.vo.AdminRequestRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
@@ -33,6 +34,17 @@ public class RestaurantService {
 		
 		close(conn);
 		return rest;
+	}
+	
+	public ArrayList<Restaurant> selectMainTvRestInfo() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Restaurant> tvList = new RestaurantDao().selectMainTvRestInfo(conn);
+		
+		close(conn);
+		return tvList;
+		
 	}
 	
 	public ArrayList<Menu> selectMenuList(int restNo){
@@ -266,7 +278,7 @@ public class RestaurantService {
 			return list;
 		}
 	
-	public int adminInsertRestaurant(AdminRestaurant ar, Menu m1, Menu m2, Menu m3, Time t, ArrayList<Attachment> list) {
+	public int adminInsertRestaurant(AdminRestaurant ar, Menu m1, Menu m2, Menu m3, Time t, Attachment a1, ArrayList<Attachment> list) {
 		
 		Connection conn = getConnection();
 		
@@ -276,8 +288,9 @@ public class RestaurantService {
 		int result4 = new RestaurantDao().adminInsertMenu2(conn, m2);
 		int result5 = new RestaurantDao().adminInsertMenu3(conn, m3);
 		int result6 = new RestaurantDao().adminInsertTime(conn, t);
+		int result7 = new RestaurantDao().adminInsertAttachment1(conn,a1);
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result6 > 0 && result6 > 0) {
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result6 > 0 && result6 > 0 && result7 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -679,5 +692,26 @@ public ArrayList<Restaurant> selectRestSearch(String searchVal) {
 		
 		
 	}
+	
+	// 음식점 등록요청 
+		public int insertRestTemp(RestaurantTemp r, ArrayList<Attachment> list) {
+			Connection conn = getConnection();
+			int result1 = new RestaurantDao().insertRestTemp(conn, r);
+			int result2 = 1;
+			
+			if(list != null && list.size() != 0) {
+				result2 = new RestaurantDao().insertAttachment(conn, list);
+			}
+			
+			if(result1>0 && result2>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			
+			close(conn);
+			
+			return result1 * result2;
+		}
 	
 }

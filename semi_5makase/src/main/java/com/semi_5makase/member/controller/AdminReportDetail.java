@@ -34,6 +34,7 @@ public class AdminReportDetail extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		int reportNo = Integer.parseInt(request.getParameter("num"));
+		
 		Report rep = new MemberService().adminSelectReportDetail(reportNo);
 		
 		if(rep != null) {

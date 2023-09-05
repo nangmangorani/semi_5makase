@@ -1,4 +1,4 @@
-<%@page import="com.semi_5makase.common.model.PageInfo"%>
+<%@page import="com.semi_5makase.common.model.vo.PageInfo"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -156,10 +156,6 @@
                       
                       	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
                           <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
-                          
-                          
-                          <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                          
                           
                           <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                           

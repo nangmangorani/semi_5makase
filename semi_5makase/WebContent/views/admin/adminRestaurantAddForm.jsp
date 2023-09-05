@@ -112,11 +112,11 @@
             margin-right: 35%;
         }
 
-        img{
+        .img{
         width: 100px;
         height: 100px;
         cursor: pointer;
-        background-image: url("../../resources//img/plus.png");
+        background-image: url("../../resources/img/plus.png");
         background-repeat: no-repeat;
         background-position: center;
         background-size: 50%;
@@ -161,13 +161,9 @@
                                 <ul class="list-group">
                                 
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                                     
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                                    
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                                     
                                 </ul>
                     </div>
@@ -201,9 +197,10 @@
                               <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
                               <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad">등록 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad?cpage=1">등록 요청 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad?cpage=1">수정 요청 리스트</a></li>
+                          </ul>
                       </div>
                     </div>
                 </div>
@@ -224,9 +221,9 @@
                             <tr>
                                 <td>사진</td>
                                 <td colspan="3">
-                                    <img id="rtImg1" onclick="chooseFile(1);">
-                                    <img id="rtImg2" onclick="chooseFile(2);">
-                                    <img id="rtImg3" onclick="chooseFile(3);">
+                                    <img class="img" id="rtImg1" onclick="chooseFile(1);">
+                                    <img class="img" id="rtImg2" onclick="chooseFile(2);">
+                                    <img class="img" id="rtImg3" onclick="chooseFile(3);">
                                 </td>
                                 <td><input type="file" name="file1" class="imgBtn" id="file1" onchange="loadImg(this, 1);" required></td>
                                 <td><input type="file" name="file2" class="imgBtn" id="file2" onchange="loadImg(this, 2);" required></td>
@@ -263,7 +260,6 @@
                                         <% } %>
                                     </select>
                                 </td>
-                                <td><button name="menuBtn">추가</button></td>
                             </tr>
                                                         
                             <tr>
@@ -275,7 +271,6 @@
                                         <% } %>
                                     </select>
                                 </td>
-                                <td><button name="menuBtn">추가</button></td>
                             </tr>
 
                             <tr>
@@ -353,10 +348,6 @@
                                     }
                                 }
                             }
-
-                            // $(document).on("click", "button[name='menuBtn']", function () {
-                            //     $("#menuTd").append("<input type='text' name='menu'> / <input type='text' name='price'> <br>")
-                            // });
 
                         </script>
                     </div>

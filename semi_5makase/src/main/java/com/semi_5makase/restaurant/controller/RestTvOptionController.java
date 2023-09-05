@@ -10,21 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.restaurant.model.service.RestaurantService;
-import com.semi_5makase.restaurant.model.vo.Review;
+import com.semi_5makase.restaurant.model.vo.Restaurant;
 
 /**
- * Servlet implementation class ReviewPictureController
+ * Servlet implementation class RestTvOptionController
  */
-@WebServlet("/picture.rv")
-public class ReviewPictureController extends HttpServlet {
+@WebServlet("/restTvOption.do")
+public class RestTvOptionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewPictureController() {
+    public RestTvOptionController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,23 +34,27 @@ public class ReviewPictureController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		int restNo = Integer.parseInt(request.getParameter("restNo"));
+		int categoryVal = Integer.parseInt(request.getParameter("category"));
+		ArrayList<Restaurant> categoryList= new RestaurantService().selectCategory(categoryVal);
 		
-		System.out.println("ajax restNo : " + restNo);
+		ArrayList<Attachment> atList = new RestaurantService().selectRestAttachment();
 		
-		ArrayList<Review> revList = new ArrayList<Review>();
-		ArrayList<Attachment> picList = new ArrayList<Attachment>();
+//		request.setAttribute("atList", atList);
+		
 		ArrayList totalList = new ArrayList<>();
+		totalList.add(categoryList);
+		totalList.add(atList);
+
 		
-		revList = new RestaurantService().selectReviewList(restNo);
-		picList = new RestaurantService().selectReviewAttachment(restNo);
-		
-		totalList.add(revList);
-		totalList.add(picList);	
-		
-		response.setContentType("application/json; charset=UTF-8");
+		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(totalList, response.getWriter());
+
+//		JsonObject responseJson = new JsonObject();
+//		responseJson.add("categoryList", new Gson().toJsonTree(categoryList));
+//		responseJson.add("atList", new Gson().toJsonTree(atList));
+//		response.getWriter().write(responseJson.toString()); 이렇게하면 안됨ㅋ
+		
+		
 		
 	}
 
@@ -57,7 +62,6 @@ public class ReviewPictureController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

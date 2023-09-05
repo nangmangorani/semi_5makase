@@ -144,10 +144,6 @@
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
                                     <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                                     
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                                    
-                                    
                                     <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                                     
                                 </ul>
@@ -239,7 +235,7 @@
                 <div align="right" style="padding-right: 30px;">
                     <a href="<%= contextPath %>/memberDelete.ad?num=<%= m.getMemNo() %>" class="btn btn-sm btn-danger">회원삭제</a>
                     <a href="<%= contextPath %>/memberUpdateForm.ad?num=<%= m.getMemNo() %>" class="btn btn-sm btn-primary">회원수정</a>
-                    <button class="btn btn-sm btn-secondary" onclick="history.go(-1);">뒤로가기</button>
+                    <a class="btn btn-sm btn-secondary" href="<%= contextPath %>/memberList.ad?cpage=1 %>">뒤로가기</a>
                 </div>
             </div>
             

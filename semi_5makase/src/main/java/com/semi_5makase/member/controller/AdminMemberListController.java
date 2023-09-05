@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.common.model.PageInfo;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.member.model.service.MemberService;
 import com.semi_5makase.member.model.vo.Member;
-import com.semi_5makase.restaurant.model.service.RestaurantService;
 
 /**
  * Servlet implementation class AdminMemberListController

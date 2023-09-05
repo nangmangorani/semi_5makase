@@ -16,6 +16,8 @@ public class Restaurant {
 	private String openingTime;
 	private String restTime;
 	private String breakTime;
+	private double avg2;
+	
 	
 	// 관우님꺼
 	private String tvName;
@@ -43,6 +45,16 @@ public class Restaurant {
 	}
 	
 	
+
+
+	public Restaurant(String restName, String restAddress, String tvName, String categoryName, double avg2) {
+		super();
+		this.restName = restName;
+		this.restAddress = restAddress;
+		this.tvName = tvName;
+		this.categoryName = categoryName;
+		this.avg2 = avg2;
+	}
 
 	public Restaurant(int restNo, String restName, String restAddress, String restPhone, String parking, String intro,
 			int restViews, String openingTime, String restTime, String breakTime) {
@@ -332,6 +344,14 @@ public class Restaurant {
 
 	public void setBreakTime(String breakTime) {
 		this.breakTime = breakTime;
+	}
+	
+	public double getAvg2() {
+		return avg2;
+	}
+
+	public void setAvg2(double avg2) {
+		this.avg2 = avg2;
 	}
 
 	@Override

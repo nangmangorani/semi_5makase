@@ -39,7 +39,6 @@ public class ReviewLikesUpdateController extends HttpServlet {
 		int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
 		int rvMemNo = Integer.parseInt(request.getParameter("memNo"));
 		
-		System.out.println("립멤넘" + rvMemNo);
 		
 		
 		

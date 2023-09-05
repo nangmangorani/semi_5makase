@@ -38,11 +38,7 @@ public class InsertReportController extends HttpServlet {
 		String report = request.getParameter("reportContent");
 		
 		int result = new RestaurantService().insertReport(memNo, susNo, report);
-		
-		System.out.println("멤 신고자" + memNo);
-		System.out.println("피 신고자" + susNo);
-		System.out.println("내용" + report);
-		
+
 		if(result > 0) {
 			request.getSession().setAttribute("alertMsg", "유저리뷰 신고가 성공적으로 작성되었습니다!");
 			response.sendRedirect(request.getContextPath() + "/detail.rt?restNo=" + restNo);

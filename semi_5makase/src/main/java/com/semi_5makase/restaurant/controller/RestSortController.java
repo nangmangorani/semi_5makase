@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi_5makase.restaurant.model.service.RestaurantService;
-
 /**
- * Servlet implementation class ReviewLikesCountController
+ * Servlet implementation class RestSortController
  */
-@WebServlet("/likesCount.rv")
-public class ReviewLikesCountController extends HttpServlet {
+@WebServlet("/restSort.do")
+public class RestSortController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewLikesCountController() {
+    public RestSortController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,12 +26,6 @@ public class ReviewLikesCountController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
-		
-		int result = new RestaurantService().selectLikesCount(reviewNo);
-		
-		response.getWriter().print(result);
 		
 	}
 

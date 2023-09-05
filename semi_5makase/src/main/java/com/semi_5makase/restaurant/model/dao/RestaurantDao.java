@@ -2,6 +2,7 @@ package com.semi_5makase.restaurant.model.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import static com.semi_5makase.common.JDBCTemplate.*;
 
 import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.common.model.vo.PageInfo;
+import com.semi_5makase.restTemp.RestaurantTemp;
 import com.semi_5makase.restaurant.model.vo.AdminRequestRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminRestaurant;
 import com.semi_5makase.restaurant.model.vo.AdminUpdateRestaurant;
@@ -77,6 +79,42 @@ private Properties prop = new Properties();
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public ArrayList<Restaurant> selectMainTvRestInfo(Connection conn) {
+		
+		ArrayList<Restaurant> tvList = new ArrayList<Restaurant>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMainTvRestInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				tvList.add(new Restaurant(rset.getString("REST_NAME"),
+										  rset.getString("ADDRESS"),
+										  rset.getString("TV_NAME"),
+										  rset.getString("CATEGORY_NAME"),
+										  rset.getDouble("AVG")
+										  ));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		System.out.println("TV리스트" + tvList);
+		
+		return tvList;
+		
 	}
 	
 	public ArrayList<Review> selectReviewList(int restNo, Connection conn){
@@ -653,15 +691,10 @@ private Properties prop = new Properties();
 										 rset.getString("parking"),
 										 rset.getString("intro"),
 										 rset.getString("status"),
-										 rset.getString("menu"),
-										 rset.getInt("price"),
-										 rset.getInt("menu_grade"),
 										 rset.getString("opening_time"),
 										 rset.getString("rest_time"),
 										 rset.getString("break_time"));
-						
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -688,7 +721,7 @@ private Properties prop = new Properties();
 			while(rset.next()) {
 				list.add(new Menu(rset.getInt("rest_no"),
 								rset.getString("menu"),
-								rset.getInt("price"),
+								rset.getString("price"),
 								rset.getInt("menu_grade")
 								));
 			}
@@ -888,7 +921,6 @@ private Properties prop = new Properties();
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("adminInsertAttachment");
-		System.out.println(result + "$$$$$$$$$$");
 		try {
 			for(Attachment at : list) {
 				
@@ -909,6 +941,29 @@ private Properties prop = new Properties();
 		return result;
 	}
 	
+	public int adminInsertAttachment1(Connection conn, Attachment at1) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("adminInsertAttachment1");
+		try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at1.getOriginName());
+				pstmt.setString(2, at1.getChangeName());
+				pstmt.setString(3, at1.getFilePath());
+				
+				result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	public int adminInsertMenu1(Connection conn, Menu m1) {
 			
 			int result = 0;
@@ -919,7 +974,7 @@ private Properties prop = new Properties();
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, m1.getMenu());
-				pstmt.setInt(2, m1.getPrice());
+				pstmt.setString(2, m1.getPrice());
 				
 				result = pstmt.executeUpdate();
 				
@@ -980,7 +1035,7 @@ private Properties prop = new Properties();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m2.getMenu());
-			pstmt.setInt(2, m2.getPrice());
+			pstmt.setString(2, m2.getPrice());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1032,7 +1087,7 @@ public int adminInsertMenu3(Connection conn, Menu m3) {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, m3.getMenu());
-			pstmt.setInt(2, m3.getPrice());
+			pstmt.setString(2, m3.getPrice());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1135,7 +1190,7 @@ public int adminUpdateMenu1(Connection conn, Menu m1) {
 		pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setString(1, m1.getMenu());
-		pstmt.setInt(2, m1.getPrice());
+		pstmt.setString(2, m1.getPrice());
 		pstmt.setInt(3, m1.getMenuGrade());
 		pstmt.setInt(4, m1.getRestNo());
 		
@@ -1159,7 +1214,7 @@ public int adminUpdateMenu2(Connection conn, Menu m2) {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, m2.getMenu());
-			pstmt.setInt(2, m2.getPrice());
+			pstmt.setString(2, m2.getPrice());
 			pstmt.setInt(3, m2.getMenuGrade());
 			pstmt.setInt(4, m2.getRestNo());
 			
@@ -1183,7 +1238,7 @@ public int adminUpdateMenu3(Connection conn, Menu m3) {
 		pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setString(1, m3.getMenu());
-		pstmt.setInt(2, m3.getPrice());
+		pstmt.setString(2, m3.getPrice());
 		pstmt.setInt(3, m3.getMenuGrade());
 		pstmt.setInt(4, m3.getRestNo());
 		
@@ -1636,23 +1691,25 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 	
 	//사이드 메뉴 옵션 모두 선택 후 조회리스트
 	public ArrayList<Restaurant> selectOptionList(Connection conn, String searchVal, int ageVal, int ageVal2, int categoryVal, String locationVal, int tvVal) {
+		System.out.println("selectOptionList 시작");
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		ArrayList<Restaurant> list = new ArrayList<Restaurant>();
 		String sql = prop.getProperty("selectOptionList");
 
 		
+		System.out.println(searchVal + "##" +  locationVal);
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, "%" + searchVal + "%");
-			pstmt.setString(2, "%" + locationVal + "%");
-			pstmt.setString(3, "%" + searchVal + "%");
-			pstmt.setString(4, "%" + locationVal + "%");
-			pstmt.setInt(5, categoryVal);
-			pstmt.setInt(6, tvVal);
-			pstmt.setInt(7, ageVal);
-			pstmt.setInt(8, ageVal2);
+			pstmt.setString(2, "%" + searchVal + "%");
+			pstmt.setString(3, "%" + locationVal + "%");
+			pstmt.setInt(4, categoryVal);
+			pstmt.setInt(5, tvVal);
+			pstmt.setInt(6, ageVal);
+			pstmt.setInt(7, ageVal2);
 			
 			rset=pstmt.executeQuery();
 			
@@ -1690,31 +1747,6 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 		return list;
 	}
 	
-	// 음식점 등록요청
-	
-//		public int insertRestTemp(Connection conn, RestaurantTemp r) {
-//			PreparedStatement pstmt = null;
-//			int result = 0;
-//			
-//			String sql = prop.getProperty("insertRestTemp");
-//			
-//			try {
-//				pstmt=conn.prepareStatement(sql);
-//				
-//				pstmt.setString(1, r.getRestName());
-//				pstmt.setString(2, r.getRestInfo());
-//				result = pstmt.executeUpdate();
-//				
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}finally{
-//				close(pstmt);
-//			}
-//			return result;
-//			
-//				
-//		}
-		
 		// 음식점 등록요청 시 사진 등록 (attachment)
 		public int insertAttachment(Connection conn, ArrayList<Attachment> list) {
 			int result = 0;
@@ -1858,6 +1890,31 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 				close(pstmt);
 			}
 			return list;
+		}
+		
+		// 음식점 등록요청
+		
+		public int insertRestTemp(Connection conn, RestaurantTemp r) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String sql = prop.getProperty("insertRestTemp");
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				
+				pstmt.setString(1, r.getRestName());
+				pstmt.setString(2, r.getRestInfo());
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+			}
+			return result;
+			
+				
 		}
 
 	
