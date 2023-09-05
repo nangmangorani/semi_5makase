@@ -39,7 +39,7 @@ public class QnaDetailViewController extends HttpServlet {
 		// 3. Attachment list 만들고 배열 받아서 setAttribute
 		// 4. jsp에서 받아서 맨위에 list째로 올리고 for문으로 첨부파일란에 뿌리기
 		
-		int qnaNo = Integer.parseInt( request.getParameter("num"));
+		int qnaNo = Integer.parseInt(request.getParameter("num"));
 		
 		int result = new QnaService().increaseQnaViews(qnaNo);
 		
@@ -58,12 +58,12 @@ public class QnaDetailViewController extends HttpServlet {
 				q.setOpen("비공개");
 			}
 			
-			ArrayList<Attachment> list = new QnaService().selectAttachment(qnaNo);
+			Attachment at = new QnaService().selectAttachment(qnaNo);
 			
-			
+			System.out.println(q.getReplyContent());
 			
 			request.setAttribute("q", q);
-			request.setAttribute("list", list);
+			request.setAttribute("at", at);
 			request.getRequestDispatcher("views/board/qnaDetailView.jsp").forward(request, response);
 			
 			

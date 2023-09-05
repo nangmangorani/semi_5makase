@@ -30,16 +30,15 @@ public class QnaService {
 	 * qna insert. 사진 있는경우 없는경우 분기처리할곳
 	 */
 	
-	public int insertBoard(Qna q, ArrayList<Attachment> list) {
+	public int insertBoard(Qna q, Attachment at) {
 		Connection conn = getConnection();
 		
 		int result1 = new QnaDao().insertBoard(conn, q);
 		int result2 = 1;
 		
 		// 사진있을경우
-		if(list != null && list.size() != 0) {
-			result2 = new QnaDao().insertAttachment(conn, list);
-			System.out.println(result2);
+		if(at != null) {
+			result2 = new QnaDao().insertAttachment(conn, at);
 		}
 		
 		if(result1 > 0 && result2 > 0) {
@@ -113,15 +112,15 @@ public class QnaService {
 		
 	}
 
-	public ArrayList<Attachment> selectAttachment(int qnaNo) {
+	public Attachment selectAttachment(int qnaNo) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Attachment> list = new QnaDao().selectAttachment(conn, qnaNo);
+		Attachment at = new QnaDao().selectAttachment(conn, qnaNo);
 		
 		close(conn);
 		
-		return list;
+		return at;
 	}
 	
 	
@@ -129,15 +128,19 @@ public class QnaService {
 	 * qna 수정하기
 	 */
 	
-	public int updateQna(Qna q, ArrayList<Attachment> list) {
+	public int updateQna(Qna q, Attachment at) {
+		
 		Connection conn = getConnection();
-		int result1 = 0;
+		// 1. 일단 글은 무조건 수정
+		int result1 = new QnaDao().updateQnaBoard(conn, q, at);
 		int result2 = 1;
 		
-		result1 = new QnaDao().updateQna(conn, q);	
-		System.out.println(result1); // 1이겠지
-		if(list != null && list.size() != 0) {
-			result2 = new QnaDao().updateAttachment(conn, list);
+		if(at != null) {
+			if(at.getFileNo() != 0) {
+				result2 = new QnaDao().updateAttachment(conn, at);
+			} else {
+				result2 = new QnaDao().insertNewAttachment(conn, at);
+			}
 		}
 		
 		if(result1 > 0 && result2 > 0) {
@@ -149,6 +152,7 @@ public class QnaService {
 		close(conn);
 		
 		return result1 * result2;
+		
 	}
 	
 	
@@ -175,6 +179,27 @@ public class QnaService {
 		
 	}
 	
+	/**
+	 * qna 답변달기
+	 */
+	
+	public int insertReply(int qnaNo, String qnaContent) {
+		
+		Connection conn = getConnection();
+		
+		int result = new QnaDao().insertReply(conn, qnaNo, qnaContent);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
 	
 	
 	

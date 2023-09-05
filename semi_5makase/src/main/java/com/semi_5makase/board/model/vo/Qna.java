@@ -13,6 +13,7 @@ public class Qna {
 	private String open;
 	private String reply;
 	private String boardWriter;
+	private String replyContent;
 	
 	public Qna() {}
 	
@@ -28,7 +29,7 @@ public class Qna {
 		
 	}
 
-
+	
 
 
 	public Qna(int qnaNo, String boardTitle, String boardContent, int qnaViews, Date createDate, String open,
@@ -44,7 +45,7 @@ public class Qna {
 		this.boardWriter = boardWriter;
 	}
 
-
+	
 
 	public Qna(int qnaNo, String boardTitle, Date createDate, String open, String reply, String boardWriter) {
 		super();
@@ -56,10 +57,27 @@ public class Qna {
 		this.boardWriter = boardWriter;
 	}
 
+	
+
+	public Qna(int qnaNo, String boardTitle, String boardContent, int qnaViews, Date createDate, String open,
+			String reply, String boardWriter, String replyContent) {
+		super();
+		this.qnaNo = qnaNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.qnaViews = qnaViews;
+		this.createDate = createDate;
+		this.open = open;
+		this.reply = reply;
+		this.boardWriter = boardWriter;
+		this.replyContent = replyContent;
+	}
+
+
 
 
 	public Qna(int qnaNo, String boardTitle, String boardContent, int qnaViews, Date createDate, String status,
-			String open, String reply, String boardWriter) {
+			String open, String reply, String boardWriter, String replyContent) {
 		super();
 		this.qnaNo = qnaNo;
 		this.boardTitle = boardTitle;
@@ -70,6 +88,15 @@ public class Qna {
 		this.open = open;
 		this.reply = reply;
 		this.boardWriter = boardWriter;
+		this.replyContent = replyContent;
+	}
+
+	public String getReplyContent() {
+		return replyContent;
+	}
+
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
 	}
 
 	public int getQnaNo() {
@@ -144,12 +171,16 @@ public class Qna {
 		this.boardWriter = boardWriter;
 	}
 
+
+
+
 	@Override
 	public String toString() {
 		return "Qna [qnaNo=" + qnaNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", qnaViews="
 				+ qnaViews + ", createDate=" + createDate + ", status=" + status + ", open=" + open + ", reply=" + reply
-				+ ", boardWriter=" + boardWriter + "]";
+				+ ", boardWriter=" + boardWriter + ", replyContent=" + replyContent + "]";
 	}
+
 	
 	
 

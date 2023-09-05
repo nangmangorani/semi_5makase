@@ -61,24 +61,17 @@ public class QnaInsertController extends HttpServlet {
 			q.setBoardWriter(userNo);
 			q.setOpen(open);
 			
-			ArrayList<Attachment> list = new ArrayList<Attachment>();
+			Attachment at = null;
 			
-			
-			for(int i =1; i<=5; i++) {
-				String key = "upfile" + i;
-				
-				if(multiRequest.getOriginalFileName(key) != null) {
-					Attachment at = new Attachment();
-					at.setOriginName(multiRequest.getOriginalFileName(key));
-					at.setChangeName(multiRequest.getFilesystemName(key));
-					at.setFilePath("resources/qnaAttachment");
-					list.add(at);
-					
-				}
+			if(multiRequest.getOriginalFileName("upfile") != null) {
+				at = new Attachment();
+				at.setOriginName(multiRequest.getOriginalFileName("upfile"));
+				at.setChangeName(multiRequest.getFilesystemName("upfile"));
+				at.setFilePath("resources/qnaAttachment");
 				
 			}
 			
-			int result = new QnaService().insertBoard(q, list);
+			int result = new QnaService().insertBoard(q, at);
 			
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "성공적으로 추가되었습니다.");

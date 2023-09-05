@@ -6,7 +6,7 @@
     pageEncoding="UTF-8"%>
 <% 
 	Qna q = (Qna)request.getAttribute("q");
-	ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
+	Attachment at = (Attachment)request.getAttribute("at");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -255,15 +255,27 @@
                         </div>
                         <div id="qnaContent">
                             <div id="qnaContent_1"><%= q.getBoardContent() %></div>
+                            <% if(at != null) { %>
                             <div id="qnaContent_2">
                                 <b>첨부파일</b>
-                                <% for(Attachment at : list) {%>
                                 	<a download="<%= at.getOriginName() %>" href="<%=contextPath%>/<%=at.getFilePath()%>/<%=at.getChangeName()%>"><%= at.getOriginName() %></a> &nbsp;
-                                <% } %>
                             </div>
+                            <% } else {%>
+                            <div id="qnaContent_2">
+                                <b>첨부파일</b>
+                                첨부파일 없습니다.
+                            </div>
+                            <% } %>
                             <div id="qnaContent_3">
                                 <b>답변</b>
-                                <span></span>
+                                <% if(loginMember.getMemId().equals("admin") && q.getReplyContent() == null) {%>
+                                	<button id="btnReplyQna" onclick="location.href='<%=contextPath%>/insertreplyview.qna?cpage=<%=q.getQnaNo()%>'">답변하기</button>
+                                <% }%>
+                                <% if(q.getReplyContent() != null) {%>
+                                	<%= q.getReplyContent() %>
+                                <% } else {%>
+                                	답변x
+                                <% } %>
                             </div>
                         </div>
                     </div>
