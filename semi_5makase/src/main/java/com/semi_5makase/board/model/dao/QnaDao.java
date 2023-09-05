@@ -111,23 +111,19 @@ public class QnaDao {
 	/**
 	 * qna 사진있는경우
 	 */
-	public int insertAttachment(Connection conn, ArrayList<Attachment> list) {
+	public int insertAttachment(Connection conn, Attachment at) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		
 		String sql = prop.getProperty("insertAttachment");
 		try {
-			for(Attachment at : list) {
-				pstmt = conn.prepareStatement(sql);
 			
-				pstmt.setString(1, at.getOriginName());
-				pstmt.setString(2, at.getChangeName());
-				pstmt.setString(3, at.getFilePath());
-				
-				result = pstmt.executeUpdate();
-				System.out.println(result + "dao at");
-			}
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
 			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -203,6 +199,8 @@ public class QnaDao {
 	 */
 	public Qna selectQna(Connection conn, int qnaNo) {
 		
+		System.out.println("Dddd");
+		
 		Qna q = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -217,6 +215,7 @@ public class QnaDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
+				System.out.println("dlsssssssssssssssss");
 				q = new Qna(rset.getInt("qna_no"),
 						    rset.getString("board_title"),
 						    rset.getString("board_content"),
@@ -224,22 +223,28 @@ public class QnaDao {
 						    rset.getDate("create_date"),
 						    rset.getString("open"),
 						    rset.getString("reply"),
-						    rset.getString("mem_id"));
+						    rset.getString("mem_id"),
+						    rset.getString("reply_content")
+						);
 			}
+			
+			System.out.println(q);
+			System.out.println("제발되라고구마!!!!!!" + q.getReplyContent());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
+		System.out.println("제발되라고!!!!!!" + q.getReplyContent());
+		System.out.println("이건되냐?" + q.getBoardTitle());
 		return q;
 		
 	}
 
-	public ArrayList<Attachment> selectAttachment(Connection conn, int qnaNo) {
+	public Attachment selectAttachment(Connection conn, int qnaNo) {
 		
-		ArrayList<Attachment> list = new ArrayList<Attachment>();
+		Attachment at = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -250,13 +255,12 @@ public class QnaDao {
 			pstmt.setInt(1, qnaNo);
 			rset = pstmt.executeQuery();
 			
-			while(rset.next()) {
-				Attachment at = new Attachment();
+			if(rset.next()) {
+				at = new Attachment();
+				at.setFileNo(rset.getInt("file_no"));
 				at.setOriginName(rset.getString("origin_name"));
 				at.setChangeName(rset.getString("change_name"));
 				at.setFilePath(rset.getString("file_path"));
-				
-				list.add(at);
 			}
 			
 		} catch (SQLException e) {
@@ -265,18 +269,18 @@ public class QnaDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return at;
 		
 	}
 	
 	/**
-	 * qna 수정하기
+	 * qna 게시글수정하기
 	 */
-	public int updateQna(Connection conn, Qna q) {
+	public int updateQnaBoard(Connection conn, Qna q, Attachment at) {
 		
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("updateQna");
+		String sql = prop.getProperty("updateQnaBoard");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -297,31 +301,63 @@ public class QnaDao {
 	}
 	
 	/**
-	 * qna 사진 수정
+	 * 사진업데이트
+	 * @param conn
+	 * @param at
+	 * @return
 	 */
-	public int updateAttachment(Connection conn, ArrayList<Attachment> list) {
+	public int updateAttachment(Connection conn, Attachment at) {
 		
-		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("deleteAttachment");
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAttachment");
 		
 		try {
-			for(Attachment at : list) {
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setInt(1, at.getRefBno());
-				
-				result = pstmt.executeUpdate();
-				
-			}
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			pstmt.setInt(4, at.getFileNo());
+			
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
-		System.out.println(result + "ㅋㅋㅋㅋㅋㅋㅋㅋ나는 dao");
-		return result;
 		
+		return result; 
+		
+	}
+	
+	/**
+	 * 사진 없다생김
+	 */
+	
+	public int insertNewAttachment(Connection conn, Attachment at) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNewAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, at.getRefBno());
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	
@@ -352,6 +388,38 @@ public class QnaDao {
 		return result;
 		
 	}
+	
+	
+	/**
+	 * qna 답변하기
+	 */
+	
+	public int insertReply(Connection conn, int qnaNo, String qnaContent) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, qnaContent);
+			pstmt.setInt(2, qnaNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	
+	
+	
 	
 	
 	

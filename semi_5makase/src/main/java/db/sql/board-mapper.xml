@@ -136,6 +136,7 @@ VALUES
      , OPEN
      , REPLY
      , MEM_ID
+     , REPLY_CONTENT
   FROM QNA Q
   JOIN MEMBER ON(MEM_NO = BOARD_WRITER)
  WHERE QNA_NO = ?
@@ -168,7 +169,7 @@ VALUES
 	 WHERE FAQ_NO = ?
 </entry>
 
-<entry key="updateQna">
+<entry key="updateQnaBoard">
 	UPDATE QNA
 	   SET BOARD_TITLE = ?
 	     , BOARD_CONTENT = ?
@@ -181,12 +182,49 @@ VALUES
 	 WHERE QNA_NO = ?
 </entry>
 
-<entry key="deleteAttachment">
-	UPDATE ATTACHMENT
-	   SET
-	       STATUS = 'N'
-	 WHERE REF_BNO = ?
+
+<entry key="updateAttachment">
+	UPDATE
+	       ATTACHMENT
+	   SET ORIGIN_NAME = ?
+	     , CHANGE_NAME = ?
+	     , FILE_PATH = ?
+	 WHERE FILE_NO = ?
 	   AND CATEGORY = 'QNA'
+
+</entry>
+
+<entry key="insertNewAttachment">
+	INSERT
+	  INTO ATTACHMENT
+	  (
+	    FILE_NO
+	  , REF_BNO
+	  , ORIGIN_NAME
+	  , CHANGE_NAME
+	  , FILE_PATH
+      , STATUS
+	  , CATEGORY 
+	  )
+	  VALUES
+	  (
+	    SEQ_FNO.NEXTVAL
+	  , ?
+	  , ?
+	  , ?
+	  , ?
+	  , 'Y'
+	  , 'QNA'
+	  )
+
+</entry>
+
+<entry key="insertReply">
+	UPDATE
+	       QNA
+	   SET REPLY = 'Y'
+	     , REPLY_CONTENT = ?
+	 WHERE QNA_NO = ?
 </entry>
 
 </properties>

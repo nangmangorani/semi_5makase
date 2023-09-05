@@ -13,7 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" rel="stylesheet">
     <link href="resources/css/mainbody.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
     
@@ -29,14 +29,27 @@
     </script>
 </head>
 <style>
+	@font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        }
+
     .header-area{
     position: relative;
     width: 100%;
     height: 15%;
     background-image: url("resources/img/pork-cutlet2.jpg");
     background-size: cover;
-    
 }
+
+.navbar{
+    background-color: rgb(240, 240, 240);
+    width: 100%;
+    height: 2%;
+}
+
 </style>
 <body>
 
@@ -44,7 +57,6 @@
 	
     <div class="outer">
         <div class="navbar" align="center">
-            <div class="menu"><a href="">HOME</a></div>
             <div class="menu"><a href="<%= contextPath %>/list.no?cpage=1">공지사항</a></div>
             <div class="menu"><a href="<%=contextPath%>/list.faq">자주묻는 질문</a></div>
             <div class="menu"><a href="<%= contextPath %>/list.qna?cpage=1">Q&A</a></div>

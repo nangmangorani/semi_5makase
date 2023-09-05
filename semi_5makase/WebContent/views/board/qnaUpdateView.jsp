@@ -8,7 +8,7 @@
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String contextPath = request.getContextPath();
 	Qna q = (Qna)request.getAttribute("q");
-	ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
+	Attachment at = (Attachment)request.getAttribute("at");
 %>    
 <!DOCTYPE html>
 <html lang="en">
@@ -109,16 +109,12 @@
                   
                   		<div id='image_preview'>
 	                      <b id="picture">사진</b>  <br>    
-	                      <% int i = 1; %>
-	                      <% for(Attachment at : list) {%>
-	                      	<input type='file' class='btnAtt' name="upfile<%=i++%>"/>
-	                      	<%= at.getOriginName() %>
-	                      	<input type="hidden" name="originFileNo" value="<%=at.getFileNo()%>"> <br>
-	                      <% } %>
-	                      <% for(int j = i-1; j<=4; j++) { %>
-	                      	<input type='file' class='btnAtt' name="upfile<%=j+1%>"/>
-	                      <% } %>
-	                      
+	                      <% if(at != null) { %>
+		                      <!-- 현재 이 게시글에 딸린 첨부파일이 있을 경우 -->
+		                      <input type="hidden" name="originFileNo" value="<%=at.getFileNo()%>">
+		                      <%= at.getOriginName() %>
+							<% } %>
+		                      <input type="file" name="upfile">
 	                      <div id='att_zone'></div>
 	                  	</div>
 	                    
