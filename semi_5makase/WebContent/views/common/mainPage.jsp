@@ -74,7 +74,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/bibimbap.jpg">
+                                <img src="resources/img/bibimbap.jpg" value="1">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -91,7 +91,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/chinese.jpg">
+                                <img src="resources/img/chinese.jpg" value="2">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -108,11 +108,11 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/cooking.jpg">
+                                <img src="resources/img/cooking.jpg" value="3">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">김치찌개 맛집 TOP3</span>
+                                    <span class="title">일식 맛집 TOP3</span>
                                     <p>"스팸 돼지고기 꽁치"</p>
                                 </div>
                             </figcaption>
@@ -125,11 +125,11 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/pasta.jpg">
+                                <img src="resources/img/pasta.jpg" value="4">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">서양 국시 TOP 5</span>
+                                    <span class="title">양식 국시 TOP 5</span>
                                     <p>"난 토마토"</p>
                                 </div>
                             </figcaption>
@@ -142,11 +142,11 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/ramen.jpg">
+                                <img src="resources/img/ramen.jpg"  value="6">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">라멘 맛집 TOP 5</span>
+                                    <span class="title">면요리 맛집 TOP 5</span>
                                     <p>"매장안에 원피스 피규어 필수"</p>
                                 </div>
                             </figcaption>
@@ -159,11 +159,11 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/soup.jpg">
+                                <img src="resources/img/soup.jpg" value="7">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">분식 맛집 TOP 3</span>
+                                    <span class="title">국밥류 맛집 TOP 3</span>
                                     <p>"라면 돈까스 김밥 국룰"</p>
                                 </div>
                             </figcaption>
@@ -176,11 +176,11 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/tteokbokki.jpg">
+                                <img src="resources/img/tteokbokki.jpg"  value="8">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">국밥류 TOP 3</span>
+                                    <span class="title">분식 TOP 3</span>
                                     <p>"이 돈이면 국밥이 몇그릇.."</p>
                                 </div>
                             </figcaption>
@@ -193,13 +193,13 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/pasta.jpg">
+                                <img src="resources/img/pasta.jpg" value="9">
                             </div>
                             <figcaption>
-                                <div class="list-pic-comment">
-                                    <span class="title">한식 맛집 TOP 3</span>
-                                    <p>"주모 샤따내려"</p>
-                                </div>
+	                            <div class="list-pic-comment">
+	                                <span class="title">돈카츠 맛집 TOP 3</span>
+	                                <p>"주모 샤따내려"</p>
+	                            </div>
                             </figcaption>
                         </figure>
                     </a>
@@ -207,6 +207,15 @@
             </ul>
         </div>
         <br>
+        
+        <script>
+        	$(".top-list-info img").click(function(){
+        		var cateNo = $(this).attr("value")
+        		var cateName = $(this).closest("figure").find("span").text();   
+        		location.href="<%= contextPath %>/main.rt?value=" + cateNo + "&&cateName=" + cateName;
+        	})
+        </script>
+        
         <hr>
         <section class="main_most_popular_restaurant">
             <h2 id="editor-select">TV에 나온 음식점</h2>

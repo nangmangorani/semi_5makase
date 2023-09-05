@@ -18,7 +18,7 @@ public class Restaurant {
 	private String restTime;
 	private String breakTime;
 	private double avg2;
-	
+	private String menu;
 	
 	// 관우님꺼
 	private String tvName;
@@ -52,6 +52,27 @@ public class Restaurant {
 		this.tvName = tvName;
 		this.categoryName = categoryName;
 		this.avg2 = avg2;
+	}
+	
+	
+
+	public Restaurant(int restNo, String categoryName, String tvName, String restName, String mainAddress,
+			String parking, String intro, int restViews, String menu, double avg2, int count, int fcount,
+			String titleImg) {
+		super();
+		this.restNo = restNo;
+		this.categoryName = categoryName;
+		this.tvName = tvName;
+		this.restName = restName;
+		this.mainAddress = mainAddress;
+		this.parking = parking;
+		this.intro = intro;
+		this.restViews = restViews;
+		this.menu = menu;
+		this.avg2 = avg2;
+		this.count = count;
+		this.fcount = fcount;
+		this.titleImg = titleImg;
 	}
 
 	public Restaurant(int restNo, String restName, String restAddress, String restPhone, String parking, String intro,
@@ -358,6 +379,14 @@ public class Restaurant {
 
 	public void setMainAddress(String mainAddress) {
 		this.mainAddress = mainAddress;
+	}
+	
+	public String getMenu() {
+		return menu;
+	}
+
+	public void setMenu(String menu) {
+		this.menu = menu;
 	}
 
 	@Override

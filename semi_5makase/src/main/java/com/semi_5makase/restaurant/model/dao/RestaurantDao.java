@@ -1913,10 +1913,48 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 				close(pstmt);
 			}
 			return result;
-			
-				
 		}
 
+		public ArrayList<Restaurant> selectCategoryList(int cateNo, Connection conn) {
+			
+			ArrayList<Restaurant> list = new ArrayList<Restaurant>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+
+			String sql = prop.getProperty("selectCategoryList");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, cateNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Restaurant(rset.getInt("REST_NO"),
+											rset.getString("CATEGORY_NAME"),
+											rset.getString("TV_NAME"),
+											rset.getString("REST_NAME"),
+											rset.getString("MAIN_ADDRESS"),
+											rset.getString("PARKING"),
+											rset.getString("INTRO"),
+											rset.getInt("REST_VIEWS"),
+											rset.getString("MENU"),
+											rset.getDouble("AVG"),
+											rset.getInt("COUNT"),
+											rset.getInt("FCOUNT"),
+											rset.getString("TITLE_IMG")
+											));
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return list;
+		}
 	
 	
 }
