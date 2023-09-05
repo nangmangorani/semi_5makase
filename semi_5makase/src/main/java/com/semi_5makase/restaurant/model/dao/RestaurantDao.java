@@ -691,15 +691,10 @@ private Properties prop = new Properties();
 										 rset.getString("parking"),
 										 rset.getString("intro"),
 										 rset.getString("status"),
-										 rset.getString("menu"),
-										 rset.getInt("price"),
-										 rset.getInt("menu_grade"),
 										 rset.getString("opening_time"),
 										 rset.getString("rest_time"),
 										 rset.getString("break_time"));
-						
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -926,7 +921,6 @@ private Properties prop = new Properties();
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("adminInsertAttachment");
-		System.out.println(result + "$$$$$$$$$$");
 		try {
 			for(Attachment at : list) {
 				
@@ -938,6 +932,29 @@ private Properties prop = new Properties();
 				
 				result = pstmt.executeUpdate();
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adminInsertAttachment1(Connection conn, Attachment at1) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("adminInsertAttachment1");
+		try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at1.getOriginName());
+				pstmt.setString(2, at1.getChangeName());
+				pstmt.setString(3, at1.getFilePath());
+				
+				result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

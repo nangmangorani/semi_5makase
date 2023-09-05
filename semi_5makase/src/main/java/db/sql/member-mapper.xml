@@ -13,6 +13,21 @@
 	  FROM MEMBER
 </entry>
 
+<entry key="selectAdminId">
+	SELECT 
+	 	   MEM_NO
+	      ,MEM_NAME
+	      ,MEM_ID
+	      ,MEM_PWD
+	      ,PHONE
+	      ,ADDRESS
+	      ,EMAIL
+	      ,MEM_GRADE
+	      ,STATUS
+	  FROM MEMBER
+	 WHERE MEM_ID = 'admin'
+</entry>
+
 <entry key="selectAdminMember">
 	SELECT 
 	 	   MEM_NO
@@ -298,19 +313,48 @@ UPDATE ATTACHMENT
 	  FROM REPORT
 </entry>
 
+<entry key="adminSelectReportList">
+	SELECT 
+	         REPORT_NO
+	        ,RM.MEM_ID REPORTER
+	        ,SM.MEM_ID SUSPECT
+	        ,REPORT_CONTENT
+	        ,REPORT_DATE
+	        ,RESULT
+	  FROM REPORT
+	  JOIN MEMBER RM ON (REPORTER = RM.MEM_NO)
+      JOIN MEMBER SM ON (SUSPECT = SM.MEM_NO)
+	  ORDER BY REPORT_NO
+</entry>
 
+<entry key="adminSelectReportDetailList">
+	SELECT 
+	         REPORT_NO
+	        ,RM.MEM_ID REPORTER
+	        ,SM.MEM_ID SUSPECT
+	        ,REPORT_CONTENT
+	        ,REPORT_DATE
+	        ,RESULT
+	  FROM REPORT
+	  JOIN MEMBER RM ON (REPORTER = RM.MEM_NO)
+      JOIN MEMBER SM ON (SUSPECT = SM.MEM_NO)
+     WHERE REPORT_NO = ?
+	  ORDER BY REPORT_NO
+</entry>
 
+<entry key="adminSelectReportDetailList">
+	SELECT 
+	         REPORT_NO
+	        ,RM.MEM_ID REPORTER
+	        ,SM.MEM_ID SUSPECT
+	        ,REPORT_CONTENT
+	        ,REPORT_DATE
+	        ,RESULT
+	  FROM REPORT
+	  JOIN MEMBER RM ON (REPORTER = RM.MEM_NO)
+      JOIN MEMBER SM ON (SUSPECT = SM.MEM_NO)
+     WHERE REPORT_NO = ?
+	  ORDER BY REPORT_NO
+</entry>
 </properties>
-
-
-
-
-
-
-
-
-
-
-
-
 

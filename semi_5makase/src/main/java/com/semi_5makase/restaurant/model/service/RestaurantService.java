@@ -278,7 +278,7 @@ public class RestaurantService {
 			return list;
 		}
 	
-	public int adminInsertRestaurant(AdminRestaurant ar, Menu m1, Menu m2, Menu m3, Time t, ArrayList<Attachment> list) {
+	public int adminInsertRestaurant(AdminRestaurant ar, Menu m1, Menu m2, Menu m3, Time t, Attachment a1, ArrayList<Attachment> list) {
 		
 		Connection conn = getConnection();
 		
@@ -288,8 +288,9 @@ public class RestaurantService {
 		int result4 = new RestaurantDao().adminInsertMenu2(conn, m2);
 		int result5 = new RestaurantDao().adminInsertMenu3(conn, m3);
 		int result6 = new RestaurantDao().adminInsertTime(conn, t);
+		int result7 = new RestaurantDao().adminInsertAttachment1(conn,a1);
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result6 > 0 && result6 > 0) {
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result6 > 0 && result6 > 0 && result7 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);

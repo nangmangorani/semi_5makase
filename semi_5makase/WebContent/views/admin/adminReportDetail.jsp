@@ -1,8 +1,9 @@
+<%@page import="com.semi_5makase.member.model.vo.Report"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Member m = (Member)request.getAttribute("m");
+	Report rep = (Report)request.getAttribute("rep");
 %>    
 
 <!DOCTYPE html>
@@ -142,13 +143,9 @@
                                 <ul class="list-group">
                                 
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                                     
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                                    
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                                     
                                 </ul>
                     </div>
@@ -182,9 +179,9 @@
                               <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
                               <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad">등록 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad?cpage=1">등록 요청 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad?cpage=1">수정 요청 리스트</a></li>
                           </ul>
                       </div>
                     </div>
@@ -194,55 +191,41 @@
 
         <!-- -------------컨텐츠 헤더------------- -->
         <div class="content">
+            <form action="<%= contextPath %>/reportUpdate.ad?num=<%= rep.getReportNo() %>" method="post">
             <div id="content_1">
-                <h4 style="font-weight: bold;" align="center">회원 정보 상세</h4>
+                <h4 style="font-weight: bold;" align="center">신고 내용</h4>
             </div>
+            <input type="hidden" name="num" values="<%= rep.getReportNo() %>">
             <div id="content_2" style="margin-top: 30px;"> 
                 <div align="center">
-                    <img src="../../resources/img/rdetail_user.png" style="width: 45px;">
-                    <table class="table" style="width: 350px;">
+                    <table class="table" style="width: 350px;" align="center">
                             <tr>
-                                <th scope="col">회원명</th>
-                                <td><%= m.getMemName() %></td>
+                                <th scope="col" style="widt:150px">신고자</th>
+                                <td><input type="text" style="border: 0;" name="reporter" value="<%= rep.getReporter() %>" disabled></td>
                             </tr>
                             <tr>
-                                <th scope="col">아이디</th>
-                                <td><%= m.getMemId() %></td>
+                                <th scope="col">피신고자</th>
+                                <td><input type="text" style="border: 0;" name="suspect" value="<%= rep.getSuspect() %>" disabled></td>
                             </tr>
                             <tr>
-                                <th scope="col">비밀번호</th>
-                                <td><input type="password" value="<%= m.getMemPwd() %>" disabled></td>
+                                <th scope="col">내용</th>
+                                <td>
+                                    <textarea name="content" style="resize: none;" cols="30" rows="3" disabled><%= rep.getReportContent() %></textarea>
+                                </td>
                             </tr>
                             <tr>
-                                <th scope="col">주소</th>
-                                <td><%= m.getAddress() %></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">전화번호</th>
-                                <td><%= m.getPhone() %></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">이메일</th>
-                                <td><%= m.getEmail() %></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">회원등급</th>
-                                <td><%= m.getMemGrade() %></td>
-                            </tr>
-                            <tr>
-                                <th scope="col">회원상태</th>
-                                <td><%= m.getStatus() %></td>
+                                <th scope="col">처리여부(Y/N)</th>
+                                <td><input type="text" name="result" value="<%= rep.getResult() %>"></td>
                             </tr>
                             
                     </table> 
                 </div>
-                <div align="right" style="padding-right: 30px;">
-                    <a href="<%= contextPath %>/memberDelete.ad?num=<%= m.getMemNo() %>" class="btn btn-sm btn-danger">회원삭제</a>
-                    <a href="<%= contextPath %>/memberUpdateForm.ad?num=<%= m.getMemNo() %>" class="btn btn-sm btn-primary">회원수정</a>
-                    <button class="btn btn-sm btn-secondary" onclick="history.go(-1);">뒤로가기</button>
-                </div>
             </div>
-            
+                <div align="right" style="padding-right: 30px;">
+                    <a type="button" class="btn btn-sm btn-secondary" href="<%= contextPath %>/reportList.ad?cpage=1">뒤로가기</a>
+                	<button type="submit" class="btn btn-sm btn-primary">수정하기</button>
+                </div>
+          </form>
         </div>
     </div>
 </body>

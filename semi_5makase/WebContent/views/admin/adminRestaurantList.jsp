@@ -1,4 +1,4 @@
-<%@page import="com.semi_5makase.common.model.PageInfo"%>
+<%@page import="com.semi_5makase.common.model.vo.PageInfo"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.AdminRestaurant"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -53,7 +53,7 @@
 
         .outline{ 
             border: 1px solid rgb(230, 230, 230);
-            width: 1000px; height: 850px; margin: auto;
+            width: 1000px; height: 1200px; margin: auto;
         }
         .outline>div{
             /* border: 1px solid red; */
@@ -116,9 +116,9 @@
         }
         
         #list-table>tbody>tr:hover{
-        background-color: gray;
-        cursor: pointer;
-    }
+	        background-color: gray;
+	        cursor: pointer;
+    	}
         
     </style>
 </head>
@@ -155,13 +155,9 @@
                       <ul class="list-group">
                       
                       	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                          <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
+                          <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                           
-                          
-                          <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                          
-                          
-                          <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                          <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                           
                       </ul>
                     </div>
@@ -195,9 +191,9 @@
                               <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
                               <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad">등록 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad?cpage=1">등록 요청 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad?cpage=1">수정 요청 리스트</a></li>
                           </ul>
                       </div>
                     </div>
@@ -235,8 +231,8 @@
 					            <!-- case2. 공지글이 있을 경우 -->
 	                        	<% for(AdminRestaurant rest : list) { %>
 		                            <tr>
-		                                <th scope="row"><%= rest.getRestNo() %></th>
-		                                <td><%= rest.getRestName() %></td>
+		                                <th scope="row" style="width: 15px"><%= rest.getRestNo() %></th>
+		                                <td style="width: 200px"><%= rest.getRestName() %></td>
 		                                <td><%= rest.getRestAddress() %></td>
 		                                <td><%= rest.getRestPhone() %></td>
 		                            </tr>
@@ -270,7 +266,6 @@
 			$("#list-table>tbody>tr").click(function(){
 				
 				const num = $(this).children().eq(0).text();
-			    console.log(num);
 				location.href = '<%= contextPath %>/rtDetail.ad?num=' + num;
 			})
 		})
