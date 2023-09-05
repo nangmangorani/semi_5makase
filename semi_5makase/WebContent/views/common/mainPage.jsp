@@ -224,7 +224,7 @@
         </section>
        <hr>
        <section class="main_most_popular_restaurant">
-        <h2 id="editor-select">지금 날씨에 먹기좋은 음식</h2>
+        <h2 id="editor-select">에디터가 선정한 식당</h2>
         <div class="popular_restaurant_container">
             <ul>
                 <li class="fl">
