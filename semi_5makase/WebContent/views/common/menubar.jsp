@@ -179,8 +179,17 @@
           		<!-- case2. 로그인 전  -->
                 <button type='button' id="modal_btn" data-target="#loginModal">로그인</button>
                 <button type="button" onclick="enrollPage()">회원가입</button>
-              <%}else{ %>
-                <!-- case2. 로그인 후  -->
+              <%} else if(loginMember.getMemId().equals("admin")) { %>
+                <!-- case2. 관리자 로그인 후  -->
+			        <div>
+			            <b><%= loginMember.getMemName()%>님</b> 환영합니다. <br>
+			            <div align="center">
+			                <a href="<%=contextPath %>/adminMain.ad">관리자 페이지</a>
+			                <a href="<%=contextPath %>/logout.me">로그아웃</a>
+			            </div>
+			        </div>
+			     <%} else { %>
+                	<!-- case2. 일반회원 로그인 후  -->
 			        <div>
 			            <b><%= loginMember.getMemName()%>님</b> 환영합니다. <br>
 			            <div align="center">
@@ -188,8 +197,7 @@
 			                <a href="<%=contextPath %>/logout.me">로그아웃</a>
 			            </div>
 			        </div>
-			     <%} %>
-                
+			     <% } %>
                 
                 
                 <div class="black_bg"></div>

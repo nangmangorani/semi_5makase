@@ -548,6 +548,38 @@ public class MemberDao {
 		return list;
 	}
 	
+	public Member selectAdminMember(Connection conn) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAdminId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("mem_no"),
+								rset.getString("mem_name"),
+								rset.getString("mem_id"),
+								rset.getString("mem_pwd"),
+								rset.getString("phone"),
+								rset.getString("address"),
+								rset.getString("email"),
+								rset.getString("mem_grade"),
+								rset.getString("status"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+	}
+	
 	public Member selectAdminMember(Connection conn, int no) {
 		Member m = null;
 		PreparedStatement pstmt = null;

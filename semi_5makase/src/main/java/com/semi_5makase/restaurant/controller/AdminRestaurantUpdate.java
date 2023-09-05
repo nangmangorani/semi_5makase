@@ -58,9 +58,9 @@ public class AdminRestaurantUpdate extends HttpServlet {
 			String menu1 = multiRequest.getParameter("menu1");
 			String menu2 = multiRequest.getParameter("menu2");
 			String menu3 = multiRequest.getParameter("menu3");
-			int price1 = Integer.parseInt(multiRequest.getParameter("price1"));
-			int price2 = Integer.parseInt(multiRequest.getParameter("price2"));
-			int price3 = Integer.parseInt(multiRequest.getParameter("price3"));
+			String price1 = multiRequest.getParameter("price1");
+			String price2 = multiRequest.getParameter("price2");
+			String price3 = multiRequest.getParameter("price3");
 			int menuGrade1 = Integer.parseInt(multiRequest.getParameter("menuGrade1"));
 			int menuGrade2 = Integer.parseInt(multiRequest.getParameter("menuGrade2"));
 			int menuGrade3 = Integer.parseInt(multiRequest.getParameter("menuGrade3"));

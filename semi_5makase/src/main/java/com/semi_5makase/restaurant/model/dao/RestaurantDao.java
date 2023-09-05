@@ -653,15 +653,10 @@ private Properties prop = new Properties();
 										 rset.getString("parking"),
 										 rset.getString("intro"),
 										 rset.getString("status"),
-										 rset.getString("menu"),
-										 rset.getInt("price"),
-										 rset.getInt("menu_grade"),
 										 rset.getString("opening_time"),
 										 rset.getString("rest_time"),
 										 rset.getString("break_time"));
-						
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -688,7 +683,7 @@ private Properties prop = new Properties();
 			while(rset.next()) {
 				list.add(new Menu(rset.getInt("rest_no"),
 								rset.getString("menu"),
-								rset.getInt("price"),
+								rset.getString("price"),
 								rset.getInt("menu_grade")
 								));
 			}
@@ -888,7 +883,6 @@ private Properties prop = new Properties();
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("adminInsertAttachment");
-		System.out.println(result + "$$$$$$$$$$");
 		try {
 			for(Attachment at : list) {
 				
@@ -909,6 +903,29 @@ private Properties prop = new Properties();
 		return result;
 	}
 	
+	public int adminInsertAttachment1(Connection conn, Attachment at1) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("adminInsertAttachment1");
+		try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at1.getOriginName());
+				pstmt.setString(2, at1.getChangeName());
+				pstmt.setString(3, at1.getFilePath());
+				
+				result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	public int adminInsertMenu1(Connection conn, Menu m1) {
 			
 			int result = 0;
@@ -919,7 +936,7 @@ private Properties prop = new Properties();
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, m1.getMenu());
-				pstmt.setInt(2, m1.getPrice());
+				pstmt.setString(2, m1.getPrice());
 				
 				result = pstmt.executeUpdate();
 				
@@ -980,7 +997,7 @@ private Properties prop = new Properties();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m2.getMenu());
-			pstmt.setInt(2, m2.getPrice());
+			pstmt.setString(2, m2.getPrice());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1032,7 +1049,7 @@ public int adminInsertMenu3(Connection conn, Menu m3) {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, m3.getMenu());
-			pstmt.setInt(2, m3.getPrice());
+			pstmt.setString(2, m3.getPrice());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1135,7 +1152,7 @@ public int adminUpdateMenu1(Connection conn, Menu m1) {
 		pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setString(1, m1.getMenu());
-		pstmt.setInt(2, m1.getPrice());
+		pstmt.setString(2, m1.getPrice());
 		pstmt.setInt(3, m1.getMenuGrade());
 		pstmt.setInt(4, m1.getRestNo());
 		
@@ -1159,7 +1176,7 @@ public int adminUpdateMenu2(Connection conn, Menu m2) {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, m2.getMenu());
-			pstmt.setInt(2, m2.getPrice());
+			pstmt.setString(2, m2.getPrice());
 			pstmt.setInt(3, m2.getMenuGrade());
 			pstmt.setInt(4, m2.getRestNo());
 			
@@ -1183,7 +1200,7 @@ public int adminUpdateMenu3(Connection conn, Menu m3) {
 		pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setString(1, m3.getMenu());
-		pstmt.setInt(2, m3.getPrice());
+		pstmt.setString(2, m3.getPrice());
 		pstmt.setInt(3, m3.getMenuGrade());
 		pstmt.setInt(4, m3.getRestNo());
 		

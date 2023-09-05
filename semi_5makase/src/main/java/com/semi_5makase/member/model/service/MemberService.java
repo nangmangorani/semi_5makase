@@ -33,6 +33,16 @@ public class MemberService {
 		
 	}
 	
+	public Member selectAdminMember() {
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().selectAdminMember(conn);
+		
+		close(conn);
+		
+		return m;
+	}
+	
 	public Member selectAdminMember(int no) {
 		Connection conn = getConnection();
 		

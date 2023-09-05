@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi_5makase.member.model.service.MemberService;
-import com.semi_5makase.member.model.vo.Report;
+import com.semi_5makase.member.model.vo.Member;
 
 /**
- * Servlet implementation class AdminReportDetail
+ * Servlet implementation class AdminMainPage
  */
-@WebServlet("/reportDetail.ad")
-public class AdminReportDetail extends HttpServlet {
+@WebServlet("/adminMain.ad")
+public class AdminMainPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminReportDetail() {
+    public AdminMainPage() {
         super();
     }
 
@@ -31,20 +31,10 @@ public class AdminReportDetail extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("UTF-8");
+		Member m = new MemberService().selectAdminMember();
 		
-		int reportNo = Integer.parseInt(request.getParameter("num"));
-		
-		Report rep = new MemberService().adminSelectReportDetail(reportNo);
-		
-		if(rep != null) {
-			request.setAttribute("rep", rep);
-			request.getRequestDispatcher("views/admin/adminReportDetail.jsp").forward(request, response);
-		} else {
-			request.setAttribute("errorMsmg", "조회를 실패했습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
-		
+		request.setAttribute("m", m);
+		request.getRequestDispatcher("views/admin/adminMainPage.jsp").forward(request, response);
 		
 	}
 
@@ -52,7 +42,6 @@ public class AdminReportDetail extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

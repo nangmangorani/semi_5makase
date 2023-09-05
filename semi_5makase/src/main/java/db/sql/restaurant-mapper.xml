@@ -380,267 +380,591 @@
            ,R.STATUS
            ,C.CATEGORY_NAME
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME
-</entry>
+	</entry>
+	
+	<entry key="ratingList">
+		 SELECT 
+	            R.REST_NO AS REST_NO
+	           ,R.CATEGORY_NO AS CATEGORY_NO
+	           ,R.TV_NO AS TV_NO
+	           ,T.TV_NAME AS TV_NAME
+	           ,R.REST_NAME AS REST_NAME
+	           ,R.REST_ADDRESS AS REST_ADDRESS
+	           ,R.REST_PHONE AS REST_PHONE
+	           ,R.PARKING AS PARKING
+	           ,R.INTRO AS INTRO
+	           ,R.REST_VIEWS AS REST_VIEWS
+	           ,R.STATUS AS STATUS
+	           ,C.CATEGORY_NAME AS CATEGORY_NAME
+	           ,NVL(AVG(RATING),0) AS AVG
+	           ,NVL(COUNT(REVIEW_NO),0) AS COUNT
+	           ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
+		   FROM RESTAURANT R
+	       LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
+	       LEFT OUTER JOIN FAVORITES F ON R.REST_NO = F.REST_NO
+	       JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
+	       LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO
+		  WHERE REST_NAME LIKE ?
+		  OR REST_ADDRESS LIKE ?
+		  AND STATUS = 'Y'
+	      GROUP BY 
+	      		 R.REST_NO
+	           ,R.CATEGORY_NO
+	           ,R.TV_NO
+	           ,T.TV_NAME
+	           ,R.REST_NAME
+	           ,R.REST_ADDRESS
+	           ,R.REST_PHONE
+	           ,R.PARKING
+	           ,R.INTRO
+	           ,R.REST_VIEWS
+	           ,R.STATUS
+	           ,C.CATEGORY_NAME
+	      ORDER BY AVG DESC  
+	</entry>
+	
+	<entry key="viewList">
+		 SELECT 
+	            R.REST_NO AS REST_NO
+	           ,R.CATEGORY_NO AS CATEGORY_NO
+	           ,R.TV_NO AS TV_NO
+	           ,T.TV_NAME AS TV_NAME
+	           ,R.REST_NAME AS REST_NAME
+	           ,R.REST_ADDRESS AS REST_ADDRESS
+	           ,R.REST_PHONE AS REST_PHONE
+	           ,R.PARKING AS PARKING
+	           ,R.INTRO AS INTRO
+	           ,R.REST_VIEWS AS REST_VIEWS
+	           ,R.STATUS AS STATUS
+	           ,C.CATEGORY_NAME AS CATEGORY_NAME
+	           ,NVL(AVG(RATING),0) AS AVG
+	           ,NVL(COUNT(REVIEW_NO),0) AS COUNT
+	           ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
+		   FROM RESTAURANT R
+	       LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
+	       LEFT OUTER JOIN FAVORITES F ON R.REST_NO = F.REST_NO
+	       JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
+	       LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO
+		  WHERE REST_NAME LIKE ?
+		  OR REST_ADDRESS LIKE ?
+		  AND STATUS = 'Y'
+	      GROUP BY 
+	      		 R.REST_NO
+	           ,R.CATEGORY_NO
+	           ,R.TV_NO
+	           ,T.TV_NAME
+	           ,R.REST_NAME
+	           ,R.REST_ADDRESS
+	           ,R.REST_PHONE
+	           ,R.PARKING
+	           ,R.INTRO
+	           ,R.REST_VIEWS
+	           ,R.STATUS
+	           ,C.CATEGORY_NAME
+	      ORDER BY REST_VIEWS DESC  
+	</entry>
+	
+	<entry key="selectCategory">
+	    SELECT
+	    	R.REST_NO AS REST_NO
+		   ,R.CATEGORY_NO AS CATEGORY_NO
+		   ,R.TV_NO AS TV_NO
+	       ,T.TV_NAME AS TV_NAME
+		   ,R.REST_NAME AS REST_NAME
+		   ,R.REST_ADDRESS AS REST_ADDRESS
+		   ,R.REST_PHONE AS REST_PHONE
+		   ,R.PARKING AS PARKING
+		   ,R.INTRO AS INTRO
+		   ,R.REST_VIEWS AS REST_VIEWS
+		   ,R.STATUS AS STATUS
+		   ,C.CATEGORY_NAME AS CATEGORY_NAME
+		   ,NVL(AVG(RATING),0) AS AVG
+		   ,NVL(COUNT(REVIEW_NO),0) AS COUNT
+		   ,COUNT(F.REST_NO) AS FCOUNT
+		 FROM RESTAURANT R
+		 LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
+	     LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO
+	     LEFT OUTER JOIN FAVORITES F ON R.REST_NO = F.REST_NO
+		 JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
+	   WHERE R.CATEGORY_NO = ?
+	   AND STATUS ='Y'
+	 GROUP BY
+	 		R.REST_NO
+		   ,R.CATEGORY_NO
+		   ,R.TV_NO
+	       ,T.TV_NAME
+		   ,R.REST_NAME
+		   ,R.REST_ADDRESS
+		   ,R.REST_PHONE
+		   ,R.PARKING
+		   ,R.INTRO
+		   ,R.REST_VIEWS
+		   ,R.STATUS
+		   ,C.CATEGORY_NAME
+	</entry>
+	
+	<entry key="selectFavoritList">
+			 	 SELECT 
+	            r.REST_NO AS rest_no
+	           ,r.CATEGORY_NO as category_no
+	           ,r.TV_NO as tv_no
+	           ,t.TV_NAME as tv_name
+	           ,r.REST_NAME as rest_name
+	           ,r.REST_ADDRESS as rest_address
+	           ,r.REST_PHONE as rest_phone
+	           ,r.PARKING as parking
+	           ,r.INTRO as intro
+	           ,r.REST_VIEWS as rest_views
+	           ,r.STATUS as status
+	           ,c.CATEGORY_NAME as category_name
+	           ,NVL(AVG(v.RATING),0) AS AVG
+	           ,NVL(COUNT(v.REVIEW_NO),0) AS COUNT
+	           ,count(f.rest_no) as count1
+		   FROM RESTAURANT r
+	       LEFT JOIN TV T ON(R.TV_NO = T.TV_NO)
+	       LEFT OUTER JOIN REVIEW v on(r.REST_NO = v.rest_no)  
+	       JOIN FOOD_CATEGORY c on (r.category_no = c.CATEGORY_NO)
+	       left join favorites f on(f.rest_no = r.rest_no)
+		  WHERE REST_NAME  like ?
+		  OR REST_ADDRESS LIKE ?
+		  AND STATUS = 'Y'
+	      GROUP BY 
+	      		 r.REST_NO
+	           ,r.CATEGORY_NO
+	           ,r.TV_NO
+	           ,T.TV_NAME
+	           ,r.REST_NAME
+	           ,r.REST_ADDRESS
+	           ,r.REST_PHONE
+	           ,r.PARKING
+	           ,r.INTRO
+	           ,r.REST_VIEWS
+	           ,r.STATUS
+	           ,c.CATEGORY_NAME
+	        order by count1 desc
+	</entry>
+	
+	<entry key="selectOptionList">
+		SELECT 
+	     R.REST_NO AS REST_NO
+	    ,R.CATEGORY_NO AS CATEGORY_NO
+	    ,R.TV_NO AS TV_NO
+	    ,T.TV_NAME AS TV_NAME
+	    ,R.REST_NAME AS REST_NAME
+	    ,R.REST_ADDRESS AS REST_ADDRESS
+	    ,R.REST_PHONE AS REST_PHONE
+	    ,R.PARKING AS PARKING
+	    ,R.INTRO AS INTRO
+	    ,R.REST_VIEWS AS REST_VIEWS
+	    ,R.STATUS AS STATUS
+	    ,C.CATEGORY_NAME AS CATEGORY_NAME
+	    ,NVL(AVG(V.RATING),0) AS AVG
+	    ,NVL(COUNT(V.REVIEW_NO),0) AS COUNT
+	    ,COUNT(F.REST_NO) AS FCOUNT
+	  FROM RESTAURANT R
+	  LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO 
+	  LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
+	  LEFT OUTER JOIN MEMBER M ON V.MEM_NO = M.MEM_NO
+	  JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
+	  JOIN FAVORITES F ON R.REST_NO = F.REST_NO
+	  WHERE ((R.REST_NAME LIKE ? OR R.REST_ADDRESS LIKE ?) AND ((R.REST_NAME LIKE ?)) OR (R.REST_ADDRESS LIKE ?))
+	  AND R.CATEGORY_NO = ?
+	  AND R.TV_NO = ?
+	  GROUP BY 
+	         R.REST_NO
+	        ,R.CATEGORY_NO
+	        ,R.TV_NO
+	        ,T.TV_NAME
+	        ,R.REST_NAME
+	        ,R.REST_ADDRESS
+	        ,R.REST_PHONE
+	        ,R.PARKING
+	        ,R.INTRO
+	        ,R.REST_VIEWS
+	        ,R.STATUS
+	        ,C.CATEGORY_NAME
+	        <![CDATA[
+	         HAVING ((SUM(M.AGE)/COUNT(M.AGE)) >= ? AND (SUM(M.AGE)/COUNT(M.AGE)) <= ?)
+	          ]]>
+	</entry>
+	
+	<entry key="insertRestTemp">
+		INSERT
+		  INTO RESTAURANT_TEMP
+		  	 (
+		  	  RTEMP_NO
+		  	 ,RTEMP_NAME
+		  	 ,RTEMP_INFO
+		  	 )
+		  	 VALUES
+		  	 (
+		  	  SEQ_RTEMPNO.NEXTVAL
+		  	 ,?
+		  	 ,?
+		  	 )
+	</entry>
+	
+	<entry key="insertAttachment">
+		INSERT
+		  INTO ATTACHMENT
+		     (
+		     	FILE_NO
+		       ,REF_BNO
+		       ,ORIGIN_NAME
+		       ,CHANGE_NAME
+		       ,FILE_PATH	
+		       ,UPLOAD_DATE
+		       ,STATUS
+		       ,CATEGORY
+		     )
+		VALUES
+		     (
+		    	SEQ_FNO.NEXTVAL
+		       ,SEQ_RTEMPNO.CURRVAL
+	           ,?
+	           ,?
+	           ,?
+	           ,DEFAULT
+	           ,'Y'
+	           ,'RTEMP'
+		     )
+	</entry>
+	
+	<entry key="selectRestThumbnail">
+	  select file_path || '/' || change_name "fileName" from attachment 
+	  where ref_bno = ?
+	  and file_level = 2
+	</entry>
+	
+	<entry key="selectRestAttachment">
+		SELECT 
+				*
+		  FROM ATTACHMENT
+		 WHERE FILE_LEVEL = 2
+	</entry>
+	
+	<entry key="adminSelectRestListPaging">
+		SELECT *
+		  FROM (
+		  	SELECT ROWNUM RNUM, A.*
+		  	FROM (
+		        SELECT REST_NO
+				     , REST_NAME
+				     , REST_ADDRESS
+				     , REST_PHONE
+				     , CATEGORY_NAME
+				     , STATUS
+				  FROM RESTAURANT
+				  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
+				  ORDER BY REST_NO
+	                )A
+	        )
+	     WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="adminSelectAttatchment">
+		SELECT
+		        FILE_NO
+		      , ORIGIN_NAME
+		      , CHANGE_NAME
+		      , FILE_PATH
+		  FROM ATTACHMENT
+		 WHERE REF_BNO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="adminSelectRestaurantMenu">
+		SELECT 
+		         REST_NO
+		        ,MENU
+		        ,PRICE
+		        ,MENU_GRADE
+		  FROM MENU
+		  JOIN RESTAURANT USING (REST_NO)
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminSelectRestaurant">
+		SELECT 
+		         REST_NO
+		        ,CATEGORY_NAME
+		        ,TV_NAME
+		        ,REST_NAME
+		        ,REST_ADDRESS
+		        ,REST_PHONE
+		        ,PARKING
+		        ,INTRO
+		        ,STATUS
+		        ,OPENING_TIME
+		        ,REST_TIME
+		        ,BREAK_TIME
+		  FROM RESTAURANT
+		  JOIN OPEN_TIME USING (REST_NO)
+		  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
+		  JOIN TV USING (TV_NO)
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="selectListCount">
+		SELECT
+		COUNT(*) count
+		  FROM RESTAURANT
+	</entry>
+	
+	<entry key="adminSelectCategory">
+		SELECT 
+		       CATEGORY_NO
+		      ,CATEGORY_NAME
+		  FROM FOOD_CATEGORY
+	</entry>
 
-<entry key="ratingList">
-	 SELECT 
-            R.REST_NO AS REST_NO
-           ,R.CATEGORY_NO AS CATEGORY_NO
-           ,R.TV_NO AS TV_NO
-           ,T.TV_NAME AS TV_NAME
-           ,R.REST_NAME AS REST_NAME
-           ,R.REST_ADDRESS AS REST_ADDRESS
-           ,R.REST_PHONE AS REST_PHONE
-           ,R.PARKING AS PARKING
-           ,R.INTRO AS INTRO
-           ,R.REST_VIEWS AS REST_VIEWS
-           ,R.STATUS AS STATUS
-           ,C.CATEGORY_NAME AS CATEGORY_NAME
-           ,NVL(AVG(RATING),0) AS AVG
-           ,NVL(COUNT(REVIEW_NO),0) AS COUNT
-           ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
-	   FROM RESTAURANT R
-       LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
-       LEFT OUTER JOIN FAVORITES F ON R.REST_NO = F.REST_NO
-       JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
-       LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO
-	  WHERE REST_NAME LIKE ?
-	  OR REST_ADDRESS LIKE ?
-	  AND STATUS = 'Y'
-      GROUP BY 
-      		 R.REST_NO
-           ,R.CATEGORY_NO
-           ,R.TV_NO
-           ,T.TV_NAME
-           ,R.REST_NAME
-           ,R.REST_ADDRESS
-           ,R.REST_PHONE
-           ,R.PARKING
-           ,R.INTRO
-           ,R.REST_VIEWS
-           ,R.STATUS
-           ,C.CATEGORY_NAME
-      ORDER BY AVG DESC  
-</entry>
+	<entry key="adminSelectTv">
+		SELECT 
+		       TV_NO
+		      ,TV_NAME
+		  FROM TV
+	</entry>
+	
+	<entry key="adminUpdateRestaurant">
+        UPDATE RESTAURANT
+		   SET REST_NAME = ?
+               ,CATEGORY_NO = ?
+               ,TV_NO = ?
+               ,REST_ADDRESS = ?
+               ,REST_PHONE = ?
+               ,PARKING = ?
+               ,INTRO = ?
+               ,STATUS = ?
+         WHERE REST_NO = ? 
+	</entry>
+	
+	<entry key="adminUpdateMenu1">
+		UPDATE MENU
+		   SET  MENU = ?
+		       ,PRICE = ?
+		       ,MENU_GRADE = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminUpdateMenu2">
+		UPDATE MENU
+		   SET  MENU = ?
+		       ,PRICE = ?
+		       ,MENU_GRADE = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminUpdateMenu3">
+		UPDATE MENU
+		   SET  MENU = ?
+		       ,PRICE = ?
+		       ,MENU_GRADE = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="adminUpdateTime">
+		UPDATE OPEN_TIME
+		   SET	OPENING_TIME = ?
+		        ,REST_TIME = ?
+		    	,BREAK_TIME = ?
+		  WHERE REST_NO = ?
+	</entry>
+	
+	<entry key="selectChangeListCount">
+		SELECT
+       		COUNT(*) count
+  		  FROM UPDATE_REST
+	</entry>
+	
+	<entry key="adminSelectRestChangePaging">
+		SELECT *
+		  FROM (
+		  	SELECT ROWNUM RNUM, A.*
+		  	FROM (
+		        SELECT 
+				       UPDATE_NO
+				      ,UPDATE_CONTENT
+				      ,REST_NO
+				      ,REST_NAME
+				  FROM UPDATE_REST
+				  JOIN RESTAURANT USING (REST_NO)
+				  ORDER BY UPDATE_NO
+                 )A
+	        )
+	     WHERE RNUM BETWEEN ? AND ?
+	</entry>
 
-<entry key="viewList">
-	 SELECT 
-            R.REST_NO AS REST_NO
-           ,R.CATEGORY_NO AS CATEGORY_NO
-           ,R.TV_NO AS TV_NO
-           ,T.TV_NAME AS TV_NAME
-           ,R.REST_NAME AS REST_NAME
-           ,R.REST_ADDRESS AS REST_ADDRESS
-           ,R.REST_PHONE AS REST_PHONE
-           ,R.PARKING AS PARKING
-           ,R.INTRO AS INTRO
-           ,R.REST_VIEWS AS REST_VIEWS
-           ,R.STATUS AS STATUS
-           ,C.CATEGORY_NAME AS CATEGORY_NAME
-           ,NVL(AVG(RATING),0) AS AVG
-           ,NVL(COUNT(REVIEW_NO),0) AS COUNT
-           ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
-	   FROM RESTAURANT R
-       LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
-       LEFT OUTER JOIN FAVORITES F ON R.REST_NO = F.REST_NO
-       JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
-       LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO
-	  WHERE REST_NAME LIKE ?
-	  OR REST_ADDRESS LIKE ?
-	  AND STATUS = 'Y'
-      GROUP BY 
-      		 R.REST_NO
-           ,R.CATEGORY_NO
-           ,R.TV_NO
-           ,T.TV_NAME
-           ,R.REST_NAME
-           ,R.REST_ADDRESS
-           ,R.REST_PHONE
-           ,R.PARKING
-           ,R.INTRO
-           ,R.REST_VIEWS
-           ,R.STATUS
-           ,C.CATEGORY_NAME
-      ORDER BY REST_VIEWS DESC  
-</entry>
+	<entry key="selectRequestListCount">
+		SELECT
+       		COUNT(*) count
+  		  FROM RESTAURANT_TEMP
+	</entry>
 
-<entry key="selectCategory">
-    SELECT
-    	R.REST_NO AS REST_NO
-	   ,R.CATEGORY_NO AS CATEGORY_NO
-	   ,R.TV_NO AS TV_NO
-       ,T.TV_NAME AS TV_NAME
-	   ,R.REST_NAME AS REST_NAME
-	   ,R.REST_ADDRESS AS REST_ADDRESS
-	   ,R.REST_PHONE AS REST_PHONE
-	   ,R.PARKING AS PARKING
-	   ,R.INTRO AS INTRO
-	   ,R.REST_VIEWS AS REST_VIEWS
-	   ,R.STATUS AS STATUS
-	   ,C.CATEGORY_NAME AS CATEGORY_NAME
-	   ,NVL(AVG(RATING),0) AS AVG
-	   ,NVL(COUNT(REVIEW_NO),0) AS COUNT
-	   ,COUNT(F.REST_NO) AS FCOUNT
-	 FROM RESTAURANT R
-	 LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
-     LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO
-     LEFT OUTER JOIN FAVORITES F ON R.REST_NO = F.REST_NO
-	 JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
-   WHERE R.CATEGORY_NO = ?
-   AND STATUS ='Y'
- GROUP BY
- 		R.REST_NO
-	   ,R.CATEGORY_NO
-	   ,R.TV_NO
-       ,T.TV_NAME
-	   ,R.REST_NAME
-	   ,R.REST_ADDRESS
-	   ,R.REST_PHONE
-	   ,R.PARKING
-	   ,R.INTRO
-	   ,R.REST_VIEWS
-	   ,R.STATUS
-	   ,C.CATEGORY_NAME
-</entry>
-
-<entry key="selectFavoritList">
-		 	 SELECT 
-            r.REST_NO AS rest_no
-           ,r.CATEGORY_NO as category_no
-           ,r.TV_NO as tv_no
-           ,t.TV_NAME as tv_name
-           ,r.REST_NAME as rest_name
-           ,r.REST_ADDRESS as rest_address
-           ,r.REST_PHONE as rest_phone
-           ,r.PARKING as parking
-           ,r.INTRO as intro
-           ,r.REST_VIEWS as rest_views
-           ,r.STATUS as status
-           ,c.CATEGORY_NAME as category_name
-           ,NVL(AVG(v.RATING),0) AS AVG
-           ,NVL(COUNT(v.REVIEW_NO),0) AS COUNT
-           ,count(f.rest_no) as count1
-	   FROM RESTAURANT r
-       LEFT JOIN TV T ON(R.TV_NO = T.TV_NO)
-       LEFT OUTER JOIN REVIEW v on(r.REST_NO = v.rest_no)  
-       JOIN FOOD_CATEGORY c on (r.category_no = c.CATEGORY_NO)
-       left join favorites f on(f.rest_no = r.rest_no)
-	  WHERE REST_NAME  like ?
-	  OR REST_ADDRESS LIKE ?
-	  AND STATUS = 'Y'
-      GROUP BY 
-      		 r.REST_NO
-           ,r.CATEGORY_NO
-           ,r.TV_NO
-           ,T.TV_NAME
-           ,r.REST_NAME
-           ,r.REST_ADDRESS
-           ,r.REST_PHONE
-           ,r.PARKING
-           ,r.INTRO
-           ,r.REST_VIEWS
-           ,r.STATUS
-           ,c.CATEGORY_NAME
-        order by count1 desc
-</entry>
-
-<entry key="selectOptionList">
-	SELECT 
-     R.REST_NO AS REST_NO
-    ,R.CATEGORY_NO AS CATEGORY_NO
-    ,R.TV_NO AS TV_NO
-    ,T.TV_NAME AS TV_NAME
-    ,R.REST_NAME AS REST_NAME
-    ,R.REST_ADDRESS AS REST_ADDRESS
-    ,R.REST_PHONE AS REST_PHONE
-    ,R.PARKING AS PARKING
-    ,R.INTRO AS INTRO
-    ,R.REST_VIEWS AS REST_VIEWS
-    ,R.STATUS AS STATUS
-    ,C.CATEGORY_NAME AS CATEGORY_NAME
-    ,NVL(AVG(V.RATING),0) AS AVG
-    ,NVL(COUNT(V.REVIEW_NO),0) AS COUNT
-    ,COUNT(F.REST_NO) AS FCOUNT
-  FROM RESTAURANT R
-  LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO 
-  LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
-  LEFT OUTER JOIN MEMBER M ON V.MEM_NO = M.MEM_NO
-  JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
-  JOIN FAVORITES F ON R.REST_NO = F.REST_NO
-  WHERE ((R.REST_NAME LIKE ? OR R.REST_ADDRESS LIKE ?) AND ((R.REST_NAME LIKE ?)) OR (R.REST_ADDRESS LIKE ?))
-  AND R.CATEGORY_NO = ?
-  AND R.TV_NO = ?
-  GROUP BY 
-         R.REST_NO
-        ,R.CATEGORY_NO
-        ,R.TV_NO
-        ,T.TV_NAME
-        ,R.REST_NAME
-        ,R.REST_ADDRESS
-        ,R.REST_PHONE
-        ,R.PARKING
-        ,R.INTRO
-        ,R.REST_VIEWS
-        ,R.STATUS
-        ,C.CATEGORY_NAME
-        <![CDATA[
-         HAVING ((SUM(M.AGE)/COUNT(M.AGE)) >= ? AND (SUM(M.AGE)/COUNT(M.AGE)) <= ?)
-          ]]>
-</entry>
-
-<entry key="insertRestTemp">
-	INSERT
-	  INTO RESTAURANT_TEMP
-	  	 (
-	  	  RTEMP_NO
-	  	 ,RTEMP_NAME
-	  	 ,RTEMP_INFO
-	  	 )
-	  	 VALUES
-	  	 (
-	  	  SEQ_RTEMPNO.NEXTVAL
-	  	 ,?
-	  	 ,?
-	  	 )
-</entry>
-
-<entry key="insertAttachment">
+	<entry key="adminSelectRestRequestPaging">
+		SELECT *
+		  FROM (
+		  	SELECT ROWNUM RNUM, A.*
+		  	FROM (
+		        SELECT 
+				       RTEMP_NO
+				      ,RTEMP_NAME
+				      ,RTEMP_INFO
+				  FROM RESTAURANT_TEMP
+				  ORDER BY RTEMP_NO
+                 )A
+	        )
+	     WHERE RNUM BETWEEN ? AND ?	
+	</entry>
+	
+	<entry key="adminInsertAttachment">
 	INSERT
 	  INTO ATTACHMENT
-	     (
-	     	FILE_NO
-	       ,REF_BNO
-	       ,ORIGIN_NAME
-	       ,CHANGE_NAME
-	       ,FILE_PATH	
-	       ,UPLOAD_DATE
-	       ,STATUS
-	       ,CATEGORY
-	     )
-	VALUES
-	     (
-	    	SEQ_FNO.NEXTVAL
-	       ,SEQ_RTEMPNO.CURRVAL
-           ,?
-           ,?
-           ,?
-           ,DEFAULT
-           ,'Y'
-           ,'RTEMP'
-	     )
-</entry>
-
-<entry key="selectRestThumbnail">
-  select file_path || '/' || change_name "fileName" from attachment 
-  where ref_bno = ?
-  and file_level = 2
-</entry>
-
-<entry key="selectRestAttachment">
-	SELECT 
-			*
-	  FROM ATTACHMENT
-	 WHERE FILE_LEVEL = 2
-</entry>
+	  (
+	     FILE_NO
+	    ,REF_BNO
+	    ,ORIGIN_NAME
+	    ,CHANGE_NAME
+	    ,FILE_PATH
+	    ,STATUS
+	  )
+	  VALUES
+	  (
+	     SEQ_FNO.NEXTVAL
+	    ,SEQ_RESTNO.CURRVAL
+	    ,?
+	    ,?
+	    ,?
+	    ,'Y'
+	  )
+	</entry>
 	
+		<entry key="adminInsertAttachment1">
+	INSERT
+	  INTO ATTACHMENT
+	  (
+	     FILE_NO
+	    ,REF_BNO
+	    ,ORIGIN_NAME
+	    ,CHANGE_NAME
+	    ,FILE_PATH
+	    ,STATUS
+	    ,FILE_LEVEL
+	  )
+	  VALUES
+	  (
+	     SEQ_FNO.NEXTVAL
+	    ,SEQ_RESTNO.CURRVAL
+	    ,?
+	    ,?
+	    ,?
+	    ,'Y'
+	    ,2
+	  )
+	</entry>
+	
+	<entry key="adminInsertRestaurant">
+		INSERT
+		  INTO RESTAURANT 
+		  (
+		     REST_NO
+		    ,REST_NAME
+		    ,REST_ADDRESS
+		    ,REST_PHONE
+		    ,PARKING
+		    ,INTRO
+		    ,STATUS
+		    ,CATEGORY_NO
+		    ,TV_NO
+		   )
+		  VALUES
+		  (
+		    SEQ_RESTNO.NEXTVAL
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   ,?
+		   )		
+	</entry>
+	
+	<entry key="adminInsertMenu1">
+		INSERT
+		  INTO MENU
+		  (
+		  	 REST_NO
+		  	,FILE_NO
+		    ,MENU
+		    ,PRICE
+		    ,MENU_GRADE
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,SEQ_FNO.CURRVAL
+		   ,?
+		   ,?
+		   ,1
+		   )
+	</entry>
+
+	<entry key="adminInsertMenu2">
+		INSERT
+		  INTO MENU
+		  (
+		  	 REST_NO
+		  	,FILE_NO
+		    ,MENU
+		    ,PRICE
+		    ,MENU_GRADE
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,SEQ_FNO.CURRVAL
+		   ,?
+		   ,?
+		   ,2
+		   )
+	</entry>
+
+	<entry key="adminInsertMenu3">
+		INSERT
+		  INTO MENU
+		  (
+		  	 REST_NO
+		  	,FILE_NO
+		    ,MENU
+		    ,PRICE
+		    ,MENU_GRADE
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,SEQ_FNO.CURRVAL
+		   ,?
+		   ,?
+		   ,3
+		   )
+	</entry>
+	
+	<entry key="adminInsertTime">
+		INSERT
+		  INTO OPEN_TIME
+		  (
+		  	 REST_NO
+		    ,OPENING_TIME
+		    ,REST_TIME
+		    ,BREAK_TIME
+		   )
+		  VALUES
+		  (
+		   SEQ_RESTNO.CURRVAL
+		   ,?
+		   ,?
+		   ,?
+		   )
+	</entry>
 </properties>
