@@ -97,7 +97,7 @@ private Properties prop = new Properties();
 			
 			while(rset.next()) {
 				tvList.add(new Restaurant(rset.getString("REST_NAME"),
-										  rset.getString("ADDRESS"),
+										  rset.getString("MAIN_ADDRESS"),
 										  rset.getString("TV_NAME"),
 										  rset.getString("CATEGORY_NAME"),
 										  rset.getDouble("AVG")
