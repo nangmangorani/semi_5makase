@@ -58,9 +58,9 @@ public class AdminRestaurantAdd extends HttpServlet {
 			String menu1 = multiRequest.getParameter("menu1");
 			String menu2 = multiRequest.getParameter("menu2");
 			String menu3 = multiRequest.getParameter("menu3");
-			int price1 = Integer.parseInt(multiRequest.getParameter("price1"));
-			int price2 = Integer.parseInt(multiRequest.getParameter("price2"));
-			int price3 = Integer.parseInt(multiRequest.getParameter("price3"));
+			String price1 = multiRequest.getParameter("price1");
+			String price2 = multiRequest.getParameter("price2");
+			String price3 = multiRequest.getParameter("price3");
 			int menuGrade1 = Integer.parseInt(multiRequest.getParameter("menuGrade1"));
 			int menuGrade2 = Integer.parseInt(multiRequest.getParameter("menuGrade2"));
 			int menuGrade3 = Integer.parseInt(multiRequest.getParameter("menuGrade3"));
@@ -100,20 +100,21 @@ public class AdminRestaurantAdd extends HttpServlet {
 			t.setRestTime(restTime);
 			t.setBreakTime(breakTime);
 			
-			Attachment at = new Attachment();
-			at.setOriginName(multiRequest.getOriginalFileName("file1"));
-			at.setChangeName(multiRequest.getFilesystemName("file1"));
-			at.setFilePath("resources/board_upfiles");
-			System.out.println(at + "????????");
-			
+			Attachment at1 = null;
+			if(multiRequest.getOriginalFileName("file1") != null) {
+				at1 = new Attachment();
+				at1.setOriginName(multiRequest.getOriginalFileName("file1"));
+				at1.setChangeName(multiRequest.getFilesystemName("file1"));
+				at1.setFilePath("resources/board_upfiles");
+			}
 			
 			ArrayList<Attachment> list = new ArrayList<Attachment>();
-			for(int i=1; i<4; i++) {
+			for(int i=2; i<4; i++) {
 				
 				String key = "file" + i;
 				
 				if(multiRequest.getOriginalFileName(key)!=null) {
-					
+					Attachment at = new Attachment();
 					at = new Attachment();
 					at.setOriginName(multiRequest.getOriginalFileName(key));
 					at.setChangeName(multiRequest.getFilesystemName(key));
@@ -123,7 +124,7 @@ public class AdminRestaurantAdd extends HttpServlet {
 				}
 			}
 			
-			int result = new RestaurantService().adminInsertRestaurant(ar, m1, m2, m3, t, list);
+			int result = new RestaurantService().adminInsertRestaurant(ar, m1, m2, m3, t, at1, list);
 			
 			
 			if(result > 0) {

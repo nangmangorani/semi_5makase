@@ -1,10 +1,18 @@
+<%@page import="com.semi_5makase.common.model.vo.PageInfo"%>
 <%@page import="com.semi_5makase.member.model.vo.Report"%>
 <%@page import="com.semi_5makase.member.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Report> list = (ArrayList<Report>)request.getAttribute("list");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
 %>    
 <!DOCTYPE html>
 <html lang="en">
@@ -148,13 +156,9 @@
                       <ul class="list-group">
                       
                       	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                          <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
+                          <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                           
-                          
-                          <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                          
-                          
-                          <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                          <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                           
                       </ul>
                     </div>
@@ -188,9 +192,9 @@
                               <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
                               <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad">등록 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad?cpage=1">등록 요청 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad?cpage=1">수정 요청 리스트</a></li>
                           </ul>
                       </div>
                     </div>
@@ -238,17 +242,23 @@
                         
                     </table> 
                 </div>
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group me-2  btn-sm" role="group" aria-label="First group">
-                      <button type="button" class="btn btn-primary"><</button>
-                      <button type="button" class="btn btn-primary">1</button>
-                      <button type="button" class="btn btn-primary">2</button>
-                      <button type="button" class="btn btn-primary">3</button>
-                      <button type="button" class="btn btn-primary">4</button>
-                      <button type="button" class="btn btn-primary">5</button>
-                      <button type="button" class="btn btn-primary">></button>
-                </div>
-            </div>
+                <div class="paging-area" align="center">
+	        	<% if(currentPage != 1) { %>
+	            	<button class="btn btn-primary" onclick="location.href='<%= contextPath %>/memberList.ad?cpage=<%= currentPage - 1 %>'">&lt;</button>
+	            <% } %>
+	            
+	            <% for(int p=startPage; p<=endPage; p++) { %>
+	            	<% if(p == currentPage) { %>
+	            		<button class="btn btn-primary" disabled><%= p %></button>
+	            	<% } else { %>
+	            		<button class="btn btn-primary" onclick="location.href='<%= contextPath %>/memberList.ad?cpage=<%= p %>'"><%= p %></button>
+	            	<% } %>
+	            <% } %>
+	            
+	            <% if(currentPage != maxPage) { %>
+	            	<button class="btn btn-primary" onclick="location.href='<%= contextPath %>/memberList.ad?cpage=<%= currentPage + 1 %>'">&gt;</button>
+	            <% } %>
+        		</div>
         </div>
     </div>
     <script>
@@ -257,7 +267,7 @@
 				
 				const num = $(this).children().eq(0).text();
 			    console.log(num);
-				location.href = '<%= contextPath %>/memberDetail.ad?num=' + num;
+				location.href = '<%= contextPath %>/reportDetail.ad?num=' + num;
 			})
 		})
 

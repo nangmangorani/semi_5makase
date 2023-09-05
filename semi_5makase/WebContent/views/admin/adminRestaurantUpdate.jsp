@@ -1,5 +1,5 @@
 <%@page import="com.semi_5makase.restaurant.model.vo.Menu"%>
-<%@page import="com.semi_5makase.restaurant.model.vo.Attachment"%>
+<%@page import="com.semi_5makase.common.model.vo.Attachment"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.AdminRestaurant"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.TV"%>
 <%@page import="com.semi_5makase.restaurant.model.vo.Category"%>
@@ -165,13 +165,9 @@
                                 <ul class="list-group">
                                 
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
-                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad">회원 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                                     
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                                    
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">신고 현황 관리</a></li>
+                                    <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                                     
                                 </ul>
                     </div>
@@ -205,9 +201,10 @@
                               <!-- ==================== 음식점 리스트 페이지로 이동 ==================== -->
                               <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtList.ad?cpage=1">음식점 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad">등록 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtRequestList.ad?cpage=1">등록 요청 리스트</a></li>
                               
-                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad">수정 요청 리스트</a></li>
+                              <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/rtChangeList.ad?cpage=1">수정 요청 리스트</a></li>
+                          </ul>
                       </div>
                     </div>
                 </div>
@@ -334,7 +331,7 @@
                         
                 </form>
             <div align="right" style="padding-right: 30px;">
-               <button type="button" class="btn btn-sm btn-secondary" onclick="history.go(-1);">취소하기</button>
+               <button type="button" class="btn btn-sm btn-secondary" onclick="history.back();">취소하기</button>
                <button type="submit" class="btn btn-sm btn-primary">수정하기</button>
            </div>
                

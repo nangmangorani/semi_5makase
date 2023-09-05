@@ -56,8 +56,8 @@ public class AdminRestaurant {
 	}
 	
 	public AdminRestaurant(int restNo, String category, String tv, String restName, String restAddress,
-			String restPhone, String parking, String intro, String status, String menu, int price, int menu_grade,
-			String openingTime, String restTime, String breakTime) {
+			String restPhone, String parking, String intro, String status, String openingTime,
+			String restTime, String breakTime) {
 		super();
 		this.restNo = restNo;
 		this.category = category;
@@ -68,9 +68,6 @@ public class AdminRestaurant {
 		this.parking = parking;
 		this.intro = intro;
 		this.status = status;
-		this.menu = menu;
-		this.price = price;
-		this.menu_grade = menu_grade;
 		this.openingTime = openingTime;
 		this.restTime = restTime;
 		this.breakTime = breakTime;

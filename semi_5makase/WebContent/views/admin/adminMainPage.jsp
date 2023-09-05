@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Member m = (Member)request.getAttribute("m");
+ %>    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,10 +149,6 @@
                                 	<!-- ==================== 회원 리스트 페이지로 이동 ==================== -->
                                     <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/memberList.ad?cpage=1">회원 관리</a></li>
                                     
-                                    
-                                    <li class="list-group-item" style="text-align: center;"><a href="">리뷰 관리</a></li>
-                                    
-                                    
                                     <li class="list-group-item" style="text-align: center;"><a href="<%= contextPath %>/reportList.ad?cpage=1">신고 현황 관리</a></li>
                                     
                                 </ul>
@@ -200,6 +200,7 @@
             </div>
             <div id="content_2" align="center" style="margin-top: 30px;">
                 <table id="tab">
+                	<input type="hidden" name="no" values="<%= m.getMemNo() %>">
                     <tr>
                         <td align="center" style="width: 200px;">
                             <strong style="vertical-align: middle;">사이트 이름</strong>
@@ -212,7 +213,7 @@
                         <td  align="center">
                             <strong style="vertical-align: middle;">최고 관리자</strong>
                         <td style="background-color: rgb(230, 230, 230);">
-                            <span id="name">관리자요</span>
+                            <span id="name" name="name"><%= m.getMemId() %></span>
                         </td>
                     </tr>
                     <tr>
@@ -220,7 +221,7 @@
                             <strong style="vertical-align: middle;" >관리자 메일주소</strong>
                         </td>
                         <td style="background-color: rgb(230, 230, 230);">
-                            <span id="email">이메일이요</span>
+                            <span id="email" name="email"><%= m.getEmail() %></span>
                         </td>
                     </tr>
                 </table> 
