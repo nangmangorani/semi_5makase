@@ -68,10 +68,11 @@
         <div class="best-area">
             <h2>믿고 보는 맛집 리스트</h2>
         </div>
+        
         <div class="top-list slick slider" id="wrapper">
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
+                    <a href="#해당 이미지 상세정보창" value="안녕">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/bibimbap.jpg" value="1">
@@ -111,8 +112,13 @@
                                 <img src="resources/img/cooking.jpg" value="3">
                             </div>
                             <figcaption>
+<<<<<<< .merge_file_181O12
                                 <div class="list-pic-comment">
                                     <span class="title">일식 맛집 TOP3</span>
+=======
+                                <div class="list-pic-comment" value="김치">
+                                    <span class="title">김치찌개 맛집 TOP3</span>
+>>>>>>> .merge_file_t0tvCN
                                     <p>"스팸 돼지고기 꽁치"</p>
                                 </div>
                             </figcaption>
@@ -131,6 +137,7 @@
                                 <div class="list-pic-comment">
                                     <span class="title">양식 국시 TOP 5</span>
                                     <p>"난 토마토"</p>
+                                    <input type="hidden" value="토마토" class="zz">
                                 </div>
                             </figcaption>
                         </figure>
@@ -173,7 +180,7 @@
             </ul>
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
+                    <a href="#해당 이미지 상세정보창" value="2">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/tteokbokki.jpg"  value="8">
@@ -190,7 +197,7 @@
             </ul>
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
+                    <a href="#해당 이미지 상세정보창" value="1">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/pasta.jpg" value="9">
@@ -206,6 +213,19 @@
                 </li>
             </ul>
         </div>
+        <script>
+         $(".fl a").click(function(){
+        	 /* event.preventDefault(); */
+        	 let i = $(this).attr("value");
+        	 
+        	 let l = $(this).attr("href", "<%=contextPath%>/MainRestLink.do");
+        	 console.log(l);
+        	 console.log(i);
+        	 
+        	 changeHrefToServletURL();
+         })
+        </script>
+        
         <br>
         
         <script>
