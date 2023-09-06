@@ -44,6 +44,7 @@ public class RestTvOptionController extends HttpServlet {
 		ArrayList totalList = new ArrayList<>();
 		totalList.add(categoryList);
 		totalList.add(atList);
+		
 
 		
 		response.setContentType("application/json; charset=utf-8");

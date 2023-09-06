@@ -144,66 +144,6 @@
             line-height: 30px;
         }
 
-
-
-        .heart-container {
-            cursor: pointer;
-            box-sizing: border-box;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .heart {
-            width: 35px;
-            height: 35px;
-            position: relative;
-            display: inline-block;
-            vertical-align: middle;
-
-        }
-
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 17.5px;
-            height: 27.5px;
-            margin-left: 370px;
-            border-radius: 17.5px 17.5px 0 0;
-            background: #ccc;
-            /* Initial color: gray */
-            transition: background 0.3s;
-        }
-
-        .heart::before {
-            left: 17.5px;
-            transform: rotate(-45deg);
-            transform-origin: 0 100%;
-        }
-
-        .heart::after {
-            left: 0;
-            transform: rotate(45deg);
-            transform-origin: 100% 100%;
-        }
-
-        .heart.filled::before,
-        .heart.filled::after {
-            background-color: rgb(215, 68, 62);
-            /* Filled color: pink */
-        }
-
-
-
-        .bigHeart {
-            float: right;
-            height: 35px;
-            width: 35px;
-            margin-right: 15px;
-            margin-top: 8px;
-        }
-
         .imgRight_1 {
             font-size: 22px;
             line-height: 48px;
@@ -285,6 +225,9 @@
                 </span>
             </div>
             <div id="content_2">
+                
+                <!-- 5개까지는 요거 -->
+
                 <div class="restaurant" onclick="location.href='http://www.naver.com'">
                     <div class="imgLine">
                         <div class="imgLeft">
@@ -294,9 +237,6 @@
                         <div class="imgRight">
                             <div class="imgRight_1">
                                 <span>1.주원식당</span>
-                                <span class="heart-container" onclick="handleContainerClick(event)">
-                                    <span class="heart"></span>
-                                </span>
                             </div>
                             <div class="imgRight_2">
                                 <span>짬뽕순두부</span>, &nbsp;
@@ -309,13 +249,13 @@
                             </div>
                             <div class="imgRight_4" style="margin-top: 10px;">
                                 <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png"
-                                    alt="">
-                                4.2 (13명)
+                                    alt="별점">
+                                4.2 (13명) 
                                 &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/view1.png" alt="">
+                                <img src="./이눔세끼화이팅/resources/img/view1.png" alt="조회수">
                                 121,732
                                 &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/heart.png" alt="">
+                                <img src="./이눔세끼화이팅/resources/img/heart.png" alt="좋아요">
                                 657
 
                             </div>
@@ -329,182 +269,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="restaurant" onclick="location.href='http://www.naver.com'">
-                    <div class="imgLine">
-                        <div class="imgLeft">
-                            <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20230813205739_photo1_e85403339e4d.jpg"
-                                alt="">
-                        </div>
-                        <div class="imgRight">
-                            <div class="imgRight_1">
-                                <span>1.주원식당</span>
-                                <span class="heart-container" onclick="handleContainerClick(event)">
-                                    <span class="heart"></span>
-                                </span>
-                            </div>
-                            <div class="imgRight_2">
-                                <span>짬뽕순두부</span>, &nbsp;
-                                <strong>순두부짬뽕</strong>
-                            </div>
-                            <div class="imgRight_3">
-                                <span>#한국인의밥상</span>,
-                                <span>#가족외식</span>,
-                                <span>#무료주차</span>
-                            </div>
-                            <div class="imgRight_4" style="margin-top: 10px;">
-                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png"
-                                    alt="">
-                                4.2 (13명)
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/view1.png" alt="">
-                                121,732
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/heart.png" alt="">
-                                657
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="textLine">
-                        <div class="restaurant_desc">
-                            <span>
-                                zz
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="restaurant" onclick="location.href='http://www.naver.com'">
-                    <div class="imgLine">
-                        <div class="imgLeft">
-                            <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20230813205739_photo1_e85403339e4d.jpg"
-                                alt="">
-                        </div>
-                        <div class="imgRight">
-                            <div class="imgRight_1">
-                                <span>1.주원식당</span>
-                                <span class="heart-container" onclick="handleContainerClick(event)">
-                                    <span class="heart"></span>
-                                </span>
-                            </div>
-                            <div class="imgRight_2">
-                                <span>짬뽕순두부</span>, &nbsp;
-                                <strong>순두부짬뽕</strong>
-                            </div>
-                            <div class="imgRight_3">
-                                <span>#한국인의밥상</span>,
-                                <span>#가족외식</span>,
-                                <span>#무료주차</span>
-                            </div>
-                            <div class="imgRight_4" style="margin-top: 10px;">
-                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png"
-                                    alt="">
-                                4.2 (13명)
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/view1.png" alt="">
-                                121,732
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/heart.png" alt="">
-                                657
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="textLine">
-                        <div class="restaurant_desc">
-                            <span>
-                                zz
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="restaurant" onclick="location.href='http://www.naver.com'">
-                    <div class="imgLine">
-                        <div class="imgLeft">
-                            <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20230813205739_photo1_e85403339e4d.jpg"
-                                alt="">
-                        </div>
-                        <div class="imgRight">
-                            <div class="imgRight_1">
-                                <span>1.주원식당</span>
-                                <span class="heart-container" onclick="handleContainerClick(event)">
-                                    <span class="heart"></span>
-                                </span>
-                            </div>
-                            <div class="imgRight_2">
-                                <span>짬뽕순두부</span>, &nbsp;
-                                <strong>순두부짬뽕</strong>
-                            </div>
-                            <div class="imgRight_3">
-                                <span>#한국인의밥상</span>,
-                                <span>#가족외식</span>,
-                                <span>#무료주차</span>
-                            </div>
-                            <div class="imgRight_4" style="margin-top: 10px;">
-                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png"
-                                    alt="">
-                                4.2 (13명)
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/view1.png" alt="">
-                                121,732
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/heart.png" alt="">
-                                657
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="textLine">
-                        <div class="restaurant_desc">
-                            <span>
-                                zz
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="restaurant" onclick="location.href='http://www.naver.com'">
-                    <div class="imgLine">
-                        <div class="imgLeft">
-                            <img src="https://d12zq4w4guyljn.cloudfront.net/300_300_20230813205739_photo1_e85403339e4d.jpg"
-                                alt="">
-                        </div>
-                        <div class="imgRight">
-                            <div class="imgRight_1">
-                                <span>1.주원식당</span>
-                                <span class="heart-container" onclick="handleContainerClick(event)">
-                                    <span class="heart"></span>
-                                </span>
-                            </div>
-                            <div class="imgRight_2">
-                                <span>짬뽕순두부</span>, &nbsp;
-                                <strong>순두부짬뽕</strong>
-                            </div>
-                            <div class="imgRight_3">
-                                <span>#한국인의밥상</span>,
-                                <span>#가족외식</span>,
-                                <span>#무료주차</span>
-                            </div>
-                            <div class="imgRight_4" style="margin-top: 10px;">
-                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png"
-                                    alt="">
-                                4.2 (13명)
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/view1.png" alt="">
-                                121,732
-                                &nbsp;&nbsp;
-                                <img src="./이눔세끼화이팅/resources/img/heart.png" alt="">
-                                657
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="textLine">
-                        <div class="restaurant_desc">
-                            <span>
-                                zz
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                
+                <!-- 5개 넘어가면 히든클래스 추가해주세여 -->
+                
                 <div class="restaurant hidden" onclick="location.href='http://www.naver.com'">
                     <div class="imgLine">
                         <div class="imgLeft">
@@ -514,9 +281,6 @@
                         <div class="imgRight">
                             <div class="imgRight_1">
                                 <span>1.주원식당</span>
-                                <span class="heart-container" onclick="handleContainerClick(event)">
-                                    <span class="heart"></span>
-                                </span>
                             </div>
                             <div class="imgRight_2">
                                 <span>짬뽕순두부</span>, &nbsp;
@@ -549,7 +313,10 @@
                         </div>
                     </div>
                 </div>
-
+                
+                
+                
+                
 
             </div>
         </div>
@@ -605,34 +372,7 @@
             });
         })
 
-        // 하트 토글 스크립트구문
-        // const heartContainer = document.querySelector('.heart-container');
-        // const heart = heartContainer.querySelector('.heart');
 
-        // heart.addEventListener('click', (event) => {
-        //     event.stopPropagation();
-        //     heart.classList.toggle('filled');
-
-        // });
-
-        // heartContainer.addEventListener('click', (event) => {
-        //     event.stopPropagation();
-        // });
-
-        const heartContainers = document.querySelectorAll('.heart-container');
-
-        heartContainers.forEach(heartContainer => {
-            const heart = heartContainer.querySelector('.heart');
-
-            heart.addEventListener('click', (event) => {
-                event.stopPropagation();
-                heart.classList.toggle('filled');
-            });
-
-            heartContainer.addEventListener('click', (event) => {
-                event.stopPropagation();
-            });
-        });
     </script>
 
 

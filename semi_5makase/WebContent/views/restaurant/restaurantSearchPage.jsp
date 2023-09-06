@@ -641,7 +641,7 @@
                     </label>
                     <label for="category_3_2">
                         <input type="radio" class="category_3" name="category" id="category_3_2"
-                            style="margin-left: 70px;"> 밥집
+                            style="margin-left: 70px;" value=""> 돈카츠
                     </label>
                     <br>
                     <label for="category_3_3">
@@ -657,7 +657,7 @@
                     </label>
                     <label for="category_3_6">
                         <input type="radio" class="category_3" name="category" id="category_3_6"
-                            style="margin-left: 70px;"> 분식
+                            style="margin-left: 70px;" value=""> 분식
                     </label>
                     
                     <script>
@@ -761,21 +761,14 @@
                 </div>
                 <div id="hiddenCategory">
                     <label for="category_3_7">
-                        <input type="radio" class="category_3" name="gender" id="category_3_7"> 면요리
+                        <input type="radio" class="category_3" name="category" id="category_3_7"> 면요리
                     </label>
                     <label for="category_3_8">
-                        <input type="radio" class="category_3" name="gender" id="category_3_8"
+                        <input type="radio" class="category_3" name="category" id="category_3_8"
                             style="margin-left: 56px;"> 국물요리
                     </label>
                     <br>
-                    <label for="category_3_9">
-                        <input type="radio" class="category_3" name="gender" id="category_3_9"> 해산물
-                    </label>
-                    <label for="category_3_10">
-                        <input type="radio" class="category_3" name="gender" id="category_3_10"
-                            style="margin-left: 56px;"> 한식
-                    </label>
-                    <br>
+                    
                 </div>
                 <button class="addBtn" style="margin: auto;">펼치기</button>
 
