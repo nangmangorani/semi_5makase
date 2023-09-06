@@ -90,8 +90,11 @@
             width: 100%;
             height: 15%;
             margin: auto;
-            background-color: lightgray;
             border-bottom: 1px solid gray;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(resources/img/hansikrecommend.png);
+            background-size: cover;
+            background-position: 20% 20%;
+
         }
 
         #content_1>span {
@@ -294,7 +297,7 @@
         <div id="content">
             <div id="content_1">
                 <span>
-                    <h2><%= cateName %></h2>
+                    <h2 style="color: white; font-weight: 500; opacity: 100%;"><%= cateName %></h2>
                 </span>
             </div>
             <div id="content_2">
