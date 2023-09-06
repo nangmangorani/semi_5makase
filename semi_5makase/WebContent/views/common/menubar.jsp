@@ -21,16 +21,6 @@
  
     </head>
     <style>
-        
-        @font-face {
-            font-family: 'SUITE-Regular';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
-            font-weight: 400;
-            font-style: normal;
-        }
-
-
-
         div { box-sizing: border-box; }
     
     	.home{
@@ -187,8 +177,8 @@
             <div class="member-area" align="center" style="margin-top: 10px;">
 			<%if(loginMember == null){ %>
           		<!-- case2. 로그인 전  -->
-                <button type='button' id="modal_btn" data-target="#loginModal">로그인</button>
-                <button type="button" onclick="enrollPage()">회원가입</button>
+                <button type='button'  id="modal_btn" data-target="#loginModal">로그인</button>
+                <button type="button"  onclick="enrollPage()">회원가입</button>
               <%} else if(loginMember.getMemId().equals("admin")) { %>
                 <!-- case2. 관리자 로그인 후  -->
 			        <div>
