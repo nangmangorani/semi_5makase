@@ -44,13 +44,19 @@
     height: 15%;
     background-image: url("resources/img/pork-cutlet2.jpg");
     background-size: cover;
-}
+	}
 
-.navbar{
-    background-color: rgb(240, 240, 240);
-    width: 100%;
-    height: 2%;
-}
+	.navbar{
+	    background-color: rgb(240, 240, 240);
+	    width: 100%;
+	    height: 2%;
+	}
+	
+	.restaurant-item img{
+		width: 470px;
+		height: 270px;
+		margin: 20px;
+	}
 
 </style>
 <body>
@@ -315,13 +321,13 @@
                      <figure class="restaurant-item">
                          <div>                              
                    			 <a href="#해당 이미지 상세정보창">
-                             <img class="restaurant-item-image" src="resources/img/bibimbap.jpg" value="구로구">
+                             <img class="restaurant-item-image" src="resources/img/guro.jpg" value="구로구">
                              </a>
                          </div>
                          <figcaption>
                              <div class="info tv_info">
                                  <span class="title">구로구 top 7</span>
-                                 <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                 <p>"구로구 맛집 뽑았다!! 모여라!!"</p>
                              </div>
                          </figcaption>
                      </figure> 
@@ -330,13 +336,13 @@
                     <figure class="restaurant-item">
                         <div>                              
                    			<a href="#해당 이미지 상세정보창">
-                            <img class="restaurant-item-image" src="resources/img/bibimbap.jpg" value="강남구">
+                            <img class="restaurant-item-image" src="resources/img/gangnam.jpg" value="강남구">
                             </a>
                         </div>
                         <figcaption>
                             <div class="info tv_info">
                                 <span class="title">강남구 top 7</span>
-                                <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                <p>"맛집의 메카 강남에서 볼래?"</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -347,13 +353,13 @@
                     <figure class="restaurant-item">
                         <div>                              
                 			<a href="#해당 이미지 상세정보창">
-                            <img class="restaurant-item-image" src="resources/img/bibimbap.jpg" value="영등포구">
+                            <img class="restaurant-item-image" src="resources/img/yeongdeungpo.jpg" value="영등포구">
                             </a>
                         </div>
                         <figcaption>
                             <div class="info tv_info">
-                                <span class="title">영등포구 top 7</span>
-                                <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                <span class="title">영등포 top 7</span>
+                                <p>"영등포에 맛 없는게 없다! 인정?"</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -362,13 +368,13 @@
                     <figure class="restaurant-item">
                         <div>                              
               			    <a href="#해당 이미지 상세정보창">
-                            <img class="restaurant-item-image" src="resources/img/bibimbap.jpg" value="마포구">
+                            <img class="restaurant-item-image" src="resources/img/mapo.jpg" value="마포구">
                             </a>
                         </div>
                         <figcaption>
                             <div class="info tv_info">
                                 <span class="title">마포구 top 7</span>
-                                <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                <p>"마포구 어딜가나 맛집이라며?"</p>
                             </div>
                         </figcaption>
                     </figure>
