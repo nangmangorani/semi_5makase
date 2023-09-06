@@ -71,7 +71,7 @@
         <div class="top-list slick slider" id="wrapper">
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
+                    <a href="">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/bibimbap.jpg" value="1">
