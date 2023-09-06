@@ -78,7 +78,7 @@
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span>비빔맛 맛집 TOP 10</span>
+                                    <span>한식 맛집 TOP 10</span>
                                     <p>"이것은 한국의 혼"</p>
                                 </div>
                             </figcaption>
@@ -112,8 +112,8 @@
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">김치찌개 맛집 TOP3</span>
-                                    <p>"스팸 돼지고기 꽁치"</p>
+                                    <span class="title">일식 맛집 TOP 7</span>
+                                    <p>"개기일식"</p>
                                 </div>
                             </figcaption>
                         </figure>
@@ -129,8 +129,8 @@
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">서양 국시 TOP 5</span>
-                                    <p>"난 토마토"</p>
+                                    <span class="title">양식 맛집 TOP 5</span>
+                                    <p>"마음의 양식"</p>
                                 </div>
                             </figcaption>
                         </figure>
@@ -146,8 +146,8 @@
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">라멘 맛집 TOP 5</span>
-                                    <p>"매장안에 원피스 피규어 필수"</p>
+                                    <span class="title">면요리 맛집 TOP5</span>
+                                    <p>"후루룩짭짭 맛좋은 라면"</p>
                                 </div>
                             </figcaption>
                         </figure>
@@ -163,8 +163,8 @@
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">분식 맛집 TOP 3</span>
-                                    <p>"라면 돈까스 김밥 국룰"</p>
+                                    <span class="title">국밥집 TOP 3</span>
+                                    <p>"뜨끈하고 든든하게"</p>
                                 </div>
                             </figcaption>
                         </figure>
@@ -180,8 +180,8 @@
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">국밥류 TOP 3</span>
-                                    <p>"이 돈이면 국밥이 몇그릇.."</p>
+                                    <span class="title">분식 맛집 TOP 5</span>
+                                    <p>"떡튀순"</p>
                                 </div>
                             </figcaption>
                         </figure>
@@ -197,8 +197,8 @@
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span class="title">한식 맛집 TOP 3</span>
-                                    <p>"주모 샤따내려"</p>
+                                    <span class="title">돈카츠 맛집 TOP 3</span>
+                                    <p>"주모 샤따반쯤내려"</p>
                                 </div>
                             </figcaption>
                         </figure>
@@ -318,7 +318,7 @@
                          </div>
                          <figcaption>
                              <div class="info tv_info">
-                                 <span class="title">뭐시구 top 10</span>
+                                 <span class="title">송파구 top 7</span>
                                  <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
                              </div>
                          </figcaption>
@@ -333,7 +333,7 @@
                         </div>
                         <figcaption>
                             <div class="info tv_info">
-                                <span class="title">뭐시구 top 10</span>
+                                <span class="title">마포구 top 7</span>
                                 <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
                             </div>
                         </figcaption>
@@ -350,7 +350,7 @@
                         </div>
                         <figcaption>
                             <div class="info tv_info">
-                                <span class="title">뭐시구 top 10</span>
+                                <span class="title">구로구 top 7</span>
                                 <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
                             </div>
                         </figcaption>
@@ -365,7 +365,7 @@
                         </div>
                         <figcaption>
                             <div class="info tv_info">
-                                <span class="title">뭐시구 top 10</span>
+                                <span class="title">서초구 top 7</span>
                                 <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
                             </div>
                         </figcaption>

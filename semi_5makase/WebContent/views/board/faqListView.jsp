@@ -302,7 +302,8 @@
 	                    <div class="CFaqTableItem__contents-box">
 	                        <em class="CFaqTableItem__answer">답변</em>
 	                        <div class="CFaqTableItem__contents">
-	                            <%= f.getFaqContent() %>
+	                            <% String s = f.getFaqContent().replaceAll("\\\\n", "<br>");%>
+	                            <% out.println(s); %>
 	                        </div>
 	                    </div>
 	                </div>
