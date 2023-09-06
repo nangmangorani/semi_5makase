@@ -72,7 +72,7 @@
         <div class="top-list slick slider" id="wrapper">
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창" value="안녕">
+                    <a href="">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/bibimbap.jpg" value="1">
@@ -112,7 +112,6 @@
                                 <img src="resources/img/cooking.jpg" value="3">
                             </div>
                             <figcaption>
-<<<<<<< .merge_file_181O12
                                 <div class="list-pic-comment">
                                     <span class="title">일식 맛집 TOP3</span>
 =======
