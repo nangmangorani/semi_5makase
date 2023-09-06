@@ -315,7 +315,7 @@
     </section>
     <hr>
     <section class="main_most_popular_restaurant">
-        <h2 id="editor-select">점메추</h2>
+        <h2 id="editor-select">지역별 맛집 추천</h2>
         <div class="popular_restaurant_container">
             <ul>
                 <li class="fl">
@@ -382,6 +382,13 @@
                 </li>
             </ul>
         </div>
+         <script>
+        	$(".restaurant-item img").click(function(){
+        		var cateNo = $(this).attr("value")
+        		var cateName = $(this).closest("figure").find("span").text();   
+        		location.href="<%= contextPath %>/main.rt?value=" + cateNo + "&&cateName=" + cateName;
+        	})
+        </script>
     </section>
     </div>
     
