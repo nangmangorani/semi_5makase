@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.semi_5makase.common.model.vo.Attachment;
 import com.semi_5makase.restaurant.model.service.RestaurantService;
+import com.semi_5makase.restaurant.model.vo.Review;
 
 /**
- * Servlet implementation class SelectModalProfileController
+ * Servlet implementation class FotoramaController
  */
-@WebServlet("/profile.rv")
-public class SelectModalProfileController extends HttpServlet {
+@WebServlet("/fotorama.rv")
+public class FotoramaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectModalProfileController() {
+    public FotoramaController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,14 +31,17 @@ public class SelectModalProfileController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String changename = (request.getParameter("changeName"));
-		int memNo = new RestaurantService().selectMemNo(changename);
+		int restNo = Integer.parseInt(request.getParameter("restNo"));
+		String changeName = request.getParameter("changeName");
 		
-		Attachment at = new RestaurantService().selectModalProfile(memNo);
+		Review rv = new RestaurantService().fotorama(restNo, changeName);
 		
 		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(at, response.getWriter());
-	
+		new Gson().toJson(rv, response.getWriter());
+		
+		
+		
+		
 	}
 
 	/**

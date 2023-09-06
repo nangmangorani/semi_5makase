@@ -1066,6 +1066,43 @@ public ArrayList<Restaurant> selectEditorRestInfo(Connection conn) {
 			
 		}
 	
+	public Review fotorama(int restNo, String changeName, Connection conn) {
+		
+		Review rv = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("fotorama");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, restNo);
+			pstmt.setString(2, changeName);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rv = new Review(rset.getInt("REVIEW_NO"),
+								rset.getString("REVIEW_CONTENT"),
+								rset.getInt("RATING"),
+								rset.getString("REVIEW_DATE"),
+								rset.getInt("MEM_NO"),
+								rset.getString("NICKNAME")
+								);
+						
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return rv;
+		
+	}
+	
 	
 	public int adminInsertMenu2(Connection conn, Menu m2) {
 		
@@ -1364,7 +1401,7 @@ public int selectChangeListCount(Connection conn) {
 	return listCount;
 }
 
-public int selectMemNo(int refBno, Connection conn) {
+public int selectMemNo(String changeName, Connection conn) {
 	
 	int memNo = 0;
 	PreparedStatement pstmt = null;
@@ -1375,15 +1412,14 @@ public int selectMemNo(int refBno, Connection conn) {
 	try {
 		pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setInt(1, refBno);
+		pstmt.setString(1, changeName);
 		
 		rset = pstmt.executeQuery();
 		
 		if(rset.next()) {
 			memNo = rset.getInt("MEM_NO");
 		}
-		
-		
+				
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
@@ -1411,8 +1447,7 @@ public ArrayList<Attachment> selectProfileAttachment(Connection conn) {
 			at.setRefBno(rset.getInt("REF_BNO"));
 			list.add(at);
 		}
-		System.out.println("정상다오" + list);
-		
+
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
@@ -1442,9 +1477,7 @@ public Attachment selectModalProfile(int refBno, Connection conn) {
 			list.setRefBno(rset.getInt("REF_BNO"));
 							
 		}
-		
-		System.out.println("모프다오" + list);
-		
+
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
@@ -1920,6 +1953,7 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 				while(rset.next()) {
 					Attachment at = new Attachment();
 					at.setFilePath(rset.getString("REVIEWIMGS"));
+					at.setChangeName(rset.getString("CHANGE_NAME"));
 					at.setRefBno(rset.getInt("REVIEW_NO"));
 					list.add(at);
 				}

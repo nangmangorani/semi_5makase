@@ -537,7 +537,7 @@
         }
 
         .reviewPic{
-            height: 85%;
+            height: 100%;
             width: 70%;
             border : 1px solid black;
         }
@@ -615,7 +615,7 @@
         	<% for(int i=0; i<rvPicList.size(); i++) { %>
         		<% if (i < 3) { %>
 	            <div id="photo_<%=i%>">
-	                <a href="#none" class="reviewModal" style="padding: 0; border: 0;" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getRefBno() %>)">
+	                <a href="#none" class="reviewModal" style="padding: 0; border: 0;" onclick="closeup('<%=rvPicList.get(i).getChangeName() %>')">
                       	<img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
 	                </a>
 	            </div>
@@ -631,19 +631,12 @@
                 <div class="closeModal" align="right">X</div>
 		      <!-- Modal content -->
 		      <div class="reviewDatail_modal-content">
-                    <div class="reviewPic">
-                        <div class="reviewPic2" style="text-align: center; height: 100%;">
-                            <img class="closeUp" src="<%= contextPath %><%= rvPicList.get(0).getFilePath() %>" style="width: 70%; height: 80%;">
-                        </div>
-                        <div class="picList fotorama" data-nav="thumbs">
-                            <% for(int i=0; i<rvPicList.size(); i++) { %>
-                            	<% if (i < 10) { %>
-                            	<a href="#none" style="text-decoration:none;" class="pl<%= rvPicList.get(i).getRefBno()%>" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getRefBno() %>)">
-	                            	<img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
-                            	</a>
-                            	<% } %>
-                            <% } %>                      
-                        </div>
+                    <div class="reviewPic fotorama" data-nav="thumbs" data-allowfullscreen="true" data-width="95%">
+                             <% for(int i=0; i<rvPicList.size(); i++) { %>
+							    <a href="#none" style="text-decoration:none;" class="pl<%= rvPicList.get(i).getRefBno()%>" onclick="closeup('<%=rvPicList.get(i).getChangeName()%>', <%= rvPicList.get(i).getRefBno() %>)">
+							        <img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
+							    </a>
+							<% } %>              
                     </div>
                     <div class="reviewCon">
                         <div class="review_header">
@@ -674,18 +667,28 @@
 		        <!--End Modal-->
 		        
 	        <script type="text/javascript">
+	        
+	        $(".fotorama").on("click", function(){
+	        	
+	        	const act = document.querySelector('.fotorama__active');
+	        	const img = act.querySelector('img');
+	        	const src = img.getAttribute('src');
 
-	        function closeup(filePath, refBno){
+	        	var fullPath = src;
+	        	var parts = fullPath.split("/"); 
+	        	var fileName = parts[parts.length - 1];
+
+	        	closeup(fileName);
 	        	
-	        	const fp = '<%=contextPath%>';
-	        	
-	        	$(".closeUp").attr("src", fp+filePath);
-	        	
+	        })
+
+	        function closeup(changeName){
+
 	        	$.ajax({
-	        		url:"select.rv",
+	        		url:"fotorama.rv",
 	        		data:{
 	        			restNo:<%= rest.getRestNo() %>,
-	        			refBno:refBno
+	        			changeName:changeName
 	        	},
 	        		success: function(result) {
 	        			
@@ -706,7 +709,7 @@
 	        	$.ajax({
 		
 	        		url:"profile.rv",
-	        		data:{refBno:refBno},
+	        		data:{changeName:changeName},
 	        		success:function(result){
 	        			
 	        			var rf = result.filePath;

@@ -266,6 +266,24 @@
 		    BY REVIEW_NO DESC
 	</entry>
 	
+	<entry key="fotorama">
+		SELECT DISTINCT
+		       REVIEW_NO
+		     , REVIEW_CONTENT
+		     , RATING
+             , TO_CHAR(REVIEW_DATE, 'YYYY/MM/DD') "REVIEW_DATE"
+		     , MEM_NO
+             , NICKNAME
+		  FROM REVIEW
+		  JOIN MEMBER USING (MEM_NO)
+		  LEFT JOIN ATTACHMENT ON (REVIEW_NO = REF_BNO)
+		 WHERE REST_NO = ?
+           AND CHANGE_NAME = ?
+           AND CATEGORY = 'REV'
+		 ORDER
+		    BY REVIEW_NO DESC 
+	</entry>
+	
 	<entry key="selectReviewNoList">
 		SELECT DISTINCT
 		       REVIEW_NO
@@ -276,8 +294,10 @@
 	</entry>
 	
 	<entry key="selectReviewAttachment">
-	SELECT
+	 SELECT
 	       '/' || FILE_PATH || '/' || CHANGE_NAME "REVIEWIMGS"
+         , CHANGE_NAME
+         , REVIEW_NO
 	  FROM ATTACHMENT
       JOIN REVIEW ON (REF_BNO = REVIEW_NO)
 	 WHERE REVIEW_NO = ?
@@ -301,6 +321,7 @@
 	<entry  key="selectReviewAttachment2">
 	SELECT
 	       '/' || FILE_PATH || '/' || CHANGE_NAME "REVIEWIMGS"
+           , CHANGE_NAME
            , REVIEW_NO
 	  FROM ATTACHMENT
       JOIN REVIEW ON (REF_BNO = REVIEW_NO)
@@ -325,7 +346,8 @@
 	<entry key="selectMemNo">
 		SELECT MEM_NO
 		  FROM REVIEW
-		 WHERE REVIEW_NO = ?
+          JOIN ATTACHMENT ON (REF_BNO = REVIEW_NO)
+		 WHERE CHANGE_NAME = ?
 	</entry>
 	
 	<entry key="selectModalProfile">

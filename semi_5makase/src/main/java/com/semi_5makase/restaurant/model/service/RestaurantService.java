@@ -438,6 +438,17 @@ public class RestaurantService {
 		
 	}
 	
+	public Review fotorama(int restNo, String changeName) {
+		
+		Connection conn = getConnection();
+		
+		Review rv = new RestaurantDao().fotorama(restNo, changeName, conn);
+		
+		close(conn);
+		return rv;
+		
+	}
+	
 	public ArrayList<ReviewNo> selectReviewNoList(int restNo){
 		
 		Connection conn = getConnection();
@@ -469,11 +480,11 @@ public class RestaurantService {
 		return list;
 	}
 	
-	public int selectMemNo (int refBno) {
+	public int selectMemNo (String changeName) {
 		
 		Connection conn = getConnection();
 		
-		int memNo = new RestaurantDao().selectMemNo(refBno, conn);
+		int memNo = new RestaurantDao().selectMemNo(changeName, conn);
 		
 		close(conn);
 		return memNo;
