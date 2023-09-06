@@ -13,13 +13,19 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+
 
     
 
 
 </head>
 <style>
+    	@font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        }
 
 
     .delbtn{
@@ -53,7 +59,9 @@
     #deleteHead2{
         width: 100%;
         height: 120px;
-        background-color: lightgray;
+        background-image: url(resources/img/parting.jpg);
+        /* background-color: lightgray; */
+        background-size: auto;
     }
     #deleteHead2>h2{
         
