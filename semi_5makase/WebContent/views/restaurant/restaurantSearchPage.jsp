@@ -70,7 +70,7 @@
 
         .wrap {
             width: 1000px;
-            height: 2000px;
+            height: auto;
             margin: auto;
         }
 
