@@ -32,7 +32,6 @@ public class AdminRestaurantDetail extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("dlrjdsfsdfsfd");
 		int restNo = Integer.parseInt(request.getParameter("num"));
 		
 		AdminRestaurant ar = new RestaurantService().adminSelectRestaurant(restNo);
