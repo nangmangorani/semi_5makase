@@ -20,18 +20,7 @@
 
 </head>
 <style>
-    @font-face {
-    font-family: 'Ansungtangmyun-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ansungtangmyun-Bold.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    }
 
-
-    * {
-
-        font-family: 'Ansungtangmyun-Bold';
-    }
 
     .delbtn{
         padding: 0.25rem 0.5rem;
