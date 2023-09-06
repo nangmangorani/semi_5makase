@@ -69,12 +69,7 @@ public class RestaurantDetailView extends HttpServlet {
 			request.setAttribute("rvNoList", rvNoList);
 			request.setAttribute("rvPicList", rvPicList);
 			request.setAttribute("profileList", profileList);
-			
-			
-			
-//			System.out.println(rvList);
-//			System.out.println(rvPicList);
-			
+
 			request.getRequestDispatcher("views/restaurant/restaurantDetailView.jsp").forward(request, response);	
 		} else {
 			request.setAttribute("errorMsg", "음식점 상세페이지 조회에 실패하였습니다.");

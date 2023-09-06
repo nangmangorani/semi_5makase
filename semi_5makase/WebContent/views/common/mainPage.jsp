@@ -71,10 +71,10 @@
         <div class="top-list slick slider" id="wrapper">
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
+                    <a href="">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/bibimbap.jpg">
+                                <img src="resources/img/bibimbap.jpg" value="1">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -91,7 +91,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/chinese.jpg">
+                                <img src="resources/img/chinese.jpg" value="2">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -108,7 +108,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/cooking.jpg">
+                                <img src="resources/img/cooking.jpg" value="3">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -125,7 +125,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/pasta.jpg">
+                                <img src="resources/img/pasta.jpg" value="4">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -142,7 +142,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/ramen.jpg">
+                                <img src="resources/img/ramen.jpg"  value="6">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -159,7 +159,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/soup.jpg">
+                                <img src="resources/img/soup.jpg" value="7">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -176,7 +176,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/tteokbokki.jpg">
+                                <img src="resources/img/tteokbokki.jpg"  value="8">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -193,7 +193,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/pasta.jpg">
+                                <img src="resources/img/pasta.jpg" value="9">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -207,6 +207,15 @@
             </ul>
         </div>
         <br>
+        
+        <script>
+        	$(".top-list-info img").click(function(){
+        		var cateNo = $(this).attr("value")
+        		var cateName = $(this).closest("figure").find("span").text();   
+        		location.href="<%= contextPath %>/main.rt?value=" + cateNo + "&&cateName=" + cateName;
+        	})
+        </script>
+        
         <hr>
         <section class="main_most_popular_restaurant">
             <h2 id="editor-select">TV에 나온 음식점</h2>
@@ -236,7 +245,7 @@
         </section>
        <hr>
        <section class="main_most_popular_restaurant">
-        <h2 id="editor-select">지금 날씨에 먹기좋은 음식</h2>
+        <h2 id="editor-select">에디터가 선정한 식당</h2>
         <div class="popular_restaurant_container">
             <ul>
                 <li class="fl">

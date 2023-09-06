@@ -688,7 +688,7 @@
                     			    	let imgSrc = "";
                     			    	console.log("i result : " + i)
 
-                    			        val += '<div class="restaurant">';
+                    			        val += '<div class="restaurant" onclick="detailRest(' + rest[i].restNo + ')">';
                     			        val += '<div class="imgLine">';
                     			        for(let j=0; j<at.length; j++){                    			    		
                     			    		if(rest[i].restNo == at[j].refBno){
@@ -890,7 +890,7 @@
                 			    	let imgSrc = "";
                 			    	console.log("i result : " + i)
 
-                			        val += '<div class="restaurant">';
+                			        val += '<div class="restaurant" onclick="detailRest(' + rest[i].restNo + ')">';
                 			        val += '<div class="imgLine">';
                 			        for(let j=0; j<at.length; j++){                    			    		
                 			    		if(rest[i].restNo == at[j].refBno){
@@ -985,7 +985,7 @@
                 			    	let imgSrc = "";
                 			    	console.log("i result : " + i);
 			
-                			        val += '<div class="restaurant">';
+                			    	val += '<div class="restaurant" onclick="detailRest(' + rest[i].restNo + ')">';
                 			        val += '<div class="imgLine">';
                 			        
                 			        
@@ -1061,7 +1061,7 @@
                 <%for(int i=0; i<locationList.size(); i++){ %>
                 
 		         	
-                <div class="restaurant">
+                <div class="restaurant" onclick="detailRest(<%= locationList.get(i).getRestNo()%>)">
                     <div class="imgLine">
                         <div class="imgLeft">
                         	
@@ -1126,11 +1126,16 @@
                 </div>
             
                 <script>
-                $(function(){
-                	$("#restItem").on("click", ".restaurant", function(){
-                		alert('ㅎㅇ');
-                	});
-                })
+                
+                function detailRest(restNo){
+                	
+                	var restNo = restNo
+                	
+                	console.log(restNo);
+                	
+                	location.href="<%= contextPath %>/detail.rt?restNo=" + restNo
+                }
+                
                 </script>
                 
                 <!-- <button class="searchPlus">검색결과 더보기</button> <br> -->
