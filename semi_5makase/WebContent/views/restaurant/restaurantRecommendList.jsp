@@ -4,6 +4,8 @@
     pageEncoding="UTF-8"%>
 <%
 	ArrayList<Restaurant> list = (ArrayList<Restaurant>)request.getAttribute("categoryList");
+	ArrayList<Restaurant> lclist = (ArrayList<Restaurant>)request.getAttribute("locationList");
+
 	String cateName = (String)request.getAttribute("categoryName");
 %>
 <!DOCTYPE html>
@@ -296,52 +298,107 @@
                 </span>
             </div>
             <div id="content_2">
-            <% for (Restaurant cateList : list) { %>
-                <div class="restaurant" onclick="location.href='<%= contextPath %>/detail.rt?restNo=<%= cateList.getRestNo() %>'">
-                    <div class="imgLine">
-                        <div class="imgLeft">
-                            <img src="<%= cateList.getTitleImg() %>"
-                                alt="">
-                        </div>
-                        <div class="imgRight">
-                            <div class="imgRight_1">
-                                <span><%= cateList.getRestName() %></span>
-                            </div>
-                            <div class="imgRight_2">
-                                <strong><%= cateList.getMenu() %></strong>
-                            </div>
-                            <div class="imgRight_3">
-                           		<% if(cateList.getTvName() != null) { %>
-                                	<span style="color:orange;">#<%= cateList.getTvName() %></span>,
-                                <% } %>
-                                <% if(cateList.getParking().equals("가능")) { %>
-                                	<span style="color:blue;">#주차가능</span>
-                                <% } else { %>
-                                	<span style="color:red;">#주차불가능</span>	
-                                <% } %>
-                            </div>
-                            <div class="imgRight_4" style="margin-top: 10px;">
-                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png">
-                                <%= cateList.getAvg2() %> (<%= cateList.getCount() %>명)
-                                &nbsp;&nbsp;
-                                <img src="./resources/img/heart.png" alt="">
-                                <%= cateList.getFcount() %>
-                                &nbsp;&nbsp;
-                                <img src="./resources/img/view1.png" alt="">
-                                <%= cateList.getRestViews() %>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="textLine">
-                        <div class="restaurant_desc">
-                            <span>
-                                <%= cateList.getIntro() %> ... 더보기
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            <% } %>
+	           <% if(list != null) { %>
+		            <% for (Restaurant cateList : list) { %>
+		                <div class="restaurant" onclick="location.href='<%= contextPath %>/detail.rt?restNo=<%= cateList.getRestNo() %>'">
+		                    <div class="imgLine">
+		                        <div class="imgLeft">
+		                            <img src="<%= cateList.getTitleImg() %>"
+		                                alt="">
+		                        </div>
+		                        <div class="imgRight">
+		                            <div class="imgRight_1">
+		                                <span><%= cateList.getRestName() %></span>
+		                            </div>
+		                            <div class="imgRight_2">
+		                                <strong><%= cateList.getMenu() %></strong>
+		                            </div>
+		                            <div class="imgRight_3">
+		                           		<% if(cateList.getTvName() != null) { %>
+		                                	<span style="color:orange;">#<%= cateList.getTvName() %></span>,
+		                                <% } %>
+		                                <% if(cateList.getParking().equals("가능")) { %>
+		                                	<span style="color:blue;">#주차가능</span>
+		                                <% } else { %>
+		                                	<span style="color:red;">#주차불가능</span>	
+		                                <% } %>
+		                            </div>
+		                            <div class="imgRight_4" style="margin-top: 10px;">
+		                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png">
+		                                <%= cateList.getAvg2() %> (<%= cateList.getCount() %>명)
+		                                &nbsp;&nbsp;
+		                                <img src="./resources/img/heart.png" alt="">
+		                                <%= cateList.getFcount() %>
+		                                &nbsp;&nbsp;
+		                                <img src="./resources/img/view1.png" alt="">
+		                                <%= cateList.getRestViews() %>
+		
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="textLine">
+		                        <div class="restaurant_desc">
+		                            <span>
+		                                <%= cateList.getIntro() %> ... 더보기
+		                            </span>
+		                        </div>
+		                    </div>
+		                </div>
+		            <% } %>
+	           <% } %>
+	           
+	           <% if (lclist != null) { %>
+	           		<% for (Restaurant llist : lclist) { %>
+		                <div class="restaurant" onclick="location.href='<%= contextPath %>/detail.rt?restNo=<%= llist.getRestNo() %>'">
+		                    <div class="imgLine">
+		                        <div class="imgLeft">
+		                            <img src="<%= llist.getTitleImg() %>"
+		                                alt="">
+		                        </div>
+		                        <div class="imgRight">
+		                            <div class="imgRight_1">
+		                                <span><%= llist.getRestName() %></span>
+		                            </div>
+		                            <div class="imgRight_2">
+		                                <strong><%= llist.getMenu() %></strong>
+		                            </div>
+		                            <div class="imgRight_3">
+		                           		<% if(!llist.getTvName().equals("없음")) { %>
+		                                	<span style="color:orange;">#<%= llist.getTvName() %></span>,
+		                                <% } %>
+		                                <% if(llist.getParking().equals("가능")) { %>
+		                                	<span style="color:blue;">#주차가능</span>
+		                                <% } else { %>
+		                                	<span style="color:red;">#주차불가능</span>	
+		                                <% } %>
+		                            </div>
+		                            <div class="imgRight_4" style="margin-top: 10px;">
+		                                <img src="https://dcicons.s3.ap-northeast-1.amazonaws.com/new/images/mobile/react_m_common/card__score__star2.png">
+		                                <%= llist.getAvg2() %> (<%= llist.getCount() %>명)
+		                                &nbsp;&nbsp;
+		                                <img src="./resources/img/heart.png" alt="">
+		                                <%= llist.getFcount() %>
+		                                &nbsp;&nbsp;
+		                                <img src="./resources/img/view1.png" alt="">
+		                                <%= llist.getRestViews() %>
+		
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="textLine">
+		                        <div class="restaurant_desc">
+		                            <span>
+		                            	<% if (llist.getIntro().length() > 53) { %>
+		                                	<%= llist.getIntro().substring(1, 53) %> ... 더보기		                            	
+		                            	<% } else { %>
+		                            		<%= llist.getIntro() %>
+		                            	<% } %> 
+		                            </span>
+		                        </div>
+		                    </div>
+		                </div>
+		            <% } %>
+	           <% } %>
             </div>
         </div>
 

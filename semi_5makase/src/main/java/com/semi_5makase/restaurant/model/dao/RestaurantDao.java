@@ -96,7 +96,8 @@ private Properties prop = new Properties();
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				tvList.add(new Restaurant(rset.getString("REST_NAME"),
+				tvList.add(new Restaurant(rset.getInt("REST_NO"),
+										  rset.getString("REST_NAME"),
 										  rset.getString("MAIN_ADDRESS"),
 										  rset.getString("TV_NAME"),
 										  rset.getString("CATEGORY_NAME"),
@@ -111,11 +112,49 @@ private Properties prop = new Properties();
 			close(pstmt);
 		}
 		
-		System.out.println("TV리스트" + tvList);
+		System.out.println("TV메인인포리스트" + tvList);
 		
 		return tvList;
 		
 	}
+	
+public ArrayList<Restaurant> selectEditorRestInfo(Connection conn) {
+		
+		ArrayList<Restaurant> tvList = new ArrayList<Restaurant>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectEditorRestInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				tvList.add(new Restaurant(rset.getInt("REST_NO"),
+										  rset.getString("REST_NAME"),
+										  rset.getString("MAIN_ADDRESS"),
+										  rset.getString("TV_NAME"),
+										  rset.getString("CATEGORY_NAME"),
+										  rset.getDouble("AVG")
+										  ));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		System.out.println("TV에디터리스트" + tvList);
+		
+		return tvList;
+		
+	}
+
 	
 	public ArrayList<Review> selectReviewList(int restNo, Connection conn){
 		
@@ -1955,6 +1994,49 @@ public ArrayList<Restaurant> viewList(Connection conn, String searchVal) {
 			}
 			return list;
 		}
-	
+		
+public ArrayList<Restaurant> selectLocationRcList(String sVal, Connection conn) {
+			
+			ArrayList<Restaurant> list = new ArrayList<Restaurant>();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			System.out.println("sval : " + sVal);
+
+			String sql = prop.getProperty("selectLocationRcList");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, "%" + sVal + "%" );
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Restaurant(rset.getInt("REST_NO"),
+											rset.getString("CATEGORY_NAME"),
+											rset.getString("TV_NAME"),
+											rset.getString("REST_NAME"),
+											rset.getString("MAIN_ADDRESS"),
+											rset.getString("PARKING"),
+											rset.getString("INTRO"),
+											rset.getInt("REST_VIEWS"),
+											rset.getString("MENU"),
+											rset.getDouble("AVG"),
+											rset.getInt("COUNT"),
+											rset.getInt("FCOUNT"),
+											rset.getString("TITLE_IMG")
+											));
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return list;
+		}
+		
 	
 }

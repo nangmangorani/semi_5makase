@@ -26,25 +26,40 @@
 	</entry>
 	
 	<entry key="selectMainTvRestInfo">
-		SELECT REST_NAME, MAIN_ADDRESS, TV_NAME, CATEGORY_NAME, ROUND(AVG(RATING),1) "AVG"
-		  FROM (
-		  SELECT 
-		       CATEGORY_NAME
+		SELECT
+               REST_NO 
+             , CATEGORY_NAME
 		     , TV_NAME
 		     , REST_NAME
 		     , MAIN_ADDRESS
-		     , RATING
+		     , ROUND(AVG(RATING),1) "AVG"
 		  FROM RESTAURANT
 		  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
 		  JOIN TV USING (TV_NO)
 		  JOIN REVIEW USING (REST_NO)
-		 WHERE TV_NO IS NOT NULL
-		  ) E
-		GROUP BY CATEGORY_NAME, TV_NAME, REST_NAME, MAIN_ADDRESS
+		 WHERE TV_NO IN (1,2,3,4,5)
+           AND REST_NO IN (3, 11, 18, 26, 34, 47)
+         GROUP BY REST_NO, CATEGORY_NAME, TV_NAME, REST_NAME, MAIN_ADDRESS
+	</entry>
+	
+	<entry key="selectEditorRestInfo">
+		SELECT
+               REST_NO 
+             , CATEGORY_NAME
+		     , TV_NAME
+		     , REST_NAME
+		     , MAIN_ADDRESS
+		     , ROUND(AVG(RATING),1) "AVG"
+		  FROM RESTAURANT
+		  JOIN FOOD_CATEGORY USING (CATEGORY_NO)
+		  JOIN TV USING (TV_NO)
+		  JOIN REVIEW USING (REST_NO)
+         WHERE REST_NO IN (10, 17, 19, 30, 39, 47)
+         GROUP BY REST_NO, CATEGORY_NAME, TV_NAME, REST_NAME, MAIN_ADDRESS
 	</entry>
 	
 	<entry key="selectMenuList">
-		SELECT 
+		SELECT 	
 		       REST_NO
 		     , FILE_NO
 		     , MENU
@@ -284,6 +299,7 @@
       JOIN REVIEW ON (REF_BNO = REVIEW_NO)
       WHERE CATEGORY = 'REV'
       	AND REST_NO = ?
+      	AND FILE_LEVEL IS NULL
 	 ORDER
     	BY REF_BNO DESC
 	</entry>
@@ -1135,10 +1151,10 @@
            ,R.REST_NAME AS REST_NAME
            ,R.MAIN_ADDRESS AS MAIN_ADDRESS
            ,R.PARKING AS PARKING
-           ,SUBSTR(R.INTRO,1,50) AS INTRO
+           ,INTRO
            ,R.REST_VIEWS AS REST_VIEWS
            ,MENU
-           ,NVL(AVG(RATING),0) AS AVG
+           ,ROUND(AVG(RATING),1) "AVG"
            ,NVL(COUNT(REVIEW_NO),0) AS COUNT
            ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME AS TITLE_IMG
@@ -1168,5 +1184,48 @@
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME
      ORDER BY
            REST_VIEWS DESC
+	</entry>
+	
+	<entry key="selectLocationRcList">
+		SELECT 
+            R.REST_NO AS REST_NO
+           ,C.CATEGORY_NAME AS CATEGORY_NAME
+           ,T.TV_NAME AS TV_NAME
+           ,R.REST_NAME AS REST_NAME
+           ,R.MAIN_ADDRESS AS MAIN_ADDRESS
+           ,R.PARKING AS PARKING
+           ,INTRO
+           ,R.REST_VIEWS AS REST_VIEWS
+           ,MENU
+           ,ROUND(AVG(RATING),1) "AVG"
+           ,NVL(COUNT(REVIEW_NO),0) AS COUNT
+           ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
+           ,AT.FILE_PATH || '/' || AT.CHANGE_NAME AS TITLE_IMG
+	   FROM RESTAURANT R
+       LEFT OUTER JOIN REVIEW V ON R.REST_NO = V.REST_NO
+       LEFT OUTER JOIN FAVORITES F ON R.REST_NO = F.REST_NO
+       JOIN FOOD_CATEGORY C ON R.CATEGORY_NO = C.CATEGORY_NO
+       LEFT OUTER JOIN TV T ON R.TV_NO = T.TV_NO
+       LEFT OUTER JOIN ATTACHMENT AT ON R.REST_NO = AT.REF_BNO
+       JOIN MENU M ON R.REST_NO = M.REST_NO
+	  WHERE R.MAIN_ADDRESS LIKE ?
+	  AND R.STATUS = 'Y'
+	  AND AT.FILE_LEVEL = 2
+      AND MENU_GRADE = 1
+      GROUP BY 
+      		 R.REST_NO
+           ,C.CATEGORY_NAME
+           ,R.TV_NO
+           ,T.TV_NAME
+           ,R.REST_NAME
+           ,R.MAIN_ADDRESS
+           ,R.REST_PHONE
+           ,R.PARKING
+           ,R.INTRO
+           ,R.REST_VIEWS
+           ,MENU
+           ,AT.FILE_PATH || '/' || AT.CHANGE_NAME
+     ORDER BY
+           REST_VIEWS DESC 
 	</entry>
 </properties>
