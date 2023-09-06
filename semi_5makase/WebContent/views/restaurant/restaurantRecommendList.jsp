@@ -306,8 +306,7 @@
 		                <div class="restaurant" onclick="location.href='<%= contextPath %>/detail.rt?restNo=<%= cateList.getRestNo() %>'">
 		                    <div class="imgLine">
 		                        <div class="imgLeft">
-		                            <img src="<%= cateList.getTitleImg() %>"
-		                                alt="">
+		                            <img src="<%= cateList.getTitleImg() %>">
 		                        </div>
 		                        <div class="imgRight">
 		                            <div class="imgRight_1">

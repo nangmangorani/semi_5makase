@@ -101,6 +101,7 @@ private Properties prop = new Properties();
 										  rset.getString("MAIN_ADDRESS"),
 										  rset.getString("TV_NAME"),
 										  rset.getString("CATEGORY_NAME"),
+										  rset.getString("TITLE_IMG"),
 										  rset.getDouble("AVG")
 										  ));
 			}
@@ -138,6 +139,7 @@ public ArrayList<Restaurant> selectEditorRestInfo(Connection conn) {
 										  rset.getString("MAIN_ADDRESS"),
 										  rset.getString("TV_NAME"),
 										  rset.getString("CATEGORY_NAME"),
+										  rset.getString("TITLE_IMG"),
 										  rset.getDouble("AVG")
 										  ));
 			}

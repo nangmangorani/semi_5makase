@@ -233,8 +233,8 @@
                 	<% for(int i=0; i<3; i++) { %>
                     <li class="fl">
                         <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
+                            <img src="<%= tvList.get(i).getTitleImg() %>"  style="width:320px; height:210px; margin:10px;">
+                                <div class="info" style="margin:10px;">
                                     <span class="title1"><%= tvList.get(i).getRestName() %></span>
                                     <strong><%= tvList.get(i).getAvg2() %></strong>
                                     <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
@@ -247,8 +247,8 @@
                 	<% for(int i=3; i<6; i++) { %>
                     <li class="fl">
                         <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
+                            <img src="<%= tvList.get(i).getTitleImg() %>"  style="width:320px; height:210px; margin:10px;">
+                                <div class="info" style="margin:10px;">
                                     <span class="title1"><%= tvList.get(i).getRestName() %></span>
                                     <strong><%= tvList.get(i).getAvg2() %></strong>
                                     <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
@@ -286,8 +286,8 @@
                 <% for(int i=0; i<3; i++) { %>
                     <li class="fl">
                         <a href="<%= contextPath %>/detail.rt?restNo=<%= editorList.get(i).getRestNo() %>">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
+                            <img src="<%= editorList.get(i).getTitleImg() %>" style="width:320px; height:210px; margin:10px;" >
+                                <div class="info" style="margin:10px;">
                                     <span class="title1"><%= editorList.get(i).getRestName() %></span>
                                     <strong><%= editorList.get(i).getAvg2() %></strong>
                                     <p><%= editorList.get(i).getMainAddress() %> - <%= editorList.get(i).getCategoryName() %></p>
@@ -299,12 +299,12 @@
                 <ul>
                 	<% for(int i=3; i<6; i++) { %>
                     <li class="fl">
-                        <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
-                            <img src="resources/img/bibimbap.jpg">
-                                <div class="info">
-                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
-                                    <strong><%= tvList.get(i).getAvg2() %></strong>
-                                    <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
+                        <a href="<%= contextPath %>/detail.rt?restNo=<%= editorList.get(i).getRestNo() %>">
+                            <img src="<%= editorList.get(i).getTitleImg() %>" style="width:320px; height:210px; margin:10px;">
+                                <div class="info" style="margin:10px;">
+                                    <span class="title1"><%= editorList.get(i).getRestName() %></span>
+                                    <strong><%= editorList.get(i).getAvg2() %></strong>
+                                    <p><%= editorList.get(i).getMainAddress() %> - <%= editorList.get(i).getCategoryName() %></p>
                                 </div>
                         </a>
                     </li>          
