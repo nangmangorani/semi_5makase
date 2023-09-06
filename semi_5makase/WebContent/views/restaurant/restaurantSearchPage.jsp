@@ -641,7 +641,7 @@
                     </label>
                     <label for="category_3_2">
                         <input type="radio" class="category_3" name="category" id="category_3_2"
-                            style="margin-left: 70px;"> 밥집
+                            style="margin-left: 70px;"> 고기
                     </label>
                     <br>
                     <label for="category_3_3">
@@ -773,7 +773,7 @@
                     </label>
                     <label for="category_3_10">
                         <input type="radio" class="category_3" name="gender" id="category_3_10"
-                            style="margin-left: 56px;"> 한식
+                            style="margin-left: 56px;"> 고기
                     </label>
                     <br>
                 </div>
