@@ -70,7 +70,7 @@
 
         .wrap {
             width: 1000px;
-            height: 2000px;
+            height: auto;
             margin: auto;
         }
 
@@ -1166,7 +1166,7 @@
             </div>
         </div>
 
-        <div id="footer">
+        <div id="footer" style="display: inline-block;">
             <div id="footer_1">
                 <a href=""> 데이터 제휴 문의 </a>
                 <a href=""> 개인정보처리방침 </a>
@@ -1330,19 +1330,7 @@
 
 
 
-            // 하트 토글 스크립트구문
-            const heartContainer = document.querySelector('.heart-container');
-            const heart = heartContainer.querySelector('.heart');
-
-            heart.addEventListener('click', (event) => {
-                event.stopPropagation();
-                heart.classList.toggle('filled');
-
-            });
-
-            heartContainer.addEventListener('click', (event) => {
-                event.stopPropagation();
-            });
+        
 
         </script>
 </body>

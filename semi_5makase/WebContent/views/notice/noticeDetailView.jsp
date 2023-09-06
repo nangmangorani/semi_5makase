@@ -187,7 +187,7 @@
                 </div>
                 <div id="content_top2" style="border-left: 0px;" onclick="location.href='<%=contextPath%>/list.qna?cpage=1'">
                     <h5>Q&A 게시판</h5>
-                    <p>생각하고 질문하세요</p>
+                    <p>무엇이든 물어보세요</p>
                 </div>
                 <div id="content_top3" style="border-left: 0px;" onclick="location.href='<%=contextPath%>/list.faq'">
                     <h5>FAQ</h5>
@@ -204,7 +204,8 @@
                               <%= n.getNoticeViews() %>
                           </div>
                           <div id="noticeMain" name="noticeContent" style="word-break:break-all;"> <br>
-                              <%= n.getNoticeContent() %>
+                              <% String s = n.getNoticeContent().replaceAll("\\\\n", "<br>");%>
+	                            <% out.println(s); %>
                           </div>
                           <div id="buttonContainer">
                             <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>

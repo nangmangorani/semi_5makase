@@ -179,7 +179,7 @@
                     <a href="#해당 이미지 상세정보창" value="2">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/tteokbokki.jpg"  value="8">
+                                <img src="resources/img/tteokbokki.jpg" value="8">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
