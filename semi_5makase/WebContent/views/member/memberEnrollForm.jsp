@@ -55,14 +55,17 @@
         #next{
             width: 400px;
         }
-
+		.home{
+    		cursor:pointer;
+    	}
+    
     </style>
 </head>
 
 <body>
     <div class="wrap">
         <div id="header">
-            <div id="header_1"><img src="resources/img/logo.png" style="width: 35%; height: 100%;"></div>
+            <div id="header_1"><img src="resources/img/logo.png" style="width: 35%; height: 100%;" class="home"></div>
         </div>
         <div id="content">
             <form id="enroll-form" action="<%=contextPath %>/insert.me" align="center" method="post">
@@ -150,6 +153,10 @@
     </div>
     
     <script>
+    $(".home").click(function(){
+		location.href="<%= contextPath %>"
+	})
+    
     function idCheck(){
         const $idInput = $("#enroll-form input[name=memId]");
 
