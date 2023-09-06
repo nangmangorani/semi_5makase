@@ -213,21 +213,6 @@
             </ul>
         </div>
         <script>
-         $(".fl a").click(function(){
-        	 /* event.preventDefault(); */
-        	 let i = $(this).attr("value");
-        	 
-        	 let l = $(this).attr("href", "<%=contextPath%>/MainRestLink.do");
-        	 console.log(l);
-        	 console.log(i);
-        	 
-        	 changeHrefToServletURL();
-         })
-        </script>
-        
-        <br>
-        
-        <script>
         	$(".top-list-info img").click(function(){
         		var cateNo = $(this).attr("value")
         		var cateName = $(this).closest("figure").find("span").text();   
