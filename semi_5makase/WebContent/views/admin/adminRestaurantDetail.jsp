@@ -115,7 +115,7 @@
             margin-right: 35%;
         }
 
-        img{
+        .restImg{
         width: 100px;
         height: 100px;
         cursor: pointer;
@@ -225,7 +225,7 @@
                                 <td>사진</td>
                                 <td colspan="3">
                                     <% for(int i=0; i<alist.size(); i++) { %>
-                        				<img src="<%= contextPath %>/<%= alist.get(i).getFilePath() %>/<%= alist.get(i).getChangeName() %>" width="200" height="150">
+                        				<img class="restImg" src="<%= contextPath %>/<%= alist.get(i).getFilePath() %>/<%= alist.get(i).getChangeName() %>" width="200" height="150">
                         			<% } %>
                                 </td>
                             </tr>

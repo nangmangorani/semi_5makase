@@ -115,21 +115,6 @@
             margin-left: 35%;
             margin-right: 35%;
         }
-
-        img{
-        width: 100px;
-        height: 100px;
-        cursor: pointer;
-        background-image: url("../../resources//img/plus.png");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 50%;
-        }
-
-        .imgBtn{
-            display: none;
-        }
-        
         
     </style>
 </head>
@@ -335,6 +320,5 @@
            </div>
         </div> 
     </div>
-    <%@ include file ="../common/footer.jsp" %>
 </body>
 </html>

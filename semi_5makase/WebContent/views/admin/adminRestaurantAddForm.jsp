@@ -112,14 +112,14 @@
             margin-right: 35%;
         }
 
-        .img{
-        width: 100px;
-        height: 100px;
-        cursor: pointer;
-        background-image: url("../../resources/img/plus.png");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 50%;
+        .restImg{
+	        width: 100px;
+	        height: 100px;
+	        cursor: pointer;
+	        background-image: url("../../resources/img/plus.png");
+	        background-repeat: no-repeat;
+	        background-position: center;
+	        background-size: 50%;
         }
 
         .imgBtn{
@@ -221,9 +221,9 @@
                             <tr>
                                 <td>사진</td>
                                 <td colspan="3">
-                                    <img class="img" id="rtImg1" onclick="chooseFile(1);">
-                                    <img class="img" id="rtImg2" onclick="chooseFile(2);">
-                                    <img class="img" id="rtImg3" onclick="chooseFile(3);">
+                                    <img class="restImg" id="rtImg1" onclick="chooseFile(1);">
+                                    <img class="restImg" id="rtImg2" onclick="chooseFile(2);">
+                                    <img class="restImg" id="rtImg3" onclick="chooseFile(3);">
                                 </td>
                                 <td><input type="file" name="file1" class="imgBtn" id="file1" onchange="loadImg(this, 1);" required></td>
                                 <td><input type="file" name="file2" class="imgBtn" id="file2" onchange="loadImg(this, 2);" required></td>

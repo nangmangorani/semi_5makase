@@ -177,8 +177,8 @@
             <div class="member-area" align="center" style="margin-top: 10px;">
 			<%if(loginMember == null){ %>
           		<!-- case2. 로그인 전  -->
-                <button type='button' id="modal_btn" data-target="#loginModal">로그인</button>
-                <button type="button" onclick="enrollPage()">회원가입</button>
+                <button type='button'  id="modal_btn" data-target="#loginModal">로그인</button>
+                <button type="button"  onclick="enrollPage()">회원가입</button>
               <%} else if(loginMember.getMemId().equals("admin")) { %>
                 <!-- case2. 관리자 로그인 후  -->
 			        <div>
