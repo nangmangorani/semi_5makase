@@ -69,7 +69,7 @@
         /* border: 1px solid red; */
         float: left;
         width: 20%;
-        margin-left:20px;
+        margin-left:93px;
     }
     #myPageFoot{
         width: 100%;
@@ -87,18 +87,8 @@
 
 
 
-    @font-face {
-    font-family: 'Ansungtangmyun-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ansungtangmyun-Bold.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    }
 
 
-    * {
-
-        font-family: 'Ansungtangmyun-Bold';
-    }
 </style>
 <body>
 	<%@ include file="../common/menubar.jsp" %>
@@ -125,7 +115,7 @@
 		            <table style="width: 800px; height: 100px;">
 		                <tr>
 		                	<% if(at != null) { %>
-		                    <th>프로필사진</th>
+		                    <th style="padding-left: 80px;">프로필사진</th>
 		                    <td>
 		                        <div id="imagePreview">
 		                            <img id="preview" src="<%= contextPath %>/<%= at.getFilePath() %>/<%= at.getChangeName() %>" alt="미리보기" style="width: 100px; height: 100px; border-radius: 50%;">
@@ -138,7 +128,7 @@
 		                        </div>
 		                    </td>
 		                    <% } else { %>
-		                    <th>프로필사진</th>
+		                    <th style="padding-left: 80px;">프로필사진</th>
 		                    <td>
 		                        <div id="imagePreview">
 		                            <img id="preview" src="" alt="미리보기" style="width: 100px; height: 100px; border-radius: 50%;">
@@ -162,25 +152,25 @@
         	<div id="myPageContent" style="margin-left: 100px;">
             <table style=" width: 800px; height: 500px;" >
                 <tr>
-                    <th>닉네임</th>
+                    <th style="padding-left: 90px;">닉네임</th>
                     <td><input type="text" name="nickname" value="<%=nickname %>" id="nickname1"  class="soft-border"><br>
                         <label for="nickname1">이눔세끼에서 이용하실 닉네임을 입력해주세요.</label>
                		</td>
                 </tr>       
                 <tr>
-                    <th>자기소개</th>
+                    <th style="padding-left: 80px;">자기소개</th>
                     <td><input type="text" value="<%=selfIntroduction %>"  class="soft-border" name="selfIntroduction"  class="soft-border" id=""></td>
                 </tr>       
                 <tr>
-                    <th>이메일</th>
+                    <th style="padding-left: 90px;">이메일</th>
                     <td><input type="text" value="<%=email %>"  class="soft-border" name="email" id=""></td>
                 </tr>                
                 <tr>
-                    <th>전화번호</th>
+                    <th style="padding-left: 85px;">전화번호</th>
                     <td><input type="text" value="<%=phone %>"  class="soft-border" name="phone" id=""></td>
                 </tr>       
                 <tr>
-                    <th>주소</th>
+                    <th style="padding-left: 100px;">주소</th>
                     <td><input type="text" value="<%=address %>"  class="soft-border" class="soft-border" name="address" id=""></td>
                 </tr>       
             </table>
@@ -188,7 +178,7 @@
                 <div align ="center"><button type="submit" class="btn btn-sm btn-success">정보변경</button></div>
                 <div align ="center"><button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#updatePwd">비밀번호 변경</button></div>
                 <div align ="center"><button type="button" class="btn btn-sm btn-success" onclick="deletePage()">회원탈퇴</button></div>
-                <div align ="center"><a href="">내가 쓴 리뷰 조회하기</a></div>
+                
             </div>
         	</div>
         </form>
