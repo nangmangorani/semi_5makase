@@ -936,7 +936,7 @@
 	                    <div class="profile">
 	                    	<% for(Attachment pf : pfList) { %>
 	                    		<% if(rv.getMemNo() == pf.getRefBno()) { %>
-	                    			<img src="<%= contextPath %><%= pf.getFilePath() %>" style="width: 70px; margin-top: 5px; margin-left: 15px;">
+	                    			<img src="<%= contextPath %><%= pf.getFilePath() %>" style="width: 70px; margin-top: 5px; margin-left: 15px; height:60px">
 	                    		<% } %>
 	                    	<% } %>
 	                    </div>
