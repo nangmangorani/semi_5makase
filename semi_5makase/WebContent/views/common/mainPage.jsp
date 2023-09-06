@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%
 	ArrayList<Restaurant> tvList = new RestaurantService().selectMainTvRestInfo();
+	ArrayList<Restaurant> editorList = new RestaurantService().selectEditorRestInfo();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,13 +44,19 @@
     height: 15%;
     background-image: url("resources/img/pork-cutlet2.jpg");
     background-size: cover;
-}
+	}
 
-.navbar{
-    background-color: rgb(240, 240, 240);
-    width: 100%;
-    height: 2%;
-}
+	.navbar{
+	    background-color: rgb(240, 240, 240);
+	    width: 100%;
+	    height: 2%;
+	}
+	
+	.restaurant-item img{
+		width: 470px;
+		height: 270px;
+		margin: 20px;
+	}
 
 </style>
 <body>
@@ -176,10 +183,10 @@
             </ul>
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창" value="2">
+                    <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/tteokbokki.jpg"  value="8">
+                                <img src="resources/img/tteokbokki.jpg" value="8">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -193,7 +200,7 @@
             </ul>
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창" value="1">
+                    <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/pasta.jpg" value="9">
@@ -223,6 +230,32 @@
             <h2 id="editor-select">TV에 나온 음식점</h2>
             <div class="popular_restaurant_container">
                 <ul>
+                	<% for(int i=0; i<3; i++) { %>
+                    <li class="fl">
+                        <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
+                            <img src="resources/img/bibimbap.jpg">
+                                <div class="info">
+                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
+                                    <strong><%= tvList.get(i).getAvg2() %></strong>
+                                    <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
+                                </div>
+                        </a>
+                    </li>          
+                <% } %>
+                </ul>
+                <ul>
+                	<% for(int i=3; i<6; i++) { %>
+                    <li class="fl">
+                        <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
+                            <img src="resources/img/bibimbap.jpg">
+                                <div class="info">
+                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
+                                    <strong><%= tvList.get(i).getAvg2() %></strong>
+                                    <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
+                                </div>
+                        </a>
+                    </li>          
+                <% } %>
                 
                 </ul>
                         <!-- 
@@ -250,68 +283,32 @@
         <h2 id="editor-select">에디터가 선정한 식당</h2>
         <div class="popular_restaurant_container">
             <ul>
-                <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
-                        <img src="resources/img/bibimbap.jpg">
-                            <div class="info">
-                                <span class="title">새마을 식당</span>
-                                <strong>3.8</strong>
-                                <p>서울 역삼동 - 고기 / 제육</p>
-                            </div>
-                    </a>
-                </li>
-                <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
-                        <img src="resources/img/bibimbap.jpg">
-                            <div class="info">
-                                <span class="title">새마을 식당</span>
-                                <strong>3.8</strong>
-                                <p>서울 역삼동 - 고기 / 제육</p>
-                            </div>
-                    </a>
-                </li>
-                <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
-                        <img src="resources/img/bibimbap.jpg">
-                            <div class="info">
-                                <span class="title">새마을 식당</span>
-                                <strong>3.8</strong>
-                                <p>서울 역삼동 - 고기 / 제육</p>
-                            </div>
-                    </a>
-                </li>
-            </ul>
-            <ul>
-                <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
-                        <img src="resources/img/bibimbap.jpg">
-                            <div class="info">
-                                <span class="title">새마을 식당</span>
-                                <strong>3.8</strong>
-                                <p>서울 역삼동 - 고기 / 제육</p>
-                            </div>
-                    </a>
-                </li>
-                <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
-                        <img src="resources/img/bibimbap.jpg">
-                            <div class="info">
-                                <span class="title">새마을 식당</span>
-                                <strong>3.8</strong>
-                                <p>서울 역삼동 - 고기 / 제육</p>
-                            </div>
-                    </a>
-                </li>
-                <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
-                        <img src="resources/img/bibimbap.jpg">
-                            <div class="info">
-                                <span class="title">새마을 식당</span>
-                                <strong>3.8</strong>
-                                <p>서울 역삼동 - 고기 / 제육</p>
-                            </div>
-                    </a>
-                </li>
+                <% for(int i=0; i<3; i++) { %>
+                    <li class="fl">
+                        <a href="<%= contextPath %>/detail.rt?restNo=<%= editorList.get(i).getRestNo() %>">
+                            <img src="resources/img/bibimbap.jpg">
+                                <div class="info">
+                                    <span class="title1"><%= editorList.get(i).getRestName() %></span>
+                                    <strong><%= editorList.get(i).getAvg2() %></strong>
+                                    <p><%= editorList.get(i).getMainAddress() %> - <%= editorList.get(i).getCategoryName() %></p>
+                                </div>
+                        </a>
+                    </li>          
+                <% } %>
+                </ul>
+                <ul>
+                	<% for(int i=3; i<6; i++) { %>
+                    <li class="fl">
+                        <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
+                            <img src="resources/img/bibimbap.jpg">
+                                <div class="info">
+                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
+                                    <strong><%= tvList.get(i).getAvg2() %></strong>
+                                    <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
+                                </div>
+                        </a>
+                    </li>          
+                <% } %>
             </ul>
         </div>
     </section>
@@ -324,13 +321,13 @@
                      <figure class="restaurant-item">
                          <div>                              
                    			 <a href="#해당 이미지 상세정보창">
-                             <img class="restaurant-item-image" src="resources/img/bibimbap.jpg">
+                             <img class="restaurant-item-image" src="resources/img/guro.jpg" value="구로구">
                              </a>
                          </div>
                          <figcaption>
                              <div class="info tv_info">
-                                 <span class="title">뭐시구 top 10</span>
-                                 <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                 <span class="title">구로구 top 7</span>
+                                 <p>"구로구 맛집 뽑았다!! 모여라!!"</p>
                              </div>
                          </figcaption>
                      </figure> 
@@ -339,13 +336,13 @@
                     <figure class="restaurant-item">
                         <div>                              
                    			<a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
+                            <img class="restaurant-item-image" src="resources/img/gangnam.jpg" value="강남구">
                             </a>
                         </div>
                         <figcaption>
                             <div class="info tv_info">
-                                <span class="title">뭐시구 top 10</span>
-                                <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                <span class="title">강남구 top 7</span>
+                                <p>"맛집의 메카 강남에서 볼래?"</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -356,13 +353,13 @@
                     <figure class="restaurant-item">
                         <div>                              
                 			<a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
+                            <img class="restaurant-item-image" src="resources/img/yeongdeungpo.jpg" value="영등포구">
                             </a>
                         </div>
                         <figcaption>
                             <div class="info tv_info">
-                                <span class="title">뭐시구 top 10</span>
-                                <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                <span class="title">영등포 top 7</span>
+                                <p>"영등포에 맛 없는게 없다! 인정?"</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -371,13 +368,13 @@
                     <figure class="restaurant-item">
                         <div>                              
               			    <a href="#해당 이미지 상세정보창">
-                            <img src="resources/img/bibimbap.jpg">
+                            <img class="restaurant-item-image" src="resources/img/mapo.jpg" value="마포구">
                             </a>
                         </div>
                         <figcaption>
                             <div class="info tv_info">
-                                <span class="title">뭐시구 top 10</span>
-                                <p>"뭐시구 뭐시구 뭐시구 뭐시구"</p>
+                                <span class="title">마포구 top 7</span>
+                                <p>"마포구 어딜가나 맛집이라며?"</p>
                             </div>
                         </figcaption>
                     </figure>
@@ -386,9 +383,10 @@
         </div>
          <script>
         	$(".restaurant-item img").click(function(){
-        		var cateNo = $(this).attr("value")
+        		var locaNo = $(this).attr("value")
+        		console.log(locaNo);
         		var cateName = $(this).closest("figure").find("span").text();   
-        		location.href="<%= contextPath %>/main.rt?value=" + cateNo + "&&cateName=" + cateName;
+        		location.href="<%= contextPath %>/mainLc.rt?value=" + locaNo + "&&cateName=" + cateName;
         	})
         </script>
     </section>
