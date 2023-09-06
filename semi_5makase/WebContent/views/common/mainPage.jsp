@@ -76,7 +76,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/bibimbap.jpg" value="1">
+                                <img src="resources/img/hansik.jpg" value="1">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -93,7 +93,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/chinese.jpg" value="2">
+                                <img src="resources/img/jungsik.jpg" value="2">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -110,7 +110,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/cooking.jpg" value="3">
+                                <img src="resources/img/ilsik.jpg" value="3">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -128,7 +128,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/pasta.jpg" value="4">
+                                <img src="resources/img/yangsik.jpg" value="4">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -146,7 +146,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/ramen.jpg"  value="6">
+                                <img src="resources/img/myunyori.jpg"  value="6">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -163,7 +163,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/soup.jpg" value="7">
+                                <img src="resources/img/sundaesoup.jpg" value="7">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
@@ -197,7 +197,7 @@
                     <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
-                                <img src="resources/img/pasta.jpg" value="9">
+                                <img src="resources/img/piggas.jpg" value="9">
                             </div>
                             <figcaption>
 	                            <div class="list-pic-comment">
