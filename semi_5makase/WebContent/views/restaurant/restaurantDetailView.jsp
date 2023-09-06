@@ -55,7 +55,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <style>
         div{
-            font-family: 'SUITE-Regular';
             box-sizing: border-box;
         }
         button{
@@ -260,12 +259,16 @@
             height: 100%;
         }
         .nameStar{
-            width: 50%;
+            width: 40%;
             height: 100%;
         }
         .userName{
             height: 60%;
             padding-top: 12px;
+        }
+        .good-mark{
+        	width:10%;
+        	display:none;
         }
         
         #info_table td ul{
@@ -944,7 +947,6 @@
 	                        <div class="userName">
 	                            <strong style="font-size: 22px;"><%= rv.getNickName() %></strong>
 	                        </div>
-	                        
 	                        <div class="star-rating">
 		                        <% for(int i = 1; i<=5; i++) { %>
 		                        	<% if(i<=rv.getRating()) { %>
@@ -957,6 +959,9 @@
 	                        
 	                        
 	                    </div>
+	                        <div class="good-mark">
+	                        	<img src="resources/img/mark.png" style="width: 50px;">
+	                        </div>
 	               		 	<div class="good">
 		                        <div class="goodCount" align="center" style="padding-top: 15px;">
 		                            <p>
@@ -964,7 +969,7 @@
 		                            </p>
 		                        </div>
 		                        <div class="goodbtn" align="center">
-                                    <img src="resources/img/nolikes.png" id="likes<%= rv.getReviewNo() %>" style="width: 50px;" onclick="updateLikes(<%= rv.getReviewNo() %>, <%= rv.getMemNo() %>);"></img> <br>
+                                    <img src="resources/img/nolikes.png" id="likes<%= rv.getReviewNo() %>" style="width: 50px;" onclick="updateLikes(<%= rv.getReviewNo() %>, <%= rv.getMemNo() %>);"></img> <br><br>
                                     <% if(loginMember != null) { %>
 		                            	<button type="button" id="report<%= rv.getReviewNo() %>" class="btn btn-sm btn-danger" style="width: 70px;">신고</button>                                    
                                     <% } %>
@@ -1167,6 +1172,12 @@
 				 type:"post",
 				 success: function(result){
 				 $("#likesCount" + reviewNo).text(result);
+				 
+				 if(result >= 1) {
+					 $(".good-mark").css("display", "block");
+				 } else {
+					 $(".good-mark").css("display", "");
+				 }
 				 }
 	     	 })
       	}

@@ -47,6 +47,18 @@ public class RestaurantService {
 		
 	}
 	
+	public ArrayList<Restaurant> selectEditorRestInfo() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Restaurant> tvList = new RestaurantDao().selectEditorRestInfo(conn);
+		
+		close(conn);
+		return tvList;
+		
+	}
+	
+	
 	public ArrayList<Menu> selectMenuList(int restNo){
 		
 		Connection conn = getConnection();
@@ -463,6 +475,7 @@ public class RestaurantService {
 		
 		int memNo = new RestaurantDao().selectMemNo(refBno, conn);
 		
+		close(conn);
 		return memNo;
 	}
 	
@@ -720,7 +733,17 @@ public ArrayList<Restaurant> selectRestSearch(String searchVal) {
 			ArrayList<Restaurant> list = new RestaurantDao().selectCategoryList(cateNo, conn);
 			
 			close(conn);
-			return(list);
+			return list;
+			
+		}
+		
+		public ArrayList<Restaurant> selectLocationRcList(String sVal) {
+			
+			Connection conn = getConnection();
+			ArrayList<Restaurant> list = new RestaurantDao().selectLocationRcList(sVal, conn);
+			
+			close(conn);
+			return list;
 			
 		}
 		
