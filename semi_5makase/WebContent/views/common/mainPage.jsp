@@ -72,14 +72,14 @@
         <div class="top-list slick slider" id="wrapper">
             <ul>
                 <li class="fl">
-                    <a href="">
+                    <a href="#해당 이미지 상세정보창">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/bibimbap.jpg" value="1">
                             </div>
                             <figcaption>
                                 <div class="list-pic-comment">
-                                    <span>한식 맛집 TOP 10</span>
+                                    <span class="title">한식 맛집 TOP 10</span>
                                     <p>"이것은 한국의 혼"</p>
                                 </div>
                             </figcaption>
@@ -114,10 +114,7 @@
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">일식 맛집 TOP3</span>
-=======
-                                <div class="list-pic-comment" value="김치">
-                                    <span class="title">김치찌개 맛집 TOP3</span>
->>>>>>> .merge_file_t0tvCN
+
                                     <p>"스팸 돼지고기 꽁치"</p>
                                 </div>
                             </figcaption>
@@ -216,6 +213,7 @@
         	$(".top-list-info img").click(function(){
         		var cateNo = $(this).attr("value")
         		var cateName = $(this).closest("figure").find("span").text();   
+        		console.log(cateNo);
         		location.href="<%= contextPath %>/main.rt?value=" + cateNo + "&&cateName=" + cateName;
         	})
         </script>
