@@ -68,6 +68,7 @@
         <div class="best-area">
             <h2>믿고 보는 맛집 리스트</h2>
         </div>
+        
         <div class="top-list slick slider" id="wrapper">
             <ul>
                 <li class="fl">
@@ -114,6 +115,7 @@
                                 <div class="list-pic-comment">
                                     <span class="title">일식 맛집 TOP 7</span>
                                     <p>"개기일식"</p>
+                                    <p>"스팸 돼지고기 꽁치"</p>
                                 </div>
                             </figcaption>
                         </figure>
@@ -173,7 +175,7 @@
             </ul>
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
+                    <a href="#해당 이미지 상세정보창" value="2">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/tteokbokki.jpg"  value="8">
@@ -190,7 +192,7 @@
             </ul>
             <ul>
                 <li class="fl">
-                    <a href="#해당 이미지 상세정보창">
+                    <a href="#해당 이미지 상세정보창" value="1">
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/pasta.jpg" value="9">
@@ -206,8 +208,6 @@
                 </li>
             </ul>
         </div>
-        <br>
-        
         <script>
         	$(".top-list-info img").click(function(){
         		var cateNo = $(this).attr("value")
@@ -315,7 +315,7 @@
     </section>
     <hr>
     <section class="main_most_popular_restaurant">
-        <h2 id="editor-select">점메추</h2>
+        <h2 id="editor-select">지역별 맛집 추천</h2>
         <div class="popular_restaurant_container">
             <ul>
                 <li class="fl">
@@ -382,6 +382,13 @@
                 </li>
             </ul>
         </div>
+         <script>
+        	$(".restaurant-item img").click(function(){
+        		var cateNo = $(this).attr("value")
+        		var cateName = $(this).closest("figure").find("span").text();   
+        		location.href="<%= contextPath %>/main.rt?value=" + cateNo + "&&cateName=" + cateName;
+        	})
+        </script>
     </section>
     </div>
     
