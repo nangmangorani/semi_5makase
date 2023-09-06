@@ -57,7 +57,6 @@
         div{
             font-family: 'SUITE-Regular';
             box-sizing: border-box;
-            border: 1px solid white;
         }
         button{
             background-color: white;
