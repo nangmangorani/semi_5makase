@@ -181,7 +181,7 @@
             <div class="searchbar-area">
                 <form action="restSearch.do" method="get">
                 	<input type="text" name="searchVal" placeholder="     지역, 음식 또는 식당명을 입력해주세요. " style="border: 0px;">
-                <button type="submit"><img src="resources/img/searchIcon.png"></button>
+                <button type="submit" id="search_icon"><img src="resources/img/searchIcon.png"></button>
             </form>
             </div>
             <div class="member-area" align="center" style="margin-top: 10px;">

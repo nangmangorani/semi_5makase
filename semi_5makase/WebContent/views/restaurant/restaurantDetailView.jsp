@@ -53,11 +53,15 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    
+    <!--  fotorama -->
+    <link  href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> <!-- 16 KB -->
     <style>
         div{
             box-sizing: border-box;
         }
-        button{
+        button:not(#search_icon){
             background-color: white;
             border: 0;
             cursor: pointer;
@@ -263,12 +267,11 @@
             height: 100%;
         }
         .userName{
-            height: 60%;
+            height: 35%;
             padding-top: 12px;
         }
         .good-mark{
-        	width:10%;
-        	display:none;
+        	width:15%;
         }
         
         #info_table td ul{
@@ -505,7 +508,7 @@
             margin: 15px auto; /* 15% from the top and centered */
             border: 1px solid black;
             width: 95%; /* Could be more or less, depending on screen size */
-            height: 95%;
+            height: 90%;
         }
         #reviewDatail_modal{
             color: #222228;
@@ -632,7 +635,7 @@
                         <div class="reviewPic2" style="text-align: center; height: 100%;">
                             <img class="closeUp" src="<%= contextPath %><%= rvPicList.get(0).getFilePath() %>" style="width: 70%; height: 80%;">
                         </div>
-                        <div class="picList">
+                        <div class="picList fotorama" data-nav="thumbs">
                             <% for(int i=0; i<rvPicList.size(); i++) { %>
                             	<% if (i < 10) { %>
                             	<a href="#none" style="text-decoration:none;" class="pl<%= rvPicList.get(i).getRefBno()%>" onclick="closeup('<%=rvPicList.get(i).getFilePath()%>', <%= rvPicList.get(i).getRefBno() %>)">
@@ -790,14 +793,14 @@
             <div id="writeReview">
             	<% if(loginMember == null) { %>
                  	<a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>" class="validateLogin">
-	                     <button style="padding: 0; border: 0;">
+	                     <button style="padding: 0; border: 0;" id="reviewButton">
 	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
 	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
 	                     </button>
                  	</a> 
                  <% } else { %>
                  	<a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>">
-	                     <button style="padding: 0; border: 0;">
+	                     <button style="padding: 0; border: 0;" id="reviewButton">
 	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
 	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
 	                     </button>
@@ -960,12 +963,12 @@
 	                        
 	                    </div>
 	                        <div class="good-mark">
-	                        	<img src="resources/img/mark.png" style="width: 50px;">
+	                        	<img src="" class="good-img<%= rv.getReviewNo() %>" style="width: 50px;">
 	                        </div>
 	               		 	<div class="good">
 		                        <div class="goodCount" align="center" style="padding-top: 15px;">
 		                            <p>
-		                                추천수 <span id="likesCount<%= rv.getReviewNo() %>"></span>
+		                                추천수 <span id="likesCount<%= rv.getReviewNo() %>" class="good-Count"></span>
 		                            </p>
 		                        </div>
 		                        <div class="goodbtn" align="center">
@@ -1019,20 +1022,20 @@
 	                
 	                </div>
 	                <div class="review_content">
-	                    <div><%= rv.getReviewContent() %></div>
-	                </div>
-	                <div class="reviewPhotoList reviewModal">
-	                    <ul>
-	                        <li>
-	                        	<% for(Attachment at : rvPicList) { %>
-	                        		<span  style="color:black;" id="<%= rv.getReviewNo()%>" class="pl<%= at.getRefBno()%>">
-	                        		<%if(rv.getReviewNo() == at.getRefBno()) { %> 	
-	                         			<img src="<%= contextPath %><%= at.getFilePath()%>" class="underReviewModal">
-	                        		<% } %>
-		                         	</span>
-	                        	<% } %>
-	                        </li>
-	                    </ul>
+	                    <div><%= rv.getReviewContent() %></div>	                	
+		                <div class="reviewPhotoList reviewModal" id="attachmentContainer">
+		                    <ul>
+		                        <li>
+		                        	<% for(Attachment at : rvPicList) { %>
+		                        		<span  style="color:black;" id="<%= rv.getReviewNo()%>" class="pl<%= at.getRefBno()%>">
+		                        		<%if(rv.getReviewNo() == at.getRefBno()) { %> 	
+		                         			<img src="<%= contextPath %><%= at.getFilePath()%>" class="underReviewModal">
+		                        		<% } %>
+			                         	</span>
+					                <% } %>
+		                        </li>
+		                    </ul>
+		                </div>
 	                </div>
            		</div>
                 	<% } %>
@@ -1045,6 +1048,13 @@
     
     
      <script>
+		
+     var attachmentContainer = document.getElementById("attachmentContainer");
+     var attachments = attachmentContainer.getElementsByTagName("img");
+
+     if (attachments.length === 0) {
+         attachmentContainer.style.display = "none";
+     }
      
      	$(".underReviewModal").click(function(){
      		$(".reviewModal").click();
@@ -1162,7 +1172,9 @@
     	        	}
     			}
     		})	
-    	}	
+    	}
+		
+		checkLikes();
      
       	// 좋아요 총 합 조회 함수
       	function likesCount(reviewNo){
@@ -1174,9 +1186,9 @@
 				 $("#likesCount" + reviewNo).text(result);
 				 
 				 if(result >= 1) {
-					 $(".good-mark").css("display", "block");
+					 $(".good-img" + reviewNo).attr("src", "resources/img/mark.png");
 				 } else {
-					 $(".good-mark").css("display", "");
+					 $(".good-img" + reviewNo).attr("src", "");
 				 }
 				 }
 	     	 })
@@ -1204,8 +1216,9 @@
 	        if($("#review_area>div:hidden").length == 0){ 
 	            $('#more').fadeOut(100); 
 	        }
-	    });
-	  
+	    })
+	    
+ 
 	 
      </script>
 </body>

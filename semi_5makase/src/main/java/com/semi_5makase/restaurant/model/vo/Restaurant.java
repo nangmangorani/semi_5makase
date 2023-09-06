@@ -45,13 +45,14 @@ public class Restaurant {
 		this.status = status;
 	}
 	
-	public Restaurant(int restNo, String restName, String mainAddress, String tvName, String categoryName, double avg2) {
+	public Restaurant(int restNo, String restName, String mainAddress, String tvName, String categoryName, String titleImg, double avg2) {
 		super();
 		this.restNo = restNo;
 		this.restName = restName;
 		this.mainAddress = mainAddress;
 		this.tvName = tvName;
 		this.categoryName = categoryName;
+		this.titleImg = titleImg;
 		this.avg2 = avg2;
 	}
 	
