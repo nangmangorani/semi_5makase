@@ -75,7 +75,18 @@ body{
     list-style: none;
 }
 
-.top-list-info{position: relative;}
+.top-list-info{
+	position: relative;
+	overflow:hidden;
+}
+.top-list-info div{
+	transition: all 0.2s;
+}
+
+.top-list-info div:hover{
+	transform: scale(1.1, 1.1);
+	transition-duration: 0.5s;
+}
 
 .list-pic-comment{
     position: absolute;
@@ -122,7 +133,9 @@ body{
     text-decoration: none;
 }
 
-.popular_restaurant_container img{width: 90%;}
+.popular_restaurant_container img{
+	
+}
 
 .info>span, .info>strong{
     font-weight: 500;
@@ -137,11 +150,45 @@ body{
     color: gray;
 }
 
+.tvinfo-container{
+	overflow:hidden;
+}
+
+.tvinfo-container a{
+	text-decoration : none;
+}
+
+/*
+.tvinfo-area img{
+	transition: all 0.2s;
+}
+
+.tvinfo-area img:hover{
+	transform: scale(1.1, 1.1);
+	transition-duration: 0.5s;
+}
+*/
+
 .fl{display: table-cell;}
 
-.restaurant-item{position: relative;}
+.restaurant-item{
+	position: relative;
+	overflow: hidden;
+}
 
-.restaurant-item-image{filter: brightness(80%);}
+.restaurant-item img{
+	filter: brightness(80%);
+}
+/*
+.restaurant-item div{
+	transition: all 0.2s;
+}
+
+.restaurant-item div:hover{
+	transform: scale(1.1, 1.1);
+	transition-duration: 0.5s;
+}
+*/
 
 /* .tv_info{
     position: absolute;
