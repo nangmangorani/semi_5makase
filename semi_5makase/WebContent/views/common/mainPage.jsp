@@ -83,13 +83,13 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/hansik.jpg" value="1">
-                            </div>
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">한식 맛집 TOP 11</span>
                                     <p>"이것은 한국의 혼"</p>
                                 </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -100,13 +100,13 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/jungsik.jpg" value="2">
-                            </div>
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">중식 맛집 TOP 5</span>
                                     <p>"짜장면 짬뽕 난 짬짜면"</p>
                                 </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -117,13 +117,13 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/ilsik.jpg" value="3">
-                            </div>
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">일식 맛집 TOP 4</span>
                                     <p>"벌써부터 느껴지는 장인정신"</p>
                                 </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -134,7 +134,6 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/yangsik.jpg" value="4">
-                            </div>
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">양식 맛집 TOP 7</span>
@@ -142,6 +141,7 @@
                                     <input type="hidden" value="토마토" class="zz">
                                 </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -152,13 +152,13 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/myunyori.jpg"  value="6">
-                            </div>
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">면요리 맛집 TOP 7</span>
                                     <p>"면치기 금지"</p>
                                 </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -169,13 +169,13 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/sundaesoup.jpg" value="7">
-                            </div>
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">국밥류 맛집 TOP 6</span>
                                     <p>"이 돈이면 국밥이 몇그릇.."</p>
                                 </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -186,13 +186,13 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/tteokbokki.jpg" value="8">
-                            </div>
                             <figcaption>
                                 <div class="list-pic-comment">
                                     <span class="title">분식 TOP 6</span>
                                     <p>"떡튀순 세트 하나주세요"</p>
                                 </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -203,13 +203,13 @@
                         <figure class="top-list-info">
                             <div>                              
                                 <img src="resources/img/piggas.jpg" value="9">
-                            </div>
                             <figcaption>
 	                            <div class="list-pic-comment">
 	                                <span class="title">돈카츠 맛집 TOP 2</span>
 	                                <p>"바사삭 바사삭"</p>
 	                            </div>
                             </figcaption>
+                            </div>
                         </figure>
                     </a>
                 </li>
@@ -231,14 +231,18 @@
                 <ul>
                 	<% for(int i=0; i<3; i++) { %>
                     <li class="fl">
-                        <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
-                            <img src="<%= tvList.get(i).getTitleImg() %>"  style="width:320px; height:210px; margin:10px;">
-                                <div class="info" style="margin:10px;">
-                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
-                                    <strong><%= tvList.get(i).getAvg2() %></strong>
-                                    <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
-                                </div>
-                        </a>
+                    	<div class="tvinfo-container">
+	                    	<div class="tvinfo-area">
+		                        <a href="<%= contextPath %>/detail.rt?restNo=<%= tvList.get(i).getRestNo() %>">
+		                            <img src="<%= tvList.get(i).getTitleImg() %>"  style="width:320px; height:210px; margin:10px;">
+		                                <div class="info" style="margin:10px;">
+		                                    <span class="title1"><%= tvList.get(i).getRestName() %></span>
+		                                    <strong><%= tvList.get(i).getAvg2() %></strong>
+		                                    <p><%= tvList.get(i).getMainAddress() %> - <%= tvList.get(i).getCategoryName() %></p>
+		                                </div>
+		                        </a>
+	                    	</div>
+                    	</div>
                     </li>          
                 <% } %>
                 </ul>
@@ -317,19 +321,19 @@
         <div class="popular_restaurant_container">
             <ul>
                 <li class="fl">
+                 	<a href="#해당 이미지 상세정보창">
                      <figure class="restaurant-item">
                          <div>                              
-                   			 <a href="#해당 이미지 상세정보창">
                              <img class="restaurant-item-image" src="resources/img/guro.jpg" value="구로구">
-                             </a>
-                         </div>
                          <figcaption>
                              <div class="info tv_info">
                                  <span class="title">구로구 top 7</span>
                                  <p>"구로구 맛집 뽑았다!! 모여라!!"</p>
                              </div>
                          </figcaption>
+                         </div>
                      </figure> 
+                     </a>
                 </li>
                 <li class="fl">
                     <figure class="restaurant-item">
