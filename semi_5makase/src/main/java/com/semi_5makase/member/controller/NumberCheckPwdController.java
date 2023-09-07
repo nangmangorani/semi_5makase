@@ -1,8 +1,6 @@
 package com.semi_5makase.member.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.semi_5makase.member.model.service.MemberService;
-import com.semi_5makase.member.model.vo.Member;
-
 /**
- * Servlet implementation class NumberCheckController
+ * Servlet implementation class NumberCheckPwdController
  */
-@WebServlet("/numCheck.me")
-public class NumberCheckController extends HttpServlet {
+@WebServlet("/numberCheckPwd.me")
+public class NumberCheckPwdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NumberCheckController() {
+    public NumberCheckPwdController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -55,13 +50,11 @@ public class NumberCheckController extends HttpServlet {
     		session.setAttribute("email", email);
     		
     		request.getSession().setAttribute("AuthenticationKey", AuthenticationKey);
-    		response.sendRedirect(request.getContextPath()+"/searchIdResult.me");
+    		response.sendRedirect(request.getContextPath()+"/checkNumPwd.me");
 			
 			
 
         }
-        
-
 	
 	}
 

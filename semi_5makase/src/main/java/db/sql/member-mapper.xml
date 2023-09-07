@@ -227,6 +227,7 @@ UPDATE ATTACHMENT
 	     , FILE_PATH
 	  FROM ATTACHMENT
 	 WHERE REF_BNO = ?
+	   AND CATEGORY = 'PROFILE'
 	   AND STATUS = 'Y'
 </entry>
 
@@ -251,6 +252,8 @@ UPDATE ATTACHMENT
 	WHERE EMAIL = ?
 
 </entry>
+
+
 
 </properties>
 

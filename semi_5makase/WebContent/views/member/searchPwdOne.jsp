@@ -93,7 +93,7 @@
     <div class="wrap-area">
         <div class="intro-area" align="center"> 비밀번호 찾기 </div> <br><br>
         <div class="selectMethod-area">
-            <div class="selectId"><a href="아이디 변경 화면">아이디 찾기</a></div>
+            <div class="selectId"><a href="<%=contextPath%>/searchId.me">아이디 찾기</a></div>
             <div class="selectPwd"><a href="location:reload()">비밀번호 찾기</a></div>
         </div>
         <form action="<%=contextPath %>/searchPwdTwo.me" method="get" class="searchBy-area">

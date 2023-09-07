@@ -1,8 +1,12 @@
+<%@page import="com.oreilly.servlet.multipart.FilePart"%>
 <%@page import="com.semi_5makase.member.model.vo.Attachment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Attachment pf = (Attachment)request.getAttribute("pf");
+%>   
 
-    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,8 +110,11 @@
 		String phone = loginMember.getPhone();
 		String address = loginMember.getAddress();
 		int memNo = loginMember.getMemNo();
+		
 
 	%>
+	
+
 	
 
     <div id="myPageWrap">
@@ -125,7 +132,7 @@
                     <th>프로필사진</th>
                     <td>
                         <div id="imagePreview" >
-                            <img id="preview"  src="" alt="Preview" style="width: 100px; height: 100px; border-radius: 50%;">
+                            <img id="preview"  src="<%=contextPath %>/<%=pf.getFilePath() %>/<%=pf.getOriginName() %>" alt="Preview" style="width: 100px; height: 100px; border-radius: 50%;">
                             <input type="file" id="profileImage" name="upfile" accept=".jpg, .jpeg, .png, .gif" onchange="previewImage()">
                         </div>
                     </td>

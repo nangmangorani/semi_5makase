@@ -56,24 +56,22 @@ public class MemberUpdateController extends HttpServlet {
 			String selfIntroduction = multiRequest.getParameter("selfIntroduction");
 			
 			Member m = new Member(memId, nickname, email, phone, address, selfIntroduction);
-			System.out.println(m);
 			
 			
-			Attachment pf = new MemberService().selectAttachment(memNo);
-			System.out.println(pf.getFilePath() +"asdadasdasdad");
 			
 			
 			Attachment at = null;
 			
-			
 			if(multiRequest.getOriginalFileName("upfile") !=null) { // 넘어온 첨부파일이 있다
+				
+				
 				at = new Attachment();
 				at.setOriginName(multiRequest.getOriginalFileName("upfile"));
 				at.setChangeName(multiRequest.getFilesystemName("upfile"));
 				at.setFilePath("resources/profile");
 				
 			
-				Member updateMem = new MemberService().updateMember(m);
+				Member updateMem = new MemberService().updateMember(m); // 프로필제외하고 수정
 				if(updateMem != null) {
 					HttpSession session = request.getSession();
 					session.setAttribute("loginMember", updateMem);
@@ -87,7 +85,7 @@ public class MemberUpdateController extends HttpServlet {
 					
 					response.sendRedirect(request.getContextPath()+"/myPage.me");
 				}
-			}else {
+			}else {  // 넘어온 첨부파일이 없을때
 				
 				Member updateMem = new MemberService().updateMember(m);
 				if(updateMem != null) {
@@ -108,6 +106,12 @@ public class MemberUpdateController extends HttpServlet {
 			
 			int result = new MemberService().updateProfile(at,memNo);
 			
+			Attachment pf = new MemberService().selectAttachment(memNo);
+			System.out.println(pf+"마지막");
+			
+			request.setAttribute("pf", pf);
+			RequestDispatcher view = request.getRequestDispatcher("views/member/clientMyPage.jsp");
+			view.forward(request, response);
 			
 
 		}

@@ -120,26 +120,22 @@
 
                     <tr>
                         <td>
-                            <input type="radio" style="width: 15px; height: 15px;" class="radio-value" name="select" value="phone"><b>휴대전화 : </b><br><br>
+                            <b>휴대전화 : </b><br><br>
                         </td>
                         <td>
-                            <div class="check1" style="display: none;">
-
+                            <div class="check1"  style="margin-bottom: 20px;">
                                 <input type="text" id="phone" name="phone" placeholder="휴대전화">
-                                <br>
-                                <input type="text" id="checknum"  placeholder="인증번호"> <br>
-                                <input type="button" class="btn btn-sm btn-info" value="인증번호 받기">
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="radio" style="width: 15px; height: 15px;"  class="radio-value" name="select" value="email"><b>이메일 인증 : </b><br><br>
+                            <b>이메일 : </b><br><br>
                         </td>
                         <td>
-                            <div class="email" style="display: none;">
+                            <div class="email" style="margin-bottom: 20px;">
                                 <input type="text" id="email" name="email"  placeholder="이메일을 입력하세요"><br>
-                                <input type="button" class="btn btn-sm btn-info" value="인증번호 받기">
+
                             </div>
                         </td>
                     </tr>
@@ -184,31 +180,7 @@
     
     <script>
 
-        $(".radio-value").on("click", function(){
-            var valueCheck = $(".radio-value:checked").val();
 
-            if(valueCheck == "phone"){
-                $(".check1").css("display","block")
-                $(".email").css("display","none")
-            } else{
-                $(".check1").css("display","none")
-                $(".email").css("display","block")
-            }
-        })
-
-        $("#checknum, #phone").keyup(function(){
-            switch(!($("#checknum").val() && $("#phone").val())){
-                case true : $("#findById").attr("disabled", true); break;
-                case false : $("#findById").attr("disabled", false); break;
-            }
-        })
-
-        $("#email").keyup(function(){
-            switch(!($("#email").val())){
-                case true : $("#findById").attr("disabled", true); break;
-                case false : $("#findById").attr("disabled", false); break;
-            }
-        })
 
         function checkOnlyOne(element) {
   
