@@ -46,7 +46,7 @@
             float: left;
         }
         #title{
-            width: 380px;
+            width: 400px;
             height: 30px;
 
             
@@ -56,10 +56,11 @@
             height: 200px;
         }
         #picture{
-            margin-right: 18px;
+            margin-right: 75px;
         }
         #textarea{
             margin-left: 50px;
+            width:400px;
         }
 
         .change{
@@ -120,6 +121,10 @@
         	resize: none;
         }
 
+        .btnAtt{
+          padding-left: 60px;
+        }
+
     </style>
 </head>
 <body>  
@@ -132,10 +137,10 @@
                 <br>
                 <form action="<%= contextPath %>/insert.qna" method="post" enctype="multipart/form-data">
                 	<input type="hidden" name="userNo" value="<%= loginMember.getMemNo() %>">
-                  <b>제목 : </b>
+                  <b style="margin-left: 20px;">제목</b>
                   <input type="text" id="title" name="title"><br><br>
   
-                  <b style="margin-right: 384px;">내용 : </b><br>
+                  <b style="margin-right: 384px;">내용</b><br>
                   <textarea name="content" id="textarea" placeholder="내용을 입력해주세요" cols="49" rows="10" style="resize: none;"></textarea><br><br>
   
 		          <input type="radio" name="open" value="Y"> 공개
@@ -150,8 +155,8 @@
                       
                       <div id='att_zone'></div>
                   </div>
-                  <button type="button" class="btn btn-secondary" style="width: 90px;">취소</button>
-                  <button type="submit" id="next" class="btn btn-success">등록하기</button>
+                  <button type="button" class="btn btn-secondary" style="width: 90px;" onclick="location.href='<%=contextPath%>/list.qna?cpage=1'">취소</button>
+                  <button type="submit" id="next" class="btn btn-success" style="width: 90px;">등록하기</button>
 
                 </form>
 
@@ -162,6 +167,7 @@
             <div id="content_2" align="center">
                 <br>
                 <b>자주묻는 질문</b> <a href="<%=contextPath%>/list.faq"><b style="margin-left: 350px; color: black;">전체</b></a><br>
+                <br>
                 <div class="container" >
                     <table class="table" align="center" style="width: 100%;">
                       <thead class="thead-light">

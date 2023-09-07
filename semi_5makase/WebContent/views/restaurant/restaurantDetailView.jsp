@@ -62,7 +62,7 @@
             box-sizing: border-box;
         }
         button:not(#search_icon){
-            background-color: white;
+            /* background-color: white; */
             border: 0;
             cursor: pointer;
         }
@@ -808,7 +808,7 @@
             
             <div id="likeAndReview">
                 <div id="like-area">
-	                    <button type="button" style="padding: 0; border: 0;" id="restFavor">
+	                    <button type="button" style="padding: 0; border: 0; background-color: white;" id="restFavor">
 	                        <img src="resources/img/noheart.png" id="favoriteImg" style="width: 50px; height: 40px;">
 	                        <p id="like-content" style="margin: 0;">즐겨찾기</p>
 	                    </button>
@@ -816,14 +816,14 @@
             <div id="writeReview">
             	<% if(loginMember == null) { %>
                  	<a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>" class="validateLogin">
-	                     <button style="padding: 0; border: 0;" id="reviewButton">
+	                     <button style="padding: 0; border: 0; background-color: white;" id="reviewButton">
 	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
 	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
 	                     </button>
                  	</a> 
                  <% } else { %>
                  	<a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>">
-	                     <button style="padding: 0; border: 0;" id="reviewButton">
+	                     <button style="padding: 0; border: 0; background-color: white;" id="reviewButton">
 	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
 	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
 	                     </button>
@@ -1011,7 +1011,7 @@
 		        	<input type="hidden" name="suspectNo" value="<%= rv.getMemNo() %>">
 		        	<input type="hidden" name="restNo" value="<%= rest.getRestNo() %>">
 		        	<div class="closeUpdateModal">X</div>
-		            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">유저 신고</span></b></span></p>
+		            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt">유저 신고</span></b></span></p>
 		            <textarea name="reportContent" class="report_modalText" cols="40" rows="10" style="resize: none;" placeholder="<%= rv.getNickName() %>님을 신고하실 내용을 적어주세요."></textarea>
 		            <br>
 		                
