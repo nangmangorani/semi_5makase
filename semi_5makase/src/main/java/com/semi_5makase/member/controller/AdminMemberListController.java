@@ -60,7 +60,7 @@ public class AdminMemberListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Member> list = new MemberService().selectAdminMemberList();
+		ArrayList<Member> list = new MemberService().selectAdminMemberList(pi);
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/admin/adminMemberList.jsp").forward(request, response);

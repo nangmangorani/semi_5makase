@@ -12,6 +12,7 @@ import java.util.Properties;
 import org.apache.catalina.filters.AddDefaultCharsetFilter;
 
 import com.semi_5makase.common.model.vo.Attachment;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.member.model.vo.Member;
 import com.semi_5makase.member.model.vo.Report;
 
@@ -515,14 +516,20 @@ public class MemberDao {
 		return result;
 	}
 	
-	public ArrayList<Member> selectAdminMemberList(Connection conn){
+	public ArrayList<Member> selectAdminMemberList(Connection conn, PageInfo pi){
 		ArrayList<Member> list = new ArrayList<Member>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectAdminMemberList");
+		String sql = prop.getProperty("selectAdminMemberListPaging");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
 			

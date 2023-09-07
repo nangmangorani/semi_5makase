@@ -6,16 +6,17 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.semi_5makase.common.model.vo.Attachment;
+import com.semi_5makase.common.model.vo.PageInfo;
 import com.semi_5makase.member.model.dao.MemberDao;
 import com.semi_5makase.member.model.vo.Member;
 import com.semi_5makase.member.model.vo.Report;
 
 public class MemberService {
 	
-	public ArrayList<Member> selectAdminMemberList() {
+	public ArrayList<Member> selectAdminMemberList(PageInfo pi) {
 		Connection conn = getConnection();
 		
-		ArrayList<Member> list = new MemberDao().selectAdminMemberList(conn);
+		ArrayList<Member> list = new MemberDao().selectAdminMemberList(conn, pi);
 		
 		close(conn);
 		

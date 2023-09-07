@@ -116,7 +116,7 @@
 	        width: 100px;
 	        height: 100px;
 	        cursor: pointer;
-	        background-image: url("../../resources/img/plus.png");
+	        background-image: url("resources/img/plus.png");
 	        background-repeat: no-repeat;
 	        background-position: center;
 	        background-size: 50%;
