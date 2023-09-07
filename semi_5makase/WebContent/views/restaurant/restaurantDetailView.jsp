@@ -104,19 +104,29 @@
         #photo{
             box-sizing: border-box;
             display: flex;
+            overflow: hidden;
+            width:600px;
         }
         
-        #photo>div{
+        #photo img{
+       		transition: all 0.2s;
         }
         
         #photo img:hover{
-       		transition: all 0.2s linear;
-        	transform: scale(1.4);
+        	transform: scale(1.1, 1.1);
+        	transition-duration: 0.5s;
         }
         
         #photo>div{
             height: 100%;
+            overflow: hidden;
         }
+        
+        #photo span{
+            height: 100%;
+            overflow: hidden;
+        }
+        
         #photo_0 img{
         	height: 200px;
             width: 200px;
@@ -351,23 +361,29 @@
         }
 
         .reviewPhotoList{
+        	width: 800px;
             height: 45%;
+            overflow:hidden;
         }
         .reviewPhotoList>ul{
+        	width:100%;
             list-style: none;
+            overflow:hidden;
         }
         .reviewPhotoList li{
             float: left;
+            overflow:hidden;
         }
         .reviewPhotoList img{
         	height: 150px;
             width: 150px;
             padding:5px;
-            transition: all 0.2s linear;
+            transition: all 0.2s;
         }
         
         .reviewPhotoList img:hover{
-        	transform: scale(1.4);
+        	transform: scale(1.1, 1.1);
+        	transition-duration: 0.5s;
         }
         
         .detailReview{
@@ -1030,7 +1046,7 @@
 	                </div>
 	                <div class="review_content">
 	                    <div><%= rv.getReviewContent() %></div>	                	
-		                <div class="reviewPhotoList reviewModal" id="attachmentContainer">
+		                <div class="reviewPhotoList reviewModal photo" id="attachmentContainer">
 		                    <ul>
 		                        <li>
 		                        	<% for(Attachment at : rvPicList) { %>
