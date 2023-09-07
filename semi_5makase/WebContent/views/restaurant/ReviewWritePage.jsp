@@ -14,7 +14,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TITLE</title>
+	<link rel="icon" href="resources/img/favicon.ico" type="image/x-icon" sizes="16x16">
+	<script>top.document.title = '<%= rest.getRestName() %>의 리뷰 작성 | 맛집 검색 이눔세끼'</script>
     <style>
         *{
             margin: 0;

@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>자주묻는질문</title>
+<link rel="icon" href="resources/img/favicon.ico" type="image/x-icon" sizes="16x16">
 <style>
     @font-face {
             font-family: 'SUITE-Regular';

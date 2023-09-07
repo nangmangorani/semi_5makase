@@ -7,7 +7,8 @@ int qnaNo = (int)request.getAttribute("qnaNo");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QNA</title>
+	<link rel="icon" href="resources/img/favicon.ico" type="image/x-icon" sizes="16x16">
 <style>
     @font-face {
             font-family: 'SUITE-Regular';
