@@ -70,6 +70,15 @@ public class MemberUpdateController extends HttpServlet {
 				at.setChangeName(multiRequest.getFilesystemName("upfile"));
 				at.setFilePath("resources/profile");
 				
+
+				int result = new MemberService().updateProfile(at,memNo);
+				
+				Attachment pf = new MemberService().selectAttachment(memNo);
+//				response.sendRedirect(request.getContextPath() + "/myPage.me");
+				
+				System.out.println(pf+"마지막");
+
+				
 			
 				Member updateMem = new MemberService().updateMember(m); // 프로필제외하고 수정
 				if(updateMem != null) {
@@ -104,6 +113,7 @@ public class MemberUpdateController extends HttpServlet {
 				
 			}
 			
+<<<<<<< HEAD
 			int result = new MemberService().updateProfile(at,memNo);
 			
 			Attachment pf = new MemberService().selectAttachment(memNo);
@@ -113,6 +123,9 @@ public class MemberUpdateController extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher("views/member/clientMyPage.jsp");
 			view.forward(request, response);
 			
+=======
+	
+>>>>>>> 28bb964da677beb3d3b4b66ee62018bd8d241e85
 
 		}
 		
