@@ -14,6 +14,26 @@
 	 ORDER BY MEM_NO
 </entry>
 
+<entry key="selectAdminMemberListPaging">
+		SELECT *
+		  FROM (
+		  	SELECT ROWNUM RNUM, A.*
+		  	FROM (
+		        SELECT 
+				       MEM_NO
+				      ,MEM_GRADE
+				      ,MEM_NAME
+				      ,GENDER
+				      ,PHONE
+				      ,MEM_ID
+				      ,STATUS
+				  FROM MEMBER
+				 ORDER BY MEM_NO
+	                )A
+	        )
+	     WHERE RNUM BETWEEN ? AND ?	
+</entry>
+
 <entry key="selectAdminId">
 	SELECT 
 	 	   MEM_NO
