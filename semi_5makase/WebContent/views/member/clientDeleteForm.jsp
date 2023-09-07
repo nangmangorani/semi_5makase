@@ -78,7 +78,6 @@
     }
     form{
         margin-left: 30px;
-        margin-top: 30px;
     }
     #p1{
         font-size: 13px;

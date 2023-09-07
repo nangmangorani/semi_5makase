@@ -17,8 +17,8 @@
             width: 1000px;
             height: 200px;
             margin: auto;
-            background: gray;
-            color: rgb(231, 227, 227);
+            background: white;
+            color: black;
         }
 
         #footer{
@@ -64,7 +64,7 @@
                 <a href=""> 위치기반 서비스 이용약관 </a>
             </div>
             <div id="footer_2">
-                <b>(주)유소</b>
+                <b>(주)이눔세끼</b>
                 <span>소재지 : 서울특별시 강남구 역삼동</span>
             </div>
             <div id="footer_3">

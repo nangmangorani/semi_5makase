@@ -302,7 +302,8 @@
 	                    <div class="CFaqTableItem__contents-box">
 	                        <em class="CFaqTableItem__answer">답변</em>
 	                        <div class="CFaqTableItem__contents">
-	                            <%= f.getFaqContent() %>
+	                            <% String s = f.getFaqContent().replaceAll("\\\\n", "<br>");%>
+	                            <% out.println(s); %>
 	                        </div>
 	                    </div>
 	                </div>
@@ -360,7 +361,7 @@
             
         </div>
         
-        
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <div id="footer">
             <div id="footer_1">
                 <a href=""> 데이터 제휴 문의 </a>
@@ -369,15 +370,15 @@
                 <a href=""> 위치기반 서비스 이용약관 </a>
             </div>
             <div id="footer_2">
-                <b>(주)유소</b>
+                <b>(주)이눔세끼</b>
                 <span>소재지 : 서울특별시 강남구 역삼동</span>
             </div>
             <div id="footer_3">
-                <span>이메일 문의: 2num@enum.com</span>
+                <span>이메일 문의: 2num@inum.com</span>
             </div>
             <div id="footer_4">
                 <span>전화 문의 : 02-457-1304 (평일 : 10:00 ~ 19:00, 주말/공휴일 제외)</span>
-                <span style="margin-left: 260px;">Copyright Ⓒ 2023 Diningcode</span>
+                <span style="margin-left: 160px;">Copyright Ⓒ 2023 inummsekki</span>
             </div>
         </div>
     
