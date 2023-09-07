@@ -36,11 +36,7 @@ public class MainLocationRestaurantListController extends HttpServlet {
 		String cateName = request.getParameter("cateName");
 		
 		ArrayList<Restaurant> list = new RestaurantService().selectLocationRcList(sVal);
-		
-		System.out.println("sval : " + sVal);
-		System.out.println("cateName : " + cateName);
-		System.out.println("lcList : " + list);
-		
+
 		request.setAttribute("locationList", list);
 		request.setAttribute("categoryName", cateName);
 		request.getRequestDispatcher("views/restaurant/restaurantRecommendList.jsp").forward(request, response);

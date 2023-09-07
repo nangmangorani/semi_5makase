@@ -34,7 +34,6 @@ public class FaqDeleteController extends HttpServlet {
 		
 		String faqNos = request.getParameter("faqNos");
 		String[] strArray = faqNos.split(",");
-		System.out.println(faqNos);
 		
 		int[] faqNoArray = Arrays.stream(strArray)
                 .mapToInt(Integer::parseInt)

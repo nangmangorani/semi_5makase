@@ -40,17 +40,12 @@ public class RestOptionController extends HttpServlet {
 		String locationVal = request.getParameter("locationVal");
 		int tvVal = Integer.parseInt(request.getParameter("tvVal"));
 		
-		System.out.println("tvVal : " + tvVal);
-		
-		
 		ArrayList<Restaurant> optionList = new RestaurantService().selectOptionList(searchVal,ageVal,ageVal2,categoryVal,locationVal,tvVal);
 		ArrayList<Attachment> atList = new RestaurantService().selectRestAttachment();
 		ArrayList totalList = new ArrayList();
 		totalList.add(optionList);
 		totalList.add(atList);
-		
-		System.out.println("옵션리스트임!!!!!!!!!!!!!! " + optionList);
-		System.out.println("옵션at리스트임!!!!!!!!!!!!!! " + atList);
+
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(totalList,response.getWriter());
 		
