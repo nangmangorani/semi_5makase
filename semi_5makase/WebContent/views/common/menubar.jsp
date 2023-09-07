@@ -67,16 +67,25 @@
             width: 60%;
             position: relative;
         }
-    
-        .searchbar-area input[type=text] {
-            border-radius: 200px;
+        .barDiv{
             width: 400px;
             height: 40px;
             margin: 25px 50px;
             background-color: rgb(240, 240, 240);
             border-color: white;
             padding-right: 30px;
+            border-radius:50px;
+            
         }
+        .searchbar-area input[type=text] {
+            border: none;
+            background-color: rgb(240, 240, 240);
+            margin-top: 7px;
+            margin-left: 30px;
+        }
+        .searchbar-area input[type="text"]:focus {
+ 		   outline: none;
+		}
     
         .searchbar-area button {
             position: absolute;
@@ -164,6 +173,7 @@
         * {
         	font-family: 'SUITE-Regular';
         }
+
         
     </style>
     <body>
@@ -180,8 +190,13 @@
                 <img src="resources/img/logo.png" class="home">
             </div>
             <div class="searchbar-area">
+            
                 <form action="restSearch.do" method="get">
-                	<input type="text" name="searchVal" placeholder="     지역, 음식 또는 식당명을 입력해주세요. " style="border: 0px;">
+
+                	<div class="barDiv">
+                		<input type="text" name="searchVal" placeholder="지역, 음식 또는 식당명을 입력해주세요. " style="border: 0px;" size="30">
+                    </div>
+
                 <button type="submit" id="search_icon"><img src="resources/img/searchIcon.png"></button>
             </form>
             </div>
