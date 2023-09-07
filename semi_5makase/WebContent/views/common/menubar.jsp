@@ -133,7 +133,7 @@
             text-indent: -9999px;
         }
     
-        #modal_btn {
+        #modal_btn, #enroll_btn {
             margin-top: 20px;
         }
     
@@ -152,6 +152,17 @@
         
         #searchIcon{
         	margin-right: 20px;
+        }
+        
+         @font-face {
+            font-family: 'SUITE-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        * {
+        	font-family: 'SUITE-Regular';
         }
         
     </style>
@@ -177,8 +188,8 @@
             <div class="member-area" align="center" style="margin-top: 10px;">
 			<%if(loginMember == null){ %>
           		<!-- case2. 로그인 전  -->
-                <button type='button'  id="modal_btn" data-target="#loginModal">로그인</button>
-                <button type="button"  onclick="enrollPage()">회원가입</button>
+                <button type='button' class="btn btn-outline-success"  id="modal_btn" data-target="#loginModal">로그인</button>
+                <button type="button" class="btn btn-outline-info"  id="enroll_btn" onclick="enrollPage()">회원가입</button>
               <%} else if(loginMember.getMemId().equals("admin")) { %>
                 <!-- case2. 관리자 로그인 후  -->
 			        <div>
