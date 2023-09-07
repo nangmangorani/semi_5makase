@@ -123,7 +123,7 @@
     <div class="wrap" >
         <div id="header">
             <div id="header_1">
-                <img src="https://static.vecteezy.com/system/resources/previews/006/584/735/original/illustration-graphic-cartoon-character-of-qna-free-vector.jpg" width="30%" height="100%" style = "">
+                <img src="https://static.vecteezy.com/system/resources/previews/006/584/735/original/illustration-graphic-cartoon-character-of-qna-free-vector.jpg" width="30%" height="100%">
             </div>
             <br><br>
             <div id="navi" align="center">
@@ -156,7 +156,7 @@
                     	<% int qnaListNo = 1; %>
 	                    <% for(Qna q : list) { %>
 	                    	<tr class="qna">
-	                    		<td><%= qnaListNo++ %></td>
+	                    		<td style="height: 55px; line-height: 40px;"><%= qnaListNo++ %></td>
 	                    		<td style="display:none"><%= q.getQnaNo() %></td>
 		                        <% if(q.getOpen().equals("공개")) { %>
 		                        <td class="tabletd"><%= q.getBoardTitle() %></td>

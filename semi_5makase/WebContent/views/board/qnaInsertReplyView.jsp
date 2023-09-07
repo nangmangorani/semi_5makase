@@ -71,6 +71,7 @@ int qnaNo = (int)request.getAttribute("qnaNo");
         }
 
         .qnaTop{
+        	padding-left: 60px;
             font-size: 35px;
         }
 
