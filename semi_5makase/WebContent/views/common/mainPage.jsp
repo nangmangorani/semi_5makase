@@ -15,7 +15,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" rel="stylesheet">
     <link href="resources/css/mainbody.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
     
@@ -250,18 +249,7 @@
                 	</form>
                 </li>
             </ul>
-        </div>
-        <script>
-        /*
-        	$(".top-list-info img").click(function(){
-        		var cateNo = $(this).attr("value")
-        		var cateName = $(this).closest("figure").find("span").text();   
-        		console.log(cateNo);
-        		location.href="<%= contextPath %>/main.rt?value=" + cateNo + "&&cateName=" + cateName;
-        	})
-        */
-        </script>
-        
+        </div>        
         <hr>
         <section class="main_most_popular_restaurant">
             <h2 id="editor-select">TV에 나온 음식점</h2>
@@ -303,25 +291,6 @@
                     	</div>
                     </li>  
                 <% } %>
-                
-                </ul>
-                        <!-- 
-                        <script>
-                        	$.ajax({
-                        		url:"mainInfo.rv",
-                        		data:{restNo:2},
-                        		success:function(result){
-                        			const rn = result.restName
-                        			$(".title1").text(rn);
-                        			
-                        			console.log(rn);
-                        		}, error:function(){
-                        			console.log("실패");
-                        		}
-                        	})	
-
-                        </script>
-                         -->
                 </ul>
             </div>
         </section>
@@ -454,16 +423,6 @@
                 </li>
             </ul>
         </div>
-         <script>
-         /*
-        	$(".restaurant-item img").click(function(){
-        		var locaNo = $(this).attr("value")
-        		console.log(locaNo);
-        		var cateName = $(this).closest("figure").find("span").text();   
-        		location.href="<%= contextPath %>/mainLc.rt?value=" + locaNo + "&&cateName=" + cateName;
-        	})
-     	*/
-        </script>
     </section>
     </div>
     
