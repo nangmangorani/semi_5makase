@@ -297,7 +297,7 @@
         <div id="content">
             <div id="content_1">
                 <span>
-                    <h2 style="color: white; font-weight: 500; opacity: 100%;"><%= cateName %></h2>
+                    <h2><%= cateName %></h2>
                 </span>
             </div>
             <div id="content_2">
@@ -316,7 +316,7 @@
 		                                <strong><%= cateList.getMenu() %></strong>
 		                            </div>
 		                            <div class="imgRight_3">
-		                           		<% if(cateList.getTvName() != null) { %>
+		                           		<% if(!cateList.getTvName().equals("없음")) { %>
 		                                	<span style="color:orange;">#<%= cateList.getTvName() %></span>,
 		                                <% } %>
 		                                <% if(cateList.getParking().equals("가능")) { %>
@@ -342,7 +342,7 @@
 		                        <div class="restaurant_desc">
 		                            <span>
 		                                <% if (cateList.getIntro().length() > 53) { %>
-		                                	<%= cateList.getIntro().substring(1, 53) %> ... 더보기		                            	
+		                                	<%= cateList.getIntro().substring(0, 53) %> ... 더보기		                            	
 		                            	<% } else { %>
 		                            		<%= cateList.getIntro() %>
 		                            	<% } %> 
@@ -395,7 +395,7 @@
 		                        <div class="restaurant_desc">
 		                            <span>
 		                            	<% if (llist.getIntro().length() > 53) { %>
-		                                	<%= llist.getIntro().substring(1, 53) %> ... 더보기		                            	
+		                                	<%= llist.getIntro().substring(0, 53) %> ... 더보기		                            	
 		                            	<% } else { %>
 		                            		<%= llist.getIntro() %>
 		                            	<% } %> 
@@ -434,6 +434,7 @@
 
 
     <script>
+    
         $(function () {
             $(".moreBtn").click(function () {
                 $(".restaurant.hidden").toggleClass("hidden");
@@ -487,6 +488,7 @@
                 event.stopPropagation();
             });
         });
+     </script>
 
 </body>
 

@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi_5makase.common.model.vo.Attachment;
-import com.semi_5makase.member.model.vo.Member;
-import com.semi_5makase.restaurant.model.dao.RestaurantDao;
 import com.semi_5makase.restaurant.model.service.RestaurantService;
-import com.semi_5makase.restaurant.model.vo.Favorite;
 import com.semi_5makase.restaurant.model.vo.Menu;
 import com.semi_5makase.restaurant.model.vo.Restaurant;
 import com.semi_5makase.restaurant.model.vo.Review;

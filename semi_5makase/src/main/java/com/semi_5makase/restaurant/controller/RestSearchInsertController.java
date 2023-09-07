@@ -38,7 +38,6 @@ public class RestSearchInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		System.out.println("이거되나?");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
