@@ -39,7 +39,7 @@ public class SelectMainRestaurantListController extends HttpServlet {
 		ArrayList<Restaurant> list =  new ArrayList<Restaurant>();
 				
 		list = new RestaurantService().selectCategoryList(cateNo);
-
+		
 		request.setAttribute("categoryList", list);
 		request.setAttribute("categoryName", cateName);
 		request.getRequestDispatcher("views/restaurant/restaurantRecommendList.jsp").forward(request, response);

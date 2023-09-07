@@ -38,18 +38,24 @@
         .wrap>div{
             width: 100%;
         }
-        #header{
-            height: 20%;
+
+        #content{
+            height: 80%;
         }
-        #header_1{
-            height: 65%;
+
+        #content_no{
+            height: 25%;
             font-size: 30px;
         }
+        
         #navi{
             height: 35%;
         }
         #content_1{
             height: 70%;
+        }
+        #footer{
+            height: 10%;
         }
 
         #all>a{
@@ -60,90 +66,110 @@
             margin-left: 75px;
             float: left;
         }
-        #search{
-            margin-left: 750px;
-            margin-top: 20px;
 
+        #search{
+            text-align: right;
         }
-        #searchbtn{
-            margin-bottom: 5px;
+        .searchbtn{
+            height: 40px;
+            border: transparent;
+            border-radius: 5px;
+            width: 80px;
+            height: 40px;
+            background-color: rgb(55, 173, 44);
+            font-weight: 500;
+            color: white;
+            margin:10px 80px 10px 0px;
         }
+
+        #noticeSearch{
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+        
+        .enrollBtn {
+            border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
+        }
+
+        .tableLine:hover{
+            background-color: rgb(243, 241, 241);
+        }
+        .tableLine{
+            cursor: pointer;
+        }
+
+        .tableth{
+            height: 55px;
+            line-height: 35px;
+        }
+        .tabletd{
+            height: 55px;
+            line-height: 40px;
+        }
+
+        
+
+
 
     </style>
 </head>
 <body>
 	<%@ include file = "../common/menubar.jsp" %>
     <div class="wrap"> 
-        <div id="header">
-            <div id="header_1" align="center" ><br>
+        <div id="content">
+            <div id="content_no" align="center" ><br>
                 <b>이눔세끼 공지사항</b>
             </div>
-            
-
-		<form action="<%= contextPath %>/list.no">
-		    <div id="search">
-		        <!-- 검색어 입력 필드 -->
-		        <input type="text" id="noticeSearch" name="searchNo" value="<%= searchNo %>">
-		        <!-- 현재 페이지 정보 유지 -->
-		        <input type="hidden" name="cpage" value="1">
-		        <button type="submit" id="searchbtn" class="btn btn-sm btn-success">검색</button>
-		    </div>
-		</form>
-			
-            
-        </div>
-        <div id="content_1">
-            <table class="table" align="center" style="width: 85%;">
-                <thead>
-                  <tr>
-                      <th>번호</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                  </tr>
-                </thead>
-                <tbody>
-                	<!-- case1. 공지글이 없을 경우 -->
-                	<% if(list.isEmpty()) {%>
-                	<tr>
-                      <td colspan="3">존재하는 공지사항이 없습니다.</td>
-                  </tr>
-                	<% } else { %>
-                		<!-- case2. 글지글이 있을 경우 -->
-                		<% int listNum = 1; %>
-                		<% for(Notice n : list) { %>
-               			<tr>
-		                     <td style="display:none"><%= n.getNoticeNo() %></td>
-		                     <td><%= listNum++ %></td>
-		                     <td><%= n.getNoticeTitle() %></td>
-		                     <td><%= n.getCreateDate() %></td>
-		                 </tr>
-                		<% } %>
-           			<% } %>
-                </tbody>
-              </table>
-              <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
-              	<button style="margin-left: 900px;" onclick="location.href='<%=contextPath%>/insertView.no'">등록하기</button>
-              <% } %>
-              <script>
-		    	$(function() {
-		    		$(".table>tbody>tr").click(function(){
-						const num = $(this).children().eq(0).text();
-						// console.log(num);
-						
-						// 요청할 url?키=벨류&키=벨류
-						// 요청시 전달값 (키=벨류) => 쿼리스트링!!
-						
-						// /jsp/detail.no?num=클릭한글번호
-						location.href = '<%= contextPath %>/detail.no?num='+num;
-		    		}) 
-		    	})
-    
-			</script>
-              
-              
-
-              <div class="pageing-area" align="center">
-
+            <form action="<%= contextPath %>/list.no">
+                <div id="search">
+                    <!-- 검색어 입력 필드 -->
+                    <input type="text" id="noticeSearch" name="searchNo" value="<%= searchNo %>">
+                    <!-- 현재 페이지 정보 유지 -->
+                    <input type="hidden" name="cpage" value="1">
+                    <button type="submit" id="searchbtn" class="searchbtn">검색</button>
+                </div>
+            </form>
+            <div id="content_1">
+                <table class="table" align="center" style="width: 85%;">
+                    <thead>
+                      <tr class="tabletr">
+                          <th class="tableth">번호</th>
+                          <th class="tableth">제목</th>
+                          <th class="tableth">작성일</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <!-- case1. 공지글이 없을 경우 -->
+                        <% if(list.isEmpty()) {%>
+                        <tr class="tabletr">
+                          <td colspan="3" class="tabletd">존재하는 공지사항이 없습니다.</td>
+                        </tr>
+                        <% } else { %>
+                            <!-- case2. 글지글이 있을 경우 -->
+                            <% int listNum = 1; %>
+                            <% for(Notice n : list) { %>
+                               <tr class="tableLine">
+                                 <td style="display:none" class="tabletd"><%= n.getNoticeNo() %></td>
+                                 <td class="tabletd"><%= listNum++ %></td>
+                                 <td class="tabletd"><%= n.getNoticeTitle() %></td>
+                                 <td class="tabletd"><%= n.getCreateDate() %></td>
+                             </tr>
+                            <% } %>
+                           <% } %>
+                    </tbody>
+                  </table>
+                  <% if(loginMember != null && loginMember.getMemId().equals("admin")) {  %>
+                      <button class="enrollBtn" style="margin-left: 900px;" onclick="location.href='<%=contextPath%>/insertView.no'">등록하기</button>
+                  <% } %>
+            </div>
+            <div class="pageing-area" align="center">
                 <ul class="pagination pagination-sm" style="margin-left: 460px;">
                  <% if(currentPage != 1) { %>
 		            <li class="page-item"><a class="page-link" href="<%= contextPath %>/list.no?cpage=<%= currentPage - 1 %>&searchNo=<%= searchNo %>"><</a></li>
@@ -169,7 +195,15 @@
                 </ul>
             </div>
         </div>
-        <div id="footer"></div>
     </div>
+
+    <script>
+        $(function() {
+            $(".table>tbody>tr").click(function(){
+                const num = $(this).children().eq(0).text();
+                location.href = '<%= contextPath %>/detail.no?num='+num;
+            }) 
+        })
+        </script>
 </body>
 

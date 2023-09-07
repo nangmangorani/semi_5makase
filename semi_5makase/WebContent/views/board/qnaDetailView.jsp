@@ -178,7 +178,7 @@
 
         #qnaContent_1{
             height: auto;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid lightgray;
         }
 
         #qnaContent_2{
@@ -189,7 +189,7 @@
         #qnaContent_3{
             width: 100%;
             height: auto;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid lightgray;
             float:left;
             
         }
@@ -210,6 +210,15 @@
             height: 15%;
             width: 100%;
             display: inline-block;
+        }
+
+        #btnReplyQna{
+            border: transparent;
+            border-radius: 5px;
+            height: 40px;
+            background-color: rgb(55, 173, 44);
+            font-weight: 500;
+            color: white;
         }
 
 
@@ -254,7 +263,10 @@
                             </div>
                         </div>
                         <div id="qnaContent">
-                            <div id="qnaContent_1"><%= q.getBoardContent() %></div>
+                            <div id="qnaContent_1">
+                           		<b>내용</b> <br>
+                            <%= q.getBoardContent() %>
+                            </div>
                             <% if(at != null) { %>
                             <div id="qnaContent_2">
                                 <b>첨부파일</b>
@@ -267,14 +279,14 @@
                             </div>
                             <% } %>
                             <div id="qnaContent_3">
-                                <b>답변</b>
+                                <b>답변</b> <br>
                                 <% if(loginMember.getMemId().equals("admin") && q.getReplyContent() == null) {%>
                                 	<button id="btnReplyQna" onclick="location.href='<%=contextPath%>/insertreplyview.qna?cpage=<%=q.getQnaNo()%>'">답변하기</button>
                                 <% }%>
                                 <% if(q.getReplyContent() != null) {%>
                                 	<%= q.getReplyContent() %>
                                 <% } else {%>
-                                	답변x
+                                	답변이 등록되지 않았습니다.
                                 <% } %>
                             </div>
                         </div>

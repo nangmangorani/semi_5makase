@@ -62,7 +62,7 @@
             box-sizing: border-box;
         }
         button:not(#search_icon){
-            background-color: white;
+            /* background-color: white; */
             border: 0;
             cursor: pointer;
         }
@@ -104,19 +104,29 @@
         #photo{
             box-sizing: border-box;
             display: flex;
+            overflow: hidden;
+            width:600px;
         }
         
-        #photo>div{
+        #photo img{
+       		transition: all 0.2s;
         }
         
         #photo img:hover{
-       		transition: all 0.2s linear;
-        	transform: scale(1.4);
+        	transform: scale(1.1, 1.1);
+        	transition-duration: 0.5s;
         }
         
         #photo>div{
             height: 100%;
+            overflow: hidden;
         }
+        
+        #photo span{
+            height: 100%;
+            overflow: hidden;
+        }
+        
         #photo_0 img{
         	height: 200px;
             width: 200px;
@@ -351,23 +361,29 @@
         }
 
         .reviewPhotoList{
+        	width: 800px;
             height: 45%;
+            overflow:hidden;
         }
         .reviewPhotoList>ul{
+        	width:100%;
             list-style: none;
+            overflow:hidden;
         }
         .reviewPhotoList li{
             float: left;
+            overflow:hidden;
         }
         .reviewPhotoList img{
         	height: 150px;
             width: 150px;
             padding:5px;
-            transition: all 0.2s linear;
+            transition: all 0.2s;
         }
         
         .reviewPhotoList img:hover{
-        	transform: scale(1.4);
+        	transform: scale(1.1, 1.1);
+        	transition-duration: 0.5s;
         }
         
         .detailReview{
@@ -537,7 +553,7 @@
         }
 
         .reviewPic{
-            height: 100%;
+            height: 90%;
             width: 70%;
             border : 1px solid black;
         }
@@ -631,7 +647,7 @@
                 <div class="closeModal" align="right">X</div>
 		      <!-- Modal content -->
 		      <div class="reviewDatail_modal-content">
-                    <div class="reviewPic fotorama" data-nav="thumbs" data-allowfullscreen="true" data-width="95%">
+                    <div class="reviewPic fotorama" data-nav="thumbs" data-allowfullscreen="true" data-width="100%" data-height="80%">
                              <% for(int i=0; i<rvPicList.size(); i++) { %>
 							    <a href="#none" style="text-decoration:none;" class="pl<%= rvPicList.get(i).getRefBno()%>" onclick="closeup('<%=rvPicList.get(i).getChangeName()%>', <%= rvPicList.get(i).getRefBno() %>)">
 							        <img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
@@ -677,6 +693,8 @@
 	        	var fullPath = src;
 	        	var parts = fullPath.split("/"); 
 	        	var fileName = parts[parts.length - 1];
+	        	
+	        	console.log(fileName);
 
 	        	closeup(fileName);
 	        	
@@ -691,6 +709,8 @@
 	        			changeName:changeName
 	        	},
 	        		success: function(result) {
+	        			
+	        			console.log(result)
 	        			
 	        			var rn = result.nickName
 	        			var rr = result.rating
@@ -788,7 +808,7 @@
             
             <div id="likeAndReview">
                 <div id="like-area">
-	                    <button type="button" style="padding: 0; border: 0;" id="restFavor">
+	                    <button type="button" style="padding: 0; border: 0; background-color: white;" id="restFavor">
 	                        <img src="resources/img/noheart.png" id="favoriteImg" style="width: 50px; height: 40px;">
 	                        <p id="like-content" style="margin: 0;">즐겨찾기</p>
 	                    </button>
@@ -796,14 +816,14 @@
             <div id="writeReview">
             	<% if(loginMember == null) { %>
                  	<a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>" class="validateLogin">
-	                     <button style="padding: 0; border: 0;" id="reviewButton">
+	                     <button style="padding: 0; border: 0; background-color: white;" id="reviewButton">
 	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
 	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
 	                     </button>
                  	</a> 
                  <% } else { %>
                  	<a href="<%=contextPath %>/insertReviewForm.rv?restNo=<%= rest.getRestNo() %>">
-	                     <button style="padding: 0; border: 0;" id="reviewButton">
+	                     <button style="padding: 0; border: 0; background-color: white;" id="reviewButton">
 	                         <img src="resources/img/review.png" style="width: 50px; height: 40px;">
 	                         <p id="review-content" style="margin: 0;">리뷰작성</p>
 	                     </button>
@@ -991,7 +1011,7 @@
 		        	<input type="hidden" name="suspectNo" value="<%= rv.getMemNo() %>">
 		        	<input type="hidden" name="restNo" value="<%= rest.getRestNo() %>">
 		        	<div class="closeUpdateModal">X</div>
-		            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt;">유저 신고</span></b></span></p>
+		            <p style="text-align: center;"><span style="font-size: 15pt;"><b><span style="font-size: 13pt">유저 신고</span></b></span></p>
 		            <textarea name="reportContent" class="report_modalText" cols="40" rows="10" style="resize: none;" placeholder="<%= rv.getNickName() %>님을 신고하실 내용을 적어주세요."></textarea>
 		            <br>
 		                
@@ -1026,7 +1046,7 @@
 	                </div>
 	                <div class="review_content">
 	                    <div><%= rv.getReviewContent() %></div>	                	
-		                <div class="reviewPhotoList reviewModal" id="attachmentContainer">
+		                <div class="reviewPhotoList reviewModal photo" id="attachmentContainer">
 		                    <ul>
 		                        <li>
 		                        	<% for(Attachment at : rvPicList) { %>

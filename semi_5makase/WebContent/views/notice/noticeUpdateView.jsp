@@ -40,7 +40,7 @@
             width: 100%;
             height: 200px;
             background-color: lightgray;
-            padding-left: 330px;
+            padding-left: 370px;
             padding-top: 70px;
         }
 
@@ -64,6 +64,23 @@
         .btn1{
             margin-left: 350px;
             margin-right: 10px;
+            border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
+        }
+
+        .btn2{
+            border: transparent;
+            border-radius: 5px;
+            width: 100px;
+            height: 40px;
+            background-color: rgb(21, 98, 189);
+            font-weight: 500;
+            color: white;
         }
 
         .btn1, .btn2{

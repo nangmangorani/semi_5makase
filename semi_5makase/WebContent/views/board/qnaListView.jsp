@@ -30,7 +30,7 @@
         }     
         .wrap{
             width: 1080px;
-            height: 800px;
+            height: 850px;
             margin: auto;
         }   
         .wrap>div{
@@ -41,11 +41,13 @@
             height: 35%
         }
         #header_1{
+        	text-align : center;
             height: 75%;
         }
         #navi{
             height: 25%;
         }
+
         #content{
             height: 60%;
         }
@@ -59,21 +61,22 @@
         .btnToNotice, .btnToFaq{
             width: 300px;
             height: 70px;
-            font-size: 22px;
+            font-size: 20px;
             background-color: transparent;
-            border: 1px solid gray;
+            border: 1px solid lightgray;
+            
         }
 
         .btnToNotice:hover, .btnToFaq:hover{
-            background-color: lightgray;
+            background-color: rgb(243, 241, 241);
         }
 
         .btnToFaq{
-            margin-left: 30px;
+            margin-left: 50px;
         }
 
         .btnToNotice{
-            margin-right: 20px;
+            margin-right: 50px;
         }
 
         #emrollBtn{
@@ -81,14 +84,23 @@
             border-radius: 5px;
             width: 100px;
             height: 40px;
-            background-color: rgb(55, 173, 44);
+            background-color: rgb(21, 98, 189);
             font-weight: 500;
             color: white;
         }
 
         .qna:hover{
-            background-color: lightgray;
+            background-color: rgb(243, 241, 241);
             cursor: pointer;
+        }
+
+        .tableth{
+            height: 55px;
+            line-height: 35px;
+        }
+        .tabletd{
+            height: 55px;
+            line-height: 40px;
         }
 
         #lock{
@@ -96,6 +108,11 @@
             height: 17px;
             margin-bottom: 3px;
             margin-left: 3px;
+        }
+
+        #emrollBtn{
+            float: right;
+            margin-right: 90px;
         }
 
 
@@ -106,61 +123,82 @@
     <div class="wrap" >
         <div id="header">
             <div id="header_1">
-                <img src="./resources/img/qnaimg.png" width="100%" height="100%">
+                <img src="https://static.vecteezy.com/system/resources/previews/006/584/735/original/illustration-graphic-cartoon-character-of-qna-free-vector.jpg" width="30%" height="100%">
             </div>
+            <br><br>
             <div id="navi" align="center">
-                <button class="btnToNotice" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">공지사항</button>
-                <button class="btnToFaq" onclick="location.href='<%=contextPath%>/list.faq'">자주묻는 질문</button>
-
+                <button class="btnToNotice btn btn-outline-secondary" onclick="location.href='<%=contextPath%>/list.no?cpage=1'">공지사항</button>
+                <button class="btnToFaq btn btn-outline-secondary" onclick="location.href='<%=contextPath%>/list.faq'">자주묻는 질문</button>
             </div>
         </div>
+        <br><br><br>
         <div id="content">
-            <br>
-            
-
-            <div class="container" >
-                <table class="table"  align="center" style="width: 700px;">
+            <div class="container">
+                <table class="table" align="center" style="width: 85%;">
                   <thead>
                     <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                        <th>처리상태</th>
-                        <th>공개여부</th>
+                        <th class="tableth">번호</th>
+                        <th class="tableth">제목</th>
+                        <th class="tableth">작성자</th>
+                        <th class="tableth">작성일</th>
+                        <th class="tableth">처리상태</th>
+                        <th class="tableth">공개여부</th>
                     </tr>
                   </thead>
                   <tbody>
                   	<!-- case1. qna가 없을 경우 -->
                     <% if(list.isEmpty()) { %>
                     <tr>
-                        <td colspan="6">존재하는 질문이 없습니다.</td>
+                        <td colspan="6" align="center">존재하는 질문이 없습니다.</td>
                     </tr>
                     <% } else {%>
                     <!-- case2. qna가 있을 경우 -->
                     	<% int qnaListNo = 1; %>
 	                    <% for(Qna q : list) { %>
 	                    	<tr class="qna">
-	                    		<td><%= qnaListNo++ %></td>
+	                    		<td style="height: 55px; line-height: 40px;"><%= qnaListNo++ %></td>
 	                    		<td style="display:none"><%= q.getQnaNo() %></td>
 		                        <% if(q.getOpen().equals("공개")) { %>
-		                        <td><%= q.getBoardTitle() %></td>
+		                        <td class="tabletd"><%= q.getBoardTitle() %></td>
 	                        <% }else{  %>
-	                        	<td>비공개 질문입니다.
+	                        	<td class="tabletd">비공개 질문입니다.
                                     <img src="./resources/img/자물쇠.png" id="lock" alt="">
                                 </td>
 	                        <% } %>
-		                        <td><%= q.getBoardWriter() %></td>
-		                        <td><%= q.getCreateDate() %></td>
-		                        <td><%= q.getReply() %></td>
-		                        <td><%= q.getOpen()%></td>
+		                        <td class="tabletd"><%= q.getBoardWriter() %></td>
+		                        <td class="tabletd"><%= q.getCreateDate() %></td>
+		                        <td class="tabletd"><%= q.getReply() %></td>
+		                        <td class="tabletd"><%= q.getOpen()%></td>
 	                    	</tr>
 	                    <% } %>
                  	<% } %>
                   </tbody>
                 </table>
 			</div>
-				<script>
+            <button type="submit" id="emrollBtn" onclick="enroll()">등록하기</button>
+        </div>
+        <div class="pageing-area" align="center">
+            <ul class="pagination pagination-sm" style="margin-left: 450px;">
+                <% if(currentPage != 1){ %>
+                <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage - 1%>">&lt;</a></li>
+            <% } else {%>
+                <li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage - 1%>">&lt;</a></li>
+            <% } %>
+            <% for(int p = startPage; p<=endPage; p++) { %>
+                <% if(p == currentPage) { %>
+                    <li class="page-item disabled"><a class="page-link"><%= p %></a></li>
+                <% } else {%>
+                <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%= p %>"><%= p %></a></li>
+                <% } %>
+            <% } %>
+            <% if(currentPage != maxPage) { %>
+                <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage + 1%>">&gt;</a></li>
+            <% } else {%>    
+                <li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage + 1%>">&gt;</a></li>
+            <% } %>
+            </ul>
+       </div>
+            <script>
 				$(function() {
                     $(document).on("click", ".qna", function() {
                         <% if (loginMember != null) { %>
@@ -179,38 +217,7 @@
                         <% } %>
 					    });
 					});
-					</script>			
-                <div class="pageing-area" align="center">
-	                <ul class="pagination pagination-sm" style="margin-left: 450px;">
-	                    <% if(currentPage != 1){ %>
-	                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage - 1%>">&lt;</a></li>
-	                <% } else {%>
-	                	<li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage - 1%>">&lt;</a></li>
-	                <% } %>
-	                <% for(int p = startPage; p<=endPage; p++) { %>
-	                	<% if(p == currentPage) { %>
-	                    	<li class="page-item disabled"><a class="page-link"><%= p %></a></li>
-	                    <% } else {%>
-	                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%= p %>"><%= p %></a></li>
-	                    <% } %>
-	                <% } %>
-	                <% if(currentPage != maxPage) { %>
-	                    <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage + 1%>">&gt;</a></li>
-	                <% } else {%>    
-	                	<li class="page-item disabled"><a class="page-link" href="<%=contextPath%>/list.qna?cpage=<%=currentPage + 1%>">&gt;</a></li>
-	                <% } %>
-	                </ul>
-               </div>
-               <div id="footer_1">
-                <button type="submit" id="emrollBtn" onclick="enroll()">등록하기</button>
-               </div>
-        </div>
-        
-        
-        
-        <div id="footer">
-            
-            
+					</script>
             <script>
             function enroll() {
                 <% if (loginMember != null) { %>
@@ -223,8 +230,6 @@
             }
             </script>
             
-            
-        </div>
     </div>
 </body>
 </html>
