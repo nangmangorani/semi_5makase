@@ -1184,7 +1184,7 @@
            ,INTRO
            ,R.REST_VIEWS AS REST_VIEWS
            ,MENU
-           ,ROUND(AVG(RATING),1) "AVG"
+           ,NVL(ROUND(AVG(RATING),1),0) "AVG"
            ,NVL(COUNT(REVIEW_NO),0) AS COUNT
            ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME AS TITLE_IMG
@@ -1213,7 +1213,7 @@
            ,MENU
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME
      ORDER BY
-           REST_VIEWS DESC
+           REST_VIEWS DESC, AVG DESC 
 	</entry>
 	
 	<entry key="selectLocationRcList">
@@ -1227,7 +1227,7 @@
            ,INTRO
            ,R.REST_VIEWS AS REST_VIEWS
            ,MENU
-           ,ROUND(AVG(RATING),1) "AVG"
+           ,NVL(ROUND(AVG(RATING),1),0) "AVG"
            ,NVL(COUNT(REVIEW_NO),0) AS COUNT
            ,NVL(COUNT(F.REST_NO),0) AS FCOUNT
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME AS TITLE_IMG
@@ -1256,6 +1256,6 @@
            ,MENU
            ,AT.FILE_PATH || '/' || AT.CHANGE_NAME
      ORDER BY
-           REST_VIEWS DESC 
+           REST_VIEWS DESC, AVG DESC
 	</entry>
 </properties>

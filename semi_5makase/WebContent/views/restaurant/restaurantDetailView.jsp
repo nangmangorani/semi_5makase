@@ -1139,8 +1139,9 @@
 	 			}
 	 		})	
 	 	}	
-     
+     	
 			checkFavorite();
+ 
 
 		  // 즐겨찾기 총 합 조회 함수
 		  	function favorCount(){
@@ -1198,7 +1199,6 @@
     		})	
     	}
 		
-		checkLikes();
      
       	// 좋아요 총 합 조회 함수
       	function likesCount(reviewNo){
