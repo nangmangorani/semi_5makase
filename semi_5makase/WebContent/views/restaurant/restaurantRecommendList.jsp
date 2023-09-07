@@ -102,6 +102,7 @@
         }
 
         #content_1>span>h2 {
+        	color:white;
             line-height: 170px;
         }
 
