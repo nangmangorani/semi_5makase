@@ -56,7 +56,9 @@ public class RestaurantDetailView extends HttpServlet {
 			ArrayList<ReviewNo> rvNoList = rSer.selectReviewNoList(restNo);		
 			ArrayList<Attachment> rvPicList = rSer.selectReviewAttachment(restNo);
 			ArrayList<Attachment> profileList = rSer.selectProfileAttachment();
-
+			
+			System.out.println("rvpic : " + rvPicList);
+ 
 			request.getSession().setAttribute("rest", rest);
 			request.getSession().setAttribute("selectReviewRatingAvg", selectReviewRatingAvg);
 			
