@@ -35,10 +35,16 @@ public class SelectMainRestaurantListController extends HttpServlet {
 
 		int cateNo = Integer.parseInt(request.getParameter("value"));
 		String cateName = request.getParameter("cateName");
+		
+		System.out.println("카테넘넘넘 : " + cateNo);
+		System.out.println("갔나요?");
 
 		ArrayList<Restaurant> list =  new ArrayList<Restaurant>();
 				
 		list = new RestaurantService().selectCategoryList(cateNo);
+		
+		System.out.println("리스트 : " + list);
+		System.out.println("리렝 : " + list.get(1).getIntro().length());
 
 		request.setAttribute("categoryList", list);
 		request.setAttribute("categoryName", cateName);

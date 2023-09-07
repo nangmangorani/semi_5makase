@@ -537,7 +537,7 @@
         }
 
         .reviewPic{
-            height: 100%;
+            height: 90%;
             width: 70%;
             border : 1px solid black;
         }
@@ -631,7 +631,7 @@
                 <div class="closeModal" align="right">X</div>
 		      <!-- Modal content -->
 		      <div class="reviewDatail_modal-content">
-                    <div class="reviewPic fotorama" data-nav="thumbs" data-allowfullscreen="true" data-width="95%">
+                    <div class="reviewPic fotorama" data-nav="thumbs" data-allowfullscreen="true" data-width="100%" data-height="80%">
                              <% for(int i=0; i<rvPicList.size(); i++) { %>
 							    <a href="#none" style="text-decoration:none;" class="pl<%= rvPicList.get(i).getRefBno()%>" onclick="closeup('<%=rvPicList.get(i).getChangeName()%>', <%= rvPicList.get(i).getRefBno() %>)">
 							        <img src="<%= contextPath %><%= rvPicList.get(i).getFilePath() %>">
@@ -677,6 +677,8 @@
 	        	var fullPath = src;
 	        	var parts = fullPath.split("/"); 
 	        	var fileName = parts[parts.length - 1];
+	        	
+	        	console.log(fileName);
 
 	        	closeup(fileName);
 	        	
@@ -691,6 +693,8 @@
 	        			changeName:changeName
 	        	},
 	        		success: function(result) {
+	        			
+	        			console.log(result)
 	        			
 	        			var rn = result.nickName
 	        			var rr = result.rating

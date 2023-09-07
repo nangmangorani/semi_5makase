@@ -341,7 +341,11 @@
 		                    <div class="textLine">
 		                        <div class="restaurant_desc">
 		                            <span>
-		                                <%= cateList.getIntro() %> ... 더보기
+		                                <% if (cateList.getIntro().length() > 53) { %>
+		                                	<%= cateList.getIntro().substring(1, 53) %> ... 더보기		                            	
+		                            	<% } else { %>
+		                            		<%= cateList.getIntro() %>
+		                            	<% } %> 
 		                            </span>
 		                        </div>
 		                    </div>
