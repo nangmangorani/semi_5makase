@@ -40,6 +40,11 @@ public class Review {
 		this.memNo = memNo;
 		this.nickName = nickName;
 	}
+	
+	public Review(int reviewNo) {
+		super();
+		this.reviewNo = reviewNo;
+	}
 
 	public int getReviewNo() {
 		return reviewNo;
