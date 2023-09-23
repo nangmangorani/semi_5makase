@@ -23,8 +23,9 @@
 	/* Favorite checkFavorite = (Favorite)request.getAttribute("checkFavorite"); */
 	// 로그인한 유저가 해당 음식점 즐겨찾기 되어있는지 확인
 	
-	int rCount = (int)request.getAttribute("reviewCount");
-	// 리뷰 수
+	int[] rvNo = (int[])request.getAttribute("rvNo");
+	
+	ArrayList rvNo2 = (ArrayList)request.getAttribute("rvNo2");
 	
 	double avg = (double)session.getAttribute("selectReviewRatingAvg");
 	// 별점 평균점수
@@ -939,7 +940,7 @@
             <div id="reviewHeader">
                 <div id="reviewCount">
                     <p>
-                       <span><%= rCount %>건의 방문자 평가</span> 
+                       <span><%= rvList.size() %>건의 방문자 평가</span> 
                     </p>
                 </div>
                 <div id="reviewSeq" align="right">
@@ -1154,6 +1155,7 @@
 					 }
 		 	 })
 		  }
+
 		  
 	  	 // 좋아요 추가, 삭제 함수
 		function updateLikes(reviewNo, memNo){
@@ -1172,12 +1174,12 @@
 						alert("자신이 작성한 리뷰는 추천할 수 없습니다.")
 					}else if(result == "delete"){
 						alert("좋아요가 해제되었습니다.")
-						likesCount(reviewNo);
 						checkLikes(reviewNo);
+						likesCount(reviewNo);
 					}else if(result == "insert"){
 						alert("좋아요에 추가되었습니다.")
-						likesCount(reviewNo);
 						checkLikes(reviewNo);
+						likesCount(reviewNo);
 					}
 				}
 			})             			
@@ -1200,7 +1202,7 @@
     	}
 		
      
-      	// 좋아요 총 합 조회 함수
+    	// 좋아요 총 합 조회 함수
       	function likesCount(reviewNo){
 	     	 $.ajax({
 	    		 url:"likesCount.rv",
@@ -1217,7 +1219,21 @@
 				 }
 	     	 })
       	}
+      	function Review(reviewNo) {
+      	    this.reviewNo = reviewNo;
+      	}
+    	
+      	$(document).ready(function () {
+      	    var rvListSize = <%= rvList.size() %>; // Replace with your actual code to get the list size
+      	    var rvNoList = <%= rvNo2 %>; // Replace with your actual code to get the list of review numbers
 
+      	    for (var i = 0; i < rvListSize; i++) {
+      	        var reviewNo = rvNoList[i];
+      	        likesCount(reviewNo);
+      	    }
+      	});
+		
+		
 		$("#writeReview").mouseover(function(){
 			$("#review-content").css("color", "red");
 		})
