@@ -23,8 +23,6 @@
 	/* Favorite checkFavorite = (Favorite)request.getAttribute("checkFavorite"); */
 	// 로그인한 유저가 해당 음식점 즐겨찾기 되어있는지 확인
 	
-	int[] rvNo = (int[])request.getAttribute("rvNo");
-	
 	ArrayList rvNo2 = (ArrayList)request.getAttribute("rvNo2");
 	
 	double avg = (double)session.getAttribute("selectReviewRatingAvg");
@@ -1155,7 +1153,6 @@
 					 }
 		 	 })
 		  }
-
 		  
 	  	 // 좋아요 추가, 삭제 함수
 		function updateLikes(reviewNo, memNo){
@@ -1219,20 +1216,17 @@
 				 }
 	     	 })
       	}
-      	function Review(reviewNo) {
-      	    this.reviewNo = reviewNo;
-      	}
     	
-      	$(document).ready(function () {
-      	    var rvListSize = <%= rvList.size() %>; // Replace with your actual code to get the list size
-      	    var rvNoList = <%= rvNo2 %>; // Replace with your actual code to get the list of review numbers
-
-      	    for (var i = 0; i < rvListSize; i++) {
-      	        var reviewNo = rvNoList[i];
-      	        likesCount(reviewNo);
-      	    }
-      	});
-		
+    	
+    	$(document).ready(function () {
+          	    var rvListSize = <%= rvList.size() %>;
+          	    var rvNoList = <%= rvNo2 %>; 
+          	    for (var i = 0; i < rvListSize; i++) {
+          	        var reviewNo = rvNoList[i];
+          	        likesCount(reviewNo);
+          	        checkLikes(reviewNo);
+          	    }
+          	});
 		
 		$("#writeReview").mouseover(function(){
 			$("#review-content").css("color", "red");
