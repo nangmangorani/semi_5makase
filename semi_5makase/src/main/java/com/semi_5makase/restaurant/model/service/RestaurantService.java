@@ -449,11 +449,11 @@ public class RestaurantService {
 		
 	}
 	
-	public ArrayList<ReviewNo> selectReviewNoList(int restNo){
+	public ArrayList<Review> selectReviewNoList(int restNo){
 		
 		Connection conn = getConnection();
 		
-		ArrayList<ReviewNo> rvNoList = new RestaurantDao().selectReviewNoList(restNo, conn);
+		ArrayList<Review> rvNoList = new RestaurantDao().selectReviewNoList(restNo, conn);
 		
 		close(conn);
 		return rvNoList;

@@ -31,10 +31,18 @@ public class CheckFavorite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		int memNo = ((Member)request.getSession().getAttribute("loginMember")).getMemNo();
+		int memNo = 0;
+		
+		if(request.getSession().getAttribute("loginMember") != null) {
+			memNo = ((Member)request.getSession().getAttribute("loginMember")).getMemNo();			
+		}
+		
 		int restNo = Integer.parseInt(request.getParameter("restNo"));
 		
-		int favor = new RestaurantService().checkFavoriteRestaurant(memNo, restNo);
+		int favor = 0;
+		if( memNo != 0) {
+			favor = new RestaurantService().checkFavoriteRestaurant(memNo, restNo);			
+		}
 
 		response.getWriter().print(favor);
 		

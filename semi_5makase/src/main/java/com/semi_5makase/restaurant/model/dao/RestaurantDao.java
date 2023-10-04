@@ -1124,9 +1124,9 @@ public ArrayList<Restaurant> selectEditorRestInfo(Connection conn) {
 		return result;
 	}
 	
-	public ArrayList<ReviewNo> selectReviewNoList(int restNo, Connection conn){
+	public ArrayList<Review> selectReviewNoList(int restNo, Connection conn){
 			
-			ArrayList<ReviewNo> rvNoList = new ArrayList<ReviewNo>();
+			ArrayList<Review> rvNoList = new ArrayList<Review>();
 			
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -1141,8 +1141,9 @@ public ArrayList<Restaurant> selectEditorRestInfo(Connection conn) {
 				rset = pstmt.executeQuery();
 				
 				while(rset.next()) {
-	
-					rvNoList.add(new ReviewNo(rset.getInt("REVIEW_NO")));			
+					Review rv = new Review();
+					rv.setReviewNo(rset.getInt("REVIEW_NO"));
+					rvNoList.add(rv);
 				}		
 	
 				

@@ -47,23 +47,36 @@ public class RestaurantDetailView extends HttpServlet {
 			Restaurant rest = rSer.selectRestaurantDetail(restNo); // 음식점 상세정보
 			ArrayList<Menu> list = rSer.selectMenuList(restNo); // 음식점 메뉴
 			int favoriteCount = rSer.selectFavoriteCount(restNo); // 즐겨찾기 수
-			int reviewCount = rSer.selectReviewCount(restNo); // 리뷰 수
 			double selectReviewRatingAvg = Math.round(rSer.selectReviewRatingAvg(restNo) * 10) / 10; // 별점 평균
 			ArrayList<Review> rvList = rSer.selectReviewList(restNo);
-			ArrayList<ReviewNo> rvNoList = rSer.selectReviewNoList(restNo);		
+			ArrayList<Review> rvNoList = rSer.selectReviewNoList(restNo);		
 			ArrayList<Attachment> rvPicList = rSer.selectReviewAttachment(restNo);
 			ArrayList<Attachment> profileList = rSer.selectProfileAttachment();
 			
-			System.out.println("rvpic : " + rvPicList);
+			int[] rvNo = new int[rvNoList.size()];
+			for(int i=0; i<rvNoList.size(); i++) {
+				rvNo[i] = rvNoList.get(i).getReviewNo();
+			}
+			
+			ArrayList rvNo2 = new ArrayList();
+			
+			 for (int i = 0; i < rvNoList.size(); i++) {
+	      	        rvNo2.add(rvNoList.get(i).getReviewNo());
+	      	        
+			 }
+			 
+			 System.out.println(rvNo2);
+			
+			
+			System.out.println("rvNoList : " + rvNoList);
  
 			request.getSession().setAttribute("rest", rest);
 			request.getSession().setAttribute("selectReviewRatingAvg", selectReviewRatingAvg);
 			
-//			request.setAttribute("rest", rest);
 			request.setAttribute("list", list);
+			request.setAttribute("rvNo", rvNo);			
+			request.setAttribute("rvNo2", rvNo2);			
 			request.setAttribute("favoriteCount", favoriteCount);		
-			request.setAttribute("reviewCount", reviewCount);
-//			request.setAttribute("selectReviewRatingAvg", selectReviewRatingAvg);
 			request.setAttribute("rvList", rvList);
 			request.setAttribute("rvNoList", rvNoList);
 			request.setAttribute("rvPicList", rvPicList);
