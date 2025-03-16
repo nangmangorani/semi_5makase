@@ -59,8 +59,8 @@ public class EmailCheckPwdController extends HttpServlet {
 		}
 		
 		String host = "smtp.naver.com";
-		String user = "kjw970208@naver.com";
-		String password = "wndnjs5602@";
+		String user = "@naver.com";
+		String password = "";
 		
 		String to_email = m.getEmail();
 		
